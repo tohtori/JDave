@@ -18,6 +18,7 @@ package jdave.runner;
 import static jdave.util.Classes.declaredClassesOf;
 import static jdave.util.Methods.isPublic;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import jdave.Specification;
@@ -35,7 +36,15 @@ public class SpecRunner {
         for (Class<?> contextType : declaredClassesOf(spec.getClass())) {
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
-                    results.expected(method);
+                    try {
+                        Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+                        Object context = constructor.newInstance(spec);
+                        method.invoke(context);
+                        results.expected(method);
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                        // FIXME report failure
+                    }
                 }
             }
         }

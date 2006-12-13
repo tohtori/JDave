@@ -48,22 +48,38 @@ public class SpecRunnerTest extends TestCase {
         assertEquals("shouldNotBeEqualToTrue", methods.get(1).getName());
     }
     
+    public void testShouldInvokeAllSpecificationMethods() {
+        BooleanSpec spec = new BooleanSpec();
+        runner.run(spec, new SpecRunner.Results() {
+            public void expected(Method method) {
+            }
+        });
+        assertEquals("shouldEqualToFalseshouldNotBeEqualToTrue", spec.actualCalls);
+    }
+    
     public static class BooleanSpec extends Specification<Boolean> {
+        public String actualCalls = "";
+        
         @Context
         public class FalseBoolean {
             public void shouldEqualToFalse() {
+                actualCalls += "shouldEqualToFalse";
             }
 
             public void shouldNotBeEqualToTrue() {
+                actualCalls += "shouldNotBeEqualToTrue";
             }
             
             protected void protectedMethod() {
+                actualCalls += "protectedMethod";
             }
             
             private void privateMethod() {
+                actualCalls += "privateMethod";
             }
             
             void packageProtectedMethod() {
+                actualCalls += "packageProtectedMethod";
             }
         }
     }
