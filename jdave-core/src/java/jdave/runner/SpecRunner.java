@@ -16,6 +16,7 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import jdave.Specification;
 import jdave.util.Classes;
@@ -32,7 +33,9 @@ public class SpecRunner {
         for (Class<?> contextType : Classes.declaredClassesOf(spec.getClass())) {
             Method[] methods = contextType.getDeclaredMethods();
             for (Method method : methods) {
-                results.expected(method);
+                if ((method.getModifiers() | Modifier.PUBLIC) != 0) {
+                    results.expected(method);
+                }
             }
         }
     }

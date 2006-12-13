@@ -47,7 +47,7 @@ public class SpecRunnerTest extends TestCase {
         assertEquals("shouldEqualToFalse", methods.get(0).getName());
         assertEquals("shouldNotBeEqualToTrue", methods.get(1).getName());
     }
-
+    
     public static class BooleanSpec extends Specification<Boolean> {
         @Context
         public class FalseBoolean {
@@ -55,6 +55,15 @@ public class SpecRunnerTest extends TestCase {
             }
 
             public void shouldNotBeEqualToTrue() {
+            }
+            
+            protected void protectedMethod() {
+            }
+            
+            private void privateMethod() {
+            }
+            
+            void packageProtectedMethod() {
             }
         }
     }
