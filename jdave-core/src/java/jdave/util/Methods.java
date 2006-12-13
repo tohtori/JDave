@@ -13,32 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.runner;
+package jdave.util;
 
 import java.lang.reflect.Method;
-
-import jdave.Specification;
-import jdave.util.Classes;
-import jdave.util.Methods;
+import java.lang.reflect.Modifier;
 
 /**
  * @author Pekka Enberg
- * @author Joni Freeman
  */
-public class SpecRunner {
-    public interface Results {
-        public void expected(Method method);
-    }
-
-    public void run(Specification<?> spec, Results results) {
-        for (Class<?> contextType : Classes.declaredClassesOf(spec.getClass())) {
-            for (Method method : contextType.getMethods()) {
-                if (Methods.isPublic(method)) {
-                    if (!method.getDeclaringClass().equals(Object.class)) {
-                        results.expected(method);
-                    }
-                }
-            }
-        }
+public class Methods {
+    public static boolean isPublic(Method method) {
+        return (method.getModifiers() | Modifier.PUBLIC) != 0;
     }
 }
