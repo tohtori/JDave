@@ -15,11 +15,12 @@
  */
 package jdave.runner;
 
+import static jdave.util.Classes.declaredClassesOf;
+import static jdave.util.Methods.isPublic;
+
 import java.lang.reflect.Method;
 
 import jdave.Specification;
-import jdave.util.Classes;
-import jdave.util.Methods;
 
 /**
  * @author Pekka Enberg
@@ -31,7 +32,7 @@ public class SpecRunner {
     }
 
     public void run(Specification<?> spec, Results results) {
-        for (Class<?> contextType : Classes.declaredClassesOf(spec.getClass())) {
+        for (Class<?> contextType : declaredClassesOf(spec.getClass())) {
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
                     results.expected(method);
@@ -41,7 +42,7 @@ public class SpecRunner {
     }
 
     private boolean isSpecMethod(Method method) {
-        if (!Methods.isPublic(method)) {
+        if (!isPublic(method)) {
             return false;
         }
         if (method.getDeclaringClass().equals(Object.class)) {
