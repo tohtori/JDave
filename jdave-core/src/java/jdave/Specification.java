@@ -37,7 +37,7 @@ public class Specification<T> {
         return obj;
     }
     
-    public Object raise(Class<?> expected) {
+    public Object raise(Class<? extends Throwable> expected) {
         return null;
     }
 }
