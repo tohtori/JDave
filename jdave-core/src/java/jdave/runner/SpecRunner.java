@@ -23,6 +23,7 @@ import jdave.util.Classes;
 
 /**
  * @author Pekka Enberg
+ * @author Joni Freeman
  */
 public class SpecRunner {
     public interface Results {
@@ -31,10 +32,11 @@ public class SpecRunner {
 
     public void run(Specification<?> spec, Results results) {
         for (Class<?> contextType : Classes.declaredClassesOf(spec.getClass())) {
-            Method[] methods = contextType.getDeclaredMethods();
-            for (Method method : methods) {
+            for (Method method : contextType.getMethods()) {
                 if ((method.getModifiers() | Modifier.PUBLIC) != 0) {
-                    results.expected(method);
+                    if (!method.getDeclaringClass().equals(Object.class)) {
+                        results.expected(method);
+                    }
                 }
             }
         }
