@@ -33,12 +33,20 @@ public class SpecRunner {
     public void run(Specification<?> spec, Results results) {
         for (Class<?> contextType : Classes.declaredClassesOf(spec.getClass())) {
             for (Method method : contextType.getMethods()) {
-                if (Methods.isPublic(method)) {
-                    if (!method.getDeclaringClass().equals(Object.class)) {
-                        results.expected(method);
-                    }
+                if (isSpecMethod(method)) {
+                    results.expected(method);
                 }
             }
         }
+    }
+
+    private boolean isSpecMethod(Method method) {
+        if (!Methods.isPublic(method)) {
+            return false;
+        }
+        if (method.getDeclaringClass().equals(Object.class)) {
+            return false;
+        }
+        return true;
     }
 }
