@@ -36,7 +36,7 @@ public class SpecRunnerTest extends TestCase {
         runner = new SpecRunner();
     }
 
-    public void testShouldNotifyResultsOfAllMethods() {
+    public void testShouldNotifyResultsOfAllPublicMethods() {
         assertTrue(methods.isEmpty());
         runner.run(new BooleanSpec(), new SpecRunner.Results() {
             public void expected(Method method) {
