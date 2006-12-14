@@ -17,6 +17,7 @@ package jdave.runner;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import jdave.Context;
@@ -54,32 +55,32 @@ public class SpecRunnerTest extends TestCase {
             public void expected(Method method) {
             }
         });
-        assertEquals("shouldEqualToFalseshouldNotBeEqualToTrue", spec.actualCalls);
+        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), spec.actualCalls);
     }
     
     public static class BooleanSpec extends Specification<Boolean> {
-        public String actualCalls = "";
+        public List<String> actualCalls = new ArrayList<String>();
         
         @Context
         public class FalseBoolean {
             public void shouldEqualToFalse() {
-                actualCalls += "shouldEqualToFalse";
+                actualCalls.add("shouldEqualToFalse");
             }
 
             public void shouldNotBeEqualToTrue() {
-                actualCalls += "shouldNotBeEqualToTrue";
+                actualCalls.add("shouldNotBeEqualToTrue");
             }
             
             protected void protectedMethod() {
-                actualCalls += "protectedMethod";
+                actualCalls.add("protectedMethod");
             }
             
             private void privateMethod() {
-                actualCalls += "privateMethod";
+                actualCalls.add("privateMethod");
             }
             
             void packageProtectedMethod() {
-                actualCalls += "packageProtectedMethod";
+                actualCalls.add("packageProtectedMethod");
             }
         }
     }
