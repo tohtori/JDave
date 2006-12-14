@@ -64,7 +64,7 @@ public class StackSpec extends Specification<Stack<?>> {
                 public void run() throws Exception {
                     stack.push(100);
                 }
-            }, should.raise(StackOverflowError.class));
+            }, should.raise(StackOverflowException.class));
         }
     }
 

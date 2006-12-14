@@ -22,7 +22,8 @@ package jdave.examples;
 public class Stack<T> {
     private static final int UNLIMITED = -1;
     private final int maxSize;
-
+    private java.util.Stack<T> stack = new java.util.Stack<T>();
+    
     public Stack() {
         this(UNLIMITED);
     }
@@ -32,17 +33,21 @@ public class Stack<T> {
     }
 
     public boolean empty() {
-        return false;
+        return stack.isEmpty();
     }
 
     public boolean full() {
-        return false;
+        return maxSize != UNLIMITED && stack.size() == maxSize;
     }
 
     public T peek() {
-        return null;
+        return stack.peek();
     }
 
     public void push(T element) {
+        if (full()) {
+            throw new StackOverflowException();
+        }
+        stack.push(element);
     }
 }
