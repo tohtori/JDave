@@ -34,11 +34,11 @@ public class SpecRunner {
 
     public void run(Specification<?> spec, Results results) {
         for (Class<?> contextType : declaredClassesOf(spec.getClass())) {
+            Object context = newContext(spec, contextType);
+            spec.be = invokeContext(context);
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
                     try {
-                        Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-                        Object context = constructor.newInstance(spec);
                         method.invoke(context);
                         results.expected(method);
                     } catch (Throwable t) {
@@ -47,6 +47,25 @@ public class SpecRunner {
                     }
                 }
             }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T invokeContext(Object context) {
+        try {
+            Method method = context.getClass().getMethod("context");
+            return (T) method.invoke(context);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Object newContext(Specification<?> spec, Class<?> contextType) {
+        try {
+            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+            return constructor.newInstance(spec);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
