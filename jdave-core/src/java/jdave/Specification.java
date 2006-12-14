@@ -19,28 +19,44 @@ package jdave;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public class Specification<T> {
+public abstract class Specification<T> {
     protected Specification<T> should = this;
     public T be;
+    private boolean expectationState = true;
     
     public Specification<T> not() {
+        expectationState = !expectationState;
         return this;
     }
 
     public void specify(boolean expected) {
-        if (!expected) {
+        if (expected != expectationState) {
             throw new ExpectationFailedException();
         }
     }
 
     public void specify(Object actual, Object expected) {
+        if (!actual.equals(expected)) {
+            throw new ExpectationFailedException();
+        }
     }
-
+    
+    public void specify(Block block, Class<? extends Throwable> expected) {
+        try {
+            block.run();
+        } catch (Throwable t) {
+            if (t.getClass().equals(expected)) {
+                return;
+            }
+        }
+        throw new ExpectationFailedException();        
+    }
+    
     public Object equal(Object obj) {
         return obj;
     }
     
-    public Object raise(Class<? extends Throwable> expected) {
-        return null;
+    public Class<? extends Throwable> raise(Class<? extends Throwable> expected) {
+        return expected;
     }
 }

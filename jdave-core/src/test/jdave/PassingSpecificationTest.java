@@ -16,6 +16,8 @@
 package jdave;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import jdave.runner.SpecRunner;
 import junit.framework.TestCase;
@@ -25,7 +27,7 @@ import junit.framework.TestCase;
  */
 public class PassingSpecificationTest extends TestCase {
     private SpecRunner runner;
-    private Method actualMethod;
+    private List<Method> actualMethods = new ArrayList<Method>();
     
     @Override
     protected void setUp() throws Exception {
@@ -35,23 +37,36 @@ public class PassingSpecificationTest extends TestCase {
     public void testShouldPassExpectation() {
         runner.run(new IntegerSpecification(), new SpecRunner.Results() {
             public void expected(Method method) {
-                actualMethod = method;
+                actualMethods.add(method);
             }
             public void unexpected(Method method) {
             }
         });
-        assertEquals("isPositive", actualMethod.getName());
+        assertEquals("canBeConvertedToDouble", actualMethods.get(0).getName());
+        assertEquals("isPositive", actualMethods.get(1).getName());
+        assertEquals("isZero", actualMethods.get(2).getName());
     }
     
     public class IntegerSpecification extends Specification<Integer> {
         @Context
         public class Zero {
+            private Integer integer;
+
             public Integer context() {
-                return new Integer(0);
+                integer = new Integer(0);
+                return integer;
             }
             
             public void isPositive() {
                 specify(should.be > -1);
+            }
+            
+            public void isZero() {
+                specify(should.not().be != 0);
+            }
+            
+            public void canBeConvertedToDouble() {
+                specify(integer.doubleValue(), 0.0);
             }
         }
     }

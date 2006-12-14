@@ -37,10 +37,10 @@ public class SpecRunner {
 
     public void run(Specification<?> spec, Results results) {
         for (Class<?> contextType : declaredClassesOf(spec.getClass())) {
-            Object context = newContext(spec, contextType);
-            spec.be = invokeContext(context);
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
+                    Object context = newContext(spec, contextType);
+                    spec.be = invokeContext(context);
                     try {
                         method.invoke(context);
                         results.expected(method);
