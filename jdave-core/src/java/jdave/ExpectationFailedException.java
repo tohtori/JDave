@@ -17,30 +17,6 @@ package jdave;
 
 /**
  * @author Joni Freeman
- * @author Pekka Enberg
  */
-public class Specification<T> {
-    protected Specification<T> should = this;
-    public T be;
-    
-    public Specification<T> not() {
-        return this;
-    }
-
-    public void specify(boolean expected) {
-        if (!expected) {
-            throw new ExpectationFailedException();
-        }
-    }
-
-    public void specify(Object actual, Object expected) {
-    }
-
-    public Object equal(Object obj) {
-        return obj;
-    }
-    
-    public Object raise(Class<? extends Throwable> expected) {
-        return null;
-    }
+public class ExpectationFailedException extends RuntimeException {
 }

@@ -19,8 +19,10 @@ import static jdave.util.Classes.declaredClassesOf;
 import static jdave.util.Methods.isPublic;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 /**
@@ -42,6 +44,10 @@ public class SpecRunner {
                     try {
                         method.invoke(context);
                         results.expected(method);
+                    } catch (InvocationTargetException e) {
+                        if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
+                            results.unexpected(method);
+                        }
                     } catch (Throwable t) {
                         t.printStackTrace();
                         // FIXME report failure
