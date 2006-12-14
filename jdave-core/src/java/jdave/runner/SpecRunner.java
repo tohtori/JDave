@@ -15,7 +15,6 @@
  */
 package jdave.runner;
 
-import static jdave.util.Classes.declaredClassesOf;
 import static jdave.util.Methods.isPublic;
 
 import java.lang.reflect.Constructor;
@@ -36,7 +35,7 @@ public class SpecRunner {
     }
 
     public void run(Class<? extends Specification<?>> specType, Results results) {
-        for (Class<?> contextType : declaredClassesOf(specType)) {
+        for (Class<?> contextType : specType.getDeclaredClasses()) {
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
                     Specification<?> spec = newSpec(specType);
