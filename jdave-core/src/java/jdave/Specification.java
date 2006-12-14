@@ -20,7 +20,7 @@ package jdave;
  * @author Pekka Enberg
  */
 public class Specification<T> {
-    protected Specification<T> should;
+    protected Specification<T> should = this;
     public T be;
     
     public Specification<T> not() {
