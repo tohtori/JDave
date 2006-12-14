@@ -48,7 +48,7 @@ public class StackSpec extends Specification<Stack<?>> {
         private Stack<Integer> stack;
 
         public Stack<Integer> context() {
-            stack = new Stack<Integer>();
+            stack = new Stack<Integer>(10);
             for (int i = 0; i < 10; i++) {
                 stack.push(i);
             }

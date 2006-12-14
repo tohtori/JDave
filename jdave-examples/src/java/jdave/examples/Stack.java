@@ -20,6 +20,17 @@ package jdave.examples;
  * @author Pekka Enberg
  */
 public class Stack<T> {
+    private static final int UNLIMITED = -1;
+    private final int maxSize;
+
+    public Stack() {
+        this(UNLIMITED);
+    }
+    
+    public Stack(int maxSize) {
+        this.maxSize = maxSize;
+    }
+
     public boolean empty() {
         return false;
     }
