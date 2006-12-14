@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 /**
  * @author Joni Freeman
  */
-public class SpecificationTest extends TestCase {
+public class ContextInitializationTest extends TestCase {
     private SpecRunner runner;
     private Object context;
     
