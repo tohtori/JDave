@@ -44,7 +44,7 @@ public class ContextInitializationTest extends TestCase {
     
     public class TestSpecification extends Specification<Object> {
         @Context
-        public class Zero {
+        public class TestContext {
             public Object context() {
                 return context;
             }
