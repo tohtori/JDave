@@ -25,7 +25,8 @@ import junit.framework.TestCase;
  */
 public class ContextInitializationTest extends TestCase {
     private SpecRunner runner;
-    private Object context;
+    private static Object context;
+    private static Object actualBe;
     
     @Override
     protected void setUp() throws Exception {
@@ -34,17 +35,16 @@ public class ContextInitializationTest extends TestCase {
     }
     
     public void testShouldSetContextAsBe() {
-        TestSpecification spec = new TestSpecification();
-        runner.run(spec, new SpecRunner.Results() {
+        runner.run(TestSpecification.class, new SpecRunner.Results() {
             public void expected(Method method) {
             }
             public void unexpected(Method method) {
             }
         });
-        assertEquals(context, spec.be);
+        assertEquals(context, actualBe);
     }
     
-    public class TestSpecification extends Specification<Object> {
+    public static class TestSpecification extends Specification<Object> {
         @Context
         public class TestContext {
             public Object context() {
@@ -52,6 +52,7 @@ public class ContextInitializationTest extends TestCase {
             }
             
             public void testSpec() {
+                actualBe = should.be;
             }
         }
     }

@@ -35,10 +35,11 @@ public class SpecRunner {
         public void unexpected(Method method);
     }
 
-    public void run(Specification<?> spec, Results results) {
-        for (Class<?> contextType : declaredClassesOf(spec.getClass())) {
+    public void run(Class<? extends Specification<?>> specType, Results results) {
+        for (Class<?> contextType : declaredClassesOf(specType)) {
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
+                    Specification<?> spec = newSpec(specType);
                     Object context = newContext(spec, contextType);
                     spec.be = invokeContext(context);
                     try {
@@ -54,6 +55,15 @@ public class SpecRunner {
                     }
                 }
             }
+        }
+    }
+
+    private <T extends Specification<?>> T newSpec(Class<T> specType) {
+        try {
+            Constructor<T> constructor = specType.getConstructor();
+            return constructor.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

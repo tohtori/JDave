@@ -35,7 +35,7 @@ public class PassingSpecificationTest extends TestCase {
     }
     
     public void testShouldPassExpectation() {
-        runner.run(new IntegerSpecification(), new SpecRunner.Results() {
+        runner.run(IntegerSpecification.class, new SpecRunner.Results() {
             public void expected(Method method) {
                 actualMethods.add(method);
             }
@@ -47,7 +47,7 @@ public class PassingSpecificationTest extends TestCase {
         assertEquals("isZero", actualMethods.get(2).getName());
     }
     
-    public class IntegerSpecification extends Specification<Integer> {
+    public static class IntegerSpecification extends Specification<Integer> {
         @Context
         public class Zero {
             private Integer integer;

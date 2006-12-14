@@ -33,8 +33,7 @@ public class FailingSpecificationTest extends TestCase {
     }
     
     public void testShouldNotPassExpectation() {
-        FailingIntegerSpecification spec = new FailingIntegerSpecification();
-        runner.run(spec, new SpecRunner.Results() {
+        runner.run(FailingIntegerSpecification.class, new SpecRunner.Results() {
             public void expected(Method method) {
             }
             public void unexpected(Method method) {
@@ -44,7 +43,7 @@ public class FailingSpecificationTest extends TestCase {
         assertEquals("isNegative", actualMethod.getName());
     }
     
-    public class FailingIntegerSpecification extends Specification<Integer> {
+    public static class FailingIntegerSpecification extends Specification<Integer> {
         @Context
         public class Zero {
             public Integer context() {

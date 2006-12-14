@@ -39,7 +39,7 @@ public class SpecRunnerTest extends TestCase {
 
     public void testShouldNotifyResultsOfAllPublicMethods() {
         assertTrue(methods.isEmpty());
-        runner.run(new BooleanSpec(), new SpecRunner.Results() {
+        runner.run(BooleanSpec.class, new SpecRunner.Results() {
             public void expected(Method method) {
                 methods.add(method);
             }
@@ -52,18 +52,18 @@ public class SpecRunnerTest extends TestCase {
     }
     
     public void testShouldInvokeAllSpecificationMethods() {
-        BooleanSpec spec = new BooleanSpec();
-        runner.run(spec, new SpecRunner.Results() {
+        BooleanSpec.actualCalls.clear();
+        runner.run(BooleanSpec.class, new SpecRunner.Results() {
             public void expected(Method method) {
             }
             public void unexpected(Method method) {
             }
         });
-        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), spec.actualCalls);
+        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
     public static class BooleanSpec extends Specification<Boolean> {
-        public List<String> actualCalls = new ArrayList<String>();
+        public static List<String> actualCalls = new ArrayList<String>();
         
         @Context
         public class FalseBoolean {
