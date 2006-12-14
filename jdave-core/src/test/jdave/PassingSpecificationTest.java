@@ -33,10 +33,11 @@ public class PassingSpecificationTest extends TestCase {
     }
     
     public void testShouldPassExpectation() {
-        IntegerSpecification spec = new IntegerSpecification();
-        runner.run(spec, new SpecRunner.Results() {
+        runner.run(new IntegerSpecification(), new SpecRunner.Results() {
             public void expected(Method method) {
                 actualMethod = method;
+            }
+            public void unexpected(Method method) {
             }
         });
         assertEquals("isPositive", actualMethod.getName());

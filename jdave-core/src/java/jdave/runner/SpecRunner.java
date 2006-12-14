@@ -30,6 +30,7 @@ import jdave.Specification;
 public class SpecRunner {
     public interface Results {
         public void expected(Method method);
+        public void unexpected(Method method);
     }
 
     public void run(Specification<?> spec, Results results) {
@@ -74,6 +75,9 @@ public class SpecRunner {
             return false;
         }
         if (method.getDeclaringClass().equals(Object.class)) {
+            return false;
+        }
+        if (method.getName().equals("context")) {
             return false;
         }
         return true;

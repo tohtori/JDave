@@ -43,6 +43,8 @@ public class SpecRunnerTest extends TestCase {
             public void expected(Method method) {
                 methods.add(method);
             }
+            public void unexpected(Method method) {
+            }
         });
         assertEquals(2, methods.size());
         assertEquals("shouldEqualToFalse", methods.get(0).getName());
@@ -54,6 +56,8 @@ public class SpecRunnerTest extends TestCase {
         runner.run(spec, new SpecRunner.Results() {
             public void expected(Method method) {
             }
+            public void unexpected(Method method) {
+            }
         });
         assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), spec.actualCalls);
     }
@@ -63,6 +67,10 @@ public class SpecRunnerTest extends TestCase {
         
         @Context
         public class FalseBoolean {
+            public Boolean context() {
+                return true;
+            }
+            
             public void shouldEqualToFalse() {
                 actualCalls.add("shouldEqualToFalse");
             }

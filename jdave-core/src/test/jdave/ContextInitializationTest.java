@@ -38,6 +38,8 @@ public class ContextInitializationTest extends TestCase {
         runner.run(spec, new SpecRunner.Results() {
             public void expected(Method method) {
             }
+            public void unexpected(Method method) {
+            }
         });
         assertEquals(context, spec.be);
     }
