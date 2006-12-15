@@ -37,24 +37,39 @@ public class SpecRunner {
     public <T> void run(Class<? extends Specification<T>> specType, Results results) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             for (Method method : contextType.getMethods()) {
-                if (isSpecMethod(method)) {
-                    Specification<T> spec = newSpec(specType);
-                    Object context = newContext(spec, contextType);
-                    spec.be = (T) invokeContextInitializer(context);
-                    try {
-                        method.invoke(context);
-                        results.expected(method);
-                    } catch (InvocationTargetException e) {
-                        if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
-                            results.unexpected(method, (ExpectationFailedException) e.getCause());
-                        } else {
-                            results.error(method, e.getCause());
-                        }
-                    } catch (Throwable t) {
-                        throw new RuntimeException(t);
-                    }
+                if (isSpecificationMethod(method)) {
+                    executeSpecificationMethod(specType, contextType, method, results);
                 }
             }
+        }
+    }
+
+    private boolean isSpecificationMethod(Method method) {
+        if (method.getDeclaringClass().equals(Object.class)) {
+            return false;
+        }
+        if (method.getName().equals("context")) {
+            return false;
+        }
+        return true;
+    }
+    
+    private <T> void executeSpecificationMethod(Class<? extends Specification<T>> specType,
+            Class<?> contextType, Method specMethod, Results results) {
+        Specification<T> spec = newSpec(specType);
+        Object context = newContext(spec, contextType);
+        spec.be = (T) invokeContextInitializer(context);
+        try {
+            specMethod.invoke(context);
+            results.expected(specMethod);
+        } catch (InvocationTargetException e) {
+            if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
+                results.unexpected(specMethod, (ExpectationFailedException) e.getCause());
+            } else {
+                results.error(specMethod, e.getCause());
+            }
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
         }
     }
 
@@ -67,15 +82,6 @@ public class SpecRunner {
         }
     }
 
-    private Object invokeContextInitializer(Object context) {
-        try {
-            Method method = context.getClass().getMethod("context");
-            return method.invoke(context);
-        } catch (Exception e) {
-            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
-        }
-    }
-
     private Object newContext(Specification<?> spec, Class<?> contextType) {
         try {
             Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
@@ -85,13 +91,12 @@ public class SpecRunner {
         }
     }
 
-    private boolean isSpecMethod(Method method) {
-        if (method.getDeclaringClass().equals(Object.class)) {
-            return false;
+    private Object invokeContextInitializer(Object context) {
+        try {
+            Method method = context.getClass().getMethod("context");
+            return method.invoke(context);
+        } catch (Exception e) {
+            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
         }
-        if (method.getName().equals("context")) {
-            return false;
-        }
-        return true;
     }
 }
