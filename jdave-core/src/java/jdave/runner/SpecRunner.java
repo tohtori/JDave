@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
+import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 
 /**
@@ -39,7 +40,7 @@ public class SpecRunner {
                 if (isSpecMethod(method)) {
                     Specification<T> spec = newSpec(specType);
                     Object context = newContext(spec, contextType);
-                    spec.be = (T) invokeContext(context);
+                    spec.be = (T) invokeContextInitializer(context);
                     try {
                         method.invoke(context);
                         results.expected(method);
@@ -66,12 +67,12 @@ public class SpecRunner {
         }
     }
 
-    private Object invokeContext(Object context) {
+    private Object invokeContextInitializer(Object context) {
         try {
             Method method = context.getClass().getMethod("context");
             return method.invoke(context);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
         }
     }
 
