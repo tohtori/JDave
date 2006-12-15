@@ -21,16 +21,16 @@ package jdave;
  */
 public abstract class Specification<T> {
     protected Specification<T> should = this;
+    private boolean actual = true;
     public T be;
-    private boolean expectationState = true;
     
     public Specification<T> not() {
-        expectationState = !expectationState;
+        actual = !actual;
         return this;
     }
 
     public void specify(boolean expected) {
-        if (expected != expectationState) {
+        if (expected != actual) {
             throw newException("true", "false");
         }
     }
