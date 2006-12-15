@@ -56,9 +56,9 @@ public class SpecRunner {
     
     private <T> void executeSpecificationMethod(Class<? extends Specification<T>> specType,
             Class<?> contextType, Method specMethod, Results results) {
-        Specification<T> spec = newSpec(specType);
+        Specification<T> spec = newSpecification(specType);
         Object context = newContext(spec, contextType);
-        spec.be = (T) invokeContextInitializer(context);
+        spec.be = initializeContext(context);
         try {
             specMethod.invoke(context);
             results.expected(specMethod);
@@ -73,7 +73,7 @@ public class SpecRunner {
         }
     }
 
-    private <T extends Specification<?>> T newSpec(Class<T> specType) {
+    private <T extends Specification<?>> T newSpecification(Class<T> specType) {
         try {
             Constructor<T> constructor = specType.getConstructor();
             return constructor.newInstance();
@@ -91,10 +91,10 @@ public class SpecRunner {
         }
     }
 
-    private Object invokeContextInitializer(Object context) {
+    private <T> T initializeContext(Object context) {
         try {
             Method method = context.getClass().getMethod("context");
-            return method.invoke(context);
+            return (T) method.invoke(context);
         } catch (Exception e) {
             throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
         }
