@@ -28,6 +28,8 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
+    private static final String CONTEXT_INITIALIZER_NAME = "context";
+
     public interface Results {
         void expected(Method method);
         void unexpected(Method method, ExpectationFailedException e);
@@ -48,7 +50,7 @@ public class SpecRunner {
         if (method.getDeclaringClass().equals(Object.class)) {
             return false;
         }
-        if (method.getName().equals("context")) {
+        if (method.getName().equals(CONTEXT_INITIALIZER_NAME)) {
             return false;
         }
         return true;
@@ -93,7 +95,7 @@ public class SpecRunner {
 
     private <T> T initializeContext(Object context) {
         try {
-            Method method = context.getClass().getMethod("context");
+            Method method = context.getClass().getMethod(CONTEXT_INITIALIZER_NAME);
             return (T) method.invoke(context);
         } catch (Exception e) {
             throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
