@@ -43,6 +43,10 @@ public class JDaveSuite<T> extends TestSuite {
                     public void unexpected(Method method, ExpectationFailedException e) {
                         throw new AssertionFailedError(method.getName());
                     }
+                    
+                    public void error(Method method, Throwable t) {
+                        throw new RuntimeException(t);
+                    }
                 };
                 new SpecRunner().run(specType, results);
             }

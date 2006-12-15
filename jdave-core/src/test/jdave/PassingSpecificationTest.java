@@ -36,13 +36,10 @@ public class PassingSpecificationTest extends TestCase {
     }
     
     public void testShouldPassExpectation() {
-        runner.run(IntegerSpecification.class, new SpecRunner.Results() {
+        runner.run(IntegerSpecification.class, new ResultsAdapter() {
+            @Override
             public void expected(Method method) {
                 actualMethods.add(method);
-            }
-            
-            public void unexpected(Method method, ExpectationFailedException e) {
-                throw new UnsupportedOperationException();
             }
         });
         Collections.sort(actualMethods, new ByNameComparator());

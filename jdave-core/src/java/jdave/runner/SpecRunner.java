@@ -30,6 +30,7 @@ public class SpecRunner {
     public interface Results {
         void expected(Method method);
         void unexpected(Method method, ExpectationFailedException e);
+        void error(Method method, Throwable t);
     }
 
     public <T> void run(Class<? extends Specification<T>> specType, Results results) {
@@ -45,10 +46,11 @@ public class SpecRunner {
                     } catch (InvocationTargetException e) {
                         if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
                             results.unexpected(method, (ExpectationFailedException) e.getCause());
+                        } else {
+                            results.error(method, e.getCause());
                         }
                     } catch (Throwable t) {
-                        t.printStackTrace();
-                        // FIXME report failure
+                        throw new RuntimeException(t);
                     }
                 }
             }

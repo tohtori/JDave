@@ -22,10 +22,13 @@ import jdave.runner.SpecRunner;
 /**
  * @author Joni Freeman
  */
-public class NopResults implements SpecRunner.Results {
+public class ResultsAdapter implements SpecRunner.Results {
     public void expected(Method method) {
     }
 
     public void unexpected(Method method, ExpectationFailedException e) {
+    }
+    
+    public void error(Method method, Throwable t) {
     }
 }

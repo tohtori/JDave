@@ -21,10 +21,10 @@ import jdave.runner.SpecRunner;
 import junit.framework.TestCase;
 
 /**
- * @author Joni Freeman
+ * @author Pekka Enberg
  */
-public class FailingSpecificationTest extends TestCase {
-    private ExpectationFailedException actualException;
+public class ErroneousSpecificationTest extends TestCase {
+    private Throwable actualException;
     private Method actualMethod;
     private SpecRunner runner;
     
@@ -33,27 +33,28 @@ public class FailingSpecificationTest extends TestCase {
         runner = new SpecRunner();
     }
     
-    public void testShouldNotPassExpectation() {
-        runner.run(FailingIntegerSpecification.class, new ResultsAdapter() {
+    public void testShouldPassError() {
+        runner.run(ErroneousSpecification.class, new ResultsAdapter() {
             @Override
-            public void unexpected(Method method, ExpectationFailedException e) {
+            public void error(Method method, Throwable t) {
                 actualMethod = method;
-                actualException = e;
+                actualException = t;
             }
         });
-        assertEquals("isNegative", actualMethod.getName());
-        assertEquals("Expected: true, but was: false", actualException.getMessage());
+        assertEquals("throwsException", actualMethod.getName());
+        assertEquals(UnsupportedOperationException.class, actualException.getClass());
+        assertEquals("Throws an exception", actualException.getMessage());
     }
     
-    public static class FailingIntegerSpecification extends Specification<Integer> {
+    public static class ErroneousSpecification extends Specification<Integer> {
         @Context
         public class Zero {
             public Integer context() {
                 return new Integer(0);
             }
             
-            public void isNegative() {
-                specify(should.be < 0);
+            public void throwsException() {
+                throw new UnsupportedOperationException("Throws an exception");
             }
         }
     }
