@@ -15,8 +15,6 @@
  */
 package jdave.runner;
 
-import static jdave.util.Methods.isPublic;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -85,9 +83,6 @@ public class SpecRunner {
     }
 
     private boolean isSpecMethod(Method method) {
-        if (!isPublic(method)) {
-            return false;
-        }
         if (method.getDeclaringClass().equals(Object.class)) {
             return false;
         }
