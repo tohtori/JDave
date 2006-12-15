@@ -17,6 +17,7 @@ package jdave;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jdave.runner.SpecRunner;
@@ -42,6 +43,7 @@ public class PassingSpecificationTest extends TestCase {
             public void unexpected(Method method) {
             }
         });
+        Collections.sort(actualMethods, new ByNameComparator());
         assertEquals("canBeConvertedToDouble", actualMethods.get(0).getName());
         assertEquals("isPositive", actualMethods.get(1).getName());
         assertEquals("isZero", actualMethods.get(2).getName());
