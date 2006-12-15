@@ -62,7 +62,11 @@ public class PassingSpecificationTest extends TestCase {
             public void isPositive() {
                 specify(should.be > -1);
             }
-            
+
+            public void toStringIsZero() {
+                specify(integer.toString(), should.equal("0"));
+            }
+
             public void isZero() {
                 specify(should.not().be != 0);
             }
