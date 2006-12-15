@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import jdave.Context;
+import jdave.ExpectationFailedException;
+import jdave.NopResults;
 import jdave.Specification;
 import junit.framework.TestCase;
 
@@ -43,7 +45,8 @@ public class SpecRunnerTest extends TestCase {
             public void expected(Method method) {
                 methods.add(method);
             }
-            public void unexpected(Method method) {
+
+            public void unexpected(Method method, ExpectationFailedException e) {
             }
         });
         assertEquals(2, methods.size());
@@ -53,12 +56,7 @@ public class SpecRunnerTest extends TestCase {
     
     public void testShouldInvokeAllSpecificationMethods() {
         BooleanSpec.actualCalls.clear();
-        runner.run(BooleanSpec.class, new SpecRunner.Results() {
-            public void expected(Method method) {
-            }
-            public void unexpected(Method method) {
-            }
-        });
+        runner.run(BooleanSpec.class, new NopResults());
         assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     

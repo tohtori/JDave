@@ -17,6 +17,7 @@ package jdave.junit3;
 
 import java.lang.reflect.Method;
 
+import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.runner.SpecRunner;
 import jdave.runner.SpecRunner.Results;
@@ -39,7 +40,7 @@ public class JDaveSuite<T> extends TestSuite {
                     public void expected(Method method) {
                     }
 
-                    public void unexpected(Method method) {
+                    public void unexpected(Method method, ExpectationFailedException e) {
                         throw new AssertionFailedError(method.getName());
                     }
                 };

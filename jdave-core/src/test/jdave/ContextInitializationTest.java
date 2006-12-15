@@ -15,8 +15,6 @@
  */
 package jdave;
 
-import java.lang.reflect.Method;
-
 import jdave.runner.SpecRunner;
 import junit.framework.TestCase;
 
@@ -35,12 +33,7 @@ public class ContextInitializationTest extends TestCase {
     }
     
     public void testShouldSetContextAsBe() {
-        runner.run(TestSpecification.class, new SpecRunner.Results() {
-            public void expected(Method method) {
-            }
-            public void unexpected(Method method) {
-            }
-        });
+        runner.run(TestSpecification.class, new NopResults());
         assertEquals(context, actualBe);
     }
     

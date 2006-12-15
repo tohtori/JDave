@@ -40,7 +40,9 @@ public class PassingSpecificationTest extends TestCase {
             public void expected(Method method) {
                 actualMethods.add(method);
             }
-            public void unexpected(Method method) {
+            
+            public void unexpected(Method method, ExpectationFailedException e) {
+                throw new UnsupportedOperationException();
             }
         });
         Collections.sort(actualMethods, new ByNameComparator());

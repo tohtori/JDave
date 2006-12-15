@@ -30,8 +30,8 @@ import jdave.Specification;
  */
 public class SpecRunner {
     public interface Results {
-        public void expected(Method method);
-        public void unexpected(Method method);
+        void expected(Method method);
+        void unexpected(Method method, ExpectationFailedException e);
     }
 
     public <T> void run(Class<? extends Specification<T>> specType, Results results) {
@@ -46,7 +46,7 @@ public class SpecRunner {
                         results.expected(method);
                     } catch (InvocationTargetException e) {
                         if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
-                            results.unexpected(method);
+                            results.unexpected(method, (ExpectationFailedException) e.getCause());
                         }
                     } catch (Throwable t) {
                         t.printStackTrace();

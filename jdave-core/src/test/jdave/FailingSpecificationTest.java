@@ -24,8 +24,9 @@ import junit.framework.TestCase;
  * @author Joni Freeman
  */
 public class FailingSpecificationTest extends TestCase {
-    private SpecRunner runner;
+    private ExpectationFailedException actualException;
     private Method actualMethod;
+    private SpecRunner runner;
     
     @Override
     protected void setUp() throws Exception {
@@ -35,12 +36,16 @@ public class FailingSpecificationTest extends TestCase {
     public void testShouldNotPassExpectation() {
         runner.run(FailingIntegerSpecification.class, new SpecRunner.Results() {
             public void expected(Method method) {
+                throw new UnsupportedOperationException();
             }
-            public void unexpected(Method method) {
+
+            public void unexpected(Method method, ExpectationFailedException e) {
                 actualMethod = method;
+                actualException = e;
             }
         });
         assertEquals("isNegative", actualMethod.getName());
+        assertEquals("Expected: true, but was: false", actualException.getMessage());
     }
     
     public static class FailingIntegerSpecification extends Specification<Integer> {
