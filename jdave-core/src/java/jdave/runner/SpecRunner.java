@@ -34,13 +34,13 @@ public class SpecRunner {
         public void unexpected(Method method);
     }
 
-    public void run(Class<? extends Specification<?>> specType, Results results) {
+    public <T> void run(Class<? extends Specification<T>> specType, Results results) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             for (Method method : contextType.getMethods()) {
                 if (isSpecMethod(method)) {
-                    Specification<?> spec = newSpec(specType);
+                    Specification<T> spec = newSpec(specType);
                     Object context = newContext(spec, contextType);
-                    spec.be = invokeContext(context);
+                    spec.be = (T) invokeContext(context);
                     try {
                         method.invoke(context);
                         results.expected(method);
@@ -66,11 +66,10 @@ public class SpecRunner {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private <T> T invokeContext(Object context) {
+    private Object invokeContext(Object context) {
         try {
             Method method = context.getClass().getMethod("context");
-            return (T) method.invoke(context);
+            return method.invoke(context);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

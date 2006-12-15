@@ -30,8 +30,8 @@ import junit.framework.TestSuite;
  * 
  * @author Joni Freeman
  */
-public class JDaveSuite extends TestSuite {
-    public JDaveSuite(final Class<? extends Specification<?>> specType) {
+public class JDaveSuite<T> extends TestSuite {
+    public JDaveSuite(final Class<? extends Specification<T>> specType) {
         addTest(new TestCase("test") {
             @Override
             protected void runTest() throws Throwable {
