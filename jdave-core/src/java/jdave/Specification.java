@@ -31,13 +31,13 @@ public abstract class Specification<T> {
 
     public void specify(boolean expected) {
         if (expected != expectationState) {
-            throw new ExpectationFailedException();
+            throw newException("true", "false");
         }
     }
 
     public void specify(Object actual, Object expected) {
         if (!actual.equals(expected)) {
-            throw new ExpectationFailedException();
+            throw newException(expected, actual);
         }
     }
     
@@ -49,7 +49,11 @@ public abstract class Specification<T> {
                 return;
             }
         }
-        throw new ExpectationFailedException();        
+        throw new ExpectationFailedException("The specified block should throw " + expected.getName() + ".");        
+    }
+
+    private ExpectationFailedException newException(Object expected, Object actual) {
+        return new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
     }
     
     public Object equal(Object obj) {

@@ -19,4 +19,7 @@ package jdave;
  * @author Joni Freeman
  */
 public class ExpectationFailedException extends RuntimeException {
+    public ExpectationFailedException(String message) {
+        super(message);
+    }
 }
