@@ -15,11 +15,16 @@
  */
 package jdave.junit3;
 
+import java.lang.reflect.Method;
+
+import jdave.ExpectationFailedException;
 import jdave.junit3.JDaveSuite.ResultAdapter;
 
 import org.jmock.Mock;
 import org.jmock.cglib.MockObjectTestCase;
+import org.jmock.core.Constraint;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -30,17 +35,37 @@ public class ResultAdapterTest extends MockObjectTestCase {
     private TestCase test;
     private Mock result;
     private ResultAdapter adapter;
+    private Method method;
 
     @Override
     protected void setUp() throws Exception {
         result = mock(TestResult.class);
         test = new TestCase("test") {};
         adapter = new JDaveSuite.ResultAdapter(test, (TestResult) result.proxy());
+        method = ResultAdapterTest.class.getDeclaredMethod("setUp");
     }
     
     public void testShouldAdaptError() {
         Throwable t = new Exception();
         result.expects(once()).method("addError").with(eq(test), eq(t));
-        adapter.error(null, t);
+        adapter.error(method, t);
+    }
+    
+    public void testShouldAdaptFailure() {
+        final ExpectationFailedException e = new ExpectationFailedException("");
+        result.expects(once()).method("addFailure").with(eq(test), new Constraint() {
+            public boolean eval(Object o) {
+                if (o instanceof AssertionFailedError) {
+                    return ((AssertionFailedError) o).getCause() == e;
+                }
+                return false;
+            }
+
+            public StringBuffer describeTo(StringBuffer buffer) {
+                buffer.append("instanceof");
+                return buffer;
+            }
+        });
+        adapter.unexpected(method, e);
     }
 }
