@@ -16,10 +16,10 @@ import junit.framework.Test;
  */
 public class ExampleSuite extends JDaveSuite {
     public ExampleSuite() {
-        specs(specs());
+        specs(create());
     }
     
-    private Collection<Class<? extends Specification<?>>> specs() {
+    private Collection<Class<? extends Specification<?>>> create() {
         Collection<Class<? extends Specification<?>>> specs = new ArrayList<Class<? extends Specification<?>>>();
         specs.add(StackSpec.class);
         return specs;
