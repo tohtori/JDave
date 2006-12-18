@@ -44,8 +44,7 @@ public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private <T> void run(final Class<? extends Specification<?>> specType) {
+    private <T> void run(final Class<T> specType) {
         setName(specType.getName());
         new SpecRunner().run((Class<? extends Specification<T>>) specType, this);
     }
