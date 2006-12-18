@@ -62,7 +62,7 @@ public class SpecRunnerTest extends TestCase {
     public void testShouldNotifyCallbackWhenContextIsStarted() {
         CallbackAdapter adapter = new CallbackAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals(FalseBoolean.class.getName(), adapter.getCurrentContext().getName());
+        assertEquals("FalseBoolean", adapter.getCurrentContext().getName());
     }
     
     public static class BooleanSpec extends Specification<Boolean> {
