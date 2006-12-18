@@ -24,7 +24,9 @@ import jdave.runner.SpecRunner;
 import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Results;
 import junit.framework.AssertionFailedError;
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**
@@ -33,23 +35,10 @@ import junit.framework.TestSuite;
  * @author Joni Freeman
  */
 public class JDaveSuite<T> extends TestSuite implements SpecRunner.Callback {
-    private Results results;
     private TestSuite suite;
 
     public JDaveSuite(final Class<? extends Specification<T>> specType) {
         setName(specType.getName());
-        results = new Results() {
-            public void expected(Method method) {                
-            }
-            
-            public void unexpected(Method method, ExpectationFailedException e) {
-                throw new AssertionFailedError(method.getName());
-            }
-            
-            public void error(Method method, Throwable t) {
-                throw new RuntimeException(t);
-            }
-        };
         new SpecRunner().run(specType, this);
     }
     
@@ -60,10 +49,41 @@ public class JDaveSuite<T> extends TestSuite implements SpecRunner.Callback {
     
     public void onSpecMethod(final SpecificationMethod method) {
         suite.addTest(new TestCase(method.getName()) {
+            private TestResult result;
+            
+            @Override
+            public void run(TestResult result) {
+                this.result = result;
+                super.run(result);
+            }
+
             @Override
             protected void runTest() throws Throwable {
-                method.run(results);
+                method.run(new ResultAdapter(this, result));
             }
-        });        
+        });
+    }
+    
+    static class ResultAdapter implements Results {
+        private final TestResult result;
+        private final Test test;
+
+        public ResultAdapter(Test test, TestResult result) {
+            this.test = test;
+            this.result = result;
+        }
+        
+        public void error(Method method, Throwable t) {
+            result.addError(test, t);
+        }
+
+        public void expected(Method method) {
+        }
+
+        public void unexpected(Method method, ExpectationFailedException e) {
+            AssertionFailedError failure = new AssertionFailedError(method.getName());
+            failure.initCause(e);
+            result.addFailure(test, failure);
+        }
     }
 }
