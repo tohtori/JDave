@@ -34,18 +34,19 @@ import junit.framework.TestSuite;
  * 
  * @author Joni Freeman
  */
-public class JDaveSuite<T> extends TestSuite implements SpecRunner.Callback {
+public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
     private TestSuite suite;
 
-    public JDaveSuite(Class<? extends Specification<T>>... specTypes) {
-        for (Class<? extends Specification<T>> specType : specTypes) {
+    public JDaveSuite(Class<? extends Specification<?>>... specTypes) {
+        for (Class<? extends Specification<?>> specType : specTypes) {
             run(specType);            
         }
     }
 
-    private void run(final Class<? extends Specification<T>> specType) {
+    @SuppressWarnings("unchecked")
+    private <T> void run(final Class<? extends Specification<?>> specType) {
         setName(specType.getName());
-        new SpecRunner().run(specType, this);
+        new SpecRunner().run((Class<? extends Specification<T>>) specType, this);
     }
     
     public void onContext(Context context) {
