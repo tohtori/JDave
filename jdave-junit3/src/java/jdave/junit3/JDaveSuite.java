@@ -16,6 +16,7 @@
 package jdave.junit3;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 import jdave.ExpectationFailedException;
 import jdave.Specification;
@@ -37,7 +38,7 @@ import junit.framework.TestSuite;
 public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
     private TestSuite suite;
 
-    public JDaveSuite(Class<? extends Specification<?>>... specTypes) {
+    public JDaveSuite(Collection<Class<? extends Specification<?>>> specTypes) {
         for (Class<? extends Specification<?>> specType : specTypes) {
             run(specType);            
         }
