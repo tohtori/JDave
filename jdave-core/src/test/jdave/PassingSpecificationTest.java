@@ -36,12 +36,12 @@ public class PassingSpecificationTest extends TestCase {
     }
     
     public void testShouldPassExpectation() {
-        runner.run(IntegerSpecification.class, new ResultsAdapter() {
+        runner.run(IntegerSpecification.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void expected(Method method) {
                 actualMethods.add(method);
             }
-        });
+        }));
         Collections.sort(actualMethods, new ByNameComparator());
         assertEquals("canBeConvertedToDouble", actualMethods.get(0).getName());
         assertEquals("isPositive", actualMethods.get(1).getName());

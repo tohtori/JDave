@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import jdave.CallbackAdapter;
 import jdave.Context;
 import jdave.ResultsAdapter;
 import jdave.Specification;
+import jdave.runner.SpecRunnerTest.BooleanSpec.FalseBoolean;
 import junit.framework.TestCase;
 
 /**
@@ -40,12 +42,12 @@ public class SpecRunnerTest extends TestCase {
 
     public void testShouldNotifyResultsOfAllPublicMethods() {
         assertTrue(methods.isEmpty());
-        runner.run(BooleanSpec.class, new ResultsAdapter() {
+        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void expected(Method method) {
                 methods.add(method);
             }
-        });
+        }));
         assertEquals(2, methods.size());
         assertEquals("shouldEqualToFalse", methods.get(0).getName());
         assertEquals("shouldNotBeEqualToTrue", methods.get(1).getName());
@@ -53,8 +55,14 @@ public class SpecRunnerTest extends TestCase {
     
     public void testShouldInvokeAllSpecificationMethods() {
         BooleanSpec.actualCalls.clear();
-        runner.run(BooleanSpec.class, new ResultsAdapter());
+        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter()));
         assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
+    }
+    
+    public void testShouldNotifyCallbackWhenContextIsStarted() {
+        CallbackAdapter adapter = new CallbackAdapter(new ResultsAdapter());
+        runner.run(BooleanSpec.class, adapter);
+        assertEquals(FalseBoolean.class.getName(), adapter.getCurrentContext().getName());
     }
     
     public static class BooleanSpec extends Specification<Boolean> {

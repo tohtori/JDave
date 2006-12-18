@@ -34,13 +34,13 @@ public class FailingSpecificationTest extends TestCase {
     }
     
     public void testShouldNotPassExpectation() {
-        runner.run(FailingIntegerSpecification.class, new ResultsAdapter() {
+        runner.run(FailingIntegerSpecification.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void unexpected(Method method, ExpectationFailedException e) {
                 actualMethod = method;
                 actualException = e;
             }
-        });
+        }));
         assertEquals("isNegative", actualMethod.getName());
         assertEquals("Expected: true, but was: false", actualException.getMessage());
     }

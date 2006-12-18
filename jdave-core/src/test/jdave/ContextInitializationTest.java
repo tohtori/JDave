@@ -33,7 +33,7 @@ public class ContextInitializationTest extends TestCase {
     }
     
     public void testShouldSetContextAsBe() {
-        runner.run(TestSpecification.class, new ResultsAdapter());
+        runner.run(TestSpecification.class, new CallbackAdapter(new ResultsAdapter()));
         assertEquals(context, actualBe);
     }
     

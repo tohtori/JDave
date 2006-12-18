@@ -34,13 +34,13 @@ public class ErroneousSpecificationTest extends TestCase {
     }
     
     public void testShouldPassError() {
-        runner.run(ErroneousSpecification.class, new ResultsAdapter() {
+        runner.run(ErroneousSpecification.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void error(Method method, Throwable t) {
                 actualMethod = method;
                 actualException = t;
             }
-        });
+        }));
         assertEquals("throwsException", actualMethod.getName());
         assertEquals(UnsupportedOperationException.class, actualException.getClass());
         assertEquals("Throws an exception", actualException.getMessage());
