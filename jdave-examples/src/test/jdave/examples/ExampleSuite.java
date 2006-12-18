@@ -4,6 +4,10 @@
  */
 package jdave.examples;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import jdave.Specification;
 import jdave.junit3.JDaveSuite;
 import junit.framework.Test;
 
@@ -12,7 +16,13 @@ import junit.framework.Test;
  */
 public class ExampleSuite extends JDaveSuite {
     public ExampleSuite() {
-        super(StackSpec.class);
+        specs(specs());
+    }
+    
+    private Collection<Class<? extends Specification<?>>> specs() {
+        Collection<Class<? extends Specification<?>>> specs = new ArrayList<Class<? extends Specification<?>>>();
+        specs.add(StackSpec.class);
+        return specs;
     }
     
     public static Test suite() {
