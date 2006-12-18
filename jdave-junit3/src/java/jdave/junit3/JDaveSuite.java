@@ -19,7 +19,9 @@ import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
 import jdave.Specification;
+import jdave.runner.Context;
 import jdave.runner.SpecRunner;
+import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Results;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
@@ -27,29 +29,41 @@ import junit.framework.TestSuite;
 
 /**
  * FIXME, make this to scan classpath
- * FIXME, there should TestCase for each specification method
  * 
  * @author Joni Freeman
  */
-public class JDaveSuite<T> extends TestSuite {
+public class JDaveSuite<T> extends TestSuite implements SpecRunner.Callback {
+    private Results results;
+    private TestSuite suite;
+
     public JDaveSuite(final Class<? extends Specification<T>> specType) {
-        addTest(new TestCase("test") {
+        setName(specType.getName());
+        results = new Results() {
+            public void expected(Method method) {                
+            }
+            
+            public void unexpected(Method method, ExpectationFailedException e) {
+                throw new AssertionFailedError(method.getName());
+            }
+            
+            public void error(Method method, Throwable t) {
+                throw new RuntimeException(t);
+            }
+        };
+        new SpecRunner().run(specType, this);
+    }
+    
+    public void onContext(Context context) {
+        suite = new TestSuite(context.getName());
+        addTest(suite);
+    }
+    
+    public void onSpecMethod(final SpecificationMethod method) {
+        suite.addTest(new TestCase(method.getName()) {
             @Override
             protected void runTest() throws Throwable {
-                Results results = new Results() {
-                    public void expected(Method method) {
-                    }
-
-                    public void unexpected(Method method, ExpectationFailedException e) {
-                        throw new AssertionFailedError(method.getName());
-                    }
-                    
-                    public void error(Method method, Throwable t) {
-                        throw new RuntimeException(t);
-                    }
-                };
-                new SpecRunner().run(specType, results);
+                method.run(results);
             }
-        });
+        });        
     }
 }
