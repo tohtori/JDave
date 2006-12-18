@@ -15,10 +15,8 @@
  */
 package jdave.examples;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 
-import jdave.Specification;
 import jdave.junit3.JDaveSuite;
 import junit.framework.Test;
 
@@ -27,13 +25,7 @@ import junit.framework.Test;
  */
 public class ExampleSuite extends JDaveSuite {
     public ExampleSuite() {
-        specs(create());
-    }
-    
-    private Collection<Class<? extends Specification<?>>> create() {
-        Collection<Class<? extends Specification<?>>> specs = new ArrayList<Class<? extends Specification<?>>>();
-        specs.add(StackSpec.class);
-        return specs;
+        specs(Arrays.asList(StackSpec.class));
     }
     
     public static Test suite() {
