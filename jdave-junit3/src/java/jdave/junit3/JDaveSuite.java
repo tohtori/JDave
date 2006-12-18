@@ -38,7 +38,7 @@ import junit.framework.TestSuite;
 public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
     private TestSuite suite;
 
-    public JDaveSuite(Collection<Class<? extends Specification<?>>> specTypes) {
+    public void specs(Collection<Class<? extends Specification<?>>> specTypes) {
         for (Class<? extends Specification<?>> specType : specTypes) {
             run(specType);            
         }
