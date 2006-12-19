@@ -7,6 +7,13 @@
   <version>0.1.0</version>
   <name>jdave-junit3</name>
   <url>http://maven.apache.org</url>
+  <distributionManagement>
+    <repository>
+      <id>panda</id>
+      <name>Laughing Panda</name>
+      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/</url>
+    </repository>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
