@@ -147,6 +147,19 @@ public class SpecificationTest extends TestCase {
             assertEquals("The specified collection [1, 2, 3] contains '1'", e.getMessage());
         }
     }
+    
+    public void testShouldPassWhenContainmentForAllExpected() {
+        specification.specify(Arrays.asList(1, 2, 3), specification.containsAll(Arrays.asList(2, 3)));
+    }
+    
+    public void testShouldFailWhenContainmentForAllNotExpected() {
+        try {
+            specification.specify(Arrays.asList(1, 2, 3), specification.containsAll(0, 1));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified collection [1, 2, 3] does not contain '[0, 1]'", e.getMessage());
+        }
+    }
 
     class EmptyStack {
         public boolean empty() {

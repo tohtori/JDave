@@ -115,10 +115,18 @@ public abstract class Specification<T> {
     }
 
     public Containment contains(Object object) {
-        return new Containment(object);
+        return new ObjectContainment(object);
     }
     
     public Containment contain(Object object) {
-        return new Containment(object);
+        return new ObjectContainment(object);
+    }
+
+    public Containment containsAll(Collection<?> elements) {
+        return new CollectionContainment(elements);
+    }
+
+    public Containment containsAll(Object... elements) {
+        return containsAll(Arrays.asList(elements));
     }
 }

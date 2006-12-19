@@ -20,19 +20,19 @@ import java.util.Collection;
 /**
  * @author Joni Freeman
  */
-public class Containment {
-    private final Object object;
+public class CollectionContainment implements Containment {
+    private final Collection<?> elements;
 
-    public Containment(Object object) {
-        this.object = object;
+    public CollectionContainment(Collection<?> elements) {
+        this.elements = elements;
     }
 
     public boolean isIn(Collection<?> actual) {
-        return actual.contains(object);
+        return actual.containsAll(elements);
     }
     
     @Override
     public String toString() {
-        return object.toString();
+        return elements.toString();
     }
 }
