@@ -33,11 +33,11 @@ public class StackSpec extends Specification<Stack<?>> {
             return stack;
         }
 
-        public void shouldBeEmpty() {
+        public void isEmpty() {
             specify(should.be.empty());
         }
 
-        public void shouldNoLongerBeEmptyAfterPush() {
+        public void isNoLongerBeEmptyAfterPush() {
             stack.push("anything");
             specify(should.not().be.empty());
         }
@@ -55,11 +55,11 @@ public class StackSpec extends Specification<Stack<?>> {
             return stack;
         }
 
-        public void shouldBeFull() {
+        public void isFull() {
             specify(should.be.full());
         }
 
-        public void shouldComplainOnPush() {
+        public void complainsOnPush() {
             specify(new Block() {
                 public void run() throws Exception {
                     stack.push(100);
@@ -67,7 +67,7 @@ public class StackSpec extends Specification<Stack<?>> {
             }, should.raise(StackOverflowException.class));
         }
         
-        public void shouldContainAllItems() {
+        public void containsAllItems() {
             for (int i = 0; i < 10; i++) {
                 specify(stack, contains(i));
             }
@@ -86,7 +86,7 @@ public class StackSpec extends Specification<Stack<?>> {
             return stack;
         }
 
-        public void shouldAddToTheTopWhenSentPush() {
+        public void addsToTheTopWhenSentPush() {
             stack.push(new Integer(100));
             specify(stack.peek(), should.equal(new Integer(100)));
         }
