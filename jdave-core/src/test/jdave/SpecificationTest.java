@@ -15,6 +15,8 @@
  */
 package jdave;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 /**
@@ -80,6 +82,32 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    public void testShouldPassWhenContainmentExpected() {
+        specification.specify(Arrays.asList(1, 2, 3), specification.contains(2));
+    }
+    
+    public void testShouldFailWhenContainmentNotExpected() {
+        try {
+            specification.specify(Arrays.asList(1, 2, 3), specification.contains(0));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified collection [1, 2, 3] does not contain '0'", e.getMessage());
+        }
+    }
+    
+    public void testShouldPassWhenNonContainmentExpected() {
+        specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
+    }
+    
+    public void testShouldFailWhenNonContainmentNotExpected() {
+        try {
+            specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contains(1));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified collection [1, 2, 3] contains '1'", e.getMessage());
+        }
+    }
+
     class EmptyStack {
         public boolean empty() {
             return true;

@@ -15,23 +15,38 @@
  */
 package jdave;
 
+import java.util.Collection;
+
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
  */
 public abstract class Specification<T> {
     protected Specification<T> should = this;
-    private boolean actual = true;
+    protected Specification<T> does = this;
+    private boolean actualState = true;
     public T be;
     
     public Specification<T> not() {
-        actual = !actual;
+        actualState = !actualState;
         return this;
     }
 
     public void specify(boolean expected) {
-        if (expected != actual) {
+        if (expected != actualState) {
             throw newException("true", "false");
+        }
+    }
+    
+    public void specify(Collection<?> actual, Containment containment) {
+        if (actualState) {
+            if (!containment.isIn(actual)) {
+                throw new ExpectationFailedException("The specified collection " + actual + " does not contain '" + containment + "'");
+            }
+        } else {
+            if (containment.isIn(actual)) {
+                throw new ExpectationFailedException("The specified collection " + actual + " contains '" + containment + "'");
+            }
         }
     }
 
@@ -62,5 +77,13 @@ public abstract class Specification<T> {
     
     public Class<? extends Throwable> raise(Class<? extends Throwable> expected) {
         return expected;
+    }
+
+    public Containment contains(Object object) {
+        return new Containment(object);
+    }
+    
+    public Containment contain(Object object) {
+        return new Containment(object);
     }
 }
