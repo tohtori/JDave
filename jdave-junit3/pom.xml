@@ -4,7 +4,7 @@
   <groupId>jdave</groupId>
   <artifactId>jdave-junit3</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <name>jdave-junit3</name>
   <url>http://maven.apache.org</url>
   <distributionManagement>
@@ -23,7 +23,7 @@
     <dependency>
       <groupId>jdave</groupId>
       <artifactId>jdave-core</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
     </dependency>
     <dependency>
       <groupId>jmock</groupId>
