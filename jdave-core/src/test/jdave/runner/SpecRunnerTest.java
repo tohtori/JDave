@@ -24,7 +24,6 @@ import jdave.CallbackAdapter;
 import jdave.Context;
 import jdave.ResultsAdapter;
 import jdave.Specification;
-import jdave.runner.SpecRunnerTest.BooleanSpec.FalseBoolean;
 import junit.framework.TestCase;
 
 /**
