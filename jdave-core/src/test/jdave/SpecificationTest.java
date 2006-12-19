@@ -86,6 +86,46 @@ public class SpecificationTest extends TestCase {
         specification.specify(Arrays.asList(1, 2, 3), specification.contains(2));
     }
     
+    public void testShouldPassWhenContainmentExpectedForObjectArray() {
+        Integer[] actual = new Integer[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains(2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForShortArray() {
+        short[] actual = new short[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((short) 2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForIntArray() {
+        int[] actual = new int[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains(2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForLongArray() {
+        long[] actual = new long[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((long) 2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForFloatArray() {
+        float[] actual = new float[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((float) 2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForDoubleArray() {
+        double[] actual = new double[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((double) 2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForBooleanArray() {
+        boolean[] actual = new boolean[] { true, false };
+        specification.specify(actual, specification.contains(true));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForCharArray() {
+        char[] actual = new char[] { '1', '2', '3' };
+        specification.specify(actual, specification.contains('2'));
+    }
+    
     public void testShouldFailWhenContainmentNotExpected() {
         try {
             specification.specify(Arrays.asList(1, 2, 3), specification.contains(0));

@@ -15,7 +15,10 @@
  */
 package jdave;
 
+import java.util.Arrays;
 import java.util.Collection;
+
+import jdave.util.Primitives;
 
 /**
  * @author Joni Freeman
@@ -48,6 +51,38 @@ public abstract class Specification<T> {
                 throw new ExpectationFailedException("The specified collection " + actual + " contains '" + containment + "'");
             }
         }
+    }
+    
+    public void specify(Object[] actual, Containment containment) {
+        specify(Arrays.asList(actual), containment);
+    }
+    
+    public void specify(short[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(int[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(long[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(float[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(double[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(boolean[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(char[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
     }
 
     public void specify(Object actual, Object expected) {
