@@ -46,8 +46,9 @@ public class SpecificationMethod {
     public void run(Results results) {
         Specification<?> spec = newSpecification(specType);
         Object context = newContext(spec);
-        spec.be = initializeContext(context);
+        Object contextObject = initializeContext(context);
         try {
+            spec.getClass().getField("be").set(spec, contextObject);
             method.invoke(context);
             results.expected(method);
         } catch (InvocationTargetException e) {
@@ -79,10 +80,10 @@ public class SpecificationMethod {
         }
     }
 
-    private <T> T initializeContext(Object context) {
+    private Object initializeContext(Object context) {
         try {
             Method method = context.getClass().getMethod(Context.CONTEXT_INITIALIZER_NAME);
-            return (T) method.invoke(context);
+            return method.invoke(context);
         } catch (Exception e) {
             throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
         }
