@@ -66,6 +66,12 @@ public class StackSpec extends Specification<Stack<?>> {
                 }
             }, should.raise(StackOverflowException.class));
         }
+        
+        public void shouldContainAllItems() {
+            for (int i = 0; i < 10; i++) {
+                specify(stack, contains(i));
+            }
+        }
     }
 
     @Context

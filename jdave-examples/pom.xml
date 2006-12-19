@@ -4,20 +4,20 @@
   <groupId>jdave</groupId>
   <artifactId>jdave-examples</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <name>jdave-examples</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
       <groupId>jdave</groupId>
       <artifactId>jdave-core</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>jdave</groupId>
       <artifactId>jdave-junit3</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
