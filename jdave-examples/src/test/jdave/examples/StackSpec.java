@@ -72,6 +72,16 @@ public class StackSpec extends Specification<Stack<?>> {
                 specify(stack, contains(i));
             }
         }
+        
+        public void doesNotContainRemovedItem() {
+            stack.remove(3);
+            specify(stack, does.not().contain(3));
+        }
+        
+        public void containsAllButRemovedItem() {
+            stack.remove(3);
+            specify(stack, containsAll(1, 2, 4, 5, 6, 7, 8, 9));
+        }
     }
 
     @Context

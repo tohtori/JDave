@@ -71,7 +71,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public boolean containsAll(Collection<?> c) {
-        throw new UnsupportedOperationException();
+        return stack.containsAll(c);
     }
 
     public boolean isEmpty() {
@@ -83,7 +83,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException();
+        return stack.remove(o);
     }
 
     public boolean removeAll(Collection<?> c) {
