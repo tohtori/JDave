@@ -36,7 +36,7 @@ public class SpecRunner {
         void onSpecMethod(SpecificationMethod method);
     }
 
-    public <T> void run(Class<? extends Specification<T>> specType, Callback callback) {
+    public <T extends Specification<?>> void run(Class<T> specType, Callback callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             Context context = new Context(specType, contextType);
             callback.onContext(context);
