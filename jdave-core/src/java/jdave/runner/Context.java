@@ -49,18 +49,22 @@ public class Context {
     void run(Callback callback) {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
-                callback.onSpecMethod(new SpecificationMethod(method) {
-                    @Override
-                    protected Object newContext() {
-                        Specification<?> spec = newSpecification();
-                        Object context = newContextInstance(spec);
-                        Object contextObject = initializeContext(context);
-                        Fields.set(spec, "be", contextObject);
-                        return context;
-                    }
-                });
+                run(method, callback);
             }
         }
+    }
+
+    private void run(Method method, Callback callback) {
+        callback.onSpecMethod(new SpecificationMethod(method) {
+            @Override
+            protected Object newContext() {
+                Specification<?> spec = newSpecification();
+                Object context = newContextInstance(spec);
+                Object contextObject = newContextObject(context);
+                Fields.set(spec, "be", contextObject);
+                return context;
+            }
+        });
     }
 
     private boolean isSpecificationMethod(Method method) {
@@ -93,7 +97,7 @@ public class Context {
         return context;
     }
 
-    private Object initializeContext(Object context) {
+    private Object newContextObject(Object context) {
         try {
             Method method = context.getClass().getMethod(INITIALIZER_NAME);
             return method.invoke(context);
