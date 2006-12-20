@@ -39,11 +39,7 @@ public class Context {
     }
 
     public String getName() {
-        return innerClassName();
-    }
-
-    private String innerClassName() {
-        return contextType.getName().substring(contextType.getName().lastIndexOf('$') + 1);
+        return contextType.getSimpleName();
     }
 
     void run(Callback callback) {
