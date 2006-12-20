@@ -53,13 +53,7 @@ public class Context {
                     @Override
                     protected Object newContext() {
                         Specification<?> spec = newSpecification();
-                        Object context;
-                        try {
-                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-                            context = constructor.newInstance(spec);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
+                        Object context = newContextInstance(spec);
                         Object contextObject = initializeContext(context);
                         Fields.set(spec, "be", contextObject);
                         return context;
@@ -86,6 +80,17 @@ public class Context {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Object newContextInstance(Specification<?> spec) {
+        Object context;
+        try {
+            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+            context = constructor.newInstance(spec);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return context;
     }
 
     private Object initializeContext(Object context) {
