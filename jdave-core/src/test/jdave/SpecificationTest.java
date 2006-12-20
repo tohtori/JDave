@@ -100,10 +100,20 @@ public class SpecificationTest extends TestCase {
         byte[] actual = new byte[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((byte) 2));
     }
-
-    public void testShouldPassWhenContainmentExpectedForShortArray() {
-        short[] actual = new short[] { 1, 2, 3 };
-        specification.specify(actual, specification.contains((short) 2));
+    
+    public void testShouldPassWhenContainmentExpectedForCharArray() {
+        char[] actual = new char[] { '1', '2', '3' };
+        specification.specify(actual, specification.contains('2'));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForDoubleArray() {
+        double[] actual = new double[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((double) 2));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForFloatArray() {
+        float[] actual = new float[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((float) 2));
     }
     
     public void testShouldPassWhenContainmentExpectedForIntArray() {
@@ -115,20 +125,10 @@ public class SpecificationTest extends TestCase {
         long[] actual = new long[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((long) 2));
     }
-    
-    public void testShouldPassWhenContainmentExpectedForFloatArray() {
-        float[] actual = new float[] { 1, 2, 3 };
-        specification.specify(actual, specification.contains((float) 2));
-    }
-    
-    public void testShouldPassWhenContainmentExpectedForDoubleArray() {
-        double[] actual = new double[] { 1, 2, 3 };
-        specification.specify(actual, specification.contains((double) 2));
-    }
-    
-    public void testShouldPassWhenContainmentExpectedForCharArray() {
-        char[] actual = new char[] { '1', '2', '3' };
-        specification.specify(actual, specification.contains('2'));
+
+    public void testShouldPassWhenContainmentExpectedForShortArray() {
+        short[] actual = new short[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((short) 2));
     }
     
     public void testShouldFailWhenContainmentNotExpected() {
