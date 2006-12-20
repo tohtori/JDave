@@ -31,7 +31,7 @@ public class SpecRunner {
         void error(Method method, Throwable t);
     }
     
-    public static interface Callback {
+    public interface Callback {
         void onContext(Context context);
         void onSpecMethod(SpecificationMethod method);
     }
