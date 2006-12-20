@@ -79,8 +79,7 @@ public class Context {
 
     private Specification<?> newSpecification() {
         try {
-            Constructor<? extends Specification<?>> constructor = specType.getConstructor();
-            return constructor.newInstance();
+            return specType.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
