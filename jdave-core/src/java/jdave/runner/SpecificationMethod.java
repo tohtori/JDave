@@ -28,12 +28,10 @@ import jdave.runner.SpecRunner.Results;
  */
 public abstract class SpecificationMethod {
     private final Class<? extends Specification<?>> specType;
-    private final Class<?> contextType;
     private final Method method;
 
-    public SpecificationMethod(Class<? extends Specification<?>> specType, Class<?> contextType, Method method) {
+    public SpecificationMethod(Class<? extends Specification<?>> specType, Method method) {
         this.specType = specType;
-        this.contextType = contextType;
         this.method = method;
     }
     
