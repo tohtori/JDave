@@ -18,7 +18,7 @@ package jdave;
 import jdave.runner.Context;
 import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Callback;
-import jdave.runner.SpecRunner.Results;
+import jdave.runner.SpecificationMethod.Results;
 
 /**
  * @author Joni Freeman

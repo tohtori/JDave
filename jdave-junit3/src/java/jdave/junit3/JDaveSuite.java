@@ -23,7 +23,7 @@ import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecRunner;
 import jdave.runner.SpecificationMethod;
-import jdave.runner.SpecRunner.Results;
+import jdave.runner.SpecificationMethod.Results;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;

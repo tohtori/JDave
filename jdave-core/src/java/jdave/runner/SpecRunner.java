@@ -15,9 +15,6 @@
  */
 package jdave.runner;
 
-import java.lang.reflect.Method;
-
-import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 /**
@@ -25,12 +22,6 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
-    public interface Results {
-        void expected(Method method);
-        void unexpected(Method method, ExpectationFailedException e);
-        void error(Method method, Throwable t);
-    }
-    
     public interface Callback {
         void onContext(Context context);
         void onSpecMethod(SpecificationMethod method);

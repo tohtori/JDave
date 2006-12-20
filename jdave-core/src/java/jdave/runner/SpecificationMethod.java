@@ -19,13 +19,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
-import jdave.runner.SpecRunner.Results;
 
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
  */
 public abstract class SpecificationMethod {
+    public interface Results {
+        void expected(Method method);
+        void unexpected(Method method, ExpectationFailedException e);
+        void error(Method method, Throwable t);
+    }
+
     private final Method method;
 
     public SpecificationMethod(Method method) {
