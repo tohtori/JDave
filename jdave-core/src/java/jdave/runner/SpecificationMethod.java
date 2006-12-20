@@ -27,20 +27,18 @@ import jdave.runner.SpecRunner.Results;
  * @author Pekka Enberg
  */
 public abstract class SpecificationMethod {
-    private final Class<? extends Specification<?>> specType;
     private final Method method;
 
-    public SpecificationMethod(Class<? extends Specification<?>> specType, Method method) {
-        this.specType = specType;
+    public SpecificationMethod(Method method) {
         this.method = method;
     }
-    
+
     public String getName() {
         return method.getName();
     }
 
     public void run(Results results) {
-        Specification<?> spec = newSpecification(specType);
+        Specification<?> spec = newSpecification();
         Object context = newContext(spec);
         Object contextObject = initializeContext(context);
         try {
@@ -58,9 +56,9 @@ public abstract class SpecificationMethod {
         }
     }
 
-    protected abstract <T extends Specification<?>> T newSpecification(Class<T> specType);
+    protected abstract Specification<?> newSpecification();
 
     protected abstract Object newContext(Specification<?> spec);
 
-    protected abstract Object initializeContext(Object context); 
+    protected abstract Object initializeContext(Object context);
 }

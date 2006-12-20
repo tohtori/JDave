@@ -47,11 +47,11 @@ public class Context {
     void run(Callback callback) {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
-                callback.onSpecMethod(new SpecificationMethod(specType, method) {
+                callback.onSpecMethod(new SpecificationMethod(method) {
                     @Override
-                    protected <T extends Specification<?>> T newSpecification(Class<T> specType) {
+                    protected Specification<?> newSpecification() {
                         try {
-                            Constructor<T> constructor = specType.getConstructor();
+                            Constructor<? extends Specification<?>> constructor = specType.getConstructor();
                             return constructor.newInstance();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
