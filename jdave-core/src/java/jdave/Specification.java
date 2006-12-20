@@ -57,6 +57,14 @@ public abstract class Specification<T> {
         specify(Arrays.asList(actual), containment);
     }
     
+    public void specify(boolean[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+    
+    public void specify(byte[] actual, Containment containment) {
+        specify(Primitives.asList(actual), containment);
+    }
+
     public void specify(short[] actual, Containment containment) {
         specify(Primitives.asList(actual), containment);
     }
@@ -74,10 +82,6 @@ public abstract class Specification<T> {
     }
     
     public void specify(double[] actual, Containment containment) {
-        specify(Primitives.asList(actual), containment);
-    }
-    
-    public void specify(boolean[] actual, Containment containment) {
         specify(Primitives.asList(actual), containment);
     }
     

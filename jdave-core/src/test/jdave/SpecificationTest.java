@@ -91,6 +91,16 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.contains(2));
     }
     
+    public void testShouldPassWhenContainmentExpectedForBooleanArray() {
+        boolean[] actual = new boolean[] { true, false };
+        specification.specify(actual, specification.contains(true));
+    }
+
+    public void testShouldPassWhenContainmentExpectedForByteArray() {
+        byte[] actual = new byte[] { 1, 2, 3 };
+        specification.specify(actual, specification.contains((byte) 2));
+    }
+
     public void testShouldPassWhenContainmentExpectedForShortArray() {
         short[] actual = new short[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((short) 2));
@@ -114,11 +124,6 @@ public class SpecificationTest extends TestCase {
     public void testShouldPassWhenContainmentExpectedForDoubleArray() {
         double[] actual = new double[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((double) 2));
-    }
-    
-    public void testShouldPassWhenContainmentExpectedForBooleanArray() {
-        boolean[] actual = new boolean[] { true, false };
-        specification.specify(actual, specification.contains(true));
     }
     
     public void testShouldPassWhenContainmentExpectedForCharArray() {
