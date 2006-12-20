@@ -37,7 +37,7 @@ public class StackSpec extends Specification<Stack<?>> {
             specify(should.be.empty());
         }
 
-        public void isNoLongerBeEmptyAfterPush() {
+        public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
             specify(should.not().be.empty());
         }
