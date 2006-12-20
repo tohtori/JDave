@@ -27,7 +27,7 @@ import jdave.runner.SpecRunner.Callback;
  * @author Pekka Enberg
  */
 public class Context {
-    static final String CONTEXT_INITIALIZER_NAME = "context";
+    static final String INITIALIZER_NAME = "context";
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
 
@@ -35,7 +35,7 @@ public class Context {
         this.specType = specType;
         this.contextType = contextType;
     }
-    
+
     public String getName() {
         return innerClassName();
     }
@@ -49,33 +49,23 @@ public class Context {
             if (isSpecificationMethod(method)) {
                 callback.onSpecMethod(new SpecificationMethod(method) {
                     @Override
-                    protected Specification<?> newSpecification() {
+                    protected Object newContext() {
+                        Specification<?> spec = newSpecification();
+                        Object context;
                         try {
-                            Constructor<? extends Specification<?>> constructor = specType.getConstructor();
-                            return constructor.newInstance();
+                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec
+                                    .getClass());
+                            context = constructor.newInstance(spec);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                    }
-
-                    @Override
-                    protected Object newContext(Specification<?> spec) {
+                        Object contextObject = initializeContext(context);
                         try {
-                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-                            return constructor.newInstance(spec);
+                            spec.getClass().getField("be").set(spec, contextObject);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                    }
-
-                    @Override
-                    protected Object initializeContext(Object context) {
-                        try {
-                            Method method = context.getClass().getMethod(Context.CONTEXT_INITIALIZER_NAME);
-                            return method.invoke(context);
-                        } catch (Exception e) {
-                            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
-                        }
+                        return context;
                     }
                 });
             }
@@ -86,9 +76,28 @@ public class Context {
         if (method.getDeclaringClass().equals(Object.class)) {
             return false;
         }
-        if (method.getName().equals(CONTEXT_INITIALIZER_NAME)) {
+        if (method.getName().equals(INITIALIZER_NAME)) {
             return false;
         }
         return true;
+    }
+
+    private Specification<?> newSpecification() {
+        try {
+            Constructor<? extends Specification<?>> constructor = specType.getConstructor();
+            return constructor.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Object initializeContext(Object context) {
+        try {
+            Method method = context.getClass().getMethod(INITIALIZER_NAME);
+            return method.invoke(context);
+        } catch (Exception e) {
+            throw new NoContextInitializerSpecifiedException("Initializer missing for "
+                    + context.getClass(), e);
+        }
     }
 }

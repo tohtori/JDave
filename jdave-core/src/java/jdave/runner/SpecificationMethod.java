@@ -19,7 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
-import jdave.Specification;
 import jdave.runner.SpecRunner.Results;
 
 /**
@@ -38,11 +37,8 @@ public abstract class SpecificationMethod {
     }
 
     public void run(Results results) {
-        Specification<?> spec = newSpecification();
-        Object context = newContext(spec);
-        Object contextObject = initializeContext(context);
+        Object context = newContext();
         try {
-            spec.getClass().getField("be").set(spec, contextObject);
             method.invoke(context);
             results.expected(method);
         } catch (InvocationTargetException e) {
@@ -56,9 +52,5 @@ public abstract class SpecificationMethod {
         }
     }
 
-    protected abstract Specification<?> newSpecification();
-
-    protected abstract Object newContext(Specification<?> spec);
-
-    protected abstract Object initializeContext(Object context);
+    protected abstract Object newContext();
 }
