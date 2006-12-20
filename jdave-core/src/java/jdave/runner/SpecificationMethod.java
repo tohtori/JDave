@@ -28,7 +28,7 @@ import jdave.runner.SpecRunner.Results;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public class SpecificationMethod {
+public abstract class SpecificationMethod {
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
     private final Method method;
@@ -62,14 +62,7 @@ public class SpecificationMethod {
         }
     }
 
-    private <T extends Specification<?>> T newSpecification(Class<T> specType) {
-        try {
-            Constructor<T> constructor = specType.getConstructor();
-            return constructor.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    protected abstract <T extends Specification<?>> T newSpecification(Class<T> specType);
 
     private Object newContext(Specification<?> spec) {
         try {

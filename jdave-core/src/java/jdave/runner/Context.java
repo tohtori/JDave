@@ -15,6 +15,7 @@
  */
 package jdave.runner;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import jdave.Specification;
@@ -45,7 +46,18 @@ public class Context {
     void run(Callback callback) {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
-                callback.onSpecMethod(new SpecificationMethod(specType, contextType, method));
+                callback.onSpecMethod(new SpecificationMethod(specType, contextType, method) {
+                    @Override
+                    protected <T extends Specification<?>> T newSpecification(Class<T> specType) {
+                        try {
+                            Constructor<T> constructor = specType.getConstructor();
+                            return constructor.newInstance();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                });
             }
         }
     }
