@@ -18,6 +18,7 @@ package jdave.runner;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 import jdave.runner.SpecRunner.Callback;
 
@@ -57,6 +58,25 @@ public class Context {
                         }
                     }
 
+                    @Override
+                    protected Object newContext(Specification<?> spec) {
+                        try {
+                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+                            return constructor.newInstance(spec);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    @Override
+                    protected Object initializeContext(Object context) {
+                        try {
+                            Method method = context.getClass().getMethod(Context.CONTEXT_INITIALIZER_NAME);
+                            return method.invoke(context);
+                        } catch (Exception e) {
+                            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
+                        }
+                    }
                 });
             }
         }

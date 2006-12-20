@@ -15,12 +15,10 @@
  */
 package jdave.runner;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
-import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 import jdave.runner.SpecRunner.Results;
 
@@ -64,21 +62,7 @@ public abstract class SpecificationMethod {
 
     protected abstract <T extends Specification<?>> T newSpecification(Class<T> specType);
 
-    private Object newContext(Specification<?> spec) {
-        try {
-            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-            return constructor.newInstance(spec);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    protected abstract Object newContext(Specification<?> spec);
 
-    private Object initializeContext(Object context) {
-        try {
-            Method method = context.getClass().getMethod(Context.CONTEXT_INITIALIZER_NAME);
-            return method.invoke(context);
-        } catch (Exception e) {
-            throw new NoContextInitializerSpecifiedException("Initializer missing for " + context.getClass(), e);
-        }
-    }
+    protected abstract Object initializeContext(Object context); 
 }
