@@ -27,7 +27,8 @@ import jdave.runner.SpecRunner.Callback;
  * @author Pekka Enberg
  */
 public class Context {
-    static final String INITIALIZER_NAME = "context";
+    private static final String INITIALIZER_NAME = "context";
+
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
 
