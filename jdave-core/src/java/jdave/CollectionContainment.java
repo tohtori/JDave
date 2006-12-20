@@ -20,7 +20,7 @@ import java.util.Collection;
 /**
  * @author Joni Freeman
  */
-public class CollectionContainment implements Containment {
+class CollectionContainment implements Containment {
     private final Collection<?> elements;
 
     public CollectionContainment(Collection<?> elements) {
