@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 import jdave.runner.SpecRunner.Callback;
+import jdave.util.Fields;
 
 /**
  * @author Joni Freeman
@@ -54,18 +55,13 @@ public class Context {
                         Specification<?> spec = newSpecification();
                         Object context;
                         try {
-                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec
-                                    .getClass());
+                            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
                             context = constructor.newInstance(spec);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
                         Object contextObject = initializeContext(context);
-                        try {
-                            spec.getClass().getField("be").set(spec, contextObject);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
+                        Fields.set(spec, "be", contextObject);
                         return context;
                     }
                 });
