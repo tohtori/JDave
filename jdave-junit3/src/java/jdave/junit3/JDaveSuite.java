@@ -54,9 +54,20 @@ public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
         addTest(suite);
     }
     
-    public void onSpecMethod(final SpecificationMethod method) {
+    public void onSpecMethod(final Specification<?> specification, final SpecificationMethod method) {
         suite.addTest(new TestCase(method.getName()) {
             private TestResult result;
+            
+            @Override
+            public void runBare() throws Throwable {
+                setUp();
+                try {
+                    runTest();
+                    specification.verify();
+                } finally {
+                    tearDown();
+                }
+            }
             
             @Override
             public void run(TestResult result) {
