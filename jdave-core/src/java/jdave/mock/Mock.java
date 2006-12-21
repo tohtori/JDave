@@ -13,33 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
-
-import jdave.runner.Context;
-import jdave.runner.SpecificationMethod;
-import jdave.runner.SpecRunner.Callback;
-import jdave.runner.SpecificationMethod.Results;
+package jdave.mock;
 
 /**
  * @author Joni Freeman
  */
-public class CallbackAdapter implements Callback {
-    private final Results results;
-    private Context context;
-
-    public CallbackAdapter(Results results) {
-        this.results = results;        
+public class Mock<T> extends org.jmock.Mock {
+    public Mock(Class<T> mockedType) {
+        super(mockedType);
     }
     
-    public void onContext(Context context) {
-        this.context = context;
-    }
-    
-    public void onSpecMethod(Specification<?> specification, SpecificationMethod method) {
-        method.run(results);
-    }
-
-    public Context getCurrentContext() {
-        return context;
+    @Override
+    @SuppressWarnings("unchecked")
+    public T proxy() {
+        return (T) super.proxy();
     }
 }

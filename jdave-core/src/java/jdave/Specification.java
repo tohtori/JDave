@@ -18,13 +18,14 @@ package jdave;
 import java.util.Arrays;
 import java.util.Collection;
 
+import jdave.mock.MockSupport;
 import jdave.util.Primitives;
 
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public abstract class Specification<T> {
+public abstract class Specification<T> extends MockSupport {
     protected Specification<T> should = this;
     protected Specification<T> does = this;
     private boolean actualState = true;

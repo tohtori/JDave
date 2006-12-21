@@ -51,10 +51,10 @@ public class Context {
     }
 
     private void run(Method method, Callback callback) {
-        callback.onSpecMethod(new SpecificationMethod(method) {
+        final Specification<?> spec = newSpecification();
+        callback.onSpecMethod(spec, new SpecificationMethod(method) {
             @Override
             protected Object newContext() {
-                Specification<?> spec = newSpecification();
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);
