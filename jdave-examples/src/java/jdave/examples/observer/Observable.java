@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.examples;
+package jdave.examples.observer;
 
-import java.util.Arrays;
-
-import jdave.junit3.JDaveSuite;
-import junit.framework.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Joni Freeman
  */
-public class ExampleSuite extends JDaveSuite {
-    public ExampleSuite() {
-        specs(Arrays.asList(ObservableSpec.class));
-    }
+public class Observable {
+    private List<Observer> observers = new ArrayList<Observer>();
     
-    public static Test suite() {
-        return new ExampleSuite();
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void significantEvent() {
+        for (Observer observer : observers) {
+            observer.onAction(this);
+        }
     }
 }
