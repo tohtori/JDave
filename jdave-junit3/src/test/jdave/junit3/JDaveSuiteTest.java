@@ -15,8 +15,6 @@
  */
 package jdave.junit3;
 
-import java.util.Arrays;
-
 import jdave.Context;
 import jdave.Specification;
 import junit.framework.TestCase;
@@ -30,8 +28,7 @@ public class JDaveSuiteTest extends TestCase {
             @Context class C1 {}
             @Context class C2 {}
         }
-        JDaveSuite suite = new JDaveSuite();
-        suite.specs(Arrays.asList(TestSpec.class));
+        JDaveSuite suite = new JDaveSuite(TestSpec.class);
         assertEquals(2, suite.testCount());
     }
 }
