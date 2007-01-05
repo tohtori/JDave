@@ -15,17 +15,17 @@
  */
 package jdave.examples;
 
-import java.util.Arrays;
-
 import jdave.junit3.JDaveSuite;
 import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Joni Freeman
  */
-public class ExampleSuite extends JDaveSuite {
+public class ExampleSuite extends TestSuite {
     public ExampleSuite() {
-        specs(Arrays.asList(ObservableSpec.class));
+        addTest(new JDaveSuite(StackSpec.class));
+        addTest(new JDaveSuite(ObservableSpec.class));
     }
     
     public static Test suite() {
