@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import jdave.CallbackAdapter;
-import jdave.Context;
 import jdave.ResultsAdapter;
 import jdave.Specification;
 import junit.framework.TestCase;
@@ -74,7 +73,6 @@ public class SpecRunnerTest extends TestCase {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
 
-        @Context
         public class FalseBoolean {
             public Boolean create() {
                 return false;
@@ -104,7 +102,6 @@ public class SpecRunnerTest extends TestCase {
                 destroyCalled++;
             }
 
-            @Context
             public class TrueBoolean {
                 public Boolean create() {
                     return true;

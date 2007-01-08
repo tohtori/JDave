@@ -49,7 +49,6 @@ public class PassingSpecificationTest extends TestCase {
     }
     
     public static class IntegerSpecification extends Specification<Integer> {
-        @Context
         public class Zero {
             private Integer integer;
 

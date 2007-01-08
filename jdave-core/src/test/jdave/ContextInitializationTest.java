@@ -38,7 +38,6 @@ public class ContextInitializationTest extends TestCase {
     }
     
     public static class TestSpecification extends Specification<Object> {
-        @Context
         public class TestContext {
             public Object create() {
                 return context;

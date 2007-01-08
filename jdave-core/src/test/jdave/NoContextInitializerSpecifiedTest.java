@@ -39,7 +39,6 @@ public class NoContextInitializerSpecifiedTest extends TestCase {
     }
 
     public static class NoContextInitializerSpecification extends Specification<Object> {
-        @Context
         public class NoInitializer {
             public void shouldDoNothing() {
             }
