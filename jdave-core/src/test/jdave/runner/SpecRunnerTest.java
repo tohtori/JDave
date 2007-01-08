@@ -112,4 +112,8 @@ public class SpecRunnerTest extends TestCase {
                 destroyCalled++;
             }
         }
-    }}
+        
+        public static class SomeHelperClass {            
+        }
+    }
+}

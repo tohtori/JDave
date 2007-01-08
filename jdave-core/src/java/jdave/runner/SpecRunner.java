@@ -29,9 +29,20 @@ public class SpecRunner {
 
     public <T extends Specification<?>> void run(Class<T> specType, Callback callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
-            Context context = new Context(specType, contextType);
-            callback.onContext(context);
-            context.run(callback);
+            if (isContextClass(specType, contextType)) {
+                Context context = new Context(specType, contextType);
+                callback.onContext(context);
+                context.run(callback);
+            }
+        }
+    }
+
+    private boolean isContextClass(Class<?> specType, Class<?> contextType) {
+        try {
+            contextType.getDeclaredConstructor(specType);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
