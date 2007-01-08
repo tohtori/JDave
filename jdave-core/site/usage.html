@@ -29,9 +29,66 @@ urchinTracker();
 			<div id="bodytext">
 		<h1 class="title">Usage</h1>
 		<div></div>
-<p>
-Coming soon...
-</p>
+
+<h2>Installation</h2>
+To use the framework you need following jars in the CLASSPATH.
+<ul>
+  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-core/0.2.0/jdave-0.2.0.jar">jdave-core.jar</a></li>
+  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.2.0/junit3-0.2.0.jar">jdave-junit3.jar</a></li>
+  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit.jar</a></li>
+  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock/1.1.0/jmock-1.1.0.jar">jmock.jar</a></li>
+  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar">jmock-cglib.jar</a></li>
+  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/cglib/cglib-full/2.0.2/cglib-full-2.0.2.jar">cglib-full.jar</a></li>
+</ul>
+
+Maven 2 users can get all these dependencies by adding following snippet to pom.xml.
+
+<pre>
+
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;laughing-panda&lt;/id&gt;
+      &lt;name&gt;Laughing Panda&lt;/name&gt;
+      &lt;url&gt;http://www.laughingpanda.org/maven2/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+  
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;jdave&lt;/groupId&gt;
+      &lt;artifactId&gt;jdave-junit3&lt;/artifactId&gt;
+      &lt;version&gt;0.2.0&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+
+</pre>
+
+
+
+<h2>Creating a specification</h2>
+
+Create specifications... Detailed documentation will follow. Meanwhile, see 
+<a href="examples.html">examples</a>.
+
+<h2>Creating a suite to launch specifications</h2>
+
+Specifications can be launched using JUnit 3 adapter.
+
+<pre>
+public class ExampleSuite extends TestSuite {
+    public ExampleSuite() {
+        addTest(new JDaveSuite(StackSpec.class));
+        addTest(new JDaveSuite(ObservableSpec.class));
+    }
+    
+    public static Test suite() {
+        return new ExampleSuite();
+    }
+}
+</pre>
+
+This suite can be run with any JUnit 3 runner.
+
 </div>	
 </div>
 </div>	
