@@ -16,11 +16,13 @@
 package jdave.mock;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.jmock.cglib.CGLIBCoreMock;
 import org.jmock.core.Formatting;
 import org.jmock.core.InvocationMatcher;
+import org.jmock.core.Stub;
 import org.jmock.core.Verifiable;
 import org.jmock.core.constraint.IsCloseTo;
 import org.jmock.core.constraint.IsEqual;
@@ -30,6 +32,11 @@ import org.jmock.core.matcher.InvokeAtMostOnceMatcher;
 import org.jmock.core.matcher.InvokeCountMatcher;
 import org.jmock.core.matcher.InvokeOnceMatcher;
 import org.jmock.core.matcher.TestFailureMatcher;
+import org.jmock.core.stub.DoAllStub;
+import org.jmock.core.stub.ReturnIteratorStub;
+import org.jmock.core.stub.ReturnStub;
+import org.jmock.core.stub.StubSequence;
+import org.jmock.core.stub.ThrowStub;
 import org.jmock.util.Verifier;
 
 /**
@@ -111,5 +118,29 @@ public class MockSupport {
 
     public IsSame same(Object operand) {
         return new IsSame(operand);
+    }
+    
+    public Stub returnValue(Object o) {
+        return new ReturnStub(o);
+    }
+
+    public Stub returnIterator(Collection<?> collection) {
+        return new ReturnIteratorStub(collection);
+    }
+
+    public Stub returnIterator(Object[] array) {
+        return new ReturnIteratorStub(array);
+    }
+
+    public Stub throwException(Throwable throwable) {
+        return new ThrowStub(throwable);
+    }
+    
+    public Stub onConsecutiveCalls(Stub... stubs ) {
+        return new StubSequence(stubs);
+    }
+
+    public Stub doAll(Stub... stubs) {
+        return new DoAllStub(stubs);
     }
 }
