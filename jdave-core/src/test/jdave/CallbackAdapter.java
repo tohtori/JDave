@@ -15,6 +15,9 @@
  */
 package jdave;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jdave.runner.Context;
 import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Callback;
@@ -25,21 +28,21 @@ import jdave.runner.SpecificationMethod.Results;
  */
 public class CallbackAdapter implements Callback {
     private final Results results;
-    private Context context;
+    private List<String> contextNames = new ArrayList<String>();
 
     public CallbackAdapter(Results results) {
         this.results = results;        
     }
     
     public void onContext(Context context) {
-        this.context = context;
+        contextNames.add(context.getName());
     }
     
     public void onSpecMethod(Specification<?> specification, SpecificationMethod method) {
         method.run(results);
     }
-
-    public Context getCurrentContext() {
-        return context;
+    
+    public List<String> getContextNames() {
+        return contextNames;
     }
 }

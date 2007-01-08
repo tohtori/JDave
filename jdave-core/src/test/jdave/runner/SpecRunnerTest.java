@@ -60,7 +60,7 @@ public class SpecRunnerTest extends TestCase {
     public void testShouldNotifyCallbackWhenContextIsStarted() {
         CallbackAdapter adapter = new CallbackAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals("FalseBoolean", adapter.getCurrentContext().getName());
+        assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
     public void testShouldCallDestroyForEachContext() {
@@ -101,15 +101,15 @@ public class SpecRunnerTest extends TestCase {
             public void destroy() {
                 destroyCalled++;
             }
+        }
 
-            public class TrueBoolean {
-                public Boolean create() {
-                    return true;
-                }
-                
-                public void destroy() {
-                    destroyCalled++;
-                }
+        public class TrueBoolean {
+            public Boolean create() {
+                return true;
+            }
+
+            public void destroy() {
+                destroyCalled++;
             }
         }
     }}
