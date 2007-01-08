@@ -16,6 +16,7 @@
 package jdave;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jdave.runner.Context;
@@ -43,6 +44,7 @@ public class CallbackAdapter implements Callback {
     }
     
     public List<String> getContextNames() {
+        Collections.sort(contextNames);
         return contextNames;
     }
 }
