@@ -15,7 +15,6 @@
  */
 package jdave.examples;
 
-import jdave.Context;
 import jdave.Specification;
 import jdave.examples.observer.Observable;
 import jdave.examples.observer.Observer;
@@ -25,7 +24,6 @@ import jdave.mock.Mock;
  * @author Joni Freeman
  */
 public class ObservableSpec extends Specification<Observable> {
-    @Context
     public class ObservableHavingObserver {
         private Observable observable;
         private Mock<Observer> observer;

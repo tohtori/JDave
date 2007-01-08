@@ -16,7 +16,6 @@
 package jdave.examples;
 
 import jdave.Block;
-import jdave.Context;
 import jdave.Specification;
 
 /**
@@ -24,7 +23,6 @@ import jdave.Specification;
  * @author Pekka Enberg
  */
 public class StackSpec extends Specification<Stack<?>> {
-    @Context
     public class EmptyStack {
         private Stack<String> stack;
 
@@ -43,7 +41,6 @@ public class StackSpec extends Specification<Stack<?>> {
         }
     }
 
-    @Context
     public class FullStack {
         private Stack<Integer> stack;
 
@@ -84,7 +81,6 @@ public class StackSpec extends Specification<Stack<?>> {
         }
     }
 
-    @Context
     public class StackWhichIsNeitherEmptyNorFull {
         private Stack<Integer> stack;
 
