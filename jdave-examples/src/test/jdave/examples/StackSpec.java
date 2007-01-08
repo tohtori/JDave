@@ -28,7 +28,7 @@ public class StackSpec extends Specification<Stack<?>> {
     public class EmptyStack {
         private Stack<String> stack;
 
-        public Stack<String> context() {
+        public Stack<String> create() {
             stack = new Stack<String>();
             return stack;
         }
@@ -47,7 +47,7 @@ public class StackSpec extends Specification<Stack<?>> {
     public class FullStack {
         private Stack<Integer> stack;
 
-        public Stack<Integer> context() {
+        public Stack<Integer> create() {
             stack = new Stack<Integer>(10);
             for (int i = 0; i < 10; i++) {
                 stack.push(i);
@@ -88,7 +88,7 @@ public class StackSpec extends Specification<Stack<?>> {
     public class StackWhichIsNeitherEmptyNorFull {
         private Stack<Integer> stack;
 
-        public Stack<Integer> context() {
+        public Stack<Integer> create() {
             stack = new Stack<Integer>();
             for (int i = 0; i < 10; i++) {
                 stack.push(i);

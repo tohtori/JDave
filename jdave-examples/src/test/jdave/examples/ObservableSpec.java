@@ -30,7 +30,7 @@ public class ObservableSpec extends Specification<Observable> {
         private Observable observable;
         private Mock<Observer> observer;
         
-        public Observable context() {
+        public Observable create() {
             observable = new Observable();
             observer = mock(Observer.class);
             observable.register(observer.proxy());
