@@ -1,0 +1,31 @@
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>true</includeBaseDirectory>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>dist/</outputDirectory>
+      <outputFileNameMapping></outputFileNameMapping>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+    </dependencySet>
+  </dependencySets>
+  <moduleSets>
+    <moduleSet>
+      <includes>
+        <include>jdave:jdave-core</include>
+        <include>jdave:jdave-junit3</include>
+        <include>jdave:jdave-examples</include>
+      </includes>
+      <binaries>
+        <outputDirectory>lib/</outputDirectory>
+        <unpack>false</unpack>
+      </binaries>
+      <sources>
+        <outputDirectory>src/${artifactId}</outputDirectory>
+      </sources>
+    </moduleSet>
+  </moduleSets>
+</assembly>
