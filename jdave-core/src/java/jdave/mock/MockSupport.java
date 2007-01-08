@@ -36,7 +36,6 @@ import org.jmock.core.stub.DoAllStub;
 import org.jmock.core.stub.ReturnIteratorStub;
 import org.jmock.core.stub.ReturnStub;
 import org.jmock.core.stub.StubSequence;
-import org.jmock.core.stub.ThrowStub;
 import org.jmock.util.Verifier;
 
 /**
