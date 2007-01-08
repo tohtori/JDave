@@ -66,11 +66,12 @@ public class SpecRunnerTest extends TestCase {
     
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
+        public static int destroyCalled;
         
         @Context
         public class FalseBoolean {
             public Boolean create() {
-                return true;
+                return false;
             }
             
             public void shouldEqualToFalse() {
@@ -92,6 +93,11 @@ public class SpecRunnerTest extends TestCase {
             void packageProtectedMethod() {
                 actualCalls.add("packageProtectedMethod");
             }
+            /*
+            public void destroy() {
+                destroyCalled++;
+            }
+            */
         }
     }
 }
