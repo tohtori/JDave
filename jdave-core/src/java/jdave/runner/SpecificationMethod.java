@@ -54,8 +54,11 @@ public abstract class SpecificationMethod {
             }
         } catch (Throwable t) {
             throw new RuntimeException(t);
+        } finally {
+            destroyContext(context);
         }
     }
 
     protected abstract Object newContext();
+    protected abstract void destroyContext(Object context);
 }

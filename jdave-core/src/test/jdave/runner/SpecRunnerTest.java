@@ -64,16 +64,22 @@ public class SpecRunnerTest extends TestCase {
         assertEquals("FalseBoolean", adapter.getCurrentContext().getName());
     }
     
+    public void testShouldCallDestroyForEachContext() {
+        BooleanSpec.destroyCalled = 0;
+        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter()));
+        assertEquals(2, BooleanSpec.destroyCalled);        
+    }
+
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
-        
+
         @Context
         public class FalseBoolean {
             public Boolean create() {
                 return false;
             }
-            
+
             public void shouldEqualToFalse() {
                 actualCalls.add("shouldEqualToFalse");
             }
@@ -81,23 +87,32 @@ public class SpecRunnerTest extends TestCase {
             public void shouldNotBeEqualToTrue() {
                 actualCalls.add("shouldNotBeEqualToTrue");
             }
-            
+
             protected void protectedMethod() {
                 actualCalls.add("protectedMethod");
             }
-            
+
             private void privateMethod() {
                 actualCalls.add("privateMethod");
             }
-            
+
             void packageProtectedMethod() {
                 actualCalls.add("packageProtectedMethod");
             }
-            /*
+            
             public void destroy() {
                 destroyCalled++;
             }
-            */
+
+            @Context
+            public class TrueBoolean {
+                public Boolean create() {
+                    return true;
+                }
+                
+                public void destroy() {
+                    destroyCalled++;
+                }
+            }
         }
-    }
-}
+    }}

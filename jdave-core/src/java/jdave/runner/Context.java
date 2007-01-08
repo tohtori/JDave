@@ -29,6 +29,7 @@ import jdave.util.Fields;
  */
 public class Context {
     private static final String INITIALIZER_NAME = "create";
+    private static final String DISPOSER_NAME = "destroy";
 
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
@@ -60,6 +61,11 @@ public class Context {
                 Fields.set(spec, "be", contextObject);
                 return context;
             }
+            
+            @Override
+            protected void destroyContext(Object context) {
+                invokeDisposer(context);
+            }
         });
     }
 
@@ -68,6 +74,9 @@ public class Context {
             return false;
         }
         if (method.getName().equals(INITIALIZER_NAME)) {
+            return false;
+        }
+        if (method.getName().equals(DISPOSER_NAME)) {
             return false;
         }
         return true;
@@ -99,6 +108,20 @@ public class Context {
         } catch (Exception e) {
             throw new NoContextInitializerSpecifiedException("Initializer missing for "
                     + context.getClass(), e);
+        }
+    }
+
+    private void invokeDisposer(Object context) {
+        Method method;
+        try {
+            method = context.getClass().getMethod(DISPOSER_NAME);
+        } catch (Exception e) {
+            return;
+        }
+        try {
+            method.invoke(context);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
