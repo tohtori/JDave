@@ -15,7 +15,6 @@
  */
 package jdave.junit3;
 
-import jdave.Context;
 import jdave.Specification;
 import junit.framework.TestCase;
 
@@ -25,8 +24,8 @@ import junit.framework.TestCase;
 public class JDaveSuiteTest extends TestCase {
     public void testShouldAddTestSuiteForEachContextInSpecification() {
         class TestSpec extends Specification<Object> {
-            @Context class C1 {}
-            @Context class C2 {}
+            class C1 {}
+            class C2 {}
         }
         JDaveSuite suite = new JDaveSuite(TestSpec.class);
         assertEquals(2, suite.testCount());
