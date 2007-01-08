@@ -36,11 +36,10 @@ import jdave.Context;
 import jdave.Specification;
 
 public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
-    @Context
     public class EmptyStack {
         private Stack&lt;String&gt; stack;
 
-        public Stack&lt;String&gt; context() {
+        public Stack&lt;String&gt; create() {
             stack = new Stack&lt;String&gt;();
             return stack;
         }
@@ -55,11 +54,10 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         }
     }
 
-    @Context
     public class FullStack {
         private Stack&lt;Integer&gt; stack;
 
-        public Stack&lt;Integer&gt; context() {
+        public Stack&lt;Integer&gt; create() {
             stack = new Stack&lt;Integer&gt;(10);
             for (int i = 0; i &lt; 10; i++) {
                 stack.push(i);
@@ -96,11 +94,10 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         }
     }
 
-    @Context
     public class StackWhichIsNeitherEmptyNorFull {
         private Stack&lt;Integer&gt; stack;
 
-        public Stack&lt;Integer&gt; context() {
+        public Stack&lt;Integer&gt; create() {
             stack = new Stack&lt;Integer&gt;();
             for (int i = 0; i &lt; 10; i++) {
                 stack.push(i);
