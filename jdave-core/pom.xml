@@ -1,68 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>jdave</groupId>
+  
+  <parent>
+    <groupId>jdave</groupId>
+    <artifactId>jdave-parent</artifactId>
+    <version>0.2.0</version>    
+    <relativePath>../jdave-parent</relativePath>
+  </parent>
+
   <artifactId>jdave-core</artifactId>
-  <packaging>jar</packaging>
-  <version>0.2.0</version>
   <name>jdave-core</name>
-  <url>http://maven.apache.org</url>
-  <distributionManagement>
-    <repository>
-      <id>panda</id>
-      <name>Laughing Panda</name>
-      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/</url>
-    </repository>
-  </distributionManagement>
-  <dependencies>
-    <dependency>
-      <groupId>jmock</groupId>
-      <artifactId>jmock</artifactId>
-      <version>1.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>jmock</groupId>
-      <artifactId>jmock-cglib</artifactId>
-      <version>1.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <sourceDirectory>src/java</sourceDirectory>
-    <testSourceDirectory>src/test</testSourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <executions>
-          <execution>
-          <goals>
-            <goal>clean</goal>
-          </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
+  <packaging>jar</packaging>
+  
 </project>

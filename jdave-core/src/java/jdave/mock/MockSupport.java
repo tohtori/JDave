@@ -131,10 +131,6 @@ public class MockSupport {
     public Stub returnIterator(Object[] array) {
         return new ReturnIteratorStub(array);
     }
-
-    public Stub throwException(Throwable throwable) {
-        return new ThrowStub(throwable);
-    }
     
     public Stub onConsecutiveCalls(Stub... stubs ) {
         return new StubSequence(stubs);
