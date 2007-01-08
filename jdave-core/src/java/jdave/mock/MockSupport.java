@@ -18,6 +18,8 @@ package jdave.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jmock.cglib.CGLIBCoreMock;
+import org.jmock.core.Formatting;
 import org.jmock.core.InvocationMatcher;
 import org.jmock.core.Verifiable;
 import org.jmock.core.constraint.IsCloseTo;
@@ -31,6 +33,10 @@ import org.jmock.core.matcher.TestFailureMatcher;
 import org.jmock.util.Verifier;
 
 /**
+ * Note, most of these methods are copied from jmock MockObjectTestCase.
+ * We do not want to derive from junit's TestCase as MockObjectTestCase
+ * does.
+ * 
  * @author Joni Freeman
  */
 public class MockSupport {
@@ -52,9 +58,23 @@ public class MockSupport {
     }
 
     protected <T> Mock<T> mock(Class<T> mockType) {
-        Mock<T> mock = new Mock<T>(mockType);
+        Mock<T> mock = new Mock<T>(newCoreMock(mockType, new Class[0], new Object[0]));
         registerToVerify(mock);
         return mock;
+    }
+    
+    public <T> Mock<T> mock(Class<T> mockType, Class[] constructorArgumentTypes, Object[] constructorArguments) {
+        Mock<T> mock = new Mock<T>(newCoreMock(mockType, constructorArgumentTypes, constructorArguments));
+        registerToVerify(mock);
+        return mock;
+    }
+    
+    private CGLIBCoreMock newCoreMock(Class<?> mockType, Class[] constructorArgumentTypes, Object[] constructorArguments) {
+        return new CGLIBCoreMock(mockType, defaultMockNameForType(mockType), constructorArgumentTypes, constructorArguments);
+    }
+
+    public String defaultMockNameForType(Class<?> mockedType) {
+        return "mock" + Formatting.classShortName(mockedType);
     }
 
     public InvocationMatcher once() {

@@ -15,12 +15,14 @@
  */
 package jdave.mock;
 
+import org.jmock.cglib.CGLIBCoreMock;
+
 /**
  * @author Joni Freeman
  */
 public class Mock<T> extends org.jmock.Mock {
-    public Mock(Class<T> mockedType) {
-        super(mockedType);
+    Mock(CGLIBCoreMock mock) {
+        super(mock);
     }
     
     @Override
