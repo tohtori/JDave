@@ -28,7 +28,7 @@ import jdave.util.Fields;
  * @author Pekka Enberg
  */
 public class Context {
-    private static final String INITIALIZER_NAME = "context";
+    private static final String INITIALIZER_NAME = "create";
 
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;

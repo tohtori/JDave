@@ -48,7 +48,7 @@ public class FailingSpecificationTest extends TestCase {
     public static class FailingIntegerSpecification extends Specification<Integer> {
         @Context
         public class Zero {
-            public Integer context() {
+            public Integer create() {
                 return new Integer(0);
             }
             

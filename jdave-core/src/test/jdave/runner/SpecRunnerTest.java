@@ -69,7 +69,7 @@ public class SpecRunnerTest extends TestCase {
         
         @Context
         public class FalseBoolean {
-            public Boolean context() {
+            public Boolean create() {
                 return true;
             }
             

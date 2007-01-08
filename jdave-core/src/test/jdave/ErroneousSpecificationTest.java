@@ -49,7 +49,7 @@ public class ErroneousSpecificationTest extends TestCase {
     public static class ErroneousSpecification extends Specification<Integer> {
         @Context
         public class Zero {
-            public Integer context() {
+            public Integer create() {
                 return new Integer(0);
             }
             

@@ -53,7 +53,7 @@ public class PassingSpecificationTest extends TestCase {
         public class Zero {
             private Integer integer;
 
-            public Integer context() {
+            public Integer create() {
                 integer = new Integer(0);
                 return integer;
             }
