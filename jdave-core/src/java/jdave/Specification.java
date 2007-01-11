@@ -102,12 +102,6 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
     
-    public void specify(double actual, Object expected, double delta) {
-        if (Math.abs(actual - (Double) expected) > delta) {
-            throw newException(expected, actual);            
-        }
-    }
-    
     public void specify(Block block, Class<? extends Throwable> expected) {
         try {
             block.run();
