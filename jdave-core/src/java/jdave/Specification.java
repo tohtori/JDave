@@ -41,7 +41,7 @@ public abstract class Specification<T> extends MockSupport {
             throw newException("true", "false");
         }
     }
-    
+
     public void specify(Collection<?> actual, Containment containment) {
         if (actualState) {
             if (!containment.isIn(actual)) {
@@ -93,6 +93,12 @@ public abstract class Specification<T> extends MockSupport {
     public void specify(Object actual, Object expected) {
         if (!actual.equals(expected)) {
             throw newException(expected, actual);
+        }
+    }
+    
+    public void specify(double actual, double expected, double delta) {
+        if (Math.abs(actual - expected) > delta) {
+            throw newException(expected, actual);            
         }
     }
     

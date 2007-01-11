@@ -35,6 +35,19 @@ public class SpecificationTest extends TestCase {
         specification.specify(1, 1);
     }
     
+    public void testShouldPassWhenExpectationWithinDelta() {
+        specification.specify(1.0, 1.001, 0.01);
+    }
+    
+    public void testShouldFailWhenExpectationNotWithinDelta() {
+        try {
+            specification.specify(1.0, 1.01, 0.001);
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected: 1.01, but was: 1.0", e.getMessage());
+        }
+    }
+    
     public void testShouldFailWhenBooleanExpectationNotMet() {
         try {
             specification.specify(false);
@@ -43,6 +56,7 @@ public class SpecificationTest extends TestCase {
             assertEquals("Expected: true, but was: false", e.getMessage());
         }
     }
+    
 
     public void testShouldFailWhenInvertedBooleanExpectationNotMet() {
         try {
