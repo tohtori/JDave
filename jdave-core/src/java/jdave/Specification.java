@@ -97,7 +97,9 @@ public abstract class Specification<T> extends MockSupport {
     }
     
     public void specify(double actual, double expected, double delta) {
-        specify(actual, new Double(expected), delta);
+        if (Math.abs(actual - expected) > delta) {
+            throw newException(expected, actual);            
+        }
     }
     
     public void specify(double actual, Object expected, double delta) {
