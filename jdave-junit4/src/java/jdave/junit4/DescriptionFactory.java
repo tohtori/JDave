@@ -27,7 +27,7 @@ public class DescriptionFactory {
             Class<? extends Specification<?>> spec) {
         Description description = Description
                 .createSuiteDescription(spec.getName());
-        for (Class contextType : spec.getDeclaredClasses()) {
+        for (Class<?> contextType : spec.getDeclaredClasses()) {
             Context context = new Context(spec, contextType);
             Description contextDescription = create(contextType,
                     context.getName());
@@ -38,7 +38,7 @@ public class DescriptionFactory {
 
     // TODO: if Context would expose a "getType()", we could simply pass in the
     // Context itself, making the hierarchy of create(...) methods much nicer
-    private static Description create(Class contextType, String name) {
+    private static Description create(Class<?> contextType, String name) {
         Description description = Description
                 .createSuiteDescription(name);
         for (Method m : contextType.getDeclaredMethods()) {
