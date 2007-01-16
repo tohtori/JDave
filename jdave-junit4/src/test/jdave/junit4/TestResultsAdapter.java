@@ -16,14 +16,13 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
+/**
+ * @author Lasse Koskela
+ */
 public class TestResultsAdapter extends RunListener {
-
     private ResultsAdapter adapter;
-
     private LinkedList<Failure> failures;
-
     private Description description;
-
     private Method method;
 
     @Before
@@ -45,8 +44,7 @@ public class TestResultsAdapter extends RunListener {
 
     @Test
     public void unexpectedFailuresAreDelegatedThroughAsTestFailure() {
-        ExpectationFailedException e = new ExpectationFailedException(
-                "Test failed");
+        ExpectationFailedException e = new ExpectationFailedException("Test failed");
         adapter.unexpected(method, e);
         runNotifierShouldHaveReceived(e);
     }
