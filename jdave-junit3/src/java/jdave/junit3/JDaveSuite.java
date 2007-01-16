@@ -51,16 +51,17 @@ public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
         addTest(suite);
     }
     
-    public void onSpecMethod(final Specification<?> specification, final SpecificationMethod method) {
+    public void onSpecMethod(final SpecificationMethod method) {
         suite.addTest(new TestCase(method.getName()) {
             private TestResult result;
+            private Specification<?> spec;
             
             @Override
             public void runBare() throws Throwable {
                 setUp();
                 try {
                     runTest();
-                    specification.verify();
+                    spec.verify();
                 } finally {
                     tearDown();
                 }
@@ -74,7 +75,7 @@ public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
 
             @Override
             protected void runTest() throws Throwable {
-                method.run(new ResultAdapter(this, result));
+                spec = method.run(new ResultAdapter(this, result));
             }
         });
     }
