@@ -22,7 +22,7 @@ import junit.framework.TestCase;
  * @author Joni Freeman
  */
 public class JDaveSuiteTest extends TestCase {
-    public void testShouldAddTestSuiteForEachContextInSpecification() {
+    public void testShouldAddTestSuiteForEachContextInSpecification() throws Exception {
         class TestSpec extends Specification<Object> {
             class C1 {}
             class C2 {}
