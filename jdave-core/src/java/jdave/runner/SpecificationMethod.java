@@ -26,12 +26,6 @@ import jdave.Specification;
  * @author Pekka Enberg
  */
 public abstract class SpecificationMethod {
-    public interface Results {
-        void expected(Method method);
-        void unexpected(Method method, ExpectationFailedException e);
-        void error(Method method, Throwable t);
-    }
-
     private final Method method;
 
     public SpecificationMethod(Method method) {

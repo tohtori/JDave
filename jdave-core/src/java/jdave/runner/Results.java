@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.runner;
 
 import java.lang.reflect.Method;
 
-import jdave.runner.Results;
+import jdave.ExpectationFailedException;
 
-/**
- * @author Joni Freeman
- */
-public class ResultsAdapter implements Results {
-    public void expected(Method method) {
-    }
-
-    public void unexpected(Method method, ExpectationFailedException e) {
-    }
-    
-    public void error(Method method, Throwable t) {
-    }
+public interface Results {
+    void expected(Method method);
+    void unexpected(Method method, ExpectationFailedException e);
+    void error(Method method, Throwable t);
 }

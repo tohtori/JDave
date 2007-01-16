@@ -20,9 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 import jdave.runner.Context;
+import jdave.runner.Results;
 import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Callback;
-import jdave.runner.SpecificationMethod.Results;
 
 /**
  * @author Joni Freeman
