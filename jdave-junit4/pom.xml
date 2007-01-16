@@ -1,42 +1,107 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>jdave</groupId>
-    <artifactId>jdave-parent</artifactId>
-    <version>0.2.0</version>    
-    <relativePath>../jdave-parent</relativePath>
-  </parent>
-
-  <artifactId>jdave-junit4</artifactId>
-  <name>jdave-junit4</name>
-  <packaging>jar</packaging>
-  
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>jdave-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.1</version>
-      <scope>compile</scope>
-    </dependency>    
-  </dependencies>
-
-  <repositories>
-    <repository>
-      <id>panda</id>
-      <name>Laughing Panda Maven Repository</name>
-      <layout>default</layout>
-      <url>http://www.laughingpanda.org/maven2</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>jdave</groupId>
+		<artifactId>jdave-parent</artifactId>
+		<version>0.2.0</version>
+		<relativePath>../jdave-parent</relativePath>
+	</parent>
+	<artifactId>jdave-junit4</artifactId>
+	<name>jdave-junit4</name>
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>jdave-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.1</version>
+<!-- <scope>test</scope> -->
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>panda</id>
+			<name>Laughing Panda Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.laughingpanda.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<configuration>
+<!-- optional instrumentation instructions
+          <instrumentation>
+            <ignore>com.example.boringcode.*</ignore>
+            <exclude>com/example/dullcode/**/*.class</exclude>
+            <exclude>com/example/**/*Test.class</exclude>
+          </instrumentation>
+          -->
+<!-- optional enforcement of coverage levels 
+          <check>
+            <branchRate>85</branchRate>
+            <lineRate>85</lineRate>
+            <haltOnFailure>true</haltOnFailure>
+            <totalBranchRate>85</totalBranchRate>
+            <totalLineRate>85</totalLineRate>
+            <packageLineRate>85</packageLineRate>
+            <packageBranchRate>85</packageBranchRate>
+            <regexes>
+              <regex>
+                <pattern>com.example.reallyimportant.*</pattern>
+                <branchRate>90</branchRate>
+                <lineRate>80</lineRate>
+              </regex>
+              <regex>
+                <pattern>com.example.boringcode.*</pattern>
+                <branchRate>40</branchRate>
+                <lineRate>30</lineRate>
+              </regex>
+            </regexes>
+          </check>
+          -->
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<!--
+							<goal>clean</goal>
+							<goal>check</goal>
+						-->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

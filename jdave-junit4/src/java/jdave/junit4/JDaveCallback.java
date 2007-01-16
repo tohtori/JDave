@@ -2,6 +2,7 @@ package jdave.junit4;
 
 import java.util.Stack;
 
+import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecificationMethod;
 import jdave.runner.SpecRunner.Callback;
@@ -19,6 +20,7 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveCallback implements Callback {
     private Stack<Description> contextStack, methodStack;
+
     private RunNotifier notifier;
 
     public JDaveCallback(RunNotifier notifier) {
@@ -38,7 +40,8 @@ public class JDaveCallback implements Callback {
         contextStack.push(desc);
     }
 
-    public void onSpecMethod(SpecificationMethod method) throws Exception {
+    public void onSpecMethod(Specification<?> spec,
+            SpecificationMethod method) {
         if (methodStack.size() > 0) {
             notifier.fireTestFinished(methodStack.pop());
         }
