@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="src" path="src/java"/>
-  <classpathentry kind="src" path="src/test" output="target/test-classes"/>
-  <classpathentry kind="output" path="target/classes"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/jdave/jdave-core/0.2.0/jdave-core-0.2.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib-full/2.0/cglib-full-2.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jdave/jdave-junit3/0.2.0/jdave-junit3-0.2.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0.jar"/>
+	<classpathentry path="src/java" kind="src"/>
+	<classpathentry path="src/test" output="target/test-classes" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry sourcepath="/ECLIPSE_WORKSPACE/jdave-core/src/java" path="M2_REPO/jdave/jdave-core/0.2.0/jdave-core-0.2.0.jar" kind="var"/>
+	<classpathentry path="M2_REPO/cglib/cglib-full/2.0/cglib-full-2.0.jar" kind="var"/>
+	<classpathentry sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" kind="var"/>
+	<classpathentry path="M2_REPO/jdave/jdave-junit3/0.2.0/jdave-junit3-0.2.0.jar" kind="var"/>
+	<classpathentry path="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar" kind="var"/>
+	<classpathentry path="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0.jar" kind="var"/>
+	<classpathentry path="target/classes" kind="output"/>
 </classpath>

@@ -23,12 +23,12 @@ import junit.framework.TestSuite;
  * @author Joni Freeman
  */
 public class ExampleSuite extends TestSuite {
-    public ExampleSuite() {
+    public ExampleSuite() throws Exception {
         addTest(new JDaveSuite(StackSpec.class));
         addTest(new JDaveSuite(ObservableSpec.class));
     }
     
-    public static Test suite() {
+    public static Test suite() throws Exception {
         return new ExampleSuite();
     }
 }
