@@ -21,7 +21,7 @@ import java.util.Iterator;
 /**
  * @author Joni Freeman
  */
-public class IteratorContainment implements Containment {
+class IteratorContainment implements Containment {
     private final Iterator<?> iterator;
 
     public IteratorContainment(Iterator<?> iterator) {

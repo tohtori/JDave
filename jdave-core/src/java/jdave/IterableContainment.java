@@ -18,7 +18,7 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public class IterableContainment extends IteratorContainment {
+class IterableContainment extends IteratorContainment {
     public IterableContainment(Iterable<?> iterable) {
         super(iterable.iterator());
     }
