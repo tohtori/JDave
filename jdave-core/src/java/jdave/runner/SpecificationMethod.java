@@ -36,7 +36,7 @@ public abstract class SpecificationMethod {
         return method.getName();
     }
 
-    public Specification<?> run(SpecRunListener results) throws Exception {
+    public Specification<?> run(SpecMethodCallback results) throws Exception {
         Specification<?> spec = newSpecification();
         Object context = newContext(spec);
         try {

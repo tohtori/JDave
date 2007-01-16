@@ -17,12 +17,12 @@ package jdave;
 
 import java.lang.reflect.Method;
 
-import jdave.runner.SpecRunListener;
+import jdave.runner.SpecMethodCallback;
 
 /**
  * @author Joni Freeman
  */
-public class ResultsAdapter implements SpecRunListener {
+public class ResultsAdapter implements SpecMethodCallback {
     public void expected(Method method) {
     }
 
