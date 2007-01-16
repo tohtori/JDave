@@ -28,7 +28,7 @@ public class TestResultsAdapter extends RunListener {
 
     @Before
     public void setUp() throws Exception {
-        method = getClass().getMethod("setUp", null);
+        method = getClass().getMethod("setUp");
         failures = new LinkedList<Failure>();
         description = Description.createSuiteDescription("Foo");
         RunNotifier notifier = new RunNotifier();
