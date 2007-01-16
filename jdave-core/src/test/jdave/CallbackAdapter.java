@@ -39,7 +39,7 @@ public class CallbackAdapter implements Callback {
         contextNames.add(context.getName());
     }
     
-    public void onSpecMethod(Specification<?> specification, SpecificationMethod method) throws Exception {
+    public void onSpecMethod(SpecificationMethod method) throws Exception {
         method.run(results);
     }
     

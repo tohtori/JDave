@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
+import jdave.Specification;
 
 /**
  * @author Joni Freeman
@@ -41,8 +42,9 @@ public abstract class SpecificationMethod {
         return method.getName();
     }
 
-    public void run(Results results) throws Exception {
-        Object context = newContext();
+    public Specification<?> run(Results results) throws Exception {
+        Specification<?> spec = newSpecification();
+        Object context = newContext(spec);
         try {
             method.invoke(context);
             results.expected(method);
@@ -57,8 +59,10 @@ public abstract class SpecificationMethod {
         } finally {
             destroyContext(context);
         }
+        return spec;
     }
 
-    protected abstract Object newContext() throws Exception;
-    protected abstract void destroyContext(Object context);
+    protected abstract Specification<?> newSpecification() throws Exception;
+    protected abstract Object newContext(Specification<?> spec) throws Exception;
+    protected abstract void destroyContext(Object context) throws Exception;
 }

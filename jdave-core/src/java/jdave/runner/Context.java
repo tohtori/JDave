@@ -52,10 +52,14 @@ public class Context {
     }
 
     private void run(Method method, Callback callback) throws Exception {
-        final Specification<?> spec = newSpecification();
-        callback.onSpecMethod(spec, new SpecificationMethod(method) {
+        callback.onSpecMethod(new SpecificationMethod(method) {            
             @Override
-            protected Object newContext() throws Exception {
+            protected Specification<?> newSpecification() throws Exception {
+                return Context.this.newSpecification();
+            }
+            
+            @Override
+            protected Object newContext(Specification<?> spec) throws Exception {
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);

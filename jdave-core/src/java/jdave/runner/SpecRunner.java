@@ -24,7 +24,7 @@ import jdave.Specification;
 public class SpecRunner {
     public interface Callback {
         void onContext(Context context);
-        void onSpecMethod(Specification<?> specification, SpecificationMethod method) throws Exception;
+        void onSpecMethod(SpecificationMethod method) throws Exception;
     }
 
     public <T extends Specification<?>> void run(Class<T> specType, Callback callback) throws Exception {
