@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
 
-public interface Results {
+public interface SpecRunListener {
     void expected(Method method);
     void unexpected(Method method, ExpectationFailedException e);
     void error(Method method, Throwable t);
