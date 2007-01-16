@@ -42,7 +42,7 @@ public class JDaveCallback implements Callback {
     }
 
     public void onSpecMethod(Specification<?> spec,
-            SpecificationMethod method) {
+            SpecificationMethod method) throws Exception {
         if (methodStack.size() > 0) {
             notifier.fireTestFinished(methodStack.pop());
         }
