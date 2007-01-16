@@ -22,7 +22,7 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
-    public <T extends Specification<?>> void run(Class<T> specType, Callback callback) throws Exception {
+    public <T extends Specification<?>> void run(Class<T> specType, SpecRunnerCallback callback) throws Exception {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             if (isContextClass(specType, contextType)) {
                 Context context = new Context(specType, contextType);

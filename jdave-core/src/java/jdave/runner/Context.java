@@ -42,7 +42,7 @@ public class Context {
         return contextType.getSimpleName();
     }
 
-    void run(Callback callback) throws Exception {
+    void run(SpecRunnerCallback callback) throws Exception {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
                 run(method, callback);
@@ -50,7 +50,7 @@ public class Context {
         }
     }
 
-    private void run(Method method, Callback callback) throws Exception {
+    private void run(Method method, SpecRunnerCallback callback) throws Exception {
         callback.onSpecMethod(new SpecificationMethod(method) {            
             @Override
             protected Specification<?> newSpecification() throws Exception {

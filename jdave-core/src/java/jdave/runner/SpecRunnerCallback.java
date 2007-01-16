@@ -15,7 +15,7 @@
  */
 package jdave.runner;
 
-public interface Callback {
+public interface SpecRunnerCallback {
     void onContext(Context context);
     void onSpecMethod(SpecificationMethod method) throws Exception;
 }

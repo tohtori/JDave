@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jdave.runner.Callback;
+import jdave.runner.SpecRunnerCallback;
 import jdave.runner.Context;
 import jdave.runner.SpecRunListener;
 import jdave.runner.SpecificationMethod;
@@ -27,7 +27,7 @@ import jdave.runner.SpecificationMethod;
 /**
  * @author Joni Freeman
  */
-public class CallbackAdapter implements Callback {
+public class CallbackAdapter implements SpecRunnerCallback {
     private final SpecRunListener results;
     private List<String> contextNames = new ArrayList<String>();
 
