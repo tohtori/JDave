@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jdave.runner.Callback;
 import jdave.runner.Context;
 import jdave.runner.SpecRunListener;
 import jdave.runner.SpecificationMethod;
-import jdave.runner.SpecRunner.Callback;
 
 /**
  * @author Joni Freeman

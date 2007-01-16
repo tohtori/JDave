@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 
 import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
-import jdave.runner.SpecRunner.Callback;
 import jdave.util.Fields;
 
 /**

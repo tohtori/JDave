@@ -22,11 +22,6 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
-    public interface Callback {
-        void onContext(Context context);
-        void onSpecMethod(SpecificationMethod method) throws Exception;
-    }
-
     public <T extends Specification<?>> void run(Class<T> specType, Callback callback) throws Exception {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             if (isContextClass(specType, contextType)) {
