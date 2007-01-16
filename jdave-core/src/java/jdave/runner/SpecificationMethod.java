@@ -41,7 +41,7 @@ public abstract class SpecificationMethod {
         return method.getName();
     }
 
-    public void run(Results results) {
+    public void run(Results results) throws Exception {
         Object context = newContext();
         try {
             method.invoke(context);
@@ -59,6 +59,6 @@ public abstract class SpecificationMethod {
         }
     }
 
-    protected abstract Object newContext();
+    protected abstract Object newContext() throws Exception;
     protected abstract void destroyContext(Object context);
 }

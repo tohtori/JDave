@@ -43,7 +43,7 @@ public class Context {
         return contextType.getSimpleName();
     }
 
-    void run(Callback callback) {
+    void run(Callback callback) throws Exception {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
                 run(method, callback);
@@ -51,11 +51,11 @@ public class Context {
         }
     }
 
-    private void run(Method method, Callback callback) {
+    private void run(Method method, Callback callback) throws Exception {
         final Specification<?> spec = newSpecification();
         callback.onSpecMethod(spec, new SpecificationMethod(method) {
             @Override
-            protected Object newContext() {
+            protected Object newContext() throws Exception {
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);
@@ -101,14 +101,15 @@ public class Context {
         return context;
     }
 
-    private Object newContextObject(Object context) {
+    private Object newContextObject(Object context) throws Exception {
+        Method method = null;
         try {
-            Method method = context.getClass().getMethod(INITIALIZER_NAME);
-            return method.invoke(context);
-        } catch (Exception e) {
+            method = context.getClass().getMethod(INITIALIZER_NAME);
+        } catch (NoSuchMethodException e) {
             throw new NoContextInitializerSpecifiedException("Initializer missing for "
                     + context.getClass(), e);
         }
+        return method.invoke(context);
     }
 
     private void invokeDisposer(Object context) {

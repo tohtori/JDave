@@ -35,7 +35,7 @@ public class PassingSpecificationTest extends TestCase {
         runner = new SpecRunner();
     }
     
-    public void testShouldPassExpectation() {
+    public void testShouldPassExpectation() throws Exception {
         runner.run(IntegerSpecification.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void expected(Method method) {

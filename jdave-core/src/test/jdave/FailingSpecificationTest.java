@@ -33,7 +33,7 @@ public class FailingSpecificationTest extends TestCase {
         runner = new SpecRunner();
     }
     
-    public void testShouldNotPassExpectation() {
+    public void testShouldNotPassExpectation() throws Exception {
         runner.run(FailingIntegerSpecification.class, new CallbackAdapter(new ResultsAdapter() {
             @Override
             public void unexpected(Method method, ExpectationFailedException e) {

@@ -29,7 +29,7 @@ public class NoContextInitializerSpecifiedTest extends TestCase {
         runner = new SpecRunner();
     }
 
-    public void testShouldThrowExceptionIfContextMethodIsMissing() {
+    public void testShouldThrowExceptionIfContextMethodIsMissing() throws Exception {
         try {
             runner.run(NoContextInitializerSpecification.class, new CallbackAdapter(new ResultsAdapter()));
             fail();
