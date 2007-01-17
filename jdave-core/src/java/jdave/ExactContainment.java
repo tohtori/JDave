@@ -23,7 +23,7 @@ import java.util.Set;
 /**
  * @author Joni Freeman
  */
-public class ExactContainment extends CollectionContainment {
+class ExactContainment extends CollectionContainment {
     public ExactContainment(Collection<?> elements) {
         super(elements);
     }
