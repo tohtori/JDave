@@ -156,11 +156,11 @@ public abstract class Specification<T> extends MockSupport {
     }
     
     public Containment containsAll(Iterator<?> elements) {
-        return new IteratorContainment(elements);
+        return new AllContainment(elements);
     }
     
     public Containment containsAll(Iterable<?> elements) {
-        return new IterableContainment(elements);
+        return new AllContainment(elements);
     }
     /*
     public Containment containsAny(Collection<?> elements) {

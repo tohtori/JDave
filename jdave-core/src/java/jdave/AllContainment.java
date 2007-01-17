@@ -16,6 +16,9 @@
 package jdave;
 
 import java.util.Collection;
+import java.util.Iterator;
+
+import jdave.util.Collections;
 
 /**
  * @author Joni Freeman
@@ -25,6 +28,14 @@ class AllContainment implements Containment {
 
     public AllContainment(Collection<?> elements) {
         this.elements = elements;
+    }
+    
+    public AllContainment(Iterator<?> elements) {
+        this.elements = Collections.list(elements);
+    }
+    
+    public AllContainment(Iterable<?> elements) {
+        this(elements.iterator());
     }
 
     public boolean isIn(Collection<?> actual) {
