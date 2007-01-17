@@ -147,28 +147,83 @@ public abstract class Specification<T> extends MockSupport {
         return new ObjectContainment(object);
     }
 
-    public Containment containsAll(Collection<?> elements) {
+    public Containment containAll(Collection<?> elements) {
         return new AllContainment(elements);
     }
+    
+    public Containment containsAll(Collection<?> elements) {
+        return containAll(elements);
+    }
 
-    public Containment containsAll(Object... elements) {
+    public Containment containAll(Object... elements) {
         return containsAll(Arrays.asList(elements));
     }
     
+    public Containment containsAll(Object... elements) {
+        return containAll(elements);
+    }
+    
+    public Containment containAll(Iterator<?> elements) {
+        return new AllContainment(elements);
+    }
+    
     public Containment containsAll(Iterator<?> elements) {
+        return containAll(elements);
+    }
+    
+    public Containment containAll(Iterable<?> elements) {
         return new AllContainment(elements);
     }
     
     public Containment containsAll(Iterable<?> elements) {
-        return new AllContainment(elements);
+        return containAll(elements);
     }
-    /*
-    public Containment containsAny(Collection<?> elements) {
+    
+    public Containment containAny(Collection<?> elements) {
         return new AnyContainment(elements);
     }
     
+    public Containment containsAny(Collection<?> elements) {
+        return containAny(elements);
+    }
+    
+    public Containment containAny(Iterator<?> elements) {
+        return new AnyContainment(elements);
+    }
+    
+    public Containment containsAny(Iterator<?> elements) {
+        return containAny(elements);
+    }
+    
+    public Containment containAny(Iterable<?> elements) {
+        return new AnyContainment(elements);
+    }
+    
+    public Containment containsAny(Iterable<?> elements) {
+        return containAny(elements);
+    }
+
+    public Containment containExactly(Collection<?> elements) {
+        return new ExactContainment(elements);
+    }
+    
     public Containment containsExactly(Collection<?> elements) {
-      return new ExactContainment(elements);
-   }
-   */
+        return containExactly(elements);
+    }
+    
+    public Containment containExactly(Iterator<?> elements) {
+        return new ExactContainment(elements);
+    }
+    
+    public Containment containsExactly(Iterator<?> elements) {
+        return containExactly(elements);
+    }
+    
+    public Containment containExactly(Iterable<?> elements) {
+        return new ExactContainment(elements);
+    }
+    
+    public Containment containsExactly(Iterable<?> elements) {
+        return containExactly(elements);
+    }
 }
