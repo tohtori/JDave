@@ -31,7 +31,7 @@ class AllContainment implements Containment {
     }
     
     public AllContainment(Iterator<?> elements) {
-        this.elements = Collections.list(elements);
+        this(Collections.list(elements));
     }
     
     public AllContainment(Iterable<?> elements) {
