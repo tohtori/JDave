@@ -20,10 +20,10 @@ import java.util.Collection;
 /**
  * @author Joni Freeman
  */
-class CollectionContainment implements Containment {
+class AllContainment implements Containment {
     private final Collection<?> elements;
 
-    public CollectionContainment(Collection<?> elements) {
+    public AllContainment(Collection<?> elements) {
         this.elements = elements;
     }
 

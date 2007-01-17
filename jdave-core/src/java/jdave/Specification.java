@@ -17,8 +17,10 @@ package jdave;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import jdave.mock.MockSupport;
+import jdave.util.Collections;
 import jdave.util.Primitives;
 
 /**
@@ -40,6 +42,14 @@ public abstract class Specification<T> extends MockSupport {
         if (expected != actualState) {
             throw newException("true", "false");
         }
+    }
+    
+    public void specify(Iterable<?> actual, Containment containment) {
+        specify(actual.iterator(), containment);
+    }
+    
+    public void specify(Iterator<?> actual, Containment containment) {
+        specify(Collections.list(actual), containment);
     }
 
     public void specify(Collection<?> actual, Containment containment) {
@@ -138,10 +148,27 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public Containment containsAll(Collection<?> elements) {
-        return new CollectionContainment(elements);
+        return new AllContainment(elements);
     }
 
     public Containment containsAll(Object... elements) {
         return containsAll(Arrays.asList(elements));
     }
+    
+    public Containment containsAll(Iterator<?> elements) {
+        return new IteratorContainment(elements);
+    }
+    
+    public Containment containsAll(Iterable<?> elements) {
+        return new IterableContainment(elements);
+    }
+    /*
+    public Containment containsAny(Collection<?> elements) {
+        return new AnyContainment(elements);
+    }
+    
+    public Containment containsExactly(Collection<?> elements) {
+      return new ExactContainment(elements);
+   }
+   */
 }
