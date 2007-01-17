@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jdave.Specification;
-import jdave.junit4.StackSpec.EmptyStack;
 import jdave.runner.Context;
 import jdave.runner.SpecificationMethod;
 
@@ -17,9 +16,7 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 
 public class TestJDaveCallback {
-
     private List<String> events = new ArrayList<String>();
-
     private JDaveCallback callback;
 
     @Before
@@ -71,8 +68,7 @@ public class TestJDaveCallback {
     private SpecificationMethod createSpecMethodByName(
             final Class<?> target, String name)
             throws NoSuchMethodException {
-        SpecificationMethod method = new SpecificationMethod(target
-                .getDeclaredMethod(name, null)) {
+        SpecificationMethod method = new SpecificationMethod(target.getDeclaredMethod(name)) {
 
             @Override
             protected void destroyContext(Object context) {
