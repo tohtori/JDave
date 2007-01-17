@@ -34,14 +34,22 @@ public abstract class Specification<T> extends MockSupport {
     public T be;
     
     public Specification<T> not() {
-        actualState = !actualState;
+        actualState = false;
         return this;
     }
 
     public void specify(boolean expected) {
-        if (expected != actualState) {
-            throw newException("true", "false");
+        try {
+            if (expected != actualState) {
+                throw newException("true", "false");
+            }
+        } finally {
+            resetActualState();
         }
+    }
+    
+    private void resetActualState() {
+        actualState = true;        
     }
     
     public void specify(Iterable<?> actual, Containment containment) {
@@ -53,14 +61,18 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public void specify(Collection<?> actual, Containment containment) {
-        if (actualState) {
-            if (!containment.isIn(actual)) {
-                throw new ExpectationFailedException("The specified collection " + actual + " does not contain '" + containment + "'");
+        try {
+            if (actualState) {
+                if (!containment.isIn(actual)) {
+                    throw new ExpectationFailedException("The specified collection " + actual + " does not contain '" + containment + "'");
+                }
+            } else {
+                if (containment.isIn(actual)) {
+                    throw new ExpectationFailedException("The specified collection " + actual + " contains '" + containment + "'");
+                }
             }
-        } else {
-            if (containment.isIn(actual)) {
-                throw new ExpectationFailedException("The specified collection " + actual + " contains '" + containment + "'");
-            }
+        } finally {
+            resetActualState();
         }
     }
     
@@ -101,8 +113,12 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public void specify(Object actual, Object expected) {
-        if (!actual.equals(expected)) {
-            throw newException(expected, actual);
+        try {
+            if (!actual.equals(expected)) {
+                throw newException(expected, actual);
+            }
+        } finally {
+            resetActualState();
         }
     }
     
@@ -111,8 +127,12 @@ public abstract class Specification<T> extends MockSupport {
     }
     
     public void specify(double actual, Object expected, double delta) {
-        if (Math.abs(actual - ((Number) expected).doubleValue()) > delta) {
-            throw newException(expected, actual);            
+        try {
+            if (Math.abs(actual - ((Number) expected).doubleValue()) > delta) {
+                throw newException(expected, actual);            
+            }
+        } finally {
+            resetActualState();
         }
     }
     
@@ -123,6 +143,8 @@ public abstract class Specification<T> extends MockSupport {
             if (t.getClass().equals(expected)) {
                 return;
             }
+        } finally {
+            resetActualState();            
         }
         throw new ExpectationFailedException("The specified block should throw " + expected.getName() + ".");        
     }

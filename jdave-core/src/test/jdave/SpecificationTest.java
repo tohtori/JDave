@@ -179,6 +179,11 @@ public class SpecificationTest extends TestCase {
             assertEquals("The specified collection [1, 2, 3] does not contain '[0, 1]'", e.getMessage());
         }
     }
+    
+    public void testNotDoesNotAffectNextSpecifyStatement() {
+        specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
+        specification.specify(true);
+    }
 
     class EmptyStack {
         public boolean empty() {
