@@ -41,17 +41,20 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2).iterator()));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(((Iterable<?>) Arrays.asList(1, 2))));
+        spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(1, 2));
     }
     
     public void testExactContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3).iterator()));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(((Iterable<?>) Arrays.asList(1, 2, 3))));
+        spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(1, 2, 3));
     }
     
     public void testAnyContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(Arrays.asList(1, 2).iterator()));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(((Iterable<?>) Arrays.asList(1, 2))));
+        spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(1, 2));
     }
 }

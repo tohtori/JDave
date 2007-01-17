@@ -187,6 +187,14 @@ public abstract class Specification<T> extends MockSupport {
         return containAny(elements);
     }
     
+    public Containment containAny(Object... elements) {
+        return containsAny(Arrays.asList(elements));
+    }
+    
+    public Containment containsAny(Object... elements) {
+        return containAny(elements);
+    }
+    
     public Containment containAny(Iterator<?> elements) {
         return new AnyContainment(elements);
     }
@@ -208,6 +216,14 @@ public abstract class Specification<T> extends MockSupport {
     }
     
     public Containment containsExactly(Collection<?> elements) {
+        return containExactly(elements);
+    }
+    
+    public Containment containExactly(Object... elements) {
+        return containsExactly(Arrays.asList(elements));
+    }
+    
+    public Containment containsExactly(Object... elements) {
         return containExactly(elements);
     }
     
