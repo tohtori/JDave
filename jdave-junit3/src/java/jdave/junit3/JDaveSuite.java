@@ -20,9 +20,10 @@ import java.lang.reflect.Method;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.runner.Context;
+import jdave.runner.SpecMethodCallback;
 import jdave.runner.SpecRunner;
+import jdave.runner.SpecRunnerCallback;
 import jdave.runner.SpecificationMethod;
-import jdave.runner.SpecificationMethod.Results;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -34,7 +35,7 @@ import junit.framework.TestSuite;
  * 
  * @author Joni Freeman
  */
-public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
+public class JDaveSuite extends TestSuite implements SpecRunnerCallback {
     private TestSuite suite;
 
     public JDaveSuite(Class<? extends Specification<?>> specType) throws Exception {
@@ -80,7 +81,7 @@ public class JDaveSuite extends TestSuite implements SpecRunner.Callback {
         });
     }
     
-    static class ResultAdapter implements Results {
+    static class ResultAdapter implements SpecMethodCallback {
         private final TestResult result;
         private final Test test;
 
