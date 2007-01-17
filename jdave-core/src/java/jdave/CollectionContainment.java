@@ -18,23 +18,28 @@ package jdave;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.util.Collections;
+
 /**
  * @author Joni Freeman
  */
-class AllContainment extends CollectionContainment {
-    public AllContainment(Collection<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterator<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterable<?> elements) {
-        super(elements);
-    }
+abstract class CollectionContainment implements Containment {
+    protected final Collection<?> elements;
 
-    public boolean isIn(Collection<?> actual) {
-        return actual.containsAll(elements);
+    public CollectionContainment(Collection<?> elements) {
+        this.elements = elements;
+    }
+    
+    public CollectionContainment(Iterator<?> elements) {
+        this(Collections.list(elements));
+    }
+    
+    public CollectionContainment(Iterable<?> elements) {
+        this(elements.iterator());
+    }
+    
+    @Override
+    public String toString() {
+        return elements.toString();
     }
 }

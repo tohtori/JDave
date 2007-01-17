@@ -15,26 +15,31 @@
  */
 package jdave;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Iterator;
+
+import junit.framework.TestCase;
 
 /**
  * @author Joni Freeman
  */
-class AllContainment extends CollectionContainment {
-    public AllContainment(Collection<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterator<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterable<?> elements) {
-        super(elements);
-    }
+public class AnyContainmentTest extends TestCase {
+    private Containment containment;
 
-    public boolean isIn(Collection<?> actual) {
-        return actual.containsAll(elements);
+    @Override
+    protected void setUp() throws Exception {
+        containment = new AnyContainment(new Iterable<Integer>() {
+            public Iterator<Integer> iterator() {
+                return Arrays.asList(1, 2, 3).iterator();
+            }
+        });
+    }
+    
+    public void testIsInPartialList() {
+        assertTrue(containment.isIn(Arrays.asList(2)));
+    }
+        
+    public void testIsNotInListWhichDoesNotHaveAnyEqualElements() {
+        assertFalse(containment.isIn(Arrays.asList(4)));
     }
 }

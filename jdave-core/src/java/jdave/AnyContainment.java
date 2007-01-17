@@ -21,20 +21,25 @@ import java.util.Iterator;
 /**
  * @author Joni Freeman
  */
-class AllContainment extends CollectionContainment {
-    public AllContainment(Collection<?> elements) {
+class AnyContainment extends CollectionContainment {
+    public AnyContainment(Collection<?> elements) {
         super(elements);
     }
     
-    public AllContainment(Iterator<?> elements) {
+    public AnyContainment(Iterator<?> elements) {
         super(elements);
     }
     
-    public AllContainment(Iterable<?> elements) {
+    public AnyContainment(Iterable<?> elements) {
         super(elements);
     }
 
     public boolean isIn(Collection<?> actual) {
-        return actual.containsAll(elements);
+        for (Object object : elements) {
+            if (actual.contains(object)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
