@@ -28,12 +28,15 @@ import jdave.util.Fields;
  */
 public class Context {
     private static final String INITIALIZER_NAME = "create";
+
     private static final String DISPOSER_NAME = "destroy";
 
     private final Class<? extends Specification<?>> specType;
+
     private final Class<?> contextType;
 
-    public Context(Class<? extends Specification<?>> specType, Class<?> contextType) {
+    public Context(Class<? extends Specification<?>> specType,
+            Class<?> contextType) {
         this.specType = specType;
         this.contextType = contextType;
     }
@@ -50,21 +53,24 @@ public class Context {
         }
     }
 
-    private void run(Method method, SpecRunnerCallback callback) throws Exception {
-        callback.onSpecMethod(new SpecificationMethod(method) {            
+    private void run(Method method, SpecRunnerCallback callback)
+            throws Exception {
+        callback.onSpecMethod(new SpecificationMethod(method) {
             @Override
-            protected Specification<?> newSpecification() throws Exception {
+            protected Specification<?> newSpecification()
+                    throws Exception {
                 return Context.this.newSpecification();
             }
-            
+
             @Override
-            protected Object newContext(Specification<?> spec) throws Exception {
+            protected Object newContext(Specification<?> spec)
+                    throws Exception {
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);
                 return context;
             }
-            
+
             @Override
             protected void destroyContext(Object context) {
                 invokeDisposer(context);
@@ -89,14 +95,41 @@ public class Context {
         try {
             return specType.newInstance();
         } catch (Exception e) {
+            System.err
+                    .println("Failure instantiating "
+                            + specType.getName()
+                            + " as a "
+                            + Specification.class.getName()
+                            + "\n  Specification.class.isAssignableFrom(specType)? "
+                            + Specification.class
+                                    .isAssignableFrom(specType)
+                            + "\n  Specification.class.isAssignableFrom(StackSpec.class)? "
+                            + Specification.class
+                                    .isAssignableFrom(SampleSpec.class)
+                            + "\n  Specification.class.equals(specType.getSuperclass())? "
+                            + Specification.class
+                                    .equals(specType
+                                            .getSuperclass())
+                            + "\n  specType.getSuperclass().getName() = '"
+                            + specType.getSuperclass().getName()
+                            + "'\n  System.identityHashCode(specType.getSuperclass()) == "
+                            + System.identityHashCode(specType
+                                    .getSuperclass())
+                            + "\n  System.identityHashCode(Specification.class) == "
+                            + System
+                                    .identityHashCode(Specification.class));
             throw new RuntimeException(e);
         }
+    }
+
+    public static class SampleSpec extends Specification<Object> {
     }
 
     private Object newContextInstance(Specification<?> spec) {
         Object context;
         try {
-            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+            Constructor<?> constructor = contextType
+                    .getDeclaredConstructor(spec.getClass());
             context = constructor.newInstance(spec);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -109,8 +142,9 @@ public class Context {
         try {
             method = context.getClass().getMethod(INITIALIZER_NAME);
         } catch (NoSuchMethodException e) {
-            throw new NoContextInitializerSpecifiedException("Initializer missing for "
-                    + context.getClass(), e);
+            throw new NoContextInitializerSpecifiedException(
+                    "Initializer missing for " + context.getClass(),
+                    e);
         }
         return method.invoke(context);
     }

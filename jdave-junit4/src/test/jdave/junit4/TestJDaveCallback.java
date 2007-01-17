@@ -64,9 +64,8 @@ public class TestJDaveCallback {
         callback.onContext(context);
         SpecificationMethod method = createSpecMethodByName(
                 getClass(), "eventOrder");
-        Specification<?> spec = new StackSpec();
 
-        callback.onSpecMethod(spec, method);
+        callback.onSpecMethod(method);
     }
 
     private SpecificationMethod createSpecMethodByName(
@@ -80,12 +79,19 @@ public class TestJDaveCallback {
             }
 
             @Override
-            protected Object newContext() {
+            protected Object newContext(Specification<?> arg0)
+                    throws Exception {
                 try {
                     return target.newInstance();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            }
+
+            @Override
+            protected Specification<?> newSpecification()
+                    throws Exception {
+                return new StackSpec();
             }
         };
         return method;
