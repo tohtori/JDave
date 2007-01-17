@@ -26,6 +26,7 @@ public class ExampleSuite extends TestSuite {
     public ExampleSuite() throws Exception {
         addTest(new JDaveSuite(StackSpec.class));
         addTest(new JDaveSuite(ObservableSpec.class));
+        addTest(new JDaveSuite(ContainmentSampleSpec.class));
     }
     
     public static Test suite() throws Exception {
