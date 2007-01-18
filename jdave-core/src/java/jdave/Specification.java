@@ -148,6 +148,10 @@ public abstract class Specification<T> extends MockSupport {
         }
         throw new ExpectationFailedException("The specified block should throw " + expected.getName() + ".");        
     }
+    
+    public void specify(Object obj, Contract contract) {
+        contract.isSatisfied(obj);
+    }
 
     private ExpectationFailedException newException(Object expected, Object actual) {
         return new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
@@ -263,5 +267,9 @@ public abstract class Specification<T> extends MockSupport {
     
     public Containment containsExactly(Iterable<?> elements) {
         return containExactly(elements);
+    }
+
+    public Contract satisfies(Contract contract) {
+        return contract;
     }
 }
