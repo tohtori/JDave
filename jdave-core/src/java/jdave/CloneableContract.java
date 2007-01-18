@@ -26,21 +26,36 @@ public class CloneableContract implements Contract {
         if (!(obj instanceof Cloneable)) {
             throw new ExpectationFailedException(obj + " does not implement Cloneable");
         }
+        
+        Method clone = cloneMethod(obj);        
+        invoke(obj, clone);
+    }
+
+    private void invoke(Object obj, Method clone) {
         try {
-            Method clone = obj.getClass().getMethod("clone");
-            clone.setAccessible(true);
-            invoke(obj, clone);
-        } catch (NoSuchMethodException e) {
-            throw new ExpectationFailedException("no clone method in " + obj.getClass());
+            invoke0(obj, clone);
         } catch (CloneNotSupportedException e) {
-            throw new ExpectationFailedException(obj + " clone not supported", e);            
+            throw new ExpectationFailedException("clone not supported in " + obj.getClass(), e);            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    private Method cloneMethod(Object obj) {
+        try {
+            return obj.getClass().getMethod("clone");
+        } catch (Exception e) {
+            throw new ExpectationFailedException("no public clone method in " + obj.getClass());
+        }
+    }
     
-    @SuppressWarnings("unused")
-    private void invoke(Object obj, Method clone) throws CloneNotSupportedException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-        clone.invoke(obj);        
+    private void invoke0(Object obj, Method clone) throws CloneNotSupportedException, Exception {
+        try {
+            clone.invoke(obj);
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof CloneNotSupportedException) {
+                throw (CloneNotSupportedException) e.getCause();
+            }
+        }
     }
 }

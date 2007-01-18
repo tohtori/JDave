@@ -41,12 +41,21 @@ public class CloneableContractTest extends TestCase {
         }
     }
     
-    public void testCloneableWithoutCloneMethodNotAccepted() {
+    public void testCloneableWithoutPublicCloneMethodNotAccepted() {
         try {
             spec.specify(new CloneableWithoutClone(), spec.satisfies(new CloneableContract()));
             fail();
         } catch (ExpectationFailedException e) {
-            assertTrue(e.getMessage().startsWith("no clone method"));
+            assertTrue(e.getMessage().startsWith("no public clone method"));
+        }
+    }
+    
+    public void testCloneableWhichDoesNotSupportCloningNotAccepted() {
+        try {
+            spec.specify(new CloneableWhichDoesNotSupportClone(), spec.satisfies(new CloneableContract()));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertTrue(e.getMessage().startsWith("clone not supported"));
         }
     }
     
@@ -61,5 +70,12 @@ public class CloneableContractTest extends TestCase {
     }
     
     private static class CloneableWithoutClone implements Cloneable {
+    }
+    
+    private static class CloneableWhichDoesNotSupportClone implements Cloneable {
+        @Override
+        public CloneableWhichDoesNotSupportClone clone() throws CloneNotSupportedException {
+            throw new CloneNotSupportedException();
+        }
     }
 }
