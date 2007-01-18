@@ -27,6 +27,7 @@ public class ExampleSuite extends TestSuite {
         addTest(new JDaveSuite(StackSpec.class));
         addTest(new JDaveSuite(ObservableSpec.class));
         addTest(new JDaveSuite(ContainmentSampleSpec.class));
+        addTest(new JDaveSuite(ContractEnforcementSampleSpec.class));
     }
     
     public static Test suite() throws Exception {
