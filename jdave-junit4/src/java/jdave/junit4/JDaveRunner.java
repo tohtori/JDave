@@ -32,7 +32,6 @@ import org.junit.runner.notification.RunNotifier;
  * @author lkoskela
  */
 public class JDaveRunner extends Runner {
-
     private Class<? extends Specification<?>> spec;
 
     public JDaveRunner(Class<? extends Specification<?>> spec) {
