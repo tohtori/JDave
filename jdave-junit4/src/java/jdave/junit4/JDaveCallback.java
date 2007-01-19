@@ -33,8 +33,8 @@ import org.junit.runner.notification.RunNotifier;
  * @author lkoskela
  */
 public class JDaveCallback implements SpecRunnerCallback {
-    private Stack<Description> contextStack, methodStack;
-
+    private Stack<Description> contextStack;
+    private Stack<Description> methodStack;
     private RunNotifier notifier;
 
     public JDaveCallback(RunNotifier notifier) {
@@ -48,19 +48,16 @@ public class JDaveCallback implements SpecRunnerCallback {
             notifier.fireTestFinished(contextStack.pop());
         }
 
-        Description desc = Description.createSuiteDescription(context
-                .getName());
+        Description desc = Description.createSuiteDescription(context.getName());
         notifier.fireTestStarted(desc);
         contextStack.push(desc);
     }
 
-    public void onSpecMethod(SpecificationMethod method)
-            throws Exception {
+    public void onSpecMethod(SpecificationMethod method) throws Exception {
         if (methodStack.size() > 0) {
             notifier.fireTestFinished(methodStack.pop());
         }
-        final Description desc = Description
-                .createSuiteDescription(method.getName());
+        final Description desc = Description.createSuiteDescription(method.getName());
         notifier.fireTestStarted(desc);
         method.run(new ResultsAdapter(notifier, desc));
         methodStack.push(desc);
@@ -74,5 +71,4 @@ public class JDaveCallback implements SpecRunnerCallback {
             notifier.fireTestFinished(contextStack.pop());
         }
     }
-
 }
