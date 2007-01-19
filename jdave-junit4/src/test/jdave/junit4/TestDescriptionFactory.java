@@ -57,42 +57,33 @@ public class TestDescriptionFactory {
     }
 
     @Test
-    public void topLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName()
-            throws Exception {
-        assertEquals(ExampleSpec.class.getName(), desc
-                .getDisplayName());
+    public void topLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName() throws Exception {
+        assertEquals(ExampleSpec.class.getName(), desc.getDisplayName());
     }
 
     @Test
-    public void topLevelDescriptionShouldHaveOneChildPerEachContextClass()
-            throws Exception {
+    public void topLevelDescriptionShouldHaveOneChildPerEachContextClass() throws Exception {
         List<Description> children = desc.getChildren();
         assertEquals(2, children.size());
         assertContainsDescription(children, "FirstContext");
         assertContainsDescription(children, "SecondContext");
     }
 
-    private void assertContainsDescription(
-            List<Description> children, String displayName) {
+    private void assertContainsDescription(List<Description> children, String displayName) {
         List<String> names = new ArrayList<String>();
         for (Description candidate : children) {
             names.add(candidate.getDisplayName());
         }
-        assertTrue("Description '" + displayName + "' not among "
-                + names, names.contains(displayName));
+        assertTrue("Description '" + displayName + "' not among " + names, names.contains(displayName));
     }
 
     @Test
-    public void contextDescriptionsShouldHaveOneChildPerEachSpecMethod()
-            throws Exception {
+    public void contextDescriptionsShouldHaveOneChildPerEachSpecMethod() throws Exception {
         List<Description> allSpecDescriptions = new ArrayList<Description>();
         for (Description context : desc.getChildren()) {
             allSpecDescriptions.addAll(context.getChildren());
         }
-        assertContainsDescription(allSpecDescriptions,
-                "firstSpecForFirstContext");
-        assertContainsDescription(allSpecDescriptions,
-                "secondSpecForFirstContext");
+        assertContainsDescription(allSpecDescriptions, "firstSpecForFirstContext");
+        assertContainsDescription(allSpecDescriptions, "secondSpecForFirstContext");
     }
-
 }
