@@ -19,7 +19,7 @@ import org.junit.runner.notification.RunNotifier;
 /**
  * @author Lasse Koskela
  */
-public class TestResultsAdapter extends RunListener {
+public class ResultsAdapterTest extends RunListener {
     private ResultsAdapter adapter;
     private LinkedList<Failure> failures;
     private Description description;

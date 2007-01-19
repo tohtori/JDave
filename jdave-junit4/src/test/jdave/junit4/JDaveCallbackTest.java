@@ -15,7 +15,7 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 
-public class TestJDaveCallback {
+public class JDaveCallbackTest {
     private List<String> events = new ArrayList<String>();
     private JDaveCallback callback;
 

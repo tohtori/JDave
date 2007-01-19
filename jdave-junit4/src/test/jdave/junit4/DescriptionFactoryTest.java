@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
 
-public class TestDescriptionFactory {
+public class DescriptionFactoryTest {
     private Description desc;
 
     public static class ExampleSpec extends Specification<Stack<String>> {
