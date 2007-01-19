@@ -15,9 +15,6 @@
  */
 package jdave.junit4;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
 import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecRunner;
