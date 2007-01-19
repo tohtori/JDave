@@ -101,6 +101,7 @@
 					</execution>
 				</executions>
 			</plugin>
+      <!-- 
 			<plugin>
 				<groupId>jdave</groupId>
 				<artifactId>jdave-maven-plugin</artifactId>
@@ -113,6 +114,7 @@
 					</execution>
 				</executions>
 			</plugin>
+       -->
 		</plugins>
 	</build>
 </project>
