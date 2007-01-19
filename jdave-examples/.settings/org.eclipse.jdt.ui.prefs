@@ -1,5 +1,7 @@
-#Wed Jan 17 21:12:38 EET 2007
+#Fri Jan 19 21:56:36 EET 2007
 eclipse.preferences.version=1
+formatter_profile=_Pekka
+formatter_settings_version=10
 org.eclipse.jdt.ui.exception.name=e
 org.eclipse.jdt.ui.gettersetter.use.is=true
 org.eclipse.jdt.ui.javadoc=true
