@@ -37,15 +37,11 @@ import org.junit.runner.Description;
  * @author lkoskela
  */
 public class DescriptionFactory {
-
-    public static Description create(
-            Class<? extends Specification<?>> spec) {
-        Description description = Description
-                .createSuiteDescription(spec.getName());
+    public static Description create(Class<? extends Specification<?>> spec) {
+        Description description = Description.createSuiteDescription(spec.getName());
         for (Class<?> contextType : spec.getDeclaredClasses()) {
             Context context = new Context(spec, contextType);
-            Description contextDescription = create(contextType,
-                    context.getName());
+            Description contextDescription = create(contextType, context.getName());
             description.addChild(contextDescription);
         }
         return description;
@@ -54,8 +50,7 @@ public class DescriptionFactory {
     // TODO: if Context would expose a "getType()", we could simply pass in the
     // Context itself, making the hierarchy of create(...) methods much nicer
     private static Description create(Class<?> contextType, String name) {
-        Description description = Description
-                .createSuiteDescription(name);
+        Description description = Description.createSuiteDescription(name);
         for (Method m : contextType.getDeclaredMethods()) {
             if (DescriptionFactory.looksLikeSpecMethod(m)) {
                 description.addChild(create(m));
@@ -73,5 +68,4 @@ public class DescriptionFactory {
         boolean isPublic = ((m.getModifiers() & Modifier.PUBLIC) == Modifier.PUBLIC);
         return notCreateMethod && isPublic;
     }
-
 }
