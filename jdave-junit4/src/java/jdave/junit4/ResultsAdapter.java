@@ -31,9 +31,7 @@ import org.junit.runner.notification.RunNotifier;
  * @author lkoskela
  */
 public class ResultsAdapter implements SpecMethodCallback {
-
     private final RunNotifier notifier;
-
     private final Description desc;
 
     ResultsAdapter(RunNotifier notifier, Description desc) {
