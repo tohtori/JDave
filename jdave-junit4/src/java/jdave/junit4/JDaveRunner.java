@@ -40,7 +40,11 @@ public class JDaveRunner extends Runner {
 
     @Override
     public Description getDescription() {
-        return DescriptionFactory.create(spec);
+        try {
+            return DescriptionFactory.create(spec);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

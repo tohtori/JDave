@@ -20,6 +20,9 @@ import java.lang.reflect.Modifier;
 
 import jdave.Specification;
 import jdave.runner.Context;
+import jdave.runner.SpecRunner;
+import jdave.runner.SpecRunnerCallback;
+import jdave.runner.SpecificationMethod;
 
 import org.junit.runner.Description;
 
@@ -35,37 +38,29 @@ import org.junit.runner.Description;
  * </ul>
  * 
  * @author lkoskela
+ * @author Joni Freeman
  */
-public class DescriptionFactory {
-    public static Description create(Class<? extends Specification<?>> spec) {
+public class DescriptionFactory implements SpecRunnerCallback {
+    private final Description description;
+    private Description contextDescription;
+
+    public DescriptionFactory(Description description) {
+        this.description = description;
+    }
+
+    public static Description create(Class<? extends Specification<?>> spec) throws Exception {
         Description description = Description.createSuiteDescription(spec.getName());
-        for (Class<?> contextType : spec.getDeclaredClasses()) {
-            Context context = new Context(spec, contextType);
-            Description contextDescription = create(contextType, context.getName());
-            description.addChild(contextDescription);
-        }
+        DescriptionFactory factory = new DescriptionFactory(description);
+        new SpecRunner().run(spec, factory);
         return description;
     }
-
-    // TODO: if Context would expose a "getType()", we could simply pass in the
-    // Context itself, making the hierarchy of create(...) methods much nicer
-    private static Description create(Class<?> contextType, String name) {
-        Description description = Description.createSuiteDescription(name);
-        for (Method m : contextType.getDeclaredMethods()) {
-            if (DescriptionFactory.looksLikeSpecMethod(m)) {
-                description.addChild(create(m));
-            }
-        }
-        return description;
+    
+    public void onContext(Context context) {
+        contextDescription = Description.createSuiteDescription(context.getName());
+        description.addChild(contextDescription);
     }
-
-    private static Description create(Method m) {
-        return Description.createSuiteDescription(m.getName());
-    }
-
-    private static boolean looksLikeSpecMethod(Method m) {
-        boolean notCreateMethod = (m.getName().equals("create") == false);
-        boolean isPublic = ((m.getModifiers() & Modifier.PUBLIC) == Modifier.PUBLIC);
-        return notCreateMethod && isPublic;
+    
+    public void onSpecMethod(SpecificationMethod method) throws Exception {
+        contextDescription.addChild(Description.createSuiteDescription(method.getName()));
     }
 }

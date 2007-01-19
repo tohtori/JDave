@@ -52,7 +52,7 @@ public class TestDescriptionFactory {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         desc = DescriptionFactory.create(ExampleSpec.class);
     }
 
