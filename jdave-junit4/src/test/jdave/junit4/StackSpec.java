@@ -1,7 +1,5 @@
 package jdave.junit4;
 
-import java.util.Stack;
-
 import org.junit.runner.RunWith;
 
 import jdave.Block;
@@ -32,8 +30,7 @@ public class StackSpec extends Specification<Stack<?>> {
         private Stack<Integer> stack;
 
         public Stack<Integer> create() {
-            stack = new Stack<Integer>();
-            stack.setSize(10);
+            stack = new Stack<Integer>(10);
             for (int i = 0; i < 10; i++) {
                 stack.push(i);
             }
@@ -49,7 +46,7 @@ public class StackSpec extends Specification<Stack<?>> {
                 public void run() throws Exception {
                     stack.push(100);
                 }
-            }, should.raise(StackOverflowError.class));
+            }, should.raise(StackOverflowException.class));
         }
 
         public void containsAllItems() {
