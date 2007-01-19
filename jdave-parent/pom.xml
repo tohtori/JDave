@@ -4,7 +4,7 @@
   <groupId>jdave</groupId>
   <artifactId>jdave-parent</artifactId>
   <packaging>pom</packaging>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
   <name>jdave-parent</name>
   <url>http://maven.apache.org</url>
   <distributionManagement>
