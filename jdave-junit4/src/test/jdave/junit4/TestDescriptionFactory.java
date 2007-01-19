@@ -14,11 +14,9 @@ import org.junit.Test;
 import org.junit.runner.Description;
 
 public class TestDescriptionFactory {
-
     private Description desc;
 
-    public static class ExampleSpec extends
-            Specification<Stack<String>> {
+    public static class ExampleSpec extends Specification<Stack<String>> {
         public class FirstContext {
             private Stack<String> stack;
 
