@@ -22,6 +22,7 @@ urchinTracker();
 	<div id="header"><div class="headerText">JDave</div>
 	<div class="center"><b class="menu"><a href="index.html">About</a> | 
 	<a href="examples.html">Examples</a> | <a href="usage.html">Usage</a> | 
+	<a href="documentation.html">Documentation</a> |
 	<a href="screenshots.html">Screenshots</a> |
 	<a href="resources.html">Resources</a></b></div>
 	</div>
@@ -33,9 +34,15 @@ urchinTracker();
 <h2>Installation</h2>
 To use the framework you need following jars in the CLASSPATH.
 <ul>
-  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-core/0.2.0/jdave-core-0.2.0.jar">jdave-core.jar</a></li>
-  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.2.0/jdave-junit3-0.2.0.jar">jdave-junit3.jar</a></li>
-  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit.jar</a></li>
+  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-core/0.3.0/jdave-core-0.3.0.jar">jdave-core.jar</a></li>
+  <li>
+    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.3.0/jdave-junit3-0.3.0.jar">jdave-junit3.jar</a> or 
+    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.3.0/jdave-junit4-0.3.0.jar">jdave-junit4.jar</a>
+  </li>
+  <li>
+    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit3.jar</a> or
+    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/4.1/junit-4.1.jar">junit4.jar</a>
+  </li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock/1.1.0/jmock-1.1.0.jar">jmock.jar</a></li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar">jmock-cglib.jar</a></li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/cglib/cglib-full/2.0.2/cglib-full-2.0.2.jar">cglib-full.jar</a></li>
@@ -56,23 +63,22 @@ Maven 2 users can get all these dependencies by adding following snippet to pom.
   &lt;dependencies&gt;
     &lt;dependency&gt;
       &lt;groupId&gt;jdave&lt;/groupId&gt;
-      &lt;artifactId&gt;jdave-junit3&lt;/artifactId&gt;
-      &lt;version&gt;0.2.0&lt;/version&gt;
+      &lt;artifactId&gt;jdave-junit3&lt;/artifactId&gt; &lt;!-- or jdave-junit4 --&gt;
+      &lt;version&gt;0.3.0&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
 
 </pre>
 
 
-
 <h2>Creating a specification</h2>
 
-Create specifications... Detailed documentation will follow. Meanwhile, see 
-<a href="examples.html">examples</a>.
+Create specifications. Please see <a href="documentation.html">the documentation</a> for 
+details. <a href="examples.html">A set of examples</a> illustrate currently available features.
 
 <h2>Creating a suite to launch specifications</h2>
 
-Specifications can be launched using JUnit 3 adapter.
+Specifications can be launched using JUnit 3 or JUnit 4 adapter.
 
 <pre>
 public class ExampleSuite extends TestSuite {
@@ -87,7 +93,16 @@ public class ExampleSuite extends TestSuite {
 }
 </pre>
 
-This suite can be run with any JUnit 3 runner.
+The above suite can be run with any JUnit 3 runner. JUnit 4 can be used
+by annotating the specification with @RunWith annotation.
+
+<pre>
+@RunWith(JDaveRunner.class)
+public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
+}
+</pre>
+
+
 
 </div>	
 </div>
