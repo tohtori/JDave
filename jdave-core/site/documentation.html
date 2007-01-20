@@ -118,9 +118,9 @@ Containments can be done for arrays, Collections, Iterators and Iterables.
 
 <pre>
 <code>
-specify(Arrays.asList(1, 2), containsAll(1, 2));
-specify(new Object[] { 1, 2 }, containsAny(Arrays.asList(0, 1)));
-specify(Arrays.asList(1, 2).iterator(), does.not().containAny(0, -1)));
+specify(Arrays.asList(1, 2), containsAll(Arrays.asList(0, 1)));
+specify(Arrays.asList(1, 2).iterator(), containsAny(1, 2));
+specify(new Object[] { 1, 2 }, does.not().containAny(0, -1)));
 etc.
 </code>
 </pre>
