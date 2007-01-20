@@ -134,12 +134,29 @@ interface.
 
 <h2>Contract enforcements</h2>
 
+Some core Java classes impose (or recommend) contracts for classes which implement
+some interface or override a method. Probably most common is the contract between
+<code>equals()</code> and <code>hashCode()</code>. The following contract enforcements
+are provided.
+
+<ul>
+  <li><code>EqualsHashCodeContract</code></li>
+  <li><code>SerializableContract</code></li>
+  <li><code>CloneableContract</code></li>
+  <li><code>EqualsComparableContract</code></li>  
+</ul>
+
+Application specific contracts can be done by implementing <code>jdave.Contract</code>
+interface.
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContractEnforcementSampleSpec.java">[examples]</a>
 </p>
 
 <h2>Using mocks</h2>
+
+JMock 1.1 is integrated as mocking framework. Please refer to 
+<a href="http://www.jmock.org">JMock documentation</a>.
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ObservableSpec.java">[examples]</a>
