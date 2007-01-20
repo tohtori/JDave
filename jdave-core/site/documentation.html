@@ -146,6 +146,16 @@ are provided.
   <li><code>EqualsComparableContract</code></li>  
 </ul>
 
+Contract is specified using <code>satisfies</code> method.
+
+<pre>
+<code>
+public void isSerializable() {
+    specify(object, satisfies(new SerializableContract()));
+}
+</code>
+</pre>
+
 Application specific contracts can be done by implementing <code>jdave.Contract</code>
 interface.
 
