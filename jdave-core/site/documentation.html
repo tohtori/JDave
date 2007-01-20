@@ -43,10 +43,13 @@ All other public methods in context class are specification methods.
 
 <pre>
 <code>
-public class ExampleSpec extends Specification&lt;MyObject&gt; {
-    public class SomeContext {
-        public MyObject create() {
-            return new MyObject();
+public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
+    public class EmptyStack {
+        private Stack&lt;String&gt; stack;
+
+        public Stack&lt;String&gt; create() {
+            stack = new Stack&lt;String&gt;();
+            return stack;
         }
 
         public void someSpecificationMethod() {
@@ -57,12 +60,49 @@ public class ExampleSpec extends Specification&lt;MyObject&gt; {
 </code>
 </pre>
 
+Specification methods are written by doing something to the context object and
+then specifying some expectations. The expectations are specified using one or
+more overloaded <code>specify(..., ...)</code> methods.
+
+<pre>
+<code>
+public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
+    public class EmptyStack {
+        // ...
+
+        public void isNoLongerEmptyAfterPush() {
+            stack.push("anything");
+            specify(should.not().be.empty());
+        }
+    }
+}
+</code>
+</pre>
+
+Specification base class provides a limited vocabulary to be used for writing
+expectations. In the above example <b><i>should</i></b> is a supplemental word which
+does nothing. It used to make expectation more readable. <b><i>not()</i></b> triggers
+following expectations to be negations. <b><i>be</i></b> refers to the object
+which was returned from <code>create()</code> method (be == create()).
+
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/StackSpec.java">[examples]</a>
 </p>
 
 <h2>Lifecycle</h2>
 
+A new <code>Specification</code> and context instance is created before executing
+each specification method. <code>destroy()</code> method is executed just after
+specification method.
+
+<ol>
+<li> new SomeSpecification();</li>
+<li> ctx = new SomeContext();</li>
+<li> be = ctx.create();</li>
+<li> <i>[run some specification method]</i></li>
+<li> ctx.destroy() // if exists</li>
+<li> skip to 1. if there's more specification methods to be run</li>
+</ol>
 
 <h2>Containments</h2>
 
