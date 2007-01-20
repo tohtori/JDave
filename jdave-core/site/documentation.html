@@ -114,11 +114,26 @@ and their friends.
   <li><code>containsExactly, does.not().containExactly</code></li>
 </ul>
 
+Containments can be done for arrays, Collections, Iterators and Iterables.
+
+<pre>
+<code>
+specify(Arrays.asList(1, 2), containsAll(1, 2));
+specify(new Object[] { 1, 2 }, containsAny(Arrays.asList(0, 1)));
+specify(Arrays.asList(1, 2).iterator(), does.not().containAny(0, -1)));
+etc.
+</code>
+</pre>
+
+Application specific containments can be done by implementing <code>jdave.Containment</code>
+interface.
+
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContainmentSampleSpec.java">[examples]</a></li>
 </p>
 
 <h2>Contract enforcements</h2>
+
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContractEnforcementSampleSpec.java">[examples]</a>
