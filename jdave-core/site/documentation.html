@@ -33,7 +33,33 @@ urchinTracker();
 
 <h2>Basics</h2>
 
+A specification is implemented by extending <code>jdave.Specification</code> base class.
+It is parametrized by the type of object which is created in contexts. Contexts are
+implemented as public non-static inner classes in the specification class. They do not
+have to extend any base class or implement any interface. The only requirement is that
+they have to have a public method <code>create()</code> which returns a context object.
+They can optionally have a public void method <code>destroy()</code>.
+All other public methods in context class are specification methods.
+
+<pre>
+<code>
+public class ExampleSpec extends Specification&lt;MyObject&gt; {
+    public class SomeContext {
+        public MyObject create() {
+            return new MyObject();
+        }
+
+        public void someSpecificationMethod() {
+            // ...
+        }
+    }
+}
+</code>
+</pre>
+
+<p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/StackSpec.java">[examples]</a>
+</p>
 
 <h2>Lifecycle</h2>
 
@@ -43,20 +69,26 @@ urchinTracker();
 Specification class provides expectation methods to compare various collection classes
 and their friends. 
 <ul>
-  <li>containsAll, does.not().containAll</li>
-  <li>containsAny, does.not().containAny</li>
-  <li>containsExactly, does.not().containExactly</li>
+  <li><code>containsAll, does.not().containAll</code></li>
+  <li><code>containsAny, does.not().containAny</code></li>
+  <li><code>containsExactly, does.not().containExactly</code></li>
 </ul>
 
+<p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContainmentSampleSpec.java">[examples]</a></li>
+</p>
 
 <h2>Contract enforcements</h2>
 
+<p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContractEnforcementSampleSpec.java">[examples]</a>
+</p>
 
 <h2>Using mocks</h2>
 
+<p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ObservableSpec.java">[examples]</a>
+</p>
 
 
 </div>	
