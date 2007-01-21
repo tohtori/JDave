@@ -32,13 +32,21 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void isEmpty() {
-            specify(should.be.empty());
+            specify(stack, should.be.empty());
         }
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(should.not().be.empty());
+            specify(stack, should.not().be.empty());
         }
+        
+        /**
+         * Note, it is possible to use implicit variable 'context' to
+         * refer the object returned from create() method.
+         */
+        public void isEmpty2() {
+            specify(context, should.be.empty());
+        }        
     }
 
     public class FullStack {
@@ -53,7 +61,7 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void isFull() {
-            specify(should.be.full());
+            specify(stack, should.be.full());
         }
 
         public void complainsOnPush() {
