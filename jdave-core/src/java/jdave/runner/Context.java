@@ -28,15 +28,11 @@ import jdave.util.Fields;
  */
 public class Context {
     private static final String INITIALIZER_NAME = "create";
-
     private static final String DISPOSER_NAME = "destroy";
-
     private final Class<? extends Specification<?>> specType;
-
     private final Class<?> contextType;
 
-    public Context(Class<? extends Specification<?>> specType,
-            Class<?> contextType) {
+    public Context(Class<? extends Specification<?>> specType, Class<?> contextType) {
         this.specType = specType;
         this.contextType = contextType;
     }
@@ -53,18 +49,15 @@ public class Context {
         }
     }
 
-    private void run(Method method, SpecRunnerCallback callback)
-            throws Exception {
+    private void run(Method method, SpecRunnerCallback callback) throws Exception {
         callback.onSpecMethod(new SpecificationMethod(method) {
             @Override
-            protected Specification<?> newSpecification()
-                    throws Exception {
+            protected Specification<?> newSpecification() throws Exception {
                 return Context.this.newSpecification();
             }
 
             @Override
-            protected Object newContext(Specification<?> spec)
-                    throws Exception {
+            protected Object newContext(Specification<?> spec) throws Exception {
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);
@@ -150,7 +143,7 @@ public class Context {
     }
 
     private void invokeDisposer(Object context) {
-        Method method;
+        Method method = null;
         try {
             method = context.getClass().getMethod(DISPOSER_NAME);
         } catch (Exception e) {
