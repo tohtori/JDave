@@ -17,12 +17,12 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void isEmpty() {
-            specify(should.be.empty());
+            specify(stack, should.be.empty());
         }
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(should.not().be.empty());
+            specify(stack, should.not().be.empty());
         }
     }
 
@@ -38,7 +38,7 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void isFull() {
-            specify(should.not().be.empty());
+            specify(stack, should.not().be.empty());
         }
 
         public void complainsOnPush() {
