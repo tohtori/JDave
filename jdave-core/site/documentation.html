@@ -72,7 +72,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(should.not().be.empty());
+            specify(stack, should.not().be.empty());
         }
     }
 }
