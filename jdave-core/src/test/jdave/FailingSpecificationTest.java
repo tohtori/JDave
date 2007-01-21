@@ -52,7 +52,7 @@ public class FailingSpecificationTest extends TestCase {
             }
             
             public void isNegative() {
-                specify(should.be < 0);
+                specify(context, should.be < 0);
             }
         }
     }

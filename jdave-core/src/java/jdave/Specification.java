@@ -32,13 +32,14 @@ public abstract class Specification<T> extends MockSupport {
     protected Specification<T> does = this;
     private boolean actualState = true;
     public T be;
+    public T context;
     
     public Specification<T> not() {
         actualState = false;
         return this;
     }
 
-    public void specify(boolean expected) {
+    public void specify(T actual, boolean expected) {
         try {
             if (expected != actualState) {
                 throw newException("true", "false");

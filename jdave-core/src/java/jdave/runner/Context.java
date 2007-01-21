@@ -61,6 +61,7 @@ public class Context {
                 Object context = newContextInstance(spec);
                 Object contextObject = newContextObject(context);
                 Fields.set(spec, "be", contextObject);
+                Fields.set(spec, "context", contextObject);
                 return context;
             }
 

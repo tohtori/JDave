@@ -50,7 +50,7 @@ public class SpecificationTest extends TestCase {
     
     public void testShouldFailWhenBooleanExpectationNotMet() {
         try {
-            specification.specify(false);
+            specification.specify(null, false);
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("Expected: true, but was: false", e.getMessage());
@@ -60,7 +60,7 @@ public class SpecificationTest extends TestCase {
 
     public void testShouldFailWhenInvertedBooleanExpectationNotMet() {
         try {
-            specification.specify(specification.not().be.empty());
+            specification.specify(null, specification.not().be.empty());
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("Expected: true, but was: false", e.getMessage());
@@ -182,9 +182,9 @@ public class SpecificationTest extends TestCase {
     
     public void testNotDoesNotAffectNextSpecifyStatement() {
         specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
-        specification.specify(true);
+        specification.specify(null, true);
     }
-
+    
     class EmptyStack {
         public boolean empty() {
             return true;

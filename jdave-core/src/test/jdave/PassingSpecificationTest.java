@@ -58,7 +58,7 @@ public class PassingSpecificationTest extends TestCase {
             }
             
             public void isPositive() {
-                specify(should.be > -1);
+                specify(context, should.be > -1);
             }
 
             public void toStringIsZero() {
@@ -66,7 +66,7 @@ public class PassingSpecificationTest extends TestCase {
             }
 
             public void isZero() {
-                specify(should.not().be != 0);
+                specify(context, should.not().be != 0);
             }
             
             public void canBeConvertedToDouble() {

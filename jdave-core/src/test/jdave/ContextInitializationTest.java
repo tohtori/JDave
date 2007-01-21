@@ -23,28 +23,35 @@ import junit.framework.TestCase;
  */
 public class ContextInitializationTest extends TestCase {
     private SpecRunner runner;
-    private static Object context;
+    private static Object contextObject;
     private static Object actualBe;
+    private static Object actualContext;
     
     @Override
     protected void setUp() throws Exception {
         runner = new SpecRunner();
-        context = new Object();
+        contextObject = new Object();
     }
     
     public void testShouldSetContextAsBe() throws Exception {
         runner.run(TestSpecification.class, new CallbackAdapter(new ResultsAdapter()));
-        assertEquals(context, actualBe);
+        assertSame(contextObject, actualBe);
+    }
+    
+    public void testVariableContextReferencesBe() throws Exception {
+        runner.run(TestSpecification.class, new CallbackAdapter(new ResultsAdapter()));
+        assertSame(contextObject, actualContext);
     }
     
     public static class TestSpecification extends Specification<Object> {
         public class TestContext {
             public Object create() {
-                return context;
+                return contextObject;
             }
             
             public void testSpec() {
-                actualBe = should.be;
+                actualBe = be;
+                actualContext = context;
             }
         }
     }
