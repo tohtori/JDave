@@ -57,4 +57,11 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(((Iterable<?>) Arrays.asList(1, 2))));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(1, 2));
     }
+    
+    public void testInOrderContainments() {
+        spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2)));
+        spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2).iterator()));
+        spec.specify(Arrays.asList(1, 2), spec.containsInOrder(((Iterable<?>) Arrays.asList(1, 2))));
+        spec.specify(Arrays.asList(1, 2), spec.containsInOrder(1, 2));
+    }
 }

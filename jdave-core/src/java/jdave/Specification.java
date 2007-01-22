@@ -269,6 +269,38 @@ public abstract class Specification<T> extends MockSupport {
     public Containment containsExactly(Iterable<?> elements) {
         return containExactly(elements);
     }
+    
+    public Containment containInOrder(Collection<?> elements) {
+        return new InOrderContainment(elements);
+    }
+    
+    public Containment containsInOrder(Collection<?> elements) {
+        return containInOrder(elements);
+    }
+
+    public Containment containInOrder(Object... elements) {
+        return new InOrderContainment(Arrays.asList(elements));
+    }
+    
+    public Containment containsInOrder(Object... elements) {
+        return containInOrder(elements);
+    }
+    
+    public Containment containInOrder(Iterator<?> elements) {
+        return new InOrderContainment(elements);
+    }
+    
+    public Containment containsInOrder(Iterator<?> elements) {
+        return containInOrder(elements);
+    }
+
+    public Containment containInOrder(Iterable<?> elements) {
+        return new InOrderContainment(elements);
+    }
+    
+    public Containment containsInOrder(Iterable<?> elements) {
+        return containInOrder(elements);
+    }
 
     public Contract satisfies(Contract contract) {
         return contract;
