@@ -59,6 +59,14 @@ public class ContainmentSampleSpec extends Specification<Object> {
         public void doesNotContainExactItems() {
             specify(elements, does.not().containExactly(1, 2, 3, 4));
         }
+        
+        public void containsItemsInOrder() {
+            specify(elements, containsInOrder(1, 2, 3));
+        }
+        
+        public void doesNotContainItemsInOrder() {
+            specify(elements, does.not().containInOrder(1, 3, 2));
+        }
     }
     
     public class SampleWithVariousRightHandSides {
