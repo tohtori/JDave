@@ -112,6 +112,7 @@ and their friends.
   <li><code>containsAll, does.not().containAll</code></li>
   <li><code>containsAny, does.not().containAny</code></li>
   <li><code>containsExactly, does.not().containExactly</code></li>
+  <li><code>containsInOrder, does.not().containInOrder</code></li>
 </ul>
 
 Containments can be done for arrays, Collections, Iterators and Iterables.
@@ -121,6 +122,7 @@ Containments can be done for arrays, Collections, Iterators and Iterables.
 specify(Arrays.asList(1, 2), containsAll(Arrays.asList(0, 1)));
 specify(Arrays.asList(1, 2).iterator(), containsAny(1, 2));
 specify(new Object[] { 1, 2 }, does.not().containAny(0, -1)));
+specify(new MyIterable(1, 2), containsInOrder(1, 2)));
 etc.
 </code>
 </pre>
