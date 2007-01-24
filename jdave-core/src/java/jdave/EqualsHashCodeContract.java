@@ -20,6 +20,9 @@ package jdave;
  */
 public abstract class EqualsHashCodeContract<T> implements Contract {
     public void isSatisfied(Object obj) throws ExpectationFailedException {
+        if (obj.equals(null)) {
+            throw new ExpectationFailedException(obj + " equals null");            
+        }
         if (!obj.equals(equal())) {
             throw new ExpectationFailedException(obj + " does not equal " + equal());
         }

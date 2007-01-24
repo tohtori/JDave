@@ -130,6 +130,29 @@ public class EqualsHashCodeContractTest extends TestCase {
         }        
     }
     
+    public void testContractIsNotAcceptedIfObjectEqualsWithNull() {
+        ClassWhichEqualsWithNull context = new ClassWhichEqualsWithNull();
+        try {
+            spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWhichEqualsWithNull>() {
+                @Override
+                public ClassWhichEqualsWithNull equal() {
+                    return new ClassWhichEqualsWithNull();
+                }
+                @Override
+                public ClassWhichEqualsWithNull nonEqual() {
+                    return new ClassWhichEqualsWithNull();
+                }
+                @Override
+                public ClassWhichEqualsWithNull subType() {
+                    return new ClassWhichEqualsWithNull();
+                }
+            }));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertTrue(e.getMessage().endsWith("equals null"));
+        }        
+    }
+    
     private static class ClassWithCorrectEqualsAndHashCode {
         private final int id;
 
@@ -162,6 +185,16 @@ public class EqualsHashCodeContractTest extends TestCase {
         @Override
         public int hashCode() {
             return count++;
+        }
+    }
+    
+    private static class ClassWhichEqualsWithNull {
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return true;
+            }
+            return false;
         }
     }
 }
