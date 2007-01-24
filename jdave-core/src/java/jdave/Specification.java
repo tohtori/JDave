@@ -39,7 +39,7 @@ public abstract class Specification<T> extends MockSupport {
         return this;
     }
 
-    public void specify(T actual, boolean expected) {
+    public void specify(boolean expected) {
         try {
             if (expected != actualState) {
                 throw newException("true", "false");
@@ -47,6 +47,10 @@ public abstract class Specification<T> extends MockSupport {
         } finally {
             resetActualState();
         }
+    }
+    
+    public void specify(T actual, boolean expected) {
+        specify(expected);
     }
     
     private void resetActualState() {
