@@ -40,7 +40,7 @@ public class EqualsComparableContractTest extends TestCase {
                 return 3;
             }
             @Override
-            public Integer equivalentByComparisionButNotByEqual() {
+            public Integer equivalentByComparisonButNotByEqual() {
                 return null;
             }
         }));
@@ -58,7 +58,7 @@ public class EqualsComparableContractTest extends TestCase {
                 return new ComparableWhoseCompareToIsConsistentWithEquals(3, "c");
             }
             @Override
-            public ComparableWhoseCompareToIsConsistentWithEquals equivalentByComparisionButNotByEqual() {
+            public ComparableWhoseCompareToIsConsistentWithEquals equivalentByComparisonButNotByEqual() {
                 return new ComparableWhoseCompareToIsConsistentWithEquals(4, "b");
             }
         }));
@@ -77,7 +77,7 @@ public class EqualsComparableContractTest extends TestCase {
                     return new ComparableWhoseCompareToIsNotConsistentWithEquals(3, "c");
                 }
                 @Override
-                public ComparableWhoseCompareToIsNotConsistentWithEquals equivalentByComparisionButNotByEqual() {
+                public ComparableWhoseCompareToIsNotConsistentWithEquals equivalentByComparisonButNotByEqual() {
                     return new ComparableWhoseCompareToIsNotConsistentWithEquals(4, "b");
                 }
             }));
@@ -99,7 +99,7 @@ public class EqualsComparableContractTest extends TestCase {
                     return 3;
                 }
                 @Override
-                public Integer equivalentByComparisionButNotByEqual() {
+                public Integer equivalentByComparisonButNotByEqual() {
                     return null;
                 }
             }));
@@ -121,7 +121,7 @@ public class EqualsComparableContractTest extends TestCase {
                     return 2;
                 }
                 @Override
-                public Integer equivalentByComparisionButNotByEqual() {
+                public Integer equivalentByComparisonButNotByEqual() {
                     return null;
                 }
             }));

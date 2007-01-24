@@ -28,8 +28,8 @@ public abstract class EqualsComparableContract<T> implements Contract {
         if (comparable.compareTo(subsequent()) >= 0) {
             throw new ExpectationFailedException(comparable + " should be before " + subsequent());
         }
-        if (equivalentByComparisionButNotByEqual() != null) {
-            if (comparable.compareTo(equivalentByComparisionButNotByEqual()) == 0) {
+        if (equivalentByComparisonButNotByEqual() != null) {
+            if (comparable.compareTo(equivalentByComparisonButNotByEqual()) == 0) {
                 throw new ExpectationFailedException("compareTo is not consistent with equals, " + 
                         comparable + ", " + subsequent());
             }
@@ -38,5 +38,5 @@ public abstract class EqualsComparableContract<T> implements Contract {
     
     protected abstract T preceding();
     protected abstract T subsequent();
-    protected abstract T equivalentByComparisionButNotByEqual();
+    protected abstract T equivalentByComparisonButNotByEqual();
 }
