@@ -7,7 +7,6 @@ import jdave.Specification;
 
 @RunWith(JDaveRunner.class)
 public class StackSpec extends Specification<Stack<?>> {
-
     public class EmptyStack {
         private Stack<String> stack;
 
