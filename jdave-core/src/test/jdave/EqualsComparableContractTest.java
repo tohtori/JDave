@@ -15,6 +15,8 @@
  */
 package jdave;
 
+import java.util.Comparator;
+
 import junit.framework.TestCase;
 
 /**
@@ -46,6 +48,32 @@ public class EqualsComparableContractTest extends TestCase {
         }));
     }
     
+    public void testContractIsSatisfiedForIntegerUsingRevereseComparator() {
+        Comparable<Integer> comparable = 2;
+        spec.specify(comparable, spec.satisfies(new EqualsComparableContract<Integer>(revereseComparator()) {
+            @Override
+            public Integer preceding() {
+                return 3;
+            }
+            @Override
+            public Integer subsequent() {
+                return 1;
+            }
+            @Override
+            public Integer equivalentByComparisonButNotByEqual() {
+                return null;
+            }
+        }));
+    }
+    
+    private Comparator<Integer> revereseComparator() {
+        return new Comparator<Integer>() {
+            public int compare(Integer o1, Integer o2) {
+                return o2.compareTo(o1);
+            }
+        };
+    }
+
     public void testContractIsSatisfiedForClassWhoseCompareToIsConsistentWithEquals() {
         Comparable<?> comparable = new ComparableWhoseCompareToIsConsistentWithEquals(1, "b");
         spec.specify(comparable, spec.satisfies(new EqualsComparableContract<ComparableWhoseCompareToIsConsistentWithEquals>() {
