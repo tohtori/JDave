@@ -79,7 +79,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException();
+        return stack.iterator();
     }
 
     public boolean remove(Object o) {
@@ -95,7 +95,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public int size() {
-        throw new UnsupportedOperationException();
+        return stack.size();
     }
 
     public Object[] toArray() {
@@ -104,5 +104,10 @@ public class Stack<T> implements Collection<T> {
 
     public <V> V[] toArray(V[] a) {
         throw new UnsupportedOperationException();
+    }
+    
+    @Override
+    public String toString() {
+        return stack.toString();
     }
 }
