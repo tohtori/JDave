@@ -70,7 +70,7 @@ public class ContractEnforcementSampleSpec extends Specification<SampleDomainObj
                     return new SampleDomainObject(3).setName("Zoe");
                 }
                 @Override
-                protected SampleDomainObject equivalentByComparisionButNotByEqual() {
+                protected SampleDomainObject equivalentByComparisonButNotByEqual() {
                     return new SampleDomainObject(4).setName("John");
                 }
             }));
