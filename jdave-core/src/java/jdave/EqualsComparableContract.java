@@ -35,7 +35,14 @@ public abstract class EqualsComparableContract<T> implements Contract {
         T object = (T) obj;
         if (comparator == null) {
             comparator = new ComparableComparator();
-        }
+            try {
+                ((Comparable) obj).compareTo(null);
+                throw new ExpectationFailedException(object.getClass().getName() + 
+                        "compareTo(null) should throw NullpointerException");
+            } catch (NullPointerException e) {
+            }
+         }
+        
         if (comparator.compare(object, preceding()) <= 0) {
             throw new ExpectationFailedException(object + " should be after " + preceding());
         }
