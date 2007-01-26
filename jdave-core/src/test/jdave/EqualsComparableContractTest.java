@@ -160,20 +160,7 @@ public class EqualsComparableContractTest extends TestCase {
     
     public void testContractIsNotSatisfiedForClassWhichDoesNotThrowNullpointerException() {        
         try {
-            spec.specify(new ComparableWhoseCompareToDoesNotThrowNullpointerException(), spec.satisfies(new EqualsComparableContract<Object>() {
-                @Override
-                public Object preceding() {
-                    return null;
-                }
-                @Override
-                public Object subsequent() {
-                    return null;
-                }
-                @Override
-                public Object equivalentByComparisonButNotByEqual() {
-                    return null;
-                }
-            }));
+            spec.specify(new ComparableWhoseCompareToDoesNotThrowNullpointerException(), new AnyContract());
             fail();
         } catch (ExpectationFailedException e) {
             assertTrue(e.getMessage().endsWith("compareTo(null) should throw NullpointerException"));
@@ -220,6 +207,23 @@ public class EqualsComparableContractTest extends TestCase {
                 return -1;
             }
             return 1;
+        }
+    }
+    
+    private static class AnyContract extends EqualsComparableContract<Object> {        
+        @Override
+        protected Object preceding() {
+            return null;
+        }
+        
+        @Override
+        protected Object subsequent() {
+            return null;
+        }
+        
+        @Override
+        protected Object equivalentByComparisonButNotByEqual() {
+            return null;
         }
     }
 }

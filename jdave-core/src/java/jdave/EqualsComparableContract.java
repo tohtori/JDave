@@ -38,10 +38,14 @@ public abstract class EqualsComparableContract<T> implements Contract {
             try {
                 ((Comparable) obj).compareTo(null);
                 throw new ExpectationFailedException(object.getClass().getName() + 
-                        "compareTo(null) should throw NullpointerException");
+                    ".compareTo(null) should throw NullpointerException");
             } catch (NullPointerException e) {
             }
-         }
+        }
+        
+        if (comparator.compare(object, object) != 0) {
+            throw new ExpectationFailedException("comparison should be 0, if objects are equal");
+        }
         
         if (comparator.compare(object, preceding()) <= 0) {
             throw new ExpectationFailedException(object + " should be after " + preceding());
@@ -51,7 +55,7 @@ public abstract class EqualsComparableContract<T> implements Contract {
         }
         if (equivalentByComparisonButNotByEqual() != null) {
             if (comparator.compare(object, equivalentByComparisonButNotByEqual()) == 0) {
-                throw new ExpectationFailedException("compareTo is not consistent with equals, " + 
+                throw new ExpectationFailedException("comparison is not consistent with equals, " + 
                         object + ", " + subsequent());
             }
         }
