@@ -89,29 +89,6 @@ public class Context {
         try {
             return specType.newInstance();
         } catch (Exception e) {
-            System.err
-                    .println("Failure instantiating "
-                            + specType.getName()
-                            + " as a "
-                            + Specification.class.getName()
-                            + "\n  Specification.class.isAssignableFrom(specType)? "
-                            + Specification.class
-                                    .isAssignableFrom(specType)
-                            + "\n  Specification.class.isAssignableFrom(StackSpec.class)? "
-                            + Specification.class
-                                    .isAssignableFrom(SampleSpec.class)
-                            + "\n  Specification.class.equals(specType.getSuperclass())? "
-                            + Specification.class
-                                    .equals(specType
-                                            .getSuperclass())
-                            + "\n  specType.getSuperclass().getName() = '"
-                            + specType.getSuperclass().getName()
-                            + "'\n  System.identityHashCode(specType.getSuperclass()) == "
-                            + System.identityHashCode(specType
-                                    .getSuperclass())
-                            + "\n  System.identityHashCode(Specification.class) == "
-                            + System
-                                    .identityHashCode(Specification.class));
             throw new RuntimeException(e);
         }
     }
