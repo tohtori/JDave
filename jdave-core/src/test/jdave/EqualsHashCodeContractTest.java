@@ -64,26 +64,49 @@ public class EqualsHashCodeContractTest extends TestCase {
         }));
     }
     
-    public void testIncorrectlyImplementedClassIsNotAccepted() {
-        ClassWithInconsistentEqualsAndHashCode context = new ClassWithInconsistentEqualsAndHashCode(1);
+    public void testClassWithIncorrectlyImplementedHashCodeIsNotAccepted() {
+        ClassWithIncorrectlyImplementedHashCode context = new ClassWithIncorrectlyImplementedHashCode(1);
         try {
-            spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithInconsistentEqualsAndHashCode>() {
+            spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithIncorrectlyImplementedHashCode>() {
                 @Override
-                public ClassWithInconsistentEqualsAndHashCode equal() {
-                    return new ClassWithInconsistentEqualsAndHashCode(1);
+                public ClassWithIncorrectlyImplementedHashCode equal() {
+                    return new ClassWithIncorrectlyImplementedHashCode(1);
                 }
                 @Override
-                public ClassWithInconsistentEqualsAndHashCode nonEqual() {
-                    return new ClassWithInconsistentEqualsAndHashCode(2);
+                public ClassWithIncorrectlyImplementedHashCode nonEqual() {
+                    return new ClassWithIncorrectlyImplementedHashCode(2);
                 }
                 @Override
-                public ClassWithInconsistentEqualsAndHashCode subType() {
-                    return new ClassWithInconsistentEqualsAndHashCode(1) {};
+                public ClassWithIncorrectlyImplementedHashCode subType() {
+                    return new ClassWithIncorrectlyImplementedHashCode(1) {};
                 }
             }));
             fail();
         } catch (ExpectationFailedException e) {
             assertTrue(e.getMessage().startsWith("hashCodes must equal for equal objects"));
+        }
+    }
+    
+    public void testClassWithIncorrectlyImplementedEqualsIsNotAccepted() {
+        ClassWithIncorrectlyImplementedEquals context = new ClassWithIncorrectlyImplementedEquals();
+        try {
+            spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithIncorrectlyImplementedEquals>() {
+                @Override
+                public ClassWithIncorrectlyImplementedEquals equal() {
+                    return new ClassWithIncorrectlyImplementedEquals();
+                }
+                @Override
+                public ClassWithIncorrectlyImplementedEquals nonEqual() {
+                    return new ClassWithIncorrectlyImplementedEquals();
+                }
+                @Override
+                public ClassWithIncorrectlyImplementedEquals subType() {
+                    return new ClassWithIncorrectlyImplementedEquals() {};
+                }
+            }));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertTrue(e.getMessage().contains("does not equal"));
         }
     }
     
@@ -176,26 +199,33 @@ public class EqualsHashCodeContractTest extends TestCase {
         }
     }
     
-    private static class ClassWithInconsistentEqualsAndHashCode {
+    private static class ClassWithIncorrectlyImplementedHashCode {
         private final int id;
         private static int count = 0;
         
-        public ClassWithInconsistentEqualsAndHashCode(int id) {
+        public ClassWithIncorrectlyImplementedHashCode(int id) {
             this.id = id;
         }
         
         @Override
         public boolean equals(Object obj) {
-            if (obj == null || !(obj.getClass().equals(ClassWithInconsistentEqualsAndHashCode.class))) {
+            if (obj == null || !(obj.getClass().equals(ClassWithIncorrectlyImplementedHashCode.class))) {
                 return false;
             }
-            ClassWithInconsistentEqualsAndHashCode other = (ClassWithInconsistentEqualsAndHashCode) obj;
+            ClassWithIncorrectlyImplementedHashCode other = (ClassWithIncorrectlyImplementedHashCode) obj;
             return id == other.id;
         }
         
         @Override
         public int hashCode() {
             return count++;
+        }
+    }
+    
+    private static class ClassWithIncorrectlyImplementedEquals {
+        @Override
+        public boolean equals(Object obj) {
+            return false;
         }
     }
     
