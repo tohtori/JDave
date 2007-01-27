@@ -82,7 +82,8 @@ public class EqualsHashCodeContractTest extends TestCase {
                 }
             }));
             fail();
-        } catch (ExpectationFailedException e) {            
+        } catch (ExpectationFailedException e) {
+            assertTrue(e.getMessage().startsWith("hashCodes must equal for equal objects"));
         }
     }
     
@@ -175,11 +176,21 @@ public class EqualsHashCodeContractTest extends TestCase {
         }
     }
     
-    private static class ClassWithInconsistentEqualsAndHashCode extends ClassWithCorrectEqualsAndHashCode {
-        private int count = 0;
+    private static class ClassWithInconsistentEqualsAndHashCode {
+        private final int id;
+        private static int count = 0;
         
         public ClassWithInconsistentEqualsAndHashCode(int id) {
-            super(id);
+            this.id = id;
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !(obj.getClass().equals(ClassWithInconsistentEqualsAndHashCode.class))) {
+                return false;
+            }
+            ClassWithInconsistentEqualsAndHashCode other = (ClassWithInconsistentEqualsAndHashCode) obj;
+            return id == other.id;
         }
         
         @Override
