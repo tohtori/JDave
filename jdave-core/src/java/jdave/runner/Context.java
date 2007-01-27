@@ -97,10 +97,9 @@ public class Context {
     }
 
     private Object newContextInstance(Specification<?> spec) {
-        Object context;
+        Object context = null;
         try {
-            Constructor<?> constructor = contextType
-                    .getDeclaredConstructor(spec.getClass());
+            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
             context = constructor.newInstance(spec);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -114,8 +113,7 @@ public class Context {
             method = context.getClass().getMethod(INITIALIZER_NAME);
         } catch (NoSuchMethodException e) {
             throw new NoContextInitializerSpecifiedException(
-                    "Initializer missing for " + context.getClass(),
-                    e);
+                    "Initializer missing for " + context.getClass(), e);
         }
         return method.invoke(context);
     }
