@@ -29,6 +29,9 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 
+/**
+ * @author lkoskela
+ */
 public class JDaveRunnerTest {
 
     private NarrativeCreatingRunNotifier notifier;
