@@ -16,6 +16,32 @@
 package jdave;
 
 /**
+ * A contract to ensure that equals method is correctly implemented
+ * and is consistent with hashCode method.
+ * 
+ * Example:
+ * <blockquote>
+ * public void isConsistentWithEqualsAndHashCode() {
+ *     object = new SampleDomainObject(1).setName("John");
+ *     specify(object, satisfies(new EqualsHashCodeContract<SampleDomainObject>() {
+ *         @Override
+ *         protected SampleDomainObject equal() {
+ *            return new SampleDomainObject(1);
+ *         }
+ *         @Override
+ *         protected SampleDomainObject nonEqual() {
+ *            return new SampleDomainObject(2);
+ *         }
+ *         @Override
+ *         protected SampleDomainObject subType() {
+ *            return new SampleDomainObject(1) {};
+ *         }
+ *      }));
+ *  }
+ * </blockquote>
+ * 
+ * @see java.lang.Object#equals(Object)
+ * 
  * @author Joni Freeman
  */
 public abstract class EqualsHashCodeContract<T> implements Contract {
@@ -41,8 +67,22 @@ public abstract class EqualsHashCodeContract<T> implements Contract {
                     hash1 + " != " + hash2);
         }
     }
-    
+
+    /**
+     * @return an Object which is equal to the Object whose contract is enforced
+     */
     protected abstract T equal();
+    
+    /**
+     * @return an Object which is not equal to the Object whose contract is enforced
+     */
     protected abstract T nonEqual();
+    
+    /**
+     * Generally subtypes should not equal with super types. 
+     * This check can be skipped by returning null.
+     * 
+     * @return an Object which is a subtype of the Object whose contract is enforced or null
+     */
     protected abstract T subType();
 }
