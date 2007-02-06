@@ -17,6 +17,7 @@ package jdave.junit4;
 
 import java.util.Stack;
 
+import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecRunnerCallback;
 import jdave.runner.SpecificationMethod;
@@ -59,7 +60,8 @@ public class JDaveCallback implements SpecRunnerCallback {
         }
         final Description desc = Description.createSuiteDescription(method.getName());
         notifier.fireTestStarted(desc);
-        method.run(new ResultsAdapter(notifier, desc));
+        Specification<?> spec = method.run(new ResultsAdapter(notifier, desc));
+        spec.verify();
         methodStack.push(desc);
     }
 
