@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-<meta name="Description" content="A free open source web design by Christina Chun.  Free for anyone to use as long as credits are intact. " />
-<meta name="Keywords" content="www.openwebdesign.org, open source web design, open web design, openwebdesign.org, christina chun, christinachun.com, www.christinachun.com" />
+<meta name="Description" content="Behaviour driven development (BDD) framework for Java" />
+<meta name="Keywords" content="bdd, behaviour driven development, behavior driven development, tdd, test driven design" />
 <meta name="Copyright" content="Christina Chun" />
 <meta name="Designed By" content="ChristinaChun.com" />
 <meta name="Language" content="English" />
@@ -81,7 +81,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 
 Specification base class provides a limited vocabulary to be used for writing
 expectations. In the above example <b><i>should</i></b> is a supplemental word which
-does nothing. It used to make expectation more readable. <b><i>not()</i></b> triggers
+does nothing. It is used to make expectation more readable. <b><i>not()</i></b> triggers
 following expectations to be negations. <b><i>be</i></b> refers to the object
 which was returned from <code>create()</code> method (be == create()).
 
@@ -119,9 +119,10 @@ Containments can be done for arrays, Collections, Iterators and Iterables.
 
 <pre>
 <code>
-specify(Arrays.asList(1, 2), containsAll(Arrays.asList(0, 1)));
-specify(Arrays.asList(1, 2).iterator(), containsAny(1, 2));
+specify(Arrays.asList(0, 1, 2), containsAll(Arrays.asList(0, 1)));
+specify(Arrays.asList(1, 2).iterator(), containsAny(0, 1));
 specify(new Object[] { 1, 2 }, does.not().containAny(0, -1)));
+specify(new MyIterable(1, 2), containsExactly(2, 1)));
 specify(new MyIterable(1, 2), containsInOrder(1, 2)));
 etc.
 </code>
