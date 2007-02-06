@@ -56,7 +56,8 @@ public class ResultAdapterTest extends MockObjectTestCase {
         result.expects(once()).method("addFailure").with(eq(test), new Constraint() {
             public boolean eval(Object o) {
                 if (o instanceof AssertionFailedError) {
-                    return ((AssertionFailedError) o).getCause() == e;
+                    AssertionFailedError error = (AssertionFailedError) o;
+                    return error.getCause() == e && error.getMessage().equals("ResultAdapterTest setUp");
                 }
                 return false;
             }

@@ -98,7 +98,8 @@ public class JDaveSuite extends TestSuite implements SpecRunnerCallback {
         }
 
         public void unexpected(Method method, ExpectationFailedException e) {
-            AssertionFailedError failure = new AssertionFailedError(method.getName());
+            AssertionFailedError failure = new AssertionFailedError(
+                    method.getDeclaringClass().getSimpleName() + " " + method.getName());
             failure.initCause(e);
             result.addFailure(test, failure);
         }
