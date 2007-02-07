@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import java.lang.reflect.Modifier;
+
 import jdave.Specification;
 
 /**
@@ -33,6 +35,13 @@ public class SpecRunner {
     }
 
     private boolean isContextClass(Class<?> specType, Class<?> contextType) {
+        if ((contextType.getModifiers() & Modifier.ABSTRACT) != 0) {
+            return false;
+        }
+        return isInnerClass(specType, contextType);
+    }
+
+    private boolean isInnerClass(Class<?> specType, Class<?> contextType) {
         try {
             contextType.getDeclaredConstructor(specType);
             return true;

@@ -113,6 +113,9 @@ public class SpecRunnerTest extends TestCase {
             }
         }
         
+        public abstract class SomeAbstractClass {            
+        }
+        
         public static class SomeHelperClass {            
         }
     }
