@@ -120,6 +120,7 @@ public class Context {
         try {
             method = context.getClass().getMethod(DISPOSER_NAME);
         } catch (Exception e) {
+            /* Disposer is optional so ignore the exception.  */
             return;
         }
         try {
