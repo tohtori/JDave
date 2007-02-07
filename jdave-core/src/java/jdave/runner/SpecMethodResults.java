@@ -19,7 +19,12 @@ import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
 
-public interface SpecMethodCallback {
+/**
+ * Used for reporting result of a specification method. 
+ *
+ * @author Pekka Enberg
+ */
+public interface SpecMethodResults {
     void expected(Method method);
     void unexpected(Method method, ExpectationFailedException e);
     void error(Method method, Throwable t);

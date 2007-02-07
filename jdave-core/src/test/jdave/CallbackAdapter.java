@@ -21,17 +21,17 @@ import java.util.List;
 
 import jdave.runner.SpecRunnerCallback;
 import jdave.runner.Context;
-import jdave.runner.SpecMethodCallback;
+import jdave.runner.SpecMethodResults;
 import jdave.runner.SpecificationMethod;
 
 /**
  * @author Joni Freeman
  */
 public class CallbackAdapter implements SpecRunnerCallback {
-    private final SpecMethodCallback results;
+    private final SpecMethodResults results;
     private List<String> contextNames = new ArrayList<String>();
 
-    public CallbackAdapter(SpecMethodCallback results) {
+    public CallbackAdapter(SpecMethodResults results) {
         this.results = results;        
     }
     

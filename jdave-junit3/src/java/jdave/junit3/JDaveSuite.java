@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.runner.Context;
-import jdave.runner.SpecMethodCallback;
+import jdave.runner.SpecMethodResults;
 import jdave.runner.SpecRunner;
 import jdave.runner.SpecRunnerCallback;
 import jdave.runner.SpecificationMethod;
@@ -81,7 +81,7 @@ public class JDaveSuite extends TestSuite implements SpecRunnerCallback {
         });
     }
     
-    static class ResultAdapter implements SpecMethodCallback {
+    static class ResultAdapter implements SpecMethodResults {
         private final TestResult result;
         private final Test test;
 
