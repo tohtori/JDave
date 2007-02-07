@@ -66,7 +66,7 @@ public class Context {
             }
 
             @Override
-            protected void destroyContext(Object context) {
+            protected void destroyContext(Object context) throws Exception {
                 invokeDisposer(context);
             }
         });
@@ -115,7 +115,7 @@ public class Context {
         return method.invoke(context);
     }
 
-    private void invokeDisposer(Object context) {
+    private void invokeDisposer(Object context) throws Exception {
         Method method = null;
         try {
             method = context.getClass().getMethod(DISPOSER_NAME);
@@ -123,10 +123,6 @@ public class Context {
             /* Disposer is optional so ignore the exception.  */
             return;
         }
-        try {
-            method.invoke(context);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        method.invoke(context);
     }
 }
