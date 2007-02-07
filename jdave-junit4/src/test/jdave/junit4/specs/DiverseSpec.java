@@ -18,14 +18,12 @@ package jdave.junit4.specs;
 import java.util.Stack;
 
 import jdave.Specification;
-import jdave.junit4.JDaveRunner;
-
-import org.junit.runner.RunWith;
 
 /**
+ * This is a sample spec with a mix of passing and intentionally failing tests. It is used for testing the JUnit 4 runner.
+ * 
  * @author Lasse Koskela
  */
-@RunWith(JDaveRunner.class)
 public class DiverseSpec extends Specification<Stack<?>> {
 
     public class FirstContext {
