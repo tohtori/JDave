@@ -28,7 +28,7 @@ import org.junit.runner.notification.RunNotifier;
  * The ResultsAdapter receives failure notifications from JDave and forwards
  * them to JUnit's RunNotifier.
  * 
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class ResultsAdapter implements SpecMethodCallback {
     private final RunNotifier notifier;

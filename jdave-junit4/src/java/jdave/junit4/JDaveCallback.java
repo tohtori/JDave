@@ -31,7 +31,7 @@ import org.junit.runner.notification.RunNotifier;
  * fires the appropriate events for the given JUnit4 RunNotifier, effectively
  * implementing the core of the JUnit4 integration.
  * 
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class JDaveCallback implements SpecRunnerCallback {
     private Stack<Description> contextStack;

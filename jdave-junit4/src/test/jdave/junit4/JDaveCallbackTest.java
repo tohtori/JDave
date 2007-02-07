@@ -31,7 +31,7 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 
 /**
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class JDaveCallbackTest {
 

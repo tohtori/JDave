@@ -23,7 +23,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 
 /**
- * @author lkoskela
+ * @author Lasse Koskela
  */
 @RunWith(JDaveRunner.class)
 public class DiverseSpec extends Specification<Stack<?>> {

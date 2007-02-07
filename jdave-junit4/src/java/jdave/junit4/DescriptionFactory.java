@@ -34,7 +34,7 @@ import org.junit.runner.Description;
  * <li>The <i>specification methods</i> for a given context</li>
  * </ul>
  * 
- * @author lkoskela
+ * @author Lasse Koskela
  * @author Joni Freeman
  */
 public class DescriptionFactory implements SpecRunnerCallback {

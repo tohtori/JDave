@@ -29,7 +29,7 @@ import org.junit.runner.notification.RunNotifier;
  * specifications. Just tag your JDave specification class with the
  * <code>@RunWith(JDaveRunner.class)</code> annotation and you're good to go!
  * 
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class JDaveRunner extends Runner {
     private Class<? extends Specification<?>> spec;

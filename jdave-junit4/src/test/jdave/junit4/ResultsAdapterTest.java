@@ -32,7 +32,7 @@ import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
 /**
- * @author lkoskela
+ * @author Lasse Koskela
  */
 public class ResultsAdapterTest extends RunListener {
     private ResultsAdapter adapter;
