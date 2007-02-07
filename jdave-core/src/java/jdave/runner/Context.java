@@ -93,9 +93,6 @@ public class Context {
         }
     }
 
-    public static class SampleSpec extends Specification<Object> {
-    }
-
     private Object newContextInstance(Specification<?> spec) {
         Object context = null;
         try {
