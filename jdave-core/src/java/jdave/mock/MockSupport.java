@@ -36,6 +36,7 @@ import org.jmock.core.stub.DoAllStub;
 import org.jmock.core.stub.ReturnIteratorStub;
 import org.jmock.core.stub.ReturnStub;
 import org.jmock.core.stub.StubSequence;
+import org.jmock.core.stub.ThrowStub;
 import org.jmock.util.Verifier;
 
 /**
@@ -137,5 +138,9 @@ public class MockSupport {
 
     public Stub doAll(Stub... stubs) {
         return new DoAllStub(stubs);
+    }
+    
+    public Stub throwException(Throwable t) {
+        return new ThrowStub(t);
     }
 }
