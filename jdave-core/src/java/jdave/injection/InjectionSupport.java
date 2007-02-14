@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Support class to inject values to sepcifications. This can be
+ * Support class to inject values to specifications. This can be
  * used to inject e.g. beans in Spring context into Specification.
- * See: <link>
  * 
  * <blockquote>
  * public class MySpecification extends Specification<Something> {
