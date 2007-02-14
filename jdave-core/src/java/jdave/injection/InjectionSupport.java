@@ -37,7 +37,7 @@ import java.util.List;
  * }
  * 
  * public class SpringInjector implements IFieldInjector {
- *     private BeanFactory factory = new ClassPathXmlApplicationContext("myAppContext.xml");
+ *     private BeanFactory factory = new ClassPathXmlApplicationContext("/myAppContext.xml");
  *
  *     public void inject(Field field) {
  *         if (factory.containsBean(field.field().getName())) {
