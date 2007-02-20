@@ -2,8 +2,8 @@
   <name>jdave-examples</name>
   <comment/>
   <projects>
-    <project>jdave-junit3</project>
     <project>jdave-core</project>
+    <project>jdave-junit3</project>
   </projects>
   <buildSpec>
     <buildCommand>
