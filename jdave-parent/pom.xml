@@ -15,6 +15,11 @@
     </repository>
   </distributionManagement>
   
+  <scm>
+    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</connection>
+    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</developerConnection>
+  </scm>
+  
   <modules>
     <module>../jdave-core</module>
     <module>../jdave-junit3</module>
