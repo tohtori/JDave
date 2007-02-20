@@ -31,7 +31,7 @@ public class NoContextInitializerSpecifiedTest extends TestCase {
 
     public void testShouldThrowExceptionIfContextMethodIsMissing() throws Exception {
         try {
-            runner.run(NoContextInitializerSpecification.class, new CallbackAdapter(new ResultsAdapter()));
+            runner.run(NoContextInitializerSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
             fail();
         } catch (NoContextInitializerSpecifiedException e) {
             assertEquals("Initializer missing for class jdave.NoContextInitializerSpecifiedTest$NoContextInitializerSpecification$NoInitializer", e.getMessage());

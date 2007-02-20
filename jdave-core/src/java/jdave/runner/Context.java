@@ -15,20 +15,17 @@
  */
 package jdave.runner;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
-import jdave.util.Fields;
 
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public class Context {
-    private static final String INITIALIZER_NAME = "create";
-    private static final String DISPOSER_NAME = "destroy";
+public abstract class Context {
+    static final String INITIALIZER_NAME = "create";
+    static final String DISPOSER_NAME = "destroy";
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
 
@@ -40,36 +37,15 @@ public class Context {
     public String getName() {
         return contextType.getSimpleName();
     }
-
-    void run(SpecRunnerCallback callback) throws Exception {
+    
+    protected abstract SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
+    
+    void run(ISpecVisitor callback) throws Exception {
         for (Method method : contextType.getMethods()) {
             if (isSpecificationMethod(method)) {
-                run(method, callback);
+                callback.onSpecMethod(newSpecificationMethod(method, specType, contextType));
             }
         }
-    }
-
-    private void run(Method method, SpecRunnerCallback callback) throws Exception {
-        callback.onSpecMethod(new SpecificationMethod(method) {
-            @Override
-            protected Specification<?> newSpecification() throws Exception {
-                return Context.this.newSpecification();
-            }
-
-            @Override
-            protected Object newContext(Specification<?> spec) throws Exception {
-                Object context = newContextInstance(spec);
-                Object contextObject = newContextObject(context);
-                Fields.set(spec, "be", contextObject);
-                Fields.set(spec, "context", contextObject);
-                return context;
-            }
-
-            @Override
-            protected void destroyContext(Object context) throws Exception {
-                invokeDisposer(context);
-            }
-        });
     }
 
     private boolean isSpecificationMethod(Method method) {
@@ -83,46 +59,5 @@ public class Context {
             return false;
         }
         return true;
-    }
-
-    private Specification<?> newSpecification() {
-        try {
-            return specType.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Object newContextInstance(Specification<?> spec) {
-        Object context = null;
-        try {
-            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-            context = constructor.newInstance(spec);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return context;
-    }
-
-    private Object newContextObject(Object context) throws Exception {
-        Method method = null;
-        try {
-            method = context.getClass().getMethod(INITIALIZER_NAME);
-        } catch (NoSuchMethodException e) {
-            throw new NoContextInitializerSpecifiedException(
-                    "Initializer missing for " + context.getClass(), e);
-        }
-        return method.invoke(context);
-    }
-
-    private void invokeDisposer(Object context) throws Exception {
-        Method method = null;
-        try {
-            method = context.getClass().getMethod(DISPOSER_NAME);
-        } catch (Exception e) {
-            /* Disposer is optional so ignore the exception.  */
-            return;
-        }
-        method.invoke(context);
     }
 }

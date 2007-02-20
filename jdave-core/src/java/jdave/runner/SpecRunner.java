@@ -15,6 +15,7 @@
  */
 package jdave.runner;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import jdave.Specification;
@@ -24,10 +25,30 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
-    public <T extends Specification<?>> void run(Class<T> specType, SpecRunnerCallback callback) throws Exception {
+    public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) throws Exception {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             if (isContextClass(specType, contextType)) {
-                Context context = new Context(specType, contextType);
+                Context context = new Context(specType, contextType) {
+                    @Override
+                    protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                        return new VisitingSpecificationMethod(method);
+                    }
+                };
+                callback.onContext(context);
+                context.run(callback);
+            }
+        }
+    }
+    
+    public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) throws Exception {
+        for (Class<?> contextType : specType.getDeclaredClasses()) {
+            if (isContextClass(specType, contextType)) {
+                Context context = new Context(specType, contextType) {
+                    @Override
+                    protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                        return new ExecutingSpecificationMethod(method, specType, contextType);
+                    }
+                };
                 callback.onContext(context);
                 context.run(callback);
             }

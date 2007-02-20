@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jdave.runner.SpecRunnerCallback;
+import jdave.runner.ISpecVisitor;
 import jdave.runner.Context;
 import jdave.runner.SpecMethodResults;
 import jdave.runner.SpecificationMethod;
@@ -27,11 +27,11 @@ import jdave.runner.SpecificationMethod;
 /**
  * @author Joni Freeman
  */
-public class CallbackAdapter implements SpecRunnerCallback {
+public class SpecVisitorAdapter implements ISpecVisitor {
     private final SpecMethodResults results;
     private List<String> contextNames = new ArrayList<String>();
 
-    public CallbackAdapter(SpecMethodResults results) {
+    public SpecVisitorAdapter(SpecMethodResults results) {
         this.results = results;        
     }
     

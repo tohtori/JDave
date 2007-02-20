@@ -34,12 +34,12 @@ public class ContextInitializationTest extends TestCase {
     }
     
     public void testShouldSetContextAsBe() throws Exception {
-        runner.run(TestSpecification.class, new CallbackAdapter(new ResultsAdapter()));
+        runner.run(TestSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertSame(contextObject, actualBe);
     }
     
     public void testVariableContextReferencesBe() throws Exception {
-        runner.run(TestSpecification.class, new CallbackAdapter(new ResultsAdapter()));
+        runner.run(TestSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertSame(contextObject, actualContext);
     }
     

@@ -34,7 +34,7 @@ public class ErroneousSpecificationTest extends TestCase {
     }
     
     public void testShouldPassError() throws Exception {
-        runner.run(ErroneousSpecification.class, new CallbackAdapter(new ResultsAdapter() {
+        runner.run(ErroneousSpecification.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override
             public void error(Method method, Throwable t) {
                 actualMethod = method;

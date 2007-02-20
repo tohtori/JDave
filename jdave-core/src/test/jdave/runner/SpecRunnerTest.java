@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import jdave.CallbackAdapter;
+import jdave.SpecVisitorAdapter;
 import jdave.ResultsAdapter;
 import jdave.Specification;
 import junit.framework.TestCase;
@@ -40,7 +40,7 @@ public class SpecRunnerTest extends TestCase {
 
     public void testShouldNotifyResultsOfAllPublicMethods() throws Exception {
         assertTrue(methods.isEmpty());
-        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter() {
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override
             public void expected(Method method) {
                 methods.add(method);
@@ -53,19 +53,19 @@ public class SpecRunnerTest extends TestCase {
     
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
-        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter()));
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
-        CallbackAdapter adapter = new CallbackAdapter(new ResultsAdapter());
+        SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
         assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
     public void testShouldCallDestroyForEachContext() throws Exception {
         BooleanSpec.destroyCalled = 0;
-        runner.run(BooleanSpec.class, new CallbackAdapter(new ResultsAdapter()));
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(2, BooleanSpec.destroyCalled);        
     }
 

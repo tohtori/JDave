@@ -34,7 +34,7 @@ public class FailingSpecificationTest extends TestCase {
     }
     
     public void testShouldNotPassExpectation() throws Exception {
-        runner.run(FailingIntegerSpecification.class, new CallbackAdapter(new ResultsAdapter() {
+        runner.run(FailingIntegerSpecification.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override
             public void unexpected(Method method, ExpectationFailedException e) {
                 actualMethod = method;

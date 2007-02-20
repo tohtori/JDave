@@ -15,7 +15,7 @@
  */
 package jdave.runner;
 
-public interface SpecRunnerCallback {
+public interface ISpecVisitor {
     void onContext(Context context);
     void onSpecMethod(SpecificationMethod method) throws Exception;
 }
