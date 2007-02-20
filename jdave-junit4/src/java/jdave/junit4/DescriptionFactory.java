@@ -18,7 +18,7 @@ package jdave.junit4;
 import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecRunner;
-import jdave.runner.SpecRunnerCallback;
+import jdave.runner.ISpecVisitor;
 import jdave.runner.SpecificationMethod;
 
 import org.junit.runner.Description;
@@ -37,7 +37,7 @@ import org.junit.runner.Description;
  * @author Lasse Koskela
  * @author Joni Freeman
  */
-public class DescriptionFactory implements SpecRunnerCallback {
+public class DescriptionFactory implements ISpecVisitor {
     private final Description description;
     private Description contextDescription;
 
@@ -48,7 +48,7 @@ public class DescriptionFactory implements SpecRunnerCallback {
     public static Description create(Class<? extends Specification<?>> spec) throws Exception {
         Description description = Description.createSuiteDescription(spec.getName());
         DescriptionFactory factory = new DescriptionFactory(description);
-        new SpecRunner().run(spec, factory);
+        new SpecRunner().visit(spec, factory);
         return description;
     }
     

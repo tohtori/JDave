@@ -15,6 +15,7 @@
  */
 package jdave.junit4;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,6 @@ import org.junit.runner.notification.StoppedByUserException;
  * @author Lasse Koskela
  */
 public class JDaveCallbackTest {
-
     private List<String> events = new ArrayList<String>();
     private JDaveCallback callback;
 
@@ -70,7 +70,12 @@ public class JDaveCallbackTest {
 
     @Test
     public void eventOrder() throws Exception {
-        Context context = new Context(StackSpec.class, StackSpec.EmptyStack.class);
+        Context context = new Context(StackSpec.class, StackSpec.EmptyStack.class) {
+            @Override
+            protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                throw new UnsupportedOperationException();
+            }            
+        };
         callback.onContext(context);
         SpecificationMethod method = createSpecMethodByName(getClass(), "eventOrder");
         callback.onSpecMethod(method);

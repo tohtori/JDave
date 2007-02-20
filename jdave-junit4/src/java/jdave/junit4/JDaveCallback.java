@@ -19,7 +19,7 @@ import java.util.Stack;
 
 import jdave.Specification;
 import jdave.runner.Context;
-import jdave.runner.SpecRunnerCallback;
+import jdave.runner.ISpecVisitor;
 import jdave.runner.SpecificationMethod;
 
 import org.junit.runner.Description;
@@ -33,7 +33,7 @@ import org.junit.runner.notification.RunNotifier;
  * 
  * @author Lasse Koskela
  */
-public class JDaveCallback implements SpecRunnerCallback {
+public class JDaveCallback implements ISpecVisitor {
     private Stack<Description> contextStack;
     private Stack<Description> methodStack;
     private RunNotifier notifier;
