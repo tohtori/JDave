@@ -52,6 +52,7 @@ public abstract class SpecificationMethod {
             throw new RuntimeException(t);
         } finally {
             destroyContext(context);
+            spec.destroy();
         }
         return spec;
     }

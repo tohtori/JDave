@@ -46,15 +46,16 @@ public class SpecRunnerTest extends TestCase {
                 methods.add(method);
             }
         }));
-        assertEquals(2, methods.size());
+        assertEquals(3, methods.size());
         assertEquals("shouldEqualToFalse", methods.get(0).getName());
         assertEquals("shouldNotBeEqualToTrue", methods.get(1).getName());
+        assertEquals("shouldBeEqualToTrue", methods.get(2).getName());
     }
     
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
+        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue", "shouldBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
@@ -63,16 +64,23 @@ public class SpecRunnerTest extends TestCase {
         assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
-    public void testShouldCallDestroyForEachContext() throws Exception {
+    public void testShouldCallDestroyForEachMethod() throws Exception {
         BooleanSpec.destroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(2, BooleanSpec.destroyCalled);        
+        assertEquals(3, BooleanSpec.destroyCalled);        
+    }
+    
+    public void testShouldCallSpecDestroyForEachMethod() throws Exception {
+        BooleanSpec.specDestroyCalled = 0;
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(3, BooleanSpec.specDestroyCalled);        
     }
 
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
-
+        public static int specDestroyCalled;
+        
         public class FalseBoolean {
             public Boolean create() {
                 return false;
@@ -107,6 +115,10 @@ public class SpecRunnerTest extends TestCase {
             public Boolean create() {
                 return true;
             }
+            
+            public void shouldBeEqualToTrue() {
+                actualCalls.add("shouldBeEqualToTrue");
+            }
 
             public void destroy() {
                 destroyCalled++;
@@ -117,6 +129,11 @@ public class SpecRunnerTest extends TestCase {
         }
         
         public static class SomeHelperClass {            
+        }
+        
+        @Override
+        public void destroy() {
+            specDestroyCalled++;
         }
     }
 }

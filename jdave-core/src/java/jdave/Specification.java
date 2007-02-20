@@ -320,4 +320,12 @@ public abstract class Specification<T> extends MockSupport {
     public Contract satisfies(Contract contract) {
         return contract;
     }
+
+    /**
+     * Called after optional destroy() method in context has been called.
+     * Override this method to add common destroy code for contexts within
+     * a specification.
+     */
+    public void destroy() {
+    }
 }
