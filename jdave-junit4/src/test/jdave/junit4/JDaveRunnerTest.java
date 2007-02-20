@@ -33,7 +33,6 @@ import org.junit.runner.notification.StoppedByUserException;
  * @author Lasse Koskela
  */
 public class JDaveRunnerTest {
-
     private NarrativeCreatingRunNotifier notifier;
 
     @Before
@@ -85,7 +84,6 @@ public class JDaveRunnerTest {
     }
 
     class NarrativeCreatingRunNotifier extends RunNotifier {
-
         public List<String> events = new ArrayList<String>();
 
         @Override
