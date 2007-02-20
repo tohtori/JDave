@@ -22,7 +22,7 @@ import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecMethodResults;
 import jdave.runner.SpecRunner;
-import jdave.runner.SpecRunnerCallback;
+import jdave.runner.ISpecVisitor;
 import jdave.runner.SpecificationMethod;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
  * 
  * @author Joni Freeman
  */
-public class JDaveSuite extends TestSuite implements SpecRunnerCallback {
+public class JDaveSuite extends TestSuite implements ISpecVisitor {
     private TestSuite suite;
 
     public JDaveSuite(Class<? extends Specification<?>> specType) throws Exception {
