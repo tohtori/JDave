@@ -57,6 +57,14 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    public void testShouldFailWhenBooleanExpectationWithWrapperNotMet() {
+        try {
+            specification.specify(null, new Boolean(false));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected: true, but was: false", e.getMessage());
+        }
+    }
 
     public void testShouldFailWhenInvertedBooleanExpectationNotMet() {
         try {

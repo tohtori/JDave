@@ -53,6 +53,10 @@ public abstract class Specification<T> extends MockSupport {
         specify(expected);
     }
     
+    public void specify(T actual, Boolean expected) {
+        specify(expected);
+    }
+    
     private void resetActualState() {
         actualState = true;        
     }
