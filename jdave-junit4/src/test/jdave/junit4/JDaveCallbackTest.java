@@ -22,6 +22,7 @@ import java.util.List;
 import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecificationMethod;
+import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,10 +35,11 @@ import org.junit.runner.notification.StoppedByUserException;
 /**
  * @author Lasse Koskela
  */
-public class JDaveCallbackTest {
+public class JDaveCallbackTest extends TestCase {
     private List<String> events = new ArrayList<String>();
     private JDaveCallback callback;
 
+    @Override
     @Before
     public void setUp() throws Exception {
         RunNotifier notifier = new RunNotifier() {
@@ -69,7 +71,7 @@ public class JDaveCallbackTest {
     }
 
     @Test
-    public void eventOrder() throws Exception {
+    public void testEventOrder() throws Exception {
         Context context = new Context(StackSpec.class, StackSpec.EmptyStack.class) {
             @Override
             protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
@@ -77,7 +79,7 @@ public class JDaveCallbackTest {
             }            
         };
         callback.onContext(context);
-        SpecificationMethod method = createSpecMethodByName(getClass(), "eventOrder");
+        SpecificationMethod method = createSpecMethodByName(getClass(), "testEventOrder");
         callback.onSpecMethod(method);
     }
 

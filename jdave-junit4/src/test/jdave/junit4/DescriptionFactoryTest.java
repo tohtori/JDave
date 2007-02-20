@@ -1,19 +1,17 @@
 package jdave.junit4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import jdave.Specification;
+import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
 
-public class DescriptionFactoryTest {
+public class DescriptionFactoryTest extends TestCase {
     private Description desc;
 
     public static class ExampleSpec extends Specification<Stack<String>> {
@@ -52,17 +50,18 @@ public class DescriptionFactoryTest {
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         desc = DescriptionFactory.create(ExampleSpec.class);
     }
 
     @Test
-    public void topLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName() throws Exception {
+    public void testTopLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName() throws Exception {
         assertEquals(ExampleSpec.class.getName(), desc.getDisplayName());
     }
 
     @Test
-    public void topLevelDescriptionShouldHaveOneChildPerEachContextClass() throws Exception {
+    public void testTopLevelDescriptionShouldHaveOneChildPerEachContextClass() throws Exception {
         List<Description> children = desc.getChildren();
         assertEquals(2, children.size());
         assertContainsDescription(children, "FirstContext");

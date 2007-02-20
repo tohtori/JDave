@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jdave.junit4.specs.DiverseSpec;
+import junit.framework.TestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,9 +33,10 @@ import org.junit.runner.notification.StoppedByUserException;
 /**
  * @author Lasse Koskela
  */
-public class JDaveRunnerTest {
+public class JDaveRunnerTest extends TestCase {
     private NarrativeCreatingRunNotifier notifier;
 
+    @Override
     @Before
     public void setUp() {
         notifier = new NarrativeCreatingRunNotifier();
