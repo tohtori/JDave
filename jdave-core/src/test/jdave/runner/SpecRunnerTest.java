@@ -18,6 +18,7 @@ package jdave.runner;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import jdave.SpecVisitorAdapter;
@@ -29,12 +30,12 @@ import junit.framework.TestCase;
  * @author Pekka Enberg
  */
 public class SpecRunnerTest extends TestCase {
-    private List<Method> methods;
+    private List<String> methods;
     private SpecRunner runner;
 
     @Override
     protected void setUp() throws Exception {
-        methods = new ArrayList<Method>();
+        methods = new ArrayList<String>();
         runner = new SpecRunner();
     }
 
@@ -43,19 +44,21 @@ public class SpecRunnerTest extends TestCase {
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override
             public void expected(Method method) {
-                methods.add(method);
+                methods.add(method.getName());
             }
         }));
+        Collections.sort(methods);
         assertEquals(3, methods.size());
-        assertEquals("shouldEqualToFalse", methods.get(0).getName());
-        assertEquals("shouldNotBeEqualToTrue", methods.get(1).getName());
-        assertEquals("shouldBeEqualToTrue", methods.get(2).getName());
+        assertEquals("shouldBeEqualToTrue", methods.get(0));
+        assertEquals("shouldEqualToFalse", methods.get(1));
+        assertEquals("shouldNotBeEqualToTrue", methods.get(2));
     }
     
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(Arrays.asList("shouldEqualToFalse", "shouldNotBeEqualToTrue", "shouldBeEqualToTrue"), BooleanSpec.actualCalls);
+        Collections.sort(BooleanSpec.actualCalls);
+        assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
