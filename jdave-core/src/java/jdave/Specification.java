@@ -123,14 +123,21 @@ public abstract class Specification<T> extends MockSupport {
 
     public void specify(Object actual, Object expected) {
         try {
-            if (!actual.equals(expected)) {
+            if (!equals(actual, expected)) {
                 throw newException(expected, actual);
             }
         } finally {
             resetActualState();
         }
     }
-    
+
+    private boolean equals(Object o1, Object o2) {
+        if (o1 == null) {
+            return o2 == null;
+        }
+        return o1.equals(o2);
+    } 
+
     public void specify(double actual, double expected, double delta) {
         specify(actual, new Double(expected), delta);
     }

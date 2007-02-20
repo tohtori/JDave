@@ -31,6 +31,12 @@ public class SpecificationTest extends TestCase {
         specification.be = new EmptyStack();
     }
     
+    public void testPassesWhenActualAndExpectedAreBothNull() {
+        Object actual = null;
+        Object expected = null;
+        specification.specify(actual, expected);        
+    }
+    
     public void testShouldPassWhenExpectationMet() {
         specification.specify(1, 1);
     }
