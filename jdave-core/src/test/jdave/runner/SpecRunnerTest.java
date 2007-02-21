@@ -73,6 +73,12 @@ public class SpecRunnerTest extends TestCase {
         assertEquals(3, BooleanSpec.destroyCalled);        
     }
     
+    public void testShouldCallSpecCreateForEachMethod() throws Exception {
+        BooleanSpec.specCreateCalled = 0;
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(3, BooleanSpec.specCreateCalled);        
+    }
+    
     public void testShouldCallSpecDestroyForEachMethod() throws Exception {
         BooleanSpec.specDestroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
@@ -82,6 +88,7 @@ public class SpecRunnerTest extends TestCase {
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
+        public static int specCreateCalled;
         public static int specDestroyCalled;
         
         public class FalseBoolean {
@@ -132,6 +139,11 @@ public class SpecRunnerTest extends TestCase {
         }
         
         public static class SomeHelperClass {            
+        }
+        
+        @Override
+        public void create() {
+            specCreateCalled++;
         }
         
         @Override

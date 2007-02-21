@@ -322,6 +322,14 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     /**
+     * Called before create() method in context has been called.
+     * Override this method to add common initialization code for contexts within
+     * a specification.
+     */
+    public void create() {
+    }
+    
+    /**
      * Called after optional destroy() method in context has been called.
      * Override this method to add common destroy code for contexts within
      * a specification.

@@ -40,6 +40,7 @@ public abstract class SpecificationMethod {
     public Specification<?> run(SpecMethodResults results) throws Exception {
         Specification<?> spec = newSpecification();
         try {
+            spec.create();
             Object context = newContext(spec);
             method.invoke(context);
             results.expected(method);
