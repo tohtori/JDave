@@ -88,7 +88,7 @@ public class JDaveCallbackTest extends TestCase {
         SpecificationMethod method = new SpecificationMethod(target.getDeclaredMethod(name)) {
 
             @Override
-            protected void destroyContext(Object context) throws Exception {
+            protected void destroyContext() throws Exception {
             }
 
             @Override
