@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
+import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 
 /**
@@ -38,8 +39,8 @@ public abstract class SpecificationMethod {
 
     public Specification<?> run(SpecMethodResults results) throws Exception {
         Specification<?> spec = newSpecification();
-        Object context = newContext(spec);
         try {
+            Object context = newContext(spec);
             method.invoke(context);
             results.expected(method);
         } catch (InvocationTargetException e) {
@@ -48,10 +49,12 @@ public abstract class SpecificationMethod {
             } else {
                 results.error(method, e.getCause());
             }
+        } catch (NoContextInitializerSpecifiedException e) {
+            throw e;
         } catch (Throwable t) {
             throw new RuntimeException(t);
         } finally {
-            destroyContext(context);
+            destroyContext();
             spec.destroy();
         }
         return spec;
@@ -59,5 +62,5 @@ public abstract class SpecificationMethod {
 
     protected abstract Specification<?> newSpecification() throws Exception;
     protected abstract Object newContext(Specification<?> spec) throws Exception;
-    protected abstract void destroyContext(Object context) throws Exception;
+    protected abstract void destroyContext() throws Exception;
 }

@@ -28,7 +28,7 @@ final class VisitingSpecificationMethod extends SpecificationMethod {
     }
 
     @Override
-    protected void destroyContext(Object context) throws Exception {
+    protected void destroyContext() throws Exception {
         throw new UnsupportedOperationException();
     }
 

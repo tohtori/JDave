@@ -29,6 +29,7 @@ import jdave.util.Fields;
 final class ExecutingSpecificationMethod extends SpecificationMethod {
     private final Class<?> contextType;
     private final Class<? extends Specification<?>> specType;
+    private Object context;
     
     ExecutingSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
         super(method);
@@ -47,7 +48,7 @@ final class ExecutingSpecificationMethod extends SpecificationMethod {
 
     @Override
     protected Object newContext(Specification<?> spec) throws Exception {
-        Object context = newContextInstance(spec);
+        context = newContextInstance(spec);
         Object contextObject = newContextObject(context);
         Fields.set(spec, "be", contextObject);
         Fields.set(spec, "context", contextObject);
@@ -55,7 +56,7 @@ final class ExecutingSpecificationMethod extends SpecificationMethod {
     }
 
     @Override
-    protected void destroyContext(Object context) throws Exception {
+    protected void destroyContext() throws Exception {
         invokeDisposer(context);
     }
         
