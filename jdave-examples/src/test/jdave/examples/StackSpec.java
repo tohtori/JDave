@@ -66,7 +66,7 @@ public class StackSpec extends Specification<Stack<?>> {
 
         public void complainsOnPush() {
             specify(new Block() {
-                public void run() throws Exception {
+                public void run() throws Throwable {
                     stack.push(100);
                 }
             }, should.raise(StackOverflowException.class));
