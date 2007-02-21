@@ -92,16 +92,24 @@ public class SpecificationTest extends TestCase {
     
     public void testShouldPassWhenExpectedExceptionRaised() {
         specification.specify(new Block() {
-            public void run() throws Exception {
+            public void run() throws Throwable {
                 throw new IllegalArgumentException();
             }
         }, specification.raise(IllegalArgumentException.class));
     }
     
+    public void testShouldPassWhenExpectedThrowableRaised() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                throw new Throwable();
+            }
+        }, specification.raise(Throwable.class));
+    }
+    
     public void testShouldFailWhenExpectedExceptionNotRaised() {
         try {
             specification.specify(new Block() {
-                public void run() throws Exception {
+                public void run() throws Throwable {
                 }
             }, specification.raise(IllegalArgumentException.class));
             fail();

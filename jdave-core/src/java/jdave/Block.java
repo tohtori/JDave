@@ -20,5 +20,5 @@ package jdave;
  * @author Pekka Enberg
  */
 public interface Block {
-    void run() throws Exception;
+    void run() throws Throwable;
 }
