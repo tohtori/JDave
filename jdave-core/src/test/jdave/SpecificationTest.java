@@ -114,7 +114,20 @@ public class SpecificationTest extends TestCase {
             }, specification.raise(IllegalArgumentException.class));
             fail();
         } catch (ExpectationFailedException e) {
-            assertEquals("The specified block should throw java.lang.IllegalArgumentException.", e.getMessage());
+            assertEquals("The specified block should throw java.lang.IllegalArgumentException but nothing was thrown.", e.getMessage());
+        }
+    }
+    
+    public void testShouldFailWhenDifferentExceptionAsExpectedWasRaised() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new NullPointerException();
+                }
+            }, specification.raise(IllegalArgumentException.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block should throw java.lang.IllegalArgumentException but java.lang.NullPointerException was thrown.", e.getMessage());
         }
     }
     

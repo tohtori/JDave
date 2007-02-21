@@ -159,10 +159,13 @@ public abstract class Specification<T> extends MockSupport {
             if (t.getClass().equals(expected)) {
                 return;
             }
+            throw new ExpectationFailedException("The specified block should throw " + expected.getName()
+                    + " but " + t.getClass().getName() + " was thrown.", t); 
         } finally {
             resetActualState();            
         }
-        throw new ExpectationFailedException("The specified block should throw " + expected.getName() + ".");        
+        throw new ExpectationFailedException("The specified block should throw " + expected.getName()
+                + " but nothing was thrown.");     
     }
     
     public void specify(Object obj, Contract contract) {
