@@ -26,12 +26,12 @@ import jdave.util.Fields;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-final class ExecutingSpecificationMethod extends SpecificationMethod {
+final class ExecutingBehavior extends Behavior {
     private final Class<?> contextType;
     private final Class<? extends Specification<?>> specType;
     private Object context;
     
-    ExecutingSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+    ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
         super(method);
         this.specType = specType;
         this.contextType = contextType;

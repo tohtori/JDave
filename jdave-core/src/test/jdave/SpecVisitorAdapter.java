@@ -21,17 +21,17 @@ import java.util.List;
 
 import jdave.runner.ISpecVisitor;
 import jdave.runner.Context;
-import jdave.runner.SpecMethodResults;
-import jdave.runner.SpecificationMethod;
+import jdave.runner.BehaviorResults;
+import jdave.runner.Behavior;
 
 /**
  * @author Joni Freeman
  */
 public class SpecVisitorAdapter implements ISpecVisitor {
-    private final SpecMethodResults results;
+    private final BehaviorResults results;
     private List<String> contextNames = new ArrayList<String>();
 
-    public SpecVisitorAdapter(SpecMethodResults results) {
+    public SpecVisitorAdapter(BehaviorResults results) {
         this.results = results;        
     }
     
@@ -39,7 +39,7 @@ public class SpecVisitorAdapter implements ISpecVisitor {
         contextNames.add(context.getName());
     }
     
-    public void onSpecMethod(SpecificationMethod method) throws Exception {
+    public void onBehavior(Behavior method) throws Exception {
         method.run(results);
     }
     

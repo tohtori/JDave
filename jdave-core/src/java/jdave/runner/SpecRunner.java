@@ -30,8 +30,8 @@ public class SpecRunner {
             if (isContextClass(specType, contextType)) {
                 Context context = new Context(specType, contextType) {
                     @Override
-                    protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-                        return new VisitingSpecificationMethod(method);
+                    protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                        return new VisitingBehavior(method);
                     }
                 };
                 callback.onContext(context);
@@ -45,8 +45,8 @@ public class SpecRunner {
             if (isContextClass(specType, contextType)) {
                 Context context = new Context(specType, contextType) {
                     @Override
-                    protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-                        return new ExecutingSpecificationMethod(method, specType, contextType);
+                    protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                        return new ExecutingBehavior(method, specType, contextType);
                     }
                 };
                 callback.onContext(context);

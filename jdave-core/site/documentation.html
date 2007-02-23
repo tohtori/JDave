@@ -39,7 +39,7 @@ implemented as public non-static inner classes in the specification class. They 
 have to extend any base class or implement any interface. The only requirement is that
 they have to have a public method <code>create()</code> which returns a context object.
 They can optionally have a public void method <code>destroy()</code>.
-All other public methods in context class are specification methods.
+All other public methods in context class are behaviors.
 
 <pre>
 <code>
@@ -52,7 +52,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
             return stack;
         }
 
-        public void someSpecificationMethod() {
+        public void someBehavior() {
             // ...
         }
     }
@@ -60,7 +60,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 </code>
 </pre>
 
-Specification methods are written by doing something to the context object and
+Behaviors are written by doing something to the context object and
 then specifying some expectations. The expectations are specified using one or
 more overloaded <code>specify(..., ...)</code> methods.
 

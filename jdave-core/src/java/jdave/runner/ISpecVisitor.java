@@ -17,5 +17,5 @@ package jdave.runner;
 
 public interface ISpecVisitor {
     void onContext(Context context);
-    void onSpecMethod(SpecificationMethod method) throws Exception;
+    void onBehavior(Behavior behavior) throws Exception;
 }

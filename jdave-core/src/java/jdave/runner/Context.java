@@ -38,17 +38,17 @@ public abstract class Context {
         return contextType.getSimpleName();
     }
     
-    protected abstract SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
+    protected abstract Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
     
     void run(ISpecVisitor callback) throws Exception {
         for (Method method : contextType.getMethods()) {
-            if (isSpecificationMethod(method)) {
-                callback.onSpecMethod(newSpecificationMethod(method, specType, contextType));
+            if (isBehavior(method)) {
+                callback.onBehavior(newBehavior(method, specType, contextType));
             }
         }
     }
 
-    private boolean isSpecificationMethod(Method method) {
+    private boolean isBehavior(Method method) {
         if (method.getDeclaringClass().equals(Object.class)) {
             return false;
         }

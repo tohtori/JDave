@@ -23,7 +23,7 @@ import junit.framework.TestCase;
  */
 public class SpecRunnerVisitTest extends TestCase {
     private SpecRunner runner;
-    private SpecificationMethod visitedMethod;
+    private Behavior visitedMethod;
 
     @Override
     protected void setUp() throws Exception {
@@ -35,11 +35,11 @@ public class SpecRunnerVisitTest extends TestCase {
             public void onContext(Context context) {
             }
 
-            public void onSpecMethod(SpecificationMethod method) throws Exception {
+            public void onBehavior(Behavior method) throws Exception {
                 visitedMethod = method;
             }            
         });
-        assertEquals(visitedMethod.getClass(), VisitingSpecificationMethod.class);
+        assertEquals(visitedMethod.getClass(), VisitingBehavior.class);
     }
     
     public static class TestSpec extends Specification<Object> {

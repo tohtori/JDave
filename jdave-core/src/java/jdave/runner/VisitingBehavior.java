@@ -22,8 +22,8 @@ import jdave.Specification;
 /**
  * @author Joni Freeman
  */
-final class VisitingSpecificationMethod extends SpecificationMethod {
-    VisitingSpecificationMethod(Method method) {
+final class VisitingBehavior extends Behavior {
+    VisitingBehavior(Method method) {
         super(method);
     }
 

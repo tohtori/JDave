@@ -26,10 +26,10 @@ import jdave.Specification;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public abstract class SpecificationMethod {
+public abstract class Behavior {
     private final Method method;
 
-    public SpecificationMethod(Method method) {
+    public Behavior(Method method) {
         this.method = method;
     }
 
@@ -37,7 +37,7 @@ public abstract class SpecificationMethod {
         return method.getName();
     }
 
-    public Specification<?> run(SpecMethodResults results) throws Exception {
+    public Specification<?> run(BehaviorResults results) throws Exception {
         Specification<?> spec = newSpecification();
         try {
             spec.create();

@@ -20,11 +20,11 @@ import java.lang.reflect.Method;
 import jdave.ExpectationFailedException;
 
 /**
- * Used for reporting result of a specification method. 
+ * Used for reporting result of a behavior. 
  *
  * @author Pekka Enberg
  */
-public interface SpecMethodResults {
+public interface BehaviorResults {
     void expected(Method method);
     void unexpected(Method method, ExpectationFailedException e);
     void error(Method method, Throwable t);
