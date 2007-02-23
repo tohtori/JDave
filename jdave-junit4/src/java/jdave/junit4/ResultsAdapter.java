@@ -18,7 +18,7 @@ package jdave.junit4;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
-import jdave.runner.SpecMethodResults;
+import jdave.runner.BehaviorResults;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
@@ -30,7 +30,7 @@ import org.junit.runner.notification.RunNotifier;
  * 
  * @author Lasse Koskela
  */
-public class ResultsAdapter implements SpecMethodResults {
+public class ResultsAdapter implements BehaviorResults {
     private final RunNotifier notifier;
     private final Description desc;
 

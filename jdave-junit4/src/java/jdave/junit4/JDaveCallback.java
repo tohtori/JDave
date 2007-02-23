@@ -20,7 +20,7 @@ import java.util.Stack;
 import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
-import jdave.runner.SpecificationMethod;
+import jdave.runner.Behavior;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -35,13 +35,13 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveCallback implements ISpecVisitor {
     private Stack<Description> contextStack;
-    private Stack<Description> methodStack;
+    private Stack<Description> behaviorStack;
     private RunNotifier notifier;
 
     public JDaveCallback(RunNotifier notifier) {
         this.notifier = notifier;
         contextStack = new Stack<Description>();
-        methodStack = new Stack<Description>();
+        behaviorStack = new Stack<Description>();
     }
 
     public void onContext(Context context) {
@@ -54,20 +54,20 @@ public class JDaveCallback implements ISpecVisitor {
         contextStack.push(desc);
     }
 
-    public void onSpecMethod(SpecificationMethod method) throws Exception {
-        if (methodStack.size() > 0) {
-            notifier.fireTestFinished(methodStack.pop());
+    public void onBehavior(Behavior behavior) throws Exception {
+        if (behaviorStack.size() > 0) {
+            notifier.fireTestFinished(behaviorStack.pop());
         }
-        final Description desc = Description.createSuiteDescription(method.getName());
+        final Description desc = Description.createSuiteDescription(behavior.getName());
         notifier.fireTestStarted(desc);
-        Specification<?> spec = method.run(new ResultsAdapter(notifier, desc));
+        Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
         spec.verify();
-        methodStack.push(desc);
+        behaviorStack.push(desc);
     }
 
     public void runFinished() {
-        if (methodStack.size() > 0) {
-            notifier.fireTestFinished(methodStack.pop());
+        if (behaviorStack.size() > 0) {
+            notifier.fireTestFinished(behaviorStack.pop());
         }
         if (contextStack.size() > 0) {
             notifier.fireTestFinished(contextStack.pop());

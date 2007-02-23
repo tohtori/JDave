@@ -21,7 +21,7 @@ import java.util.List;
 
 import jdave.Specification;
 import jdave.runner.Context;
-import jdave.runner.SpecificationMethod;
+import jdave.runner.Behavior;
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -74,18 +74,18 @@ public class JDaveCallbackTest extends TestCase {
     public void testEventOrder() throws Exception {
         Context context = new Context(StackSpec.class, StackSpec.EmptyStack.class) {
             @Override
-            protected SpecificationMethod newSpecificationMethod(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+            protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
                 throw new UnsupportedOperationException();
             }            
         };
         callback.onContext(context);
-        SpecificationMethod method = createSpecMethodByName(getClass(), "testEventOrder");
-        callback.onSpecMethod(method);
+        Behavior method = createSpecMethodByName(getClass(), "testEventOrder");
+        callback.onBehavior(method);
     }
 
-    private SpecificationMethod createSpecMethodByName(final Class<?> target, String name)
+    private Behavior createSpecMethodByName(final Class<?> target, String name)
             throws NoSuchMethodException {
-        SpecificationMethod method = new SpecificationMethod(target.getDeclaredMethod(name)) {
+        Behavior method = new Behavior(target.getDeclaredMethod(name)) {
 
             @Override
             protected void destroyContext() throws Exception {

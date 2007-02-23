@@ -19,7 +19,7 @@ import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.SpecRunner;
 import jdave.runner.ISpecVisitor;
-import jdave.runner.SpecificationMethod;
+import jdave.runner.Behavior;
 
 import org.junit.runner.Description;
 
@@ -57,7 +57,7 @@ public class DescriptionFactory implements ISpecVisitor {
         description.addChild(contextDescription);
     }
     
-    public void onSpecMethod(SpecificationMethod method) throws Exception {
+    public void onBehavior(Behavior method) throws Exception {
         contextDescription.addChild(Description.createSuiteDescription(method.getName()));
     }
 }
