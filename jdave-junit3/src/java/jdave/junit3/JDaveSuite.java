@@ -20,10 +20,10 @@ import java.lang.reflect.Method;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.runner.Context;
-import jdave.runner.SpecMethodResults;
+import jdave.runner.BehaviorResults;
 import jdave.runner.SpecRunner;
 import jdave.runner.ISpecVisitor;
-import jdave.runner.SpecificationMethod;
+import jdave.runner.Behavior;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -52,8 +52,8 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
         addTest(suite);
     }
     
-    public void onSpecMethod(final SpecificationMethod method) {
-        suite.addTest(new TestCase(method.getName()) {
+    public void onBehavior(final Behavior behavior) {
+        suite.addTest(new TestCase(behavior.getName()) {
             private TestResult result;
             private Specification<?> spec;
             
@@ -76,12 +76,12 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
 
             @Override
             protected void runTest() throws Throwable {
-                spec = method.run(new ResultAdapter(this, result));
+                spec = behavior.run(new ResultAdapter(this, result));
             }
         });
     }
     
-    static class ResultAdapter implements SpecMethodResults {
+    static class ResultAdapter implements BehaviorResults {
         private final TestResult result;
         private final Test test;
 
