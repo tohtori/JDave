@@ -180,6 +180,78 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.contains((short) 2));
     }
     
+    public void testShouldPassWhenContainmentExpectedForPrimitiveByteArrayInput() {
+        byte[] actual = new byte[]{ 0, 1, 2 };
+        specification.specify(actual, specification.containsInOrder(new byte[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsExactly(new byte[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsAll(new byte[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containsAny(new byte[]{ -1, 1, 3 }));
+        specification.specify(actual, specification.containInOrder(new byte[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containExactly(new byte[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containAll(new byte[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containAny(new byte[]{ -1, 1, 3 }));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForPrimitiveShortArrayInput() {
+        short[] actual = new short[]{ 0, 1, 2 };
+        specification.specify(actual, specification.containsInOrder(new short[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsExactly(new short[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsAll(new short[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containsAny(new short[]{ -1, 1, 3 }));
+        specification.specify(actual, specification.containInOrder(new short[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containExactly(new short[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containAll(new short[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containAny(new short[]{ -1, 1, 3 }));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForPrimitiveIntArrayInput() {
+        int[] actual = new int[]{ 0, 1, 2 };
+        specification.specify(actual, specification.containsInOrder(new int[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsExactly(new int[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsAll(new int[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containsAny(new int[]{ -1, 1, 3 }));
+        specification.specify(actual, specification.containInOrder(new int[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containExactly(new int[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containAll(new int[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containAny(new int[]{ -1, 1, 3 }));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForPrimitiveLongArrayInput() {
+        long[] actual = new long[]{ 0, 1, 2 };
+        specification.specify(actual, specification.containsInOrder(new long[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsExactly(new long[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containsAll(new long[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containsAny(new long[]{ -1, 1, 3 }));
+        specification.specify(actual, specification.containInOrder(new long[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containExactly(new long[]{ 0, 1, 2 }));
+        specification.specify(actual, specification.containAll(new long[]{ 2, 1, 0 }));
+        specification.specify(actual, specification.containAny(new long[]{ -1, 1, 3 }));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForPrimitiveFloatArrayInput() {
+        float[] actual = new float[]{ .0f, .1f, .2f };
+        specification.specify(actual, specification.containsInOrder(new float[]{ .0f, .1f, .2f }));
+        specification.specify(actual, specification.containsExactly(new float[]{ .0f, .1f, .2f }));
+        specification.specify(actual, specification.containsAll(new float[]{ .2f, .1f, .0f }));
+        specification.specify(actual, specification.containsAny(new float[]{ -.1f, .1f, .3f }));
+        specification.specify(actual, specification.containInOrder(new float[]{ .0f, .1f, .2f }));
+        specification.specify(actual, specification.containExactly(new float[]{ .0f, .1f, .2f }));
+        specification.specify(actual, specification.containAll(new float[]{ .2f, .1f, .0f }));
+        specification.specify(actual, specification.containAny(new float[]{ -.1f, .1f, .3f }));
+    }
+    
+    public void testShouldPassWhenContainmentExpectedForPrimitiveDoubleArrayInput() {
+        double[] actual = new double[]{ .0d, .1d, .2d };
+        specification.specify(actual, specification.containsInOrder(new double[]{ .0d, .1d, .2d }));
+        specification.specify(actual, specification.containsExactly(new double[]{ .0d, .1d, .2d }));
+        specification.specify(actual, specification.containsAll(new double[]{ .2d, .1d, .0d }));
+        specification.specify(actual, specification.containsAny(new double[]{ -.1d, .1d, .3d }));
+        specification.specify(actual, specification.containInOrder(new double[]{ .0d, .1d, .2d }));
+        specification.specify(actual, specification.containExactly(new double[]{ .0d, .1d, .2d }));
+        specification.specify(actual, specification.containAll(new double[]{ .2d, .1d, .0d }));
+        specification.specify(actual, specification.containAny(new double[]{ -.1d, .1d, .3d }));
+    }
+    
     public void testShouldFailWhenContainmentNotExpected() {
         try {
             specification.specify(Arrays.asList(1, 2, 3), specification.contains(0));
