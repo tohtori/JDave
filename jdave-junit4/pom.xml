@@ -14,6 +14,11 @@
   <name>jdave-junit4</name>
   <packaging>jar</packaging>
   
+  <scm>
+    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-junit4</connection>
+    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-junit4</developerConnection>
+  </scm>
+  
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
