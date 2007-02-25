@@ -1,8 +1,15 @@
-Update docs (version numbers, examples, documentation, front page news).
-
+> Update docs (version numbers, examples, documentation, front page news).
 mvn release:prepare (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
-commit updated poms manually
+> commit updated poms manually
 rm -rf ~/.m2/repository/jdave (delete local jdave repo)
 mvn install
+scp -r ~/.m2/repository/jdave/ inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/maven2/
+svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpanda.org/svn/jdave/tags/0.5.0 -m "tag release"
 mvn-no-tests clean package assembly:directory   (in jdave-parent)
+cd target/jdave-parent-0.5.0-bin/
+jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
+> commit
 scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
+
+Test:
+- gets downloaded with maven
