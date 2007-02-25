@@ -10,6 +10,8 @@ cd target/jdave-parent-0.5.0-bin/
 jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
 > commit
 scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
+scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
 
 Test:
 - gets downloaded with maven
+- links in site work
