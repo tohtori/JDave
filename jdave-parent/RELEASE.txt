@@ -1,4 +1,8 @@
 Update docs (version numbers, examples, documentation, front page news).
 
+mvn release:prepare (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
+commit updated poms manually
+rm -rf ~/.m2/repository/jdave (delete local jdave repo)
+mvn install
 mvn-no-tests clean package assembly:directory   (in jdave-parent)
 scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
