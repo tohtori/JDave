@@ -6,18 +6,13 @@
   <parent>
     <groupId>jdave</groupId>
     <artifactId>jdave-parent</artifactId>
-    <version>0.5.0</version>
+    <version>0.6.0-SNAPSHOT</version>
     <relativePath>../jdave-parent</relativePath>
   </parent>
   
   <artifactId>jdave-junit4</artifactId>
   <name>jdave-junit4</name>
   <packaging>jar</packaging>
-  
-  <scm>
-    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/tags/jdave-parent-0.5.0</connection>
-    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/tags/jdave-parent-0.5.0</developerConnection>
-  </scm>
   
   <dependencies>
     <dependency>
