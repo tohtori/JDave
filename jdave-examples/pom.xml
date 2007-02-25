@@ -13,6 +13,11 @@
   <name>jdave-examples</name>
   <packaging>jar</packaging>
   
+  <scm>
+    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples</connection>
+    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples</developerConnection>
+  </scm>
+  
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
