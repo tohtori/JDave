@@ -13,4 +13,9 @@
   <name>jdave-core</name>
   <packaging>jar</packaging>
   
+  <scm>
+    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-core</connection>
+    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk/jdave-core</developerConnection>
+  </scm>
+  
 </project>
