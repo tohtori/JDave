@@ -114,6 +114,39 @@ public class SpecificationTest extends TestCase {
         }, specification.raise(Throwable.class));
     }
     
+    public void testShouldPassWhenExactExpectedThrowableRaised() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                throw new Throwable();
+            }
+        }, specification.raiseExactly(Throwable.class));
+    }
+    
+    public void testShouldFailWhenExpectingAnExactExceptionButNoneIsRaised() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                }
+            }, specification.raiseExactly(IllegalArgumentException.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block should throw java.lang.IllegalArgumentException but nothing was thrown.", e.getMessage());
+        }
+    }
+    
+    public void testShouldFailWhenExpectingAnExactExceptionButSubclassIsRaised() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.raiseExactly(Throwable.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block should throw java.lang.Throwable but java.lang.IllegalArgumentException was thrown.", e.getMessage());
+        }
+    }
+    
     public void testShouldFailWhenExpectedExceptionNotRaised() {
         try {
             specification.specify(new Block() {

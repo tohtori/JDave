@@ -154,20 +154,20 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Block block, Class<? extends Throwable> expected) {
+    public void specify(Block block, ExpectedException<? extends Throwable> expectation) {
         try {
             block.run();
         } catch (Throwable t) {
-            if (expected.isAssignableFrom(t.getClass())) {
+            if (expectation.matches(t.getClass())) {
                 return;
             }
             throw new ExpectationFailedException("The specified block should throw "
-                    + expected.getName() + " but " + t.getClass().getName() + " was thrown.", t);
+                    + expectation.getType().getName() + " but " + t.getClass().getName() + " was thrown.", t);
         } finally {
             resetActualState();
         }
         throw new ExpectationFailedException("The specified block should throw "
-                + expected.getName() + " but nothing was thrown.");
+                + expectation.getType().getName() + " but nothing was thrown.");
     }
 
     public void specify(Object obj, Contract contract) {
@@ -182,8 +182,12 @@ public abstract class Specification<T> extends MockSupport {
         return obj;
     }
 
-    public Class<? extends Throwable> raise(Class<? extends Throwable> expected) {
-        return expected;
+    public ExpectedException<? extends Throwable> raise(Class<? extends Throwable> expected) {
+        return new ExpectedException(expected);
+    }
+
+    public ExpectedException<? extends Throwable> raiseExactly(Class<? extends Throwable> expected) {
+        return new ExactExpectedException(expected);
     }
 
     public Containment contains(Object object) {
