@@ -182,12 +182,12 @@ public abstract class Specification<T> extends MockSupport {
         return obj;
     }
 
-    public ExpectedException<? extends Throwable> raise(Class<? extends Throwable> expected) {
-        return new ExpectedException(expected);
+    public <E extends Throwable> ExpectedException<E> raise(Class<E> expected) {
+        return new ExpectedException<E>(expected);
     }
 
-    public ExpectedException<? extends Throwable> raiseExactly(Class<? extends Throwable> expected) {
-        return new ExactExpectedException(expected);
+    public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected) {
+        return new ExactExpectedException<E>(expected);
     }
 
     public Containment contains(Object object) {

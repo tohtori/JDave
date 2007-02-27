@@ -19,7 +19,6 @@ package jdave;
  * @author Lasse Koskela
  */
 public class ExpectedException<T> {
-
     private final Class<? extends T> expected;
 
     public ExpectedException(Class<? extends T> expected) {
@@ -33,5 +32,4 @@ public class ExpectedException<T> {
     public boolean matches(Class<? extends Throwable> actual) {
         return expected.isAssignableFrom(actual);
     }
-
 }

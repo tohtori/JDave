@@ -18,14 +18,13 @@ package jdave;
 /**
  * @author Lasse Koskela
  */
-public class ExactExpectedException<T> extends ExpectedException {
-
+public class ExactExpectedException<T> extends ExpectedException<T> {
     public ExactExpectedException(Class<T> expected) {
         super(expected);
     }
 
     @Override
-    public boolean matches(Class actual) {
+    public boolean matches(Class<? extends Throwable> actual) {
         return getType().equals(actual);
     }
 }
