@@ -106,6 +106,14 @@ public class SpecificationTest extends TestCase {
         }, specification.raise(Throwable.class));
     }
     
+    public void testShouldPassWhenSubclassOfExpectedThrowableRaised() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                throw new NoClassDefFoundError();
+            }
+        }, specification.raise(Throwable.class));
+    }
+    
     public void testShouldFailWhenExpectedExceptionNotRaised() {
         try {
             specification.specify(new Block() {

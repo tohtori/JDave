@@ -158,7 +158,7 @@ public abstract class Specification<T> extends MockSupport {
         try {
             block.run();
         } catch (Throwable t) {
-            if (t.getClass().equals(expected)) {
+            if (expected.isAssignableFrom(t.getClass())) {
                 return;
             }
             throw new ExpectationFailedException("The specified block should throw "
