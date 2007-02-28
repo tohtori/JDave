@@ -43,7 +43,7 @@ public class InPartialOrderContainmentTest extends TestCase {
         assertFalse(containment.isIn(Arrays.asList(1, 3, 2)));
     }
     
-    public void testIsInPartialOrderWhenActualHasMoreElements() {
+    public void testIsInPartialOrderWhenActualHasMoreElementsButInOrder() {
         assertTrue(containment.isIn(Arrays.asList(1, 2, 3, 4)));
     }
     
