@@ -26,6 +26,23 @@
     <module>../jdave-examples</module>
   </modules>
   
+  <developers>
+    <developer>
+      <name>Pekka Enberg</name>
+    </developer>
+    <developer>
+      <name>Joni Freeman</name>
+    </developer>
+    <developer>
+      <name>Lasse Koskela</name>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Esko Luontola</name>
+    </contributor>
+  </contributors>
+  
   <dependencies>
     <dependency>
       <groupId>jmock</groupId>
