@@ -67,6 +67,10 @@ public class ContainmentSampleSpec extends Specification<Object> {
         public void doesNotContainItemsInOrder() {
             specify(elements, does.not().containInOrder(1, 3, 2));
         }
+        
+        public void containsItemsInPartialOrder() {
+            specify(elements, containsInPartialOrder(1, 3));
+        }
     }
     
     public class SampleWithVariousRightHandSides {
