@@ -15,12 +15,11 @@
  */
 package jdave;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
+ * @author Esko Luontola
  * @author Joni Freeman
  */
 public class InPartialOrderContainment extends CollectionContainment {
@@ -37,9 +36,18 @@ public class InPartialOrderContainment extends CollectionContainment {
     }
     
     public boolean isIn(Collection<?> actual) {
-        List<?> retained = new ArrayList<Object>(actual);
-        retained.retainAll(elements);
-        InOrderContainment inOrderContainment = new InOrderContainment(elements);
-        return inOrderContainment.isIn(retained);
+        Iterator<?> i1 = elements.iterator();
+        Iterator<?> i2 = actual.iterator();
+        while (i1.hasNext()) {
+            Object o1 = i1.next();
+            Object o2;
+            do {
+                if (!i2.hasNext()) {
+                    return false;
+                }
+                o2 = i2.next();
+            } while (!o1.equals(o2));
+        }
+        return true;
     }
 }
