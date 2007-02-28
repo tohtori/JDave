@@ -353,4 +353,84 @@ public class ContainmentSupport extends MockSupport {
     public Containment containsInOrder(Iterable<?> elements) {
         return containInOrder(elements);
     }
+    
+    public Containment containInPartialOrder(Collection<?> elements) {
+        return new InPartialOrderContainment(elements);
+    }
+
+    public Containment containsInPartialOrder(Collection<?> elements) {
+        return containInPartialOrder(elements);
+    }
+
+    public Containment containInPartialOrder(Object... elements) {
+        return new InPartialOrderContainment(Arrays.asList(elements));
+    }
+
+    public Containment containInPartialOrder(byte[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(byte[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containInPartialOrder(short[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(short[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containInPartialOrder(int[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(int[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containInPartialOrder(long[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(long[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containInPartialOrder(float[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(float[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containInPartialOrder(double[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(double[] object) {
+        return containInPartialOrder(Primitives.asList(object));
+    }
+
+    public Containment containsInPartialOrder(Object... elements) {
+        return containInPartialOrder(elements);
+    }
+
+    public Containment containInPartialOrder(Iterator<?> elements) {
+        return new InPartialOrderContainment(elements);
+    }
+
+    public Containment containsInPartialOrder(Iterator<?> elements) {
+        return containInPartialOrder(elements);
+    }
+
+    public Containment containInPartialOrder(Iterable<?> elements) {
+        return new InPartialOrderContainment(elements);
+    }
+
+    public Containment containsInPartialOrder(Iterable<?> elements) {
+        return containInPartialOrder(elements);
+    }
 }
