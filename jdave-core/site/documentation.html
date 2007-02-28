@@ -112,9 +112,22 @@ Specification class provides expectation methods to compare various collection c
 and their friends. 
 <ul>
   <li><code>containsAll, does.not().containAll</code></li>
+  The actual collection must contain all given elements. The order of elements
+  is not significant.
   <li><code>containsAny, does.not().containAny</code></li>
+  The actual collection must contain at least one element from given collection.
   <li><code>containsExactly, does.not().containExactly</code></li>
+  The actual collection must contain exactly the same elements as in given collection. 
+  The order of elements is not significant.
   <li><code>containsInOrder, does.not().containInOrder</code></li>
+  The actual collection must contain exactly the same elements as in given collection
+  and in same order.
+  <li><code>containsInPartialOrder, does.not().containInPartialOrder</code></li>
+  The actual collection can hold other objects, but the objects which are common in
+  both collections must be in same order. The actual collection can also repeat
+  some elements. Example, [1, 2, 2, 3, 4] is in partial order with [1, 2, 3].
+  See <a href="http://en.wikipedia.org/wiki/Partial_order">Wikipedia</a> for
+  further information.
 </ul>
 
 Containments can be done for arrays, Collections, Iterators and Iterables.
@@ -126,6 +139,7 @@ specify(Arrays.asList(1, 2).iterator(), containsAny(0, 1));
 specify(new Object[] { 1, 2 }, does.not().containAny(0, -1)));
 specify(new MyIterable(1, 2), containsExactly(2, 1)));
 specify(new MyIterable(1, 2), containsInOrder(1, 2)));
+specify(Arrays.asList(1, 2, 3), containsInPartialOrder(1, 2)));
 etc.
 </code>
 </pre>
