@@ -42,9 +42,9 @@ class JLabelContainment<T> implements ContainerContainment {
     public String error(Container container) {
         List<JLabel> labels = findLabels(container);
         if (labels.isEmpty()) {
-            return "Expected label with text \"" + expected + "\", but there are no labels in panel.";
+            return "Expected label with text \"" + expected + "\", but there are no labels in container.";
         }
-        return "Expected label with text \"" + expected + "\", but panel contains only the following labels: " + format(labels) + ".";
+        return "Expected label with text \"" + expected + "\", but container has only the following labels: " + format(labels) + ".";
     }
 
     private List<JLabel> findLabels(Container container) {

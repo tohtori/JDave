@@ -15,10 +15,10 @@
  */
 package jdave.jemmy;
 
+import java.awt.Container;
 import java.io.InputStream;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import jdave.ExpectationFailedException;
 import jdave.Specification;
@@ -28,16 +28,16 @@ import org.netbeans.jemmy.JemmyProperties;
 /**
  * @author Pekka Enberg
  */
-public abstract class JemmyPanelSpecification<T extends JPanel> extends Specification<T> {
-    protected T panel;
+public abstract class JemmyContainerSpecification<T extends Container> extends Specification<T> {
+    protected T container;
 
     @Override
     public void create() {
         initJemmy();
-        panel = newPanel();
+        container = newContainer();
         JFrame frame = new JFrame();
         frame.setVisible(true);
-        frame.add(panel);
+        frame.add(container);
     }
 
     protected void initJemmy() {
@@ -53,11 +53,11 @@ public abstract class JemmyPanelSpecification<T extends JPanel> extends Specific
         return getClass().getClassLoader().getResourceAsStream("jdave-jemmy.timeouts");
     }
 
-    protected abstract T newPanel();
+    protected abstract T newContainer();
 
     public void specify(ContainerContainment containment) {
-        if (!containment.isIn(panel)) {
-            throw new ExpectationFailedException(containment.error(panel));
+        if (!containment.isIn(container)) {
+            throw new ExpectationFailedException(containment.error(container));
         }
     }
 

@@ -29,14 +29,14 @@ import org.junit.runner.RunWith;
  * @author Pekka Enberg
  */
 @RunWith(JDaveRunner.class)
-public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecification<JPanel>> {
+public class JemmyContainerSpecificationSpec extends Specification<JemmyContainerSpecification<JPanel>> {
     public class EmptyPanel {
-        private JemmyPanelSpecification<JPanel> spec;
+        private JemmyContainerSpecification<JPanel> spec;
 
-        public JemmyPanelSpecification<JPanel> create() {
-            spec = new JemmyPanelSpecification<JPanel>() {
+        public JemmyContainerSpecification<JPanel> create() {
+            spec = new JemmyContainerSpecification<JPanel>() {
                 @Override
-                protected JPanel newPanel() {
+                protected JPanel newContainer() {
                     return new JPanel();
                 }
             };
@@ -49,17 +49,17 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
                 public void run() throws Throwable {
                     spec.specify(spec.containsLabel("Hello, Jemmy!"));
                 }
-            }, raise(ExpectationFailedException.class, "Expected label with text \"Hello, Jemmy!\", but there are no labels in panel."));
+            }, raise(ExpectationFailedException.class, "Expected label with text \"Hello, Jemmy!\", but there are no labels in container."));
         }
     }
 
-    public class PanelWithLabels {
-        private JemmyPanelSpecification<JPanel> spec;
+    public class JPanelWithLabels {
+        private JemmyContainerSpecification<JPanel> spec;
 
-        public JemmyPanelSpecification<JPanel> create() {
-            spec = new JemmyPanelSpecification<JPanel>() {
+        public JemmyContainerSpecification<JPanel> create() {
+            spec = new JemmyContainerSpecification<JPanel>() {
                 @Override
-                protected JPanel newPanel() {
+                protected JPanel newContainer() {
                     JPanel panel = new JPanel();
                     panel.add(new JLabel("Hello, Jemmy!"));
                     panel.add(new JLabel("What's up JDave?"));
@@ -79,7 +79,7 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
                 public void run() throws Throwable {
                     spec.specify(spec.containsLabel("hello, jemmy!"));
                 }
-            }, raise(ExpectationFailedException.class, "Expected label with text \"hello, jemmy!\", but panel contains only the following labels: [Hello, Jemmy!, What's up JDave?]."));
+            }, raise(ExpectationFailedException.class, "Expected label with text \"hello, jemmy!\", but container has only the following labels: [Hello, Jemmy!, What's up JDave?]."));
         }
     }
 }
