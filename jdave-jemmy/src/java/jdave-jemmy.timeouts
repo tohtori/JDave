@@ -1,0 +1,4 @@
+# You can find a list of Jemmy timeout properties here:
+# http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts
+ComponentOperator.WaitComponentTimeout=5000
+FrameWaiter.WaitFrameTimeout=5000
