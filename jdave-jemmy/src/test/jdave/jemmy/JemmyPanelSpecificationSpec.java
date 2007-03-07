@@ -18,6 +18,8 @@ package jdave.jemmy;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import jdave.Block;
+import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -43,7 +45,11 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
         }
 
         public void doesNotContainLabel() {
-            specify(!spec.containsLabel("Hello, Jemmy!"));
+            specify(new Block() {
+                public void run() throws Throwable {
+                    spec.specify(spec.containsLabel("Hello, Jemmy!"));
+                }
+            }, raise(ExpectationFailedException.class, "No label with text \"Hello, Jemmy!\" found in panel."));
         }
     }
 
@@ -64,11 +70,15 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
         }
 
         public void containsLabelWithExactTextMatch() {
-            specify(spec.containsLabel("Hello, Jemmy!"));
+            spec.specify(spec.containsLabel("Hello, Jemmy!"));
         }
         
         public void doesNotContainLabelWithCaseInsensitiveMatch() {
-            specify(!spec.containsLabel("hello, jemmy!"));
+            specify(new Block() {
+                public void run() throws Throwable {
+                    spec.specify(spec.containsLabel("hello, jemmy!"));
+                }
+            }, raise(ExpectationFailedException.class, "No label with text \"hello, jemmy!\" found in panel."));
         }
     }
 }

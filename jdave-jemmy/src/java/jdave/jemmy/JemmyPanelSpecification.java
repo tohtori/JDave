@@ -18,13 +18,12 @@ package jdave.jemmy;
 import java.io.InputStream;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 import org.netbeans.jemmy.JemmyProperties;
-import org.netbeans.jemmy.operators.JLabelOperator;
 
 /**
  * @author Pekka Enberg
@@ -56,8 +55,13 @@ public abstract class JemmyPanelSpecification<T extends JPanel> extends Specific
 
     protected abstract T newPanel();
 
-    public boolean containsLabel(String labelText) {
-        JLabel label = JLabelOperator.findJLabel(panel, labelText, true, true);
-        return label != null;
+    public void specify(ContainerContainment containment) {
+        if (!containment.isIn(panel)) {
+            throw new ExpectationFailedException(containment.message());
+        }
+    }
+
+    public ContainerContainment containsLabel(String expected) {
+        return new JLabelContainment<T>(expected);
     }
 }
