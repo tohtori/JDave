@@ -62,6 +62,6 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     }
 
     public ContainerContainment containsLabel(String expected) {
-        return new JLabelContainment<T>(expected);
+        return new JLabelContainment(expected);
     }
 }
