@@ -23,6 +23,7 @@
     <module>../jdave-core</module>
     <module>../jdave-junit3</module>
     <module>../jdave-junit4</module>
+    <module>../jdave-jemmy</module>
     <module>../jdave-examples</module>
   </modules>
   
@@ -117,4 +118,10 @@
       </plugin>
     </plugins>
   </reporting>
+  <repositories>
+    <repository>
+      <id>laughingpanda-maven2</id>
+      <url>http://www.laughingpanda.org/maven2/</url>
+    </repository>
+  </repositories>
 </project>
