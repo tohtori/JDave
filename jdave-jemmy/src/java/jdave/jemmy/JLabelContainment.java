@@ -48,13 +48,16 @@ class JLabelContainment implements ContainerContainment {
     }
 
     private List<JLabel> findLabels(Container container) {
-        List<JLabel> result = new ArrayList<JLabel>();
+        List<JLabel> results = new ArrayList<JLabel>();
         for (Component component : container.getComponents()) {
             if (component instanceof JLabel) {
-                result.add((JLabel) component);
+                results.add((JLabel) component);
+            }
+            if (component instanceof Container) {
+                results.addAll(findLabels((Container) component));
             }
         }
-        return result;
+        return results;
     }
 
     private String format(List<JLabel> labels) {
