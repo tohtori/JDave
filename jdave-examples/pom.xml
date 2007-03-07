@@ -23,6 +23,11 @@
       <artifactId>jdave-junit3</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>jdave-jemmy</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   
 </project>

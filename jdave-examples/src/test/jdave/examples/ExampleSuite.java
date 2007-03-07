@@ -15,6 +15,7 @@
  */
 package jdave.examples;
 
+import jdave.examples.swing.AlbumPanelSpec;
 import jdave.junit3.JDaveSuite;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,6 +29,7 @@ public class ExampleSuite extends TestSuite {
         addTest(new JDaveSuite(ObservableSpec.class));
         addTest(new JDaveSuite(ContainmentSampleSpec.class));
         addTest(new JDaveSuite(ContractEnforcementSampleSpec.class));
+        addTest(new JDaveSuite(AlbumPanelSpec.class));
     }
     
     public static Test suite() throws Exception {
