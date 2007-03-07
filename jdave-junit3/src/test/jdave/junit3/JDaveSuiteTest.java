@@ -16,12 +16,21 @@
 package jdave.junit3;
 
 import jdave.Specification;
+import jdave.runner.Behavior;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 /**
  * @author Joni Freeman
  */
 public class JDaveSuiteTest extends TestCase {
+    private boolean verifyCalled;
+    
+    @Override
+    protected void setUp() throws Exception {
+        verifyCalled = false;
+    }
+
     public void testShouldAddTestSuiteForEachContextInSpecification() throws Exception {
         class TestSpec extends Specification<Object> {
             class C1 {}
@@ -29,5 +38,43 @@ public class JDaveSuiteTest extends TestCase {
         }
         JDaveSuite suite = new JDaveSuite(TestSpec.class);
         assertEquals(2, suite.testCount());
+    }
+    
+    public void testShouldNotVerifySpecIfTestRunHasErrors() throws Exception {
+        JDaveSuite suite = new JDaveSuite(TestSpecWithMethod.class) {
+            @Override
+            protected Specification<?> runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) throws Throwable {
+                testResult.addError(testCase, new RuntimeException());
+                return new StubSpecification();
+            }
+        };
+        suite.run(new TestResult());
+        assertFalse(verifyCalled);
+    }
+  
+    public void testShouldVerifySpecIfNoErrorsInTestRun() throws Exception {
+        JDaveSuite suite = new JDaveSuite(TestSpecWithMethod.class) {
+            @Override
+            protected Specification<?> runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) throws Throwable {
+                return new StubSpecification();
+            }
+        };
+        suite.run(new TestResult());
+        assertTrue(verifyCalled);
+    }
+    
+    private class TestSpecWithMethod extends Specification<Object> {
+        class C1 {
+            @SuppressWarnings("unused")
+            public void specMethod() {
+            }
+        }
+    }
+    
+    private class StubSpecification extends Specification<Object> {
+        @Override
+        public void verify() {
+            verifyCalled = true;
+        }
     }
 }

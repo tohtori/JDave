@@ -62,10 +62,16 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
                 setUp();
                 try {
                     runTest();
-                    spec.verify();
+                    if (!hasErrorsOrFailures()) {
+                        spec.verify();
+                    }
                 } finally {
                     tearDown();
                 }
+            }
+            
+            private boolean hasErrorsOrFailures() {
+                return result.errorCount() > 0 || result.failureCount() > 0;
             }
             
             @Override
@@ -76,11 +82,15 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
 
             @Override
             protected void runTest() throws Throwable {
-                spec = behavior.run(new ResultAdapter(this, result));
+                spec = runBehavior(behavior, this, result);
             }
         });
     }
     
+    protected Specification<?> runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) throws Throwable {
+        return behavior.run(new ResultAdapter(testCase, testResult));
+    }
+
     static class ResultAdapter implements BehaviorResults {
         private final TestResult result;
         private final Test test;
