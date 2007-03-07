@@ -57,7 +57,7 @@ public abstract class JemmyPanelSpecification<T extends JPanel> extends Specific
 
     public void specify(ContainerContainment containment) {
         if (!containment.isIn(panel)) {
-            throw new ExpectationFailedException(containment.message());
+            throw new ExpectationFailedException(containment.error(panel));
         }
     }
 

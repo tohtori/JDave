@@ -15,12 +15,18 @@
  */
 package jdave.jemmy;
 
+import java.awt.Component;
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 
 import org.netbeans.jemmy.operators.JLabelOperator;
 
+/**
+ * @author Pekka Enberg
+ */
 class JLabelContainment<T> implements ContainerContainment {
     private final String expected;
 
@@ -33,7 +39,29 @@ class JLabelContainment<T> implements ContainerContainment {
         return label != null;
     }
 
-    public String message() {
-        return "No label with text \"" + expected + "\" found in panel.";
+    public String error(Container container) {
+        List<JLabel> labels = findLabels(container);
+        if (labels.isEmpty()) {
+            return "Expected label with text \"" + expected + "\", but there are no labels in panel.";
+        }
+        return "Expected label with text \"" + expected + "\", but panel contains only the following labels: " + format(labels) + ".";
+    }
+
+    private List<JLabel> findLabels(Container container) {
+        List<JLabel> result = new ArrayList<JLabel>();
+        for (Component component : container.getComponents()) {
+            if (component instanceof JLabel) {
+                result.add((JLabel) component);
+            }
+        }
+        return result;
+    }
+
+    private String format(List<JLabel> labels) {
+        List<String> result = new ArrayList<String>(); 
+        for (JLabel label : labels) {
+            result.add(label.getText());
+        }
+        return result.toString();
     }
 }

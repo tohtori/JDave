@@ -21,6 +21,6 @@ import java.awt.Container;
  * @author Pekka Enberg
  */
 public interface ContainerContainment {
-    boolean isIn(Container component);
-    String message();
+    boolean isIn(Container container);
+    String error(Container container);
 }

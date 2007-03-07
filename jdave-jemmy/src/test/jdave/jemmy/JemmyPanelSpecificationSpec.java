@@ -49,11 +49,11 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
                 public void run() throws Throwable {
                     spec.specify(spec.containsLabel("Hello, Jemmy!"));
                 }
-            }, raise(ExpectationFailedException.class, "No label with text \"Hello, Jemmy!\" found in panel."));
+            }, raise(ExpectationFailedException.class, "Expected label with text \"Hello, Jemmy!\", but there are no labels in panel."));
         }
     }
 
-    public class PanelWithLabel {
+    public class PanelWithLabels {
         private JemmyPanelSpecification<JPanel> spec;
 
         public JemmyPanelSpecification<JPanel> create() {
@@ -62,6 +62,7 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
                 protected JPanel newPanel() {
                     JPanel panel = new JPanel();
                     panel.add(new JLabel("Hello, Jemmy!"));
+                    panel.add(new JLabel("What's up JDave?"));
                     return panel;
                 }
             };
@@ -78,7 +79,7 @@ public class JemmyPanelSpecificationSpec extends Specification<JemmyPanelSpecifi
                 public void run() throws Throwable {
                     spec.specify(spec.containsLabel("hello, jemmy!"));
                 }
-            }, raise(ExpectationFailedException.class, "No label with text \"hello, jemmy!\" found in panel."));
+            }, raise(ExpectationFailedException.class, "Expected label with text \"hello, jemmy!\", but panel contains only the following labels: [Hello, Jemmy!, What's up JDave?]."));
         }
     }
 }
