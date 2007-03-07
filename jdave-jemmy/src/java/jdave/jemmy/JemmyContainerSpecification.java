@@ -68,7 +68,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
         return new JLabelContainment(expected);
     }
 
-    class JemmyOperations {
+    protected class JemmyOperations {
         public void pushButton(String text) {
             JButton button = JButtonOperator.findJButton(container, text, true, true);
             if (button == null) {
