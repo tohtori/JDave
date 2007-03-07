@@ -24,7 +24,7 @@ public class ExactExpectedException<T> extends ExpectedException<T> {
     }
 
     @Override
-    public boolean matches(Class<? extends Throwable> actual) {
+    public boolean matchesType(Class<? extends Throwable> actual) {
         return getType().equals(actual);
     }
 }

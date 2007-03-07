@@ -97,7 +97,15 @@ public class SpecificationTest extends TestCase {
             }
         }, specification.raise(IllegalArgumentException.class));
     }
-    
+
+    public void testShouldPassWhenExpectedExceptionRaisedWithSpecifiedMessage() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                throw new IllegalArgumentException("argument is null");
+            }
+        }, specification.raise(IllegalArgumentException.class, "argument is null"));
+    }
+
     public void testShouldPassWhenExpectedThrowableRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -169,6 +177,32 @@ public class SpecificationTest extends TestCase {
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("The specified block should throw java.lang.IllegalArgumentException but java.lang.NullPointerException was thrown.", e.getMessage());
+        }
+    }
+
+    public void testShouldFailWhenExpectedExceptionRaisedWithWrongMessage() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException("invalid range");
+                }
+            }, specification.raise(IllegalArgumentException.class, "argument is null"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected the exception message to be \"argument is null\", but was: \"invalid range\".", e.getMessage());
+        }
+    }
+
+    public void testShouldFailWhenExpectedExceptionRaisedWithWrongNullMessage() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException("invalid range");
+                }
+            }, specification.raise(IllegalArgumentException.class, null));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected the exception message to be \"null\", but was: \"invalid range\".", e.getMessage());
         }
     }
     

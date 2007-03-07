@@ -17,27 +17,23 @@ package jdave;
 
 /**
  * @author Lasse Koskela
+ * @author Pekka Enberg
  */
-public class ExpectedException<T> {
-    private final Class<? extends T> expected;
+public class ExpectedExceptionWithMessage<T> extends ExpectedException<T> {
+    private final String message;
 
-    public ExpectedException(Class<? extends T> expected) {
-        this.expected = expected;
+    public ExpectedExceptionWithMessage(Class<? extends T> type, String message) {
+        super(type);
+        this.message = message;
     }
-
-    public Class<? extends T> getType() {
-        return expected;
-    }
-
-    public boolean matchesType(Class<? extends Throwable> actual) {
-        return expected.isAssignableFrom(actual);
-    }
-
+    
+    @Override
     public boolean matchesMessage(String message) {
-        return true;
+        return message.equals(this.message);
     }
-
+    
+    @Override
     public String getMessage() {
-        throw new UnsupportedOperationException();
+        return message;
     }
 }

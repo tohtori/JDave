@@ -157,11 +157,15 @@ public abstract class Specification<T> extends ContainmentSupport {
         try {
             block.run();
         } catch (Throwable t) {
-            if (expectation.matches(t.getClass())) {
-                return;
+            if (!expectation.matchesType(t.getClass())) {
+                throw new ExpectationFailedException("The specified block should throw "
+                        + expectation.getType().getName() + " but " + t.getClass().getName() + " was thrown.", t);
             }
-            throw new ExpectationFailedException("The specified block should throw "
-                    + expectation.getType().getName() + " but " + t.getClass().getName() + " was thrown.", t);
+            if (!expectation.matchesMessage(t.getMessage())) {
+                throw new ExpectationFailedException("Expected the exception message to be \""
+                        + expectation.getMessage() +"\", but was: \"" + t.getMessage() + "\".", t);
+            }
+            return;
         } finally {
             resetActualState();
         }
@@ -183,6 +187,10 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public <E extends Throwable> ExpectedException<E> raise(Class<E> expected) {
         return new ExpectedException<E>(expected);
+    }
+
+    public <E extends Throwable> ExpectedException<E> raise(Class<E> expectedType, String expectedMessage) {
+        return new ExpectedExceptionWithMessage<E>(expectedType, expectedMessage);
     }
 
     public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected) {
