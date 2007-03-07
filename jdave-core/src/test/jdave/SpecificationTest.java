@@ -106,6 +106,14 @@ public class SpecificationTest extends TestCase {
         }, specification.raise(IllegalArgumentException.class, "argument is null"));
     }
 
+    public void testShouldPassWhenExpectedExceptionRaisedExpectingNullMessage() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                throw new IllegalArgumentException((String) null);
+            }
+        }, specification.raise(IllegalArgumentException.class, null));
+    }
+
     public void testShouldPassWhenExpectedThrowableRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -193,7 +201,7 @@ public class SpecificationTest extends TestCase {
         }
     }
 
-    public void testShouldFailWhenExpectedExceptionRaisedWithWrongNullMessage() {
+    public void testShouldFailWhenExpectedExceptionRaisedButMessageIsNonNullWhenExpectingNull() {
         try {
             specification.specify(new Block() {
                 public void run() throws Throwable {
@@ -203,6 +211,19 @@ public class SpecificationTest extends TestCase {
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("Expected the exception message to be \"null\", but was: \"invalid range\".", e.getMessage());
+        }
+    }
+
+    public void testShouldFailWhenExpectedExceptionRaisedWithNullMessageWhenExpectingNonNull() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException((String) null);
+                }
+            }, specification.raise(IllegalArgumentException.class, "argument is null"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected the exception message to be \"argument is null\", but was: \"null\".", e.getMessage());
         }
     }
     

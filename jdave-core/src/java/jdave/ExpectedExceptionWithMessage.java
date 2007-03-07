@@ -29,6 +29,15 @@ public class ExpectedExceptionWithMessage<T> extends ExpectedException<T> {
     
     @Override
     public boolean matchesMessage(String message) {
+        if (message == null && this.message == null) {
+            return true;
+        }
+        if (message == null) {
+            return false;
+        }
+        if (this.message == null) {
+            return false;
+        }
         return message.equals(this.message);
     }
     
