@@ -72,6 +72,7 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
 
         public void containsLabelWithExactTextMatch() {
             spec.specify(spec.containsLabel("Hello, Jemmy!"));
+            spec.specify(spec.containsLabel("What's up JDave?"));
         }
         
         public void doesNotContainLabelWithCaseInsensitiveMatch() {
