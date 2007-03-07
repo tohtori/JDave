@@ -15,6 +15,10 @@
  */
 package jdave.jemmy;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +26,7 @@ import jdave.Block;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.mock.Mock;
 
 import org.junit.runner.RunWith;
 
@@ -44,7 +49,15 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
             return spec;
         }
 
-        public void doesNotContainLabel() {
+        public void complainsOnButtonPush() {
+            specify(new Block() {
+                public void run() throws Throwable {
+                    spec.jemmy.pushButton("Hello");
+                }
+            }, raise(NoSuchButtonException.class, "Hello"));
+        }
+
+        public void complainsOnContainsLabel() {
             specify(new Block() {
                 public void run() throws Throwable {
                     spec.specify(spec.containsLabel("Hello, Jemmy!"));
@@ -82,5 +95,40 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                 }
             }, raise(ExpectationFailedException.class, "Expected label with text \"hello, jemmy!\", but container has only the following labels: [Hello, Jemmy!, What's up JDave?]."));
         }
+    }
+    
+    public class JPanelWithButton {
+        private JemmyContainerSpecification<JPanel> spec;
+        private Mock<PresentationModel> presentationModelMock;
+
+        public JemmyContainerSpecification<JPanel> create() {
+            presentationModelMock = mock(PresentationModel.class);
+            spec = new JemmyContainerSpecification<JPanel>() {
+                @Override
+                protected JPanel newContainer() {
+                    JPanel panel = new JPanel();
+                    JButton button = new JButton();
+                    button.setAction(new AbstractAction("Hello") {
+                        public void actionPerformed(ActionEvent event) {
+                            presentationModelMock.proxy().onClick();
+                        }
+                    });
+                    button.setText("Hello");
+                    panel.add(button);
+                    return panel;
+                }
+            };
+            spec.create();
+            return spec;
+        }
+        
+        public void buttonPushInvokesAction() {
+            presentationModelMock.expects(once()).method("onClick");
+            spec.jemmy.pushButton("Hello");
+        }
+    }
+    
+    public interface PresentationModel {
+        void onClick();
     }
 }

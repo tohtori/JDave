@@ -18,17 +18,20 @@ package jdave.jemmy;
 import java.awt.Container;
 import java.io.InputStream;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 import org.netbeans.jemmy.JemmyProperties;
+import org.netbeans.jemmy.operators.JButtonOperator;
 
 /**
  * @author Pekka Enberg
  */
 public abstract class JemmyContainerSpecification<T extends Container> extends Specification<T> {
+    protected JemmyOperations jemmy = new JemmyOperations();
     protected T container;
 
     @Override
@@ -63,5 +66,15 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
 
     public ContainerContainment containsLabel(String expected) {
         return new JLabelContainment(expected);
+    }
+
+    class JemmyOperations {
+        public void pushButton(String text) {
+            JButton button = JButtonOperator.findJButton(container, text, true, true);
+            if (button == null) {
+                throw new NoSuchButtonException(text);
+            }
+            new JButtonOperator(button).push();
+        }
     }
 }
