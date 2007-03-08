@@ -33,14 +33,20 @@ import org.netbeans.jemmy.operators.JButtonOperator;
 public abstract class JemmyContainerSpecification<T extends Container> extends Specification<T> {
     protected JemmyOperations jemmy = new JemmyOperations();
     protected T container;
+    private JFrame frame;
 
     @Override
     public void create() {
         initJemmy();
         container = newContainer();
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setVisible(true);
         frame.add(container);
+    }
+
+    @Override
+    public void destroy() {
+        frame.dispose();
     }
 
     protected void initJemmy() {
