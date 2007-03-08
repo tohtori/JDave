@@ -15,14 +15,13 @@
  */
 package jdave.junit4;
 
-import java.util.Stack;
-
 import jdave.Specification;
+import jdave.runner.Behavior;
 import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
-import jdave.runner.Behavior;
 
 import org.junit.runner.Description;
+import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -32,45 +31,28 @@ import org.junit.runner.notification.RunNotifier;
  * implementing the core of the JUnit4 integration.
  * 
  * @author Lasse Koskela
+ * @author Joni Freeman
  */
 public class JDaveCallback implements ISpecVisitor {
-    private Stack<Description> contextStack;
-    private Stack<Description> behaviorStack;
     private RunNotifier notifier;
 
     public JDaveCallback(RunNotifier notifier) {
         this.notifier = notifier;
-        contextStack = new Stack<Description>();
-        behaviorStack = new Stack<Description>();
     }
 
     public void onContext(Context context) {
-        if (contextStack.size() > 0) {
-            notifier.fireTestFinished(contextStack.pop());
-        }
-
-        Description desc = Description.createSuiteDescription(context.getName());
-        notifier.fireTestStarted(desc);
-        contextStack.push(desc);
     }
 
     public void onBehavior(Behavior behavior) throws Exception {
-        if (behaviorStack.size() > 0) {
-            notifier.fireTestFinished(behaviorStack.pop());
-        }
         final Description desc = Description.createSuiteDescription(behavior.getName());
         notifier.fireTestStarted(desc);
-        Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
-        spec.verify();
-        behaviorStack.push(desc);
-    }
-
-    public void runFinished() {
-        if (behaviorStack.size() > 0) {
-            notifier.fireTestFinished(behaviorStack.pop());
-        }
-        if (contextStack.size() > 0) {
-            notifier.fireTestFinished(contextStack.pop());
+        try {
+            Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
+            spec.verify();
+        } catch (Throwable t) {
+            notifier.fireTestFailure(new Failure(desc, t));
+        } finally {
+            notifier.fireTestFinished(desc);
         }
     }
 }

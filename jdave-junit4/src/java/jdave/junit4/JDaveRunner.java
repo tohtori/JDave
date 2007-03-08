@@ -51,19 +51,19 @@ public class JDaveRunner extends Runner {
     public void run(final RunNotifier notifier) {
         Result result = new Result();
         notifier.addListener(result.createListener());
-        notifier.fireTestRunStarted(getDescription());
+        Description description = getDescription();
+        notifier.fireTestStarted(description);
         try {
             runJDave(notifier);
-            notifier.fireTestRunFinished(result);
         } catch (Throwable t) {
-            notifier.fireTestFailure(new Failure(getDescription(), t));
+            notifier.fireTestFailure(new Failure(description, t));
+        } finally {
+            notifier.fireTestFinished(description);            
         }
     }
 
     private void runJDave(final RunNotifier notifier) throws Exception {
         SpecRunner runner = new SpecRunner();
-        JDaveCallback callback = new JDaveCallback(notifier);
-        runner.run(spec, callback);
-        callback.runFinished();
+        runner.run(spec, new JDaveCallback(notifier));
     }
 }

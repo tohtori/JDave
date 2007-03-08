@@ -45,28 +45,14 @@ public class JDaveRunnerTest extends TestCase {
     }
 
     @Test
-    public void testRunForSpecClassIsStartedAndFinished() throws Exception {
-        shouldHaveHappened("fireTestRunStarted:" + DiverseSpec.class.getName());
-        shouldHaveHappened("fireTestRunFinished");
-    }
-
-    @Test
-    public void bothContextsAreStartedAndFinished() throws Exception {
-        shouldHaveHappened("fireTestStarted:FirstContext");
-        shouldHaveHappened("fireTestFinished:FirstContext");
-        shouldHaveHappened("fireTestStarted:SecondContext");
-        shouldHaveHappened("fireTestFinished:SecondContext");
-    }
-
-    @Test
-    public void failingSpecMethodsAreRecordedWithFailure() throws Exception {
+    public void testFailingSpecMethodsAreRecordedWithFailure() throws Exception {
         shouldHaveHappened("fireTestStarted:fails");
         shouldHaveHappened("fireTestFailure:fails");
         shouldHaveHappened("fireTestFinished:fails");
     }
 
     @Test
-    public void passingSpecMethodsAreRecordedWithoutFailure() throws Exception {
+    public void testPassingSpecMethodsAreRecordedWithoutFailure() throws Exception {
         shouldHaveHappened("fireTestStarted:passes");
         shouldHaveHappened("fireTestFinished:passes");
         shouldNotHaveHappened("fireTestFailure:passes");
