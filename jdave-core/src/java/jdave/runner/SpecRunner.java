@@ -56,7 +56,7 @@ public class SpecRunner {
     }
 
     private boolean isContextClass(Class<?> specType, Class<?> contextType) {
-        if ((contextType.getModifiers() & Modifier.ABSTRACT) != 0) {
+        if ((contextType.getModifiers() & (Modifier.ABSTRACT | Modifier.PRIVATE)) != 0) {
             return false;
         }
         return isInnerClass(specType, contextType);
