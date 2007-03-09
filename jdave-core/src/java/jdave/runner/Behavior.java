@@ -37,6 +37,10 @@ public abstract class Behavior {
         return method.getName();
     }
 
+    public Class<?> getContextClass() {
+        return method.getDeclaringClass();
+    }
+
     public Specification<?> run(BehaviorResults results) throws Exception {
         Specification<?> spec = newSpecification();
         try {
