@@ -32,10 +32,6 @@ public class JDaveSuiteTest extends TestCase {
     }
 
     public void testShouldAddTestSuiteForEachContextInSpecification() throws Exception {
-        class TestSpec extends Specification<Object> {
-            class C1 {}
-            class C2 {}
-        }
         JDaveSuite suite = new JDaveSuite(TestSpec.class);
         assertEquals(2, suite.testCount());
     }
@@ -62,16 +58,21 @@ public class JDaveSuiteTest extends TestCase {
         suite.run(new TestResult());
         assertTrue(verifyCalled);
     }
-    
-    private class TestSpecWithMethod extends Specification<Object> {
-        class C1 {
+
+    public class TestSpec extends Specification<Object> {
+        public class C1 {}
+        public class C2 {}
+    }
+
+    public class TestSpecWithMethod extends Specification<Object> {
+        public class C1 {
             @SuppressWarnings("unused")
             public void specMethod() {
             }
         }
     }
     
-    private class StubSpecification extends Specification<Object> {
+    public class StubSpecification extends Specification<Object> {
         @Override
         public void verify() {
             verifyCalled = true;
