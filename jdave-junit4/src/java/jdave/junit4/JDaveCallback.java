@@ -43,7 +43,7 @@ public class JDaveCallback implements ISpecVisitor {
     }
 
     public void onBehavior(Behavior behavior) throws Exception {
-        final Description desc = Description.createTestDescription(behavior.getContextClass(), behavior.getName());
+        Description desc = Description.createSuiteDescription(behavior.getName());
         notifier.fireTestStarted(desc);
         try {
             Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
