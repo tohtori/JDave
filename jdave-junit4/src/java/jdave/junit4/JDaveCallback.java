@@ -21,7 +21,6 @@ import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
 
 import org.junit.runner.Description;
-import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -35,7 +34,7 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveCallback implements ISpecVisitor {
     private RunNotifier notifier;
-
+    
     public JDaveCallback(RunNotifier notifier) {
         this.notifier = notifier;
     }
@@ -44,13 +43,13 @@ public class JDaveCallback implements ISpecVisitor {
     }
 
     public void onBehavior(Behavior behavior) throws Exception {
-        final Description desc = Description.createSuiteDescription(behavior.getName());
+        final Description desc = Description.createTestDescription(behavior.getContextClass(), behavior.getName());
         notifier.fireTestStarted(desc);
         try {
             Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
             spec.verify();
         } catch (Throwable t) {
-            notifier.fireTestFailure(new Failure(desc, t));
+            // intentional, exceptions are reported in ResultsAdapter
         } finally {
             notifier.fireTestFinished(desc);
         }

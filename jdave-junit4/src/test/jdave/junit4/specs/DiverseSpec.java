@@ -25,7 +25,6 @@ import jdave.Specification;
  * @author Lasse Koskela
  */
 public class DiverseSpec extends Specification<Stack<?>> {
-
     public class FirstContext {
         private Stack<String> stack;
 

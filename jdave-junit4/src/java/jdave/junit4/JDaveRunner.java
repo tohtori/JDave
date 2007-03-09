@@ -21,7 +21,6 @@ import jdave.runner.SpecRunner;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.Runner;
-import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -49,21 +48,11 @@ public class JDaveRunner extends Runner {
 
     @Override
     public void run(final RunNotifier notifier) {
-        Result result = new Result();
-        notifier.addListener(result.createListener());
-        Description description = getDescription();
-        notifier.fireTestStarted(description);
+        notifier.addListener(new Result().createListener());
         try {
-            runJDave(notifier);
+            new SpecRunner().run(spec, new JDaveCallback(notifier));
         } catch (Throwable t) {
-            notifier.fireTestFailure(new Failure(description, t));
-        } finally {
-            notifier.fireTestFinished(description);            
+            // intentional, exceptions are reported at lower level
         }
-    }
-
-    private void runJDave(final RunNotifier notifier) throws Exception {
-        SpecRunner runner = new SpecRunner();
-        runner.run(spec, new JDaveCallback(notifier));
     }
 }
