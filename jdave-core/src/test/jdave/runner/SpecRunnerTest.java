@@ -144,6 +144,12 @@ public class SpecRunnerTest extends TestCase {
         private class SomePrivateClass {            
         }
         
+        class SomePackageProtectedClass {            
+        }
+        
+        protected class SomeProtectedClass {            
+        }
+        
         @Override
         public void create() {
             specCreateCalled++;

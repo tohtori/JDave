@@ -56,10 +56,15 @@ public class SpecRunner {
     }
 
     private boolean isContextClass(Class<?> specType, Class<?> contextType) {
-        if ((contextType.getModifiers() & (Modifier.ABSTRACT | Modifier.PRIVATE)) != 0) {
+        if (!isConcreteAndPublic(contextType)) {
             return false;
         }
         return isInnerClass(specType, contextType);
+    }
+
+    private boolean isConcreteAndPublic(Class<?> contextType) {
+        int mod = contextType.getModifiers();
+        return (Modifier.isPublic(mod) && !Modifier.isAbstract(mod));
     }
 
     private boolean isInnerClass(Class<?> specType, Class<?> contextType) {
