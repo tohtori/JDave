@@ -21,6 +21,7 @@ import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
 
 import org.junit.runner.Description;
+import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -49,7 +50,7 @@ public class JDaveCallback implements ISpecVisitor {
             Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
             spec.verify();
         } catch (Throwable t) {
-            // intentional, exceptions are reported in ResultsAdapter
+            notifier.fireTestFailure(new Failure(desc, t));
         } finally {
             notifier.fireTestFinished(desc);
         }
