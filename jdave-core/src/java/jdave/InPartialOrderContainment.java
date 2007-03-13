@@ -38,6 +38,7 @@ public class InPartialOrderContainment extends CollectionContainment {
     public boolean isIn(Collection<?> actual) {
         Iterator<?> i1 = elements.iterator();
         Iterator<?> i2 = actual.iterator();
+        EqualityCheck equalityCheck = newEqualityCheck();
         while (i1.hasNext()) {
             Object o1 = i1.next();
             Object o2;
@@ -46,8 +47,12 @@ public class InPartialOrderContainment extends CollectionContainment {
                     return false;
                 }
                 o2 = i2.next();
-            } while (!o1.equals(o2));
+            } while (!equalityCheck.isEqual(o1, o2));
         }
         return true;
+    }
+    
+    protected EqualityCheck newEqualityCheck() {
+        return new EqualsEqualityCheck();
     }
 }
