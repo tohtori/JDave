@@ -1,5 +1,5 @@
 > Update docs (version numbers, examples, documentation, front page news).
-mvn release:prepare (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
+./bin/prepare-release.sh (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
 > commit updated poms manually
 rm -rf ~/.m2/repository/jdave (delete local jdave repo)
 mvn install
