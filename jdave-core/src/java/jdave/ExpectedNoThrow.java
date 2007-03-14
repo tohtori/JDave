@@ -18,10 +18,10 @@ package jdave;
 /**
  * @author Pekka Enberg
  */
-public class InverseExpectedException<T> {
+public class ExpectedNoThrow<T> {
     private final ExpectedException<T> expectation;
 
-    public InverseExpectedException(ExpectedException<T> expectation) {
+    public ExpectedNoThrow(ExpectedException<T> expectation) {
         this.expectation = expectation;
     }
 

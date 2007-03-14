@@ -108,17 +108,17 @@ public class InverseSpecification<T> extends ContainmentSupport {
         return new InverseContainment(super.newObjectContainment(object));
     }
 
-    public <E extends Throwable> InverseExpectedException<E> raise(Class<E> expected) {
-        return new InverseExpectedException<E>(new ExpectedException<E>(expected));
+    public <E extends Throwable> ExpectedNoThrow<E> raise(Class<E> expected) {
+        return new ExpectedNoThrow<E>(new ExpectedException<E>(expected));
     }
 
-    public <E extends Throwable> InverseExpectedException<E> raise(Class<E> expectedType,
+    public <E extends Throwable> ExpectedNoThrow<E> raise(Class<E> expectedType,
             String expectedMessage) {
-        return new InverseExpectedException<E>(new ExpectedExceptionWithMessage<E>(expectedType,
+        return new ExpectedNoThrow<E>(new ExpectedExceptionWithMessage<E>(expectedType,
                 expectedMessage));
     }
 
-    public <E extends Throwable> InverseExpectedException<E> raiseExactly(Class<E> expected) {
-        return new InverseExpectedException<E>(new ExactExpectedException<E>(expected));
+    public <E extends Throwable> ExpectedNoThrow<E> raiseExactly(Class<E> expected) {
+        return new ExpectedNoThrow<E>(new ExactExpectedException<E>(expected));
     }
 }

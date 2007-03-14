@@ -159,15 +159,15 @@ public abstract class Specification<T> extends MockSupport {
         throw new ExpectationFailedException(expectation.notThrown());
     }
 
-    public <V extends Throwable> void specify(Block block, InverseExpectedException<V> expectation) throws Throwable {
+    public <V extends Throwable> void specify(Block block, ExpectedNoThrow<V> expectation) throws Throwable {
         try {
-            specifyThrow(block, expectation);
+            specifyNoThrow(block, expectation);
         } finally {
             resetActualState();
         }
     }
 
-    private void specifyThrow(Block block, InverseExpectedException<? extends Throwable> expectation) throws Throwable {
+    private void specifyNoThrow(Block block, ExpectedNoThrow<? extends Throwable> expectation) throws Throwable {
         try {
             block.run();
         } catch (Throwable t) {
