@@ -41,7 +41,7 @@ public abstract class Specification<T> extends ContainmentSupport {
     public void specify(boolean expected) {
         try {
             if (expected != actualState) {
-                throw newException("true", "false");
+                throw new ExpectationFailedException("Expected: " + "true" + ", but was: " + "false");
             }
         } finally {
             resetActualState();
@@ -120,7 +120,7 @@ public abstract class Specification<T> extends ContainmentSupport {
     public void specify(Object actual, Object expected) {
         try {
             if (!new EqualsEqualityCheck().isEqual(actual, expected)) {
-                throw newException(expected, actual);
+                throw new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
             }
         } finally {
             resetActualState();
@@ -134,7 +134,7 @@ public abstract class Specification<T> extends ContainmentSupport {
     public void specify(double actual, Object expected, double delta) {
         try {
             if (Math.abs(actual - ((Number) expected).doubleValue()) > delta) {
-                throw newException(expected, actual);
+                throw new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
             }
         } finally {
             resetActualState();
@@ -171,10 +171,6 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public void specify(Object obj, Contract contract) {
         contract.isSatisfied(obj);
-    }
-
-    private ExpectationFailedException newException(Object expected, Object actual) {
-        return new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
     }
 
     public Object equal(Object obj) {
