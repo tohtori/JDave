@@ -18,7 +18,7 @@ package jdave;
 /**
  * @author Lasse Koskela
  */
-public class ExpectedException<T> implements IExpectedException<T> {
+public class ExpectedException<T> {
     protected final Class<? extends T> expected;
 
     public ExpectedException(Class<? extends T> expected) {
@@ -42,11 +42,7 @@ public class ExpectedException<T> implements IExpectedException<T> {
         return expected.isAssignableFrom(actual);
     }
 
-    public String nothrow() {
+    public String notThrown() {
         return "The specified block should throw " + expected.getName() + " but nothing was thrown.";
-    }
-
-    public boolean propagateException() {
-        return false;
     }
 }

@@ -139,7 +139,7 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public <V extends Throwable> void specify(Block block, IExpectedException<V> expectation) {
+    public <V extends Throwable> void specify(Block block, ExpectedException<V> expectation) {
         try {
             specifyThrow(block, expectation);
         } finally {
@@ -147,20 +147,34 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    private void specifyThrow(Block block, IExpectedException<? extends Throwable> expectation) {
+    private void specifyThrow(Block block, ExpectedException<? extends Throwable> expectation) {
         try {
             block.run();
         } catch (Throwable t) {
             if (!expectation.matches(t)) {
                 throw new ExpectationFailedException(expectation.error(t), t);
             }
-            if (expectation.propagateException()) {
-                throw new RuntimeException(t);
-            }
             return;
         }
-        if (!expectation.propagateException()) {
-            throw new ExpectationFailedException(expectation.nothrow());
+        throw new ExpectationFailedException(expectation.notThrown());
+    }
+
+    public <V extends Throwable> void specify(Block block, InverseExpectedException<V> expectation) throws Throwable {
+        try {
+            specifyThrow(block, expectation);
+        } finally {
+            resetActualState();
+        }
+    }
+
+    private void specifyThrow(Block block, InverseExpectedException<? extends Throwable> expectation) throws Throwable {
+        try {
+            block.run();
+        } catch (Throwable t) {
+            if (!expectation.matches(t)) {
+                throw new ExpectationFailedException(expectation.error(t), t);
+            }
+            throw t;
         }
     }
 

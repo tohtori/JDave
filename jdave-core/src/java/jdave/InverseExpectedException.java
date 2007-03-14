@@ -18,10 +18,10 @@ package jdave;
 /**
  * @author Pekka Enberg
  */
-public class InverseExpectedException<T> implements IExpectedException<T> {
-    private final IExpectedException<T> expectation;
+public class InverseExpectedException<T> {
+    private final ExpectedException<T> expectation;
 
-    public InverseExpectedException(IExpectedException<T> expectation) {
+    public InverseExpectedException(ExpectedException<T> expectation) {
         this.expectation = expectation;
     }
 
@@ -31,13 +31,5 @@ public class InverseExpectedException<T> implements IExpectedException<T> {
 
     public String error(Throwable t) {
         throw new ExpectationFailedException("The specified block threw " + t.getClass().getName(), t);
-    }
-
-    public boolean propagateException() {
-        return true;
-    }
-
-    public String nothrow() {
-        throw new UnsupportedOperationException();
     }
 }

@@ -28,7 +28,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         specification = new Specification<Void>() { };
     }
 
-    public void testShouldPassWhenNoExceptionRaised() {
+    public void testShouldPassWhenNoExceptionRaised() throws Throwable {
         specification.specify(new Block() {
             public void run() throws Throwable {
                 // Intentionally left blank.
@@ -36,7 +36,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }, specification.not().raise(IllegalArgumentException.class));
     }
 
-    public void testShouldFailIfThrowsExpectedException() {
+    public void testShouldFailIfThrowsExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
                 public void run() throws Throwable {
@@ -49,7 +49,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
 
-    public void testShouldFailIfThrowsSubclassOfExpectedException() {
+    public void testShouldFailIfThrowsSubclassOfExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
                 public void run() throws Throwable {
@@ -62,7 +62,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
 
-    public void testShouldFailIfThrowsExactlyExpectedException() {
+    public void testShouldFailIfThrowsExactlyExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
                 public void run() throws Throwable {
@@ -75,7 +75,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
 
-    public void testShouldRethrowIfThrowsSubclassOfExactlyExpectedException() {
+    public void testShouldRethrowIfThrowsSubclassOfExactlyExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
                 public void run() throws Throwable {
@@ -83,9 +83,8 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
                 }
             }, specification.not().raiseExactly(Throwable.class));
             fail();
-        } catch (RuntimeException e) {
-            assertEquals(IllegalArgumentException.class, e.getCause().getClass());
-            assertEquals("rethrown", e.getCause().getMessage());
+        } catch (IllegalArgumentException e) {
+            assertEquals("rethrown", e.getMessage());
         }
     }
 }
