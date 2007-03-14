@@ -31,6 +31,7 @@ public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
         
         public void notifiesPresentationModelWhenSaveButtonIsClicked() {
             presentationModelMock.expects(once()).method("save").withNoArguments();
+            frame.pack();
             jemmy.pushButton("Save");
         }
     }
