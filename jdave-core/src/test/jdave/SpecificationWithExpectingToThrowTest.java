@@ -22,12 +22,11 @@ import junit.framework.TestCase;
  * @author Pekka Enberg
  */
 public class SpecificationWithExpectingToThrowTest extends TestCase {
-    private Specification<EmptyStack> specification;
+    private Specification<Void> specification;
 
     @Override
     protected void setUp() throws Exception {
-        specification = new Specification<EmptyStack>() { };
-        specification.be = new EmptyStack();
+        specification = new Specification<Void>() { };
     }
 
     public void testShouldPassWhenExpectedExceptionRaised() {
@@ -164,12 +163,6 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("Expected the exception message to be \"argument is null\", but was: \"null\".", e.getMessage());
-        }
-    }
-
-    class EmptyStack {
-        public boolean empty() {
-            return true;
         }
     }
 }

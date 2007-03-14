@@ -21,12 +21,11 @@ import junit.framework.TestCase;
  * @author Pekka Enberg
  */
 public class SpecificationWithNotExpectingToThrowTest extends TestCase {
-    private Specification<EmptyStack> specification;
+    private Specification<Void> specification;
 
     @Override
     protected void setUp() throws Exception {
-        specification = new Specification<EmptyStack>() { };
-        specification.be = new EmptyStack();
+        specification = new Specification<Void>() { };
     }
 
     public void testShouldPassWhenNoExceptionRaised() {
@@ -87,12 +86,6 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         } catch (RuntimeException e) {
             assertEquals(IllegalArgumentException.class, e.getCause().getClass());
             assertEquals("rethrown", e.getCause().getMessage());
-        }
-    }
-
-    class EmptyStack {
-        public boolean empty() {
-            return true;
         }
     }
 }
