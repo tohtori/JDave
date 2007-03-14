@@ -27,8 +27,12 @@ class ObjectContainment implements Containment {
         this.object = object;
     }
 
-    public boolean isIn(Collection<?> actual) {
+    public boolean matches(Collection<?> actual) {
         return actual.contains(object);
+    }
+
+    public String error(Collection<?> actual) {
+        return "The specified collection " + actual + " does not contain '" + this + "'";
     }
     
     @Override

@@ -36,7 +36,7 @@ class ExactContainment extends CollectionContainment {
         super(elements);
     }
 
-    public boolean isIn(Collection<?> actual) {
+    public boolean matches(Collection<?> actual) {
         Set<?> expected = new HashSet<Object>(elements);
         return expected.equals(new HashSet<Object>(actual));
     }

@@ -21,5 +21,6 @@ import java.util.Collection;
  * @author Joni Freeman
  */
 public interface Containment {
-    boolean isIn(Collection<?> actual);
+    boolean matches(Collection<?> actual);
+    String error(Collection<?> actual);
 }

@@ -34,7 +34,7 @@ class AllContainment extends CollectionContainment {
         super(elements);
     }
 
-    public boolean isIn(Collection<?> actual) {
+    public boolean matches(Collection<?> actual) {
         return actual.containsAll(elements);
     }
 }

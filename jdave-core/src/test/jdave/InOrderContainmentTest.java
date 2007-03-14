@@ -36,18 +36,18 @@ public class InOrderContainmentTest extends TestCase {
     }
     
     public void testIsInOrder() {
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
         
     public void testIsNotInOrder() {
-        assertFalse(containment.isIn(Arrays.asList(1, 3, 2)));
+        assertFalse(containment.matches(Arrays.asList(1, 3, 2)));
     }
     
     public void testIsNotInOrderWhenActualHasMoreElements() {
-        assertFalse(containment.isIn(Arrays.asList(1, 2, 3, 4)));
+        assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
     
     public void testIsNotInOrderWhenActualHasLessElements() {
-        assertFalse(containment.isIn(Arrays.asList(1, 2)));
+        assertFalse(containment.matches(Arrays.asList(1, 2)));
     }
 }

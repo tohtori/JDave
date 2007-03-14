@@ -1,5 +1,5 @@
 /*
- * Copyright 2006 the original author or authors.
+ * Copyright 2007 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,22 @@
 package jdave;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
- * @author Joni Freeman
+ * @author Pekka Enberg
  */
-class AnyContainment extends CollectionContainment {
-    public AnyContainment(Collection<?> elements) {
-        super(elements);
-    }
-    
-    public AnyContainment(Iterator<?> elements) {
-        super(elements);
-    }
-    
-    public AnyContainment(Iterable<?> elements) {
-        super(elements);
+public class InverseContainment implements Containment {
+    private final Containment containment;
+
+    public InverseContainment(Containment containment) {
+        this.containment = containment;
     }
 
     public boolean matches(Collection<?> actual) {
-        for (Object object : elements) {
-            if (actual.contains(object)) {
-                return true;
-            }
-        }
-        return false;
+        return !containment.matches(actual);
+    }
+
+    public String error(Collection<?> actual) {
+        return "The specified collection " + actual + " contains '" + containment + "'";
     }
 }

@@ -35,7 +35,7 @@ public class InPartialOrderContainment extends CollectionContainment {
         super(elements);
     }
     
-    public boolean isIn(Collection<?> actual) {
+    public boolean matches(Collection<?> actual) {
         Iterator<?> i1 = elements.iterator();
         Iterator<?> i2 = actual.iterator();
         EqualityCheck equalityCheck = newEqualityCheck();

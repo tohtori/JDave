@@ -42,4 +42,8 @@ abstract class CollectionContainment implements Containment {
     public String toString() {
         return elements.toString();
     }
+
+    public String error(Collection<?> actual) {
+        return "The specified collection " + actual + " does not contain '" + this + "'";
+    }
 }

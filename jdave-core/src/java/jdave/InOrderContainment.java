@@ -34,7 +34,7 @@ public class InOrderContainment extends CollectionContainment {
         super(elements);
     }
 
-    public boolean isIn(Collection<?> actual) {
+    public boolean matches(Collection<?> actual) {
         if (elements.size() != actual.size()) {
             return false;
         }

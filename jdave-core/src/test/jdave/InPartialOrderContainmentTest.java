@@ -36,29 +36,29 @@ public class InPartialOrderContainmentTest extends TestCase {
     }
     
     public void testIsInPartialOrderIfCollectionsContainSameElementsInOrder() {
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
         
     public void testIsNotInPartialOrderIfCollectionsContainSameElementsButNotInOrder() {
-        assertFalse(containment.isIn(Arrays.asList(1, 3, 2)));
+        assertFalse(containment.matches(Arrays.asList(1, 3, 2)));
     }
     
     public void testIsInPartialOrderWhenActualHasMoreElementsButInOrder() {
-        assertTrue(containment.isIn(Arrays.asList(4, 1, 2, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 4, 2, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 4, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 3, 4)));
+        assertTrue(containment.matches(Arrays.asList(4, 1, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 4, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 4, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
     
     public void testIsNotInOrderWhenActualHasLessElementsButInOrder() {
-        assertFalse(containment.isIn(Arrays.asList(1, 2)));
-        assertFalse(containment.isIn(Arrays.asList(1, 3)));
+        assertFalse(containment.matches(Arrays.asList(1, 2)));
+        assertFalse(containment.matches(Arrays.asList(1, 3)));
     }
     
     public void testIsInPartialOrderWhenActualRepeatsSomeElements() {
-        assertTrue(containment.isIn(Arrays.asList(1, 1, 2, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 3, 2, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 2, 3)));
-        assertTrue(containment.isIn(Arrays.asList(1, 2, 3, 1, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 1, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 3, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 2, 3)));
+        assertTrue(containment.matches(Arrays.asList(1, 2, 3, 1, 2, 3)));
     }
 }

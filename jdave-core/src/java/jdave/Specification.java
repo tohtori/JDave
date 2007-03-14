@@ -70,16 +70,11 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public void specify(Collection<?> actual, Containment containment) {
         try {
-            if (actualState) {
-                if (!containment.isIn(actual)) {
-                    throw new ExpectationFailedException("The specified collection " + actual
-                            + " does not contain '" + containment + "'");
-                }
-            } else {
-                if (containment.isIn(actual)) {
-                    throw new ExpectationFailedException("The specified collection " + actual
-                            + " contains '" + containment + "'");
-                }
+            if (!actualState) {
+                containment = new InverseContainment(containment);
+            }
+            if (!containment.matches(actual)) {
+                throw new ExpectationFailedException(containment.error(actual));
             }
         } finally {
             resetActualState();

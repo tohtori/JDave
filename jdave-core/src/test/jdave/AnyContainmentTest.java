@@ -36,10 +36,10 @@ public class AnyContainmentTest extends TestCase {
     }
     
     public void testIsInPartialList() {
-        assertTrue(containment.isIn(Arrays.asList(2)));
+        assertTrue(containment.matches(Arrays.asList(2)));
     }
         
     public void testIsNotInListWhichDoesNotHaveAnyEqualElements() {
-        assertFalse(containment.isIn(Arrays.asList(4)));
+        assertFalse(containment.matches(Arrays.asList(4)));
     }
 }
