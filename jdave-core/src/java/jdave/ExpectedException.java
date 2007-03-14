@@ -18,26 +18,35 @@ package jdave;
 /**
  * @author Lasse Koskela
  */
-public class ExpectedException<T> {
-    private final Class<? extends T> expected;
+public class ExpectedException<T> implements IExpectedException<T> {
+    protected final Class<? extends T> expected;
 
     public ExpectedException(Class<? extends T> expected) {
         this.expected = expected;
     }
 
-    public Class<? extends T> getType() {
-        return expected;
+    public boolean matches(Throwable t) {
+        return matchesType(t.getClass());
+    }
+    
+    public String error(Throwable t) {
+        if (!matchesType(t.getClass())) {
+            return "The specified block should throw "
+                    + expected.getName() + " but " + t.getClass().getName()
+                    + " was thrown.";
+        }
+        throw new IllegalStateException();
     }
 
-    public boolean matchesType(Class<? extends Throwable> actual) {
+    protected boolean matchesType(Class<? extends Throwable> actual) {
         return expected.isAssignableFrom(actual);
     }
 
-    public boolean matchesMessage(String message) {
-        return true;
+    public String nothrow() {
+        return "The specified block should throw " + expected.getName() + " but nothing was thrown.";
     }
 
-    public String getMessage() {
-        throw new UnsupportedOperationException();
+    public boolean propagateException() {
+        return false;
     }
 }

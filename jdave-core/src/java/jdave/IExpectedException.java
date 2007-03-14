@@ -16,15 +16,11 @@
 package jdave;
 
 /**
- * @author Lasse Koskela
+ * @author Pekka Enberg
  */
-public class ExactExpectedException<T> extends ExpectedException<T> {
-    public ExactExpectedException(Class<T> expected) {
-        super(expected);
-    }
-
-    @Override
-    public boolean matchesType(Class<? extends Throwable> actual) {
-        return expected.equals(actual);
-    }
+public interface IExpectedException<T> {
+    boolean matches(Throwable t);
+    String error(Throwable t);
+    boolean propagateException();
+    String nothrow();
 }

@@ -20,15 +20,33 @@ package jdave;
  * @author Pekka Enberg
  */
 public class ExpectedExceptionWithMessage<T> extends ExpectedException<T> {
-    private final String message;
+    protected final String message;
 
     public ExpectedExceptionWithMessage(Class<? extends T> type, String message) {
         super(type);
         this.message = message;
     }
-    
+
     @Override
-    public boolean matchesMessage(String message) {
+    public boolean matches(Throwable t) {
+        return matchesType(t.getClass()) && matchesMessage(t.getMessage());
+    }
+
+    @Override
+    public String error(Throwable t) {
+        if (!matchesType(t.getClass())) {
+            return "The specified block should throw "
+                    + expected.getName() + " but " + t.getClass().getName()
+                    + " was thrown.";
+        }
+        if (!matchesMessage(t.getMessage())) {
+            return "Expected the exception message to be \"" + message
+                            + "\", but was: \"" + t.getMessage() + "\".";
+        }
+        throw new IllegalStateException();
+    }
+
+    private boolean matchesMessage(String message) {
         if (message == null && this.message == null) {
             return true;
         }
@@ -39,10 +57,5 @@ public class ExpectedExceptionWithMessage<T> extends ExpectedException<T> {
             return false;
         }
         return message.equals(this.message);
-    }
-    
-    @Override
-    public String getMessage() {
-        return message;
     }
 }

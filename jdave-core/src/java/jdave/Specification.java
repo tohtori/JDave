@@ -141,47 +141,31 @@ public abstract class Specification<T> extends ContainmentSupport {
         }
     }
 
-    public void specify(Block block, ExpectedException<? extends Throwable> expectation) {
+    public <V extends Throwable> void specify(Block block, IExpectedException<V> expectation) {
         try {
-            if (actualState) {
-                specifyExpectingToThrow(block, expectation);
-            } else {
-                specifyNotExpectingToThrow(block, expectation);
+            if (!actualState) {
+                expectation = new InverseExpectedException<V>(expectation);
             }
+            specifyThrow(block, expectation);
         } finally {
             resetActualState();
         }
     }
 
-    private void specifyExpectingToThrow(Block block, ExpectedException<? extends Throwable> expectation) {
+    private void specifyThrow(Block block, IExpectedException<? extends Throwable> expectation) {
         try {
             block.run();
         } catch (Throwable t) {
-            if (!expectation.matchesType(t.getClass())) {
-                throw new ExpectationFailedException("The specified block should throw "
-                        + expectation.getType().getName() + " but " + t.getClass().getName()
-                        + " was thrown.", t);
+            if (!expectation.matches(t)) {
+                throw new ExpectationFailedException(expectation.error(t), t);
             }
-            if (!expectation.matchesMessage(t.getMessage())) {
-                throw new ExpectationFailedException(
-                        "Expected the exception message to be \"" + expectation.getMessage()
-                                + "\", but was: \"" + t.getMessage() + "\".", t);
+            if (expectation.propagateException()) {
+                throw new RuntimeException(t);
             }
             return;
         }
-        throw new ExpectationFailedException("The specified block should throw "
-                + expectation.getType().getName() + " but nothing was thrown.");
-    }
-
-    private void specifyNotExpectingToThrow(Block block, ExpectedException<? extends Throwable> expectation) {
-        try {
-            block.run();
-        } catch (Throwable t) {
-            if (expectation.matchesType(t.getClass())) {
-                throw new ExpectationFailedException("The specified block threw "
-                        + t.getClass().getName(), t);
-            }
-            throw new RuntimeException(t);
+        if (!expectation.propagateException()) {
+            throw new ExpectationFailedException(expectation.nothrow());
         }
     }
 
