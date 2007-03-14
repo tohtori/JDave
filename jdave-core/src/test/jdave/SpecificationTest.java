@@ -226,7 +226,68 @@ public class SpecificationTest extends TestCase {
             assertEquals("Expected the exception message to be \"argument is null\", but was: \"null\".", e.getMessage());
         }
     }
-    
+
+    public void testShouldPassWhenNoExceptionRaised() {
+        specification.specify(new Block() {
+            public void run() throws Throwable {
+                // Intentionally left blank.
+            }
+        }, specification.not().raise(IllegalArgumentException.class));
+    }
+
+    public void testShouldFailIfThrowsExpectedException() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.not().raise(IllegalArgumentException.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block threw java.lang.IllegalArgumentException", e.getMessage());
+        }
+    }
+
+    public void testShouldFailIfThrowsSubclassOfExpectedException() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.not().raise(Throwable.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block threw java.lang.IllegalArgumentException", e.getMessage());
+        }
+    }
+
+    public void testShouldFailIfThrowsExactlyExpectedException() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.not().raiseExactly(IllegalArgumentException.class));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block threw java.lang.IllegalArgumentException", e.getMessage());
+        }
+    }
+
+    public void testShouldRethrowIfThrowsSubclassOfExactlyExpectedException() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException("rethrown");
+                }
+            }, specification.not().raiseExactly(Throwable.class));
+            fail();
+        } catch (RuntimeException e) {
+            assertEquals(IllegalArgumentException.class, e.getCause().getClass());
+            assertEquals("rethrown", e.getCause().getMessage());
+        }
+    }
+
     public void testShouldPassWhenContainmentExpected() {
         specification.specify(Arrays.asList(1, 2, 3), specification.contains(2));
     }

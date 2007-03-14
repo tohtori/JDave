@@ -148,22 +148,46 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public void specify(Block block, ExpectedException<? extends Throwable> expectation) {
         try {
+            if (actualState) {
+                specifyExpectingToThrow(block, expectation);
+            } else {
+                specifyNotExpectingToThrow(block, expectation);
+            }
+        } finally {
+            resetActualState();
+        }
+    }
+
+    private void specifyExpectingToThrow(Block block, ExpectedException<? extends Throwable> expectation) {
+        try {
             block.run();
         } catch (Throwable t) {
             if (!expectation.matchesType(t.getClass())) {
                 throw new ExpectationFailedException("The specified block should throw "
-                        + expectation.getType().getName() + " but " + t.getClass().getName() + " was thrown.", t);
+                        + expectation.getType().getName() + " but " + t.getClass().getName()
+                        + " was thrown.", t);
             }
             if (!expectation.matchesMessage(t.getMessage())) {
-                throw new ExpectationFailedException("Expected the exception message to be \""
-                        + expectation.getMessage() +"\", but was: \"" + t.getMessage() + "\".", t);
+                throw new ExpectationFailedException(
+                        "Expected the exception message to be \"" + expectation.getMessage()
+                                + "\", but was: \"" + t.getMessage() + "\".", t);
             }
             return;
-        } finally {
-            resetActualState();
         }
         throw new ExpectationFailedException("The specified block should throw "
                 + expectation.getType().getName() + " but nothing was thrown.");
+    }
+
+    private void specifyNotExpectingToThrow(Block block, ExpectedException<? extends Throwable> expectation) {
+        try {
+            block.run();
+        } catch (Throwable t) {
+            if (expectation.matchesType(t.getClass())) {
+                throw new ExpectationFailedException("The specified block threw "
+                        + t.getClass().getName(), t);
+            }
+            throw new RuntimeException(t);
+        }
     }
 
     public void specify(Object obj, Contract contract) {
