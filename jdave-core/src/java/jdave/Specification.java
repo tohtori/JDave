@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.mock.MockSupport;
 import jdave.util.Collections;
 import jdave.util.Primitives;
 
@@ -26,16 +27,16 @@ import jdave.util.Primitives;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-public abstract class Specification<T> extends ContainmentSupport {
+public abstract class Specification<T> extends MockSupport {
     protected Specification<T> should = this;
     protected Specification<T> does = this;
     private boolean actualState = true;
     public T be;
     public T context;
     
-    public Specification<T> not() {
+    public InverseSpecification<T> not() {
         actualState = false;
-        return this;
+        return new InverseSpecification<T>(this);
     }
 
     public void specify(boolean expected) {
@@ -70,9 +71,6 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public void specify(Collection<?> actual, Containment containment) {
         try {
-            if (!actualState) {
-                containment = new InverseContainment(containment);
-            }
             if (!containment.matches(actual)) {
                 throw new ExpectationFailedException(containment.error(actual));
             }
@@ -143,9 +141,6 @@ public abstract class Specification<T> extends ContainmentSupport {
 
     public <V extends Throwable> void specify(Block block, IExpectedException<V> expectation) {
         try {
-            if (!actualState) {
-                expectation = new InverseExpectedException<V>(expectation);
-            }
             specifyThrow(block, expectation);
         } finally {
             resetActualState();

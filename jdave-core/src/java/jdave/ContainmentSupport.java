@@ -19,18 +19,21 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import jdave.mock.MockSupport;
 import jdave.util.Primitives;
 
 /**
  * @author Joni Freeman
  */
-public class ContainmentSupport extends MockSupport {
+public class ContainmentSupport {
     public Containment contains(Object object) {
-        return new ObjectContainment(object);
+        return newObjectContainment(object);
     }
 
     public Containment contain(Object object) {
+        return newObjectContainment(object);
+    }
+
+    protected Containment newObjectContainment(Object object) {
         return new ObjectContainment(object);
     }
 
@@ -83,6 +86,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAll(Collection<?> elements) {
+        return newAllContainment(elements);
+    }
+
+    protected Containment newAllContainment(Collection<?> elements) {
         return new AllContainment(elements);
     }
 
@@ -99,6 +106,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAll(Iterator<?> elements) {
+        return newAllContainment(elements);
+    }
+
+    protected Containment newAllContainment(Iterator<?> elements) {
         return new AllContainment(elements);
     }
 
@@ -107,6 +118,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAll(Iterable<?> elements) {
+        return newAllContainment(elements);
+    }
+
+    protected Containment newAllContainment(Iterable<?> elements) {
         return new AllContainment(elements);
     }
 
@@ -163,6 +178,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAny(Collection<?> elements) {
+        return newAnyContainment(elements);
+    }
+
+    protected Containment newAnyContainment(Collection<?> elements) {
         return new AnyContainment(elements);
     }
 
@@ -179,6 +198,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAny(Iterator<?> elements) {
+        return newAnyContainment(elements);
+    }
+
+    protected Containment newAnyContainment(Iterator<?> elements) {
         return new AnyContainment(elements);
     }
 
@@ -187,6 +210,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containAny(Iterable<?> elements) {
+        return newAnyContainment(elements);
+    }
+
+    protected Containment newAnyContainment(Iterable<?> elements) {
         return new AnyContainment(elements);
     }
 
@@ -195,6 +222,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containExactly(Collection<?> elements) {
+        return newExactContainment(elements);
+    }
+
+    protected Containment newExactContainment(Collection<?> elements) {
         return new ExactContainment(elements);
     }
 
@@ -259,6 +290,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containExactly(Iterator<?> elements) {
+        return newExactContainment(elements);
+    }
+
+    protected Containment newExactContainment(Iterator<?> elements) {
         return new ExactContainment(elements);
     }
 
@@ -267,6 +302,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containExactly(Iterable<?> elements) {
+        return newExactContainment(elements);
+    }
+
+    protected Containment newExactContainment(Iterable<?> elements) {
         return new ExactContainment(elements);
     }
 
@@ -275,6 +314,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInOrder(Collection<?> elements) {
+        return newInOrderContainment(elements);
+    }
+
+    protected Containment newInOrderContainment(Collection<?> elements) {
         return new InOrderContainment(elements);
     }
 
@@ -283,7 +326,7 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInOrder(Object... elements) {
-        return new InOrderContainment(Arrays.asList(elements));
+        return newInOrderContainment(Arrays.asList(elements));
     }
 
     public Containment containInOrder(byte[] object) {
@@ -339,6 +382,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInOrder(Iterator<?> elements) {
+        return newInOrderContainment(elements);
+    }
+
+    protected Containment newInOrderContainment(Iterator<?> elements) {
         return new InOrderContainment(elements);
     }
 
@@ -347,6 +394,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInOrder(Iterable<?> elements) {
+        return newInOrderContainment(elements);
+    }
+
+    protected Containment newInOrderContainment(Iterable<?> elements) {
         return new InOrderContainment(elements);
     }
 
@@ -355,6 +406,10 @@ public class ContainmentSupport extends MockSupport {
     }
     
     public Containment containInPartialOrder(Collection<?> elements) {
+        return newInPartialOrderContainment(elements);
+    }
+
+    protected Containment newInPartialOrderContainment(Collection<?> elements) {
         return new InPartialOrderContainment(elements);
     }
 
@@ -363,7 +418,7 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInPartialOrder(Object... elements) {
-        return new InPartialOrderContainment(Arrays.asList(elements));
+        return newInPartialOrderContainment(Arrays.asList(elements));
     }
 
     public Containment containInPartialOrder(byte[] object) {
@@ -419,6 +474,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInPartialOrder(Iterator<?> elements) {
+        return newInPartialOrderContainment(elements);
+    }
+
+    protected Containment newInPartialOrderContainment(Iterator<?> elements) {
         return new InPartialOrderContainment(elements);
     }
 
@@ -427,6 +486,10 @@ public class ContainmentSupport extends MockSupport {
     }
 
     public Containment containInPartialOrder(Iterable<?> elements) {
+        return newInPartialOrderContainment(elements);
+    }
+
+    protected Containment newInPartialOrderContainment(Iterable<?> elements) {
         return new InPartialOrderContainment(elements);
     }
 

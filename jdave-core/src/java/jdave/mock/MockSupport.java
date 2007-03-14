@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import jdave.ContainmentSupport;
+
 import org.jmock.cglib.CGLIBCoreMock;
 import org.jmock.core.Formatting;
 import org.jmock.core.InvocationMatcher;
@@ -45,7 +47,7 @@ import org.jmock.util.Verifier;
  * 
  * @author Joni Freeman
  */
-public class MockSupport {
+public class MockSupport extends ContainmentSupport {
     private List<Verifiable> objectsThatRequireVerification = new ArrayList<Verifiable>();
     
     public void registerToVerify(Verifiable verifiable) {
