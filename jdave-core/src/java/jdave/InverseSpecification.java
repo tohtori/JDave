@@ -121,4 +121,12 @@ public class InverseSpecification<T> extends ContainmentSupport {
     public <E extends Throwable> ExpectedNoThrow<E> raiseExactly(Class<E> expected) {
         return new ExpectedNoThrow<E>(new ExactExpectedException<E>(expected));
     }
+
+    public IEqualityCheck equal(Object obj) {
+        return new NotEqualsEqualityCheck(obj);
+    }
+
+    public Contract satisfy(Contract contract) {
+        return new NotContract(contract);
+    }
 }

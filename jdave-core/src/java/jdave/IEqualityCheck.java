@@ -18,21 +18,7 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public class EqualsEqualityCheck implements IEqualityCheck {
-    private final Object expected;
-
-    public EqualsEqualityCheck(Object expected) {
-        this.expected = expected;        
-    }
-    
-    public boolean matches(Object actual) {
-        if (expected == null) {
-            return actual == null;
-        }
-        return expected.equals(actual);
-    }
-    
-    public String error(Object actual) {
-        return "Expected: " + expected + ", but was: " + actual;
-    }
+public interface IEqualityCheck {
+    boolean matches(Object actual);
+    String error(Object actual);
 }

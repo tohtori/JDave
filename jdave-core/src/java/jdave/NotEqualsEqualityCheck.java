@@ -18,6 +18,21 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public interface EqualityCheck {
-    boolean isEqual(Object o1, Object o2);
+public class NotEqualsEqualityCheck implements IEqualityCheck {
+    private final Object expected;
+
+    public NotEqualsEqualityCheck(Object expected) {
+        this.expected = expected;        
+    }
+    
+    public boolean matches(Object actual) {
+        if (expected == null) {
+            return actual != null;
+        }
+        return !expected.equals(actual);
+    }
+    
+    public String error(Object actual) {
+        return "Did not expect: " + expected + ", but was: " + actual;
+    }
 }

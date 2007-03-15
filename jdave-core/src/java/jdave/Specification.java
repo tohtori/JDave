@@ -116,29 +116,26 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public void specify(Object actual, Object expected) {
+        IEqualityCheck equalityCheck = new EqualsEqualityCheck(expected);
         try {
-            if (!new EqualsEqualityCheck().isEqual(actual, expected)) {
-                throw new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
+            if (!equalityCheck.matches(actual)) {
+                throw new ExpectationFailedException(equalityCheck.error(actual));
             }
         } finally {
             resetActualState();
         }
     }
-
-    public void specify(double actual, double expected, double delta) {
-        specify(actual, new Double(expected), delta);
-    }
-
-    public void specify(double actual, Object expected, double delta) {
+    
+    public void specify(Object actual, IEqualityCheck equalityCheck) {
         try {
-            if (Math.abs(actual - ((Number) expected).doubleValue()) > delta) {
-                throw new ExpectationFailedException("Expected: " + expected + ", but was: " + actual);
+            if (!equalityCheck.matches(actual)) {
+                throw new ExpectationFailedException(equalityCheck.error(actual));
             }
         } finally {
             resetActualState();
         }
     }
-
+    
     public <V extends Throwable> void specify(Block block, ExpectedException<V> expectation) {
         try {
             specifyThrow(block, expectation);
@@ -182,8 +179,12 @@ public abstract class Specification<T> extends MockSupport {
         contract.isSatisfied(obj);
     }
 
-    public Object equal(Object obj) {
-        return obj;
+    public IEqualityCheck equal(Object obj) {
+        return new EqualsEqualityCheck(obj);
+    }
+
+    public IEqualityCheck equal(Number expectedNumber, double delta) {
+        return new DeltaEqualityCheck(expectedNumber, delta);
     }
 
     public <E extends Throwable> ExpectedException<E> raise(Class<E> expected) {

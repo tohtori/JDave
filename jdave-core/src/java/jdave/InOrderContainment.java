@@ -41,14 +41,14 @@ public class InOrderContainment extends CollectionContainment {
         Iterator<?> i1 = elements.iterator();
         Iterator<?> i2 = actual.iterator();
         while (i1.hasNext()) {
-            if (!newEqualityCheck().isEqual(i1.next(), i2.next())) {
+            if (!newEqualityCheck(i1.next()).matches(i2.next())) {
                 return false;
             }
         }
         return true;
     }
     
-    protected EqualityCheck newEqualityCheck() {
-        return new EqualsEqualityCheck();
+    protected IEqualityCheck newEqualityCheck(Object expected) {
+        return new EqualsEqualityCheck(expected);
     }
 }

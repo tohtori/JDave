@@ -18,21 +18,20 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public class EqualsEqualityCheck implements IEqualityCheck {
-    private final Object expected;
+public class NotContract implements Contract {
+    private final Contract contract;
 
-    public EqualsEqualityCheck(Object expected) {
-        this.expected = expected;        
+    public NotContract(Contract contract) {
+        this.contract = contract;
     }
-    
-    public boolean matches(Object actual) {
-        if (expected == null) {
-            return actual == null;
+
+    public void isSatisfied(Object obj) throws ExpectationFailedException {
+        try {
+            contract.isSatisfied(obj);
+        } catch (ExpectationFailedException e) {
+            return;
         }
-        return expected.equals(actual);
-    }
-    
-    public String error(Object actual) {
-        return "Expected: " + expected + ", but was: " + actual;
+        throw new ExpectationFailedException("should not satisfy " + 
+                contract.getClass().getSimpleName() + " contract");
     }
 }
