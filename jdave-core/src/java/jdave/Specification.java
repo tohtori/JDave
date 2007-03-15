@@ -34,9 +34,9 @@ public abstract class Specification<T> extends MockSupport {
     public T be;
     public T context;
     
-    public InverseSpecification<T> not() {
+    public Not<T> not() {
         actualState = false;
-        return new InverseSpecification<T>(this);
+        return new Not<T>(this);
     }
 
     public void specify(boolean expected) {

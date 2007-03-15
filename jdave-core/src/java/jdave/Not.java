@@ -21,91 +21,91 @@ import java.util.Iterator;
 /**
  * @author Pekka Enberg
  */
-public class InverseSpecification<T> extends ContainmentSupport {
+public class Not<T> extends ContainmentSupport {
     public T be;
 
-    public InverseSpecification(Specification<T> specification) {
+    public Not(Specification<T> specification) {
         this.be = specification.be;
     }
 
     @Override
     protected Containment newAllContainment(Collection<?> elements) {
-        return new InverseContainment(super.newAllContainment(elements));
+        return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
     protected Containment newAllContainment(Iterable<?> elements) {
-        return new InverseContainment(super.newAllContainment(elements));
+        return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
     protected Containment newAllContainment(Iterator<?> elements) {
-        return new InverseContainment(super.newAllContainment(elements));
+        return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
     protected Containment newAnyContainment(Collection<?> elements) {
-        return new InverseContainment(super.newAnyContainment(elements));
+        return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
     protected Containment newAnyContainment(Iterable<?> elements) {
-        return new InverseContainment(super.newAnyContainment(elements));
+        return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
     protected Containment newAnyContainment(Iterator<?> elements) {
-        return new InverseContainment(super.newAnyContainment(elements));
+        return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
     protected Containment newExactContainment(Collection<?> elements) {
-        return new InverseContainment(super.newExactContainment(elements));
+        return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
     protected Containment newExactContainment(Iterable<?> elements) {
-        return new InverseContainment(super.newExactContainment(elements));
+        return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
     protected Containment newExactContainment(Iterator<?> elements) {
-        return new InverseContainment(super.newExactContainment(elements));
+        return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
     protected Containment newInOrderContainment(Collection<?> elements) {
-        return new InverseContainment(super.newInOrderContainment(elements));
+        return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
     protected Containment newInOrderContainment(Iterable<?> elements) {
-        return new InverseContainment(super.newInOrderContainment(elements));
+        return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
     protected Containment newInOrderContainment(Iterator<?> elements) {
-        return new InverseContainment(super.newInOrderContainment(elements));
+        return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
     protected Containment newInPartialOrderContainment(Collection<?> elements) {
-        return new InverseContainment(super.newInPartialOrderContainment(elements));
+        return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
     protected Containment newInPartialOrderContainment(Iterable<?> elements) {
-        return new InverseContainment(super.newInPartialOrderContainment(elements));
+        return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
     protected Containment newInPartialOrderContainment(Iterator<?> elements) {
-        return new InverseContainment(super.newInPartialOrderContainment(elements));
+        return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
     protected Containment newObjectContainment(Object object) {
-        return new InverseContainment(super.newObjectContainment(object));
+        return new NotContainment(super.newObjectContainment(object));
     }
 
     public <E extends Throwable> ExpectedNoThrow<E> raise(Class<E> expected) {
