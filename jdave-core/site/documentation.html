@@ -168,12 +168,18 @@ are provided.
   <li><code>EqualsComparableContract</code></li>  
 </ul>
 
-Contract is specified using <code>satisfies</code> method.
+Contract is specified using <code>satisfies</code> method. 
+<code>should.not().satisfy</code> can be used if an object should not satisfy
+a contract.
 
 <pre>
 <code>
 public void isSerializable() {
-    specify(object, satisfies(new SerializableContract()));
+    specify(serializable, satisfies(new SerializableContract()));
+}
+
+public void isNotSerializable() {
+    specify(nonSerializable, should.not().satisfy(new SerializableContract()));
 }
 </code>
 </pre>
