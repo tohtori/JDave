@@ -18,10 +18,10 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public class NotContract implements Contract {
-    private final Contract contract;
+public class NotContract implements IContract {
+    private final IContract contract;
 
-    public NotContract(Contract contract) {
+    public NotContract(IContract contract) {
         this.contract = contract;
     }
 

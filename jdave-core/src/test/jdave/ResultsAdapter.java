@@ -17,12 +17,12 @@ package jdave;
 
 import java.lang.reflect.Method;
 
-import jdave.runner.BehaviorResults;
+import jdave.runner.IBehaviorResults;
 
 /**
  * @author Joni Freeman
  */
-public class ResultsAdapter implements BehaviorResults {
+public class ResultsAdapter implements IBehaviorResults {
     public void expected(Method method) {
     }
 

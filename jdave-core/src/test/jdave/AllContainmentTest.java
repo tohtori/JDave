@@ -24,7 +24,7 @@ import junit.framework.TestCase;
  * @author Joni Freeman
  */
 public class AllContainmentTest extends TestCase {
-    private Containment containment;
+    private IContainment containment;
 
     @Override
     protected void setUp() throws Exception {

@@ -61,15 +61,15 @@ public abstract class Specification<T> extends MockSupport {
         actualState = true;
     }
 
-    public void specify(Iterable<?> actual, Containment containment) {
+    public void specify(Iterable<?> actual, IContainment containment) {
         specify(actual.iterator(), containment);
     }
 
-    public void specify(Iterator<?> actual, Containment containment) {
+    public void specify(Iterator<?> actual, IContainment containment) {
         specify(Collections.list(actual), containment);
     }
 
-    public void specify(Collection<?> actual, Containment containment) {
+    public void specify(Collection<?> actual, IContainment containment) {
         try {
             if (!containment.matches(actual)) {
                 throw new ExpectationFailedException(containment.error(actual));
@@ -79,39 +79,39 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Object[] actual, Containment containment) {
+    public void specify(Object[] actual, IContainment containment) {
         specify(Arrays.asList(actual), containment);
     }
 
-    public void specify(boolean[] actual, Containment containment) {
+    public void specify(boolean[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(byte[] actual, Containment containment) {
+    public void specify(byte[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(char[] actual, Containment containment) {
+    public void specify(char[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(double[] actual, Containment containment) {
+    public void specify(double[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(float[] actual, Containment containment) {
+    public void specify(float[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(int[] actual, Containment containment) {
+    public void specify(int[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(long[] actual, Containment containment) {
+    public void specify(long[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(short[] actual, Containment containment) {
+    public void specify(short[] actual, IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
@@ -175,7 +175,7 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Object obj, Contract contract) {
+    public void specify(Object obj, IContract contract) {
         contract.isSatisfied(obj);
     }
 
@@ -199,7 +199,7 @@ public abstract class Specification<T> extends MockSupport {
         return new ExactExpectedException<E>(expected);
     }
 
-    public Contract satisfies(Contract contract) {
+    public IContract satisfies(IContract contract) {
         return contract;
     }
 

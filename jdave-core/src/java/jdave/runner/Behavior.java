@@ -37,7 +37,7 @@ public abstract class Behavior {
         return method.getName();
     }
 
-    public Specification<?> run(BehaviorResults results) throws Exception {
+    public Specification<?> run(IBehaviorResults results) throws Exception {
         Specification<?> spec = newSpecification();
         try {
             spec.create();

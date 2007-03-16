@@ -22,7 +22,7 @@ import java.io.OutputStream;
 /**
  * @author Joni Freeman
  */
-public class SerializableContract implements Contract {
+public class SerializableContract implements IContract {
     public void isSatisfied(Object obj) throws ExpectationFailedException {
         ObjectOutputStream stream = null;
         try {

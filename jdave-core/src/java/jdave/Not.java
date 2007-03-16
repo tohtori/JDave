@@ -29,82 +29,82 @@ public class Not<T> extends ContainmentSupport {
     }
 
     @Override
-    protected Containment newAllContainment(Collection<?> elements) {
+    protected IContainment newAllContainment(Collection<?> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected Containment newAllContainment(Iterable<?> elements) {
+    protected IContainment newAllContainment(Iterable<?> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected Containment newAllContainment(Iterator<?> elements) {
+    protected IContainment newAllContainment(Iterator<?> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected Containment newAnyContainment(Collection<?> elements) {
+    protected IContainment newAnyContainment(Collection<?> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected Containment newAnyContainment(Iterable<?> elements) {
+    protected IContainment newAnyContainment(Iterable<?> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected Containment newAnyContainment(Iterator<?> elements) {
+    protected IContainment newAnyContainment(Iterator<?> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected Containment newExactContainment(Collection<?> elements) {
+    protected IContainment newExactContainment(Collection<?> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected Containment newExactContainment(Iterable<?> elements) {
+    protected IContainment newExactContainment(Iterable<?> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected Containment newExactContainment(Iterator<?> elements) {
+    protected IContainment newExactContainment(Iterator<?> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected Containment newInOrderContainment(Collection<?> elements) {
+    protected IContainment newInOrderContainment(Collection<?> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected Containment newInOrderContainment(Iterable<?> elements) {
+    protected IContainment newInOrderContainment(Iterable<?> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected Containment newInOrderContainment(Iterator<?> elements) {
+    protected IContainment newInOrderContainment(Iterator<?> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected Containment newInPartialOrderContainment(Collection<?> elements) {
+    protected IContainment newInPartialOrderContainment(Collection<?> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected Containment newInPartialOrderContainment(Iterable<?> elements) {
+    protected IContainment newInPartialOrderContainment(Iterable<?> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected Containment newInPartialOrderContainment(Iterator<?> elements) {
+    protected IContainment newInPartialOrderContainment(Iterator<?> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected Containment newObjectContainment(Object object) {
+    protected IContainment newObjectContainment(Object object) {
         return new NotContainment(super.newObjectContainment(object));
     }
 
@@ -126,7 +126,7 @@ public class Not<T> extends ContainmentSupport {
         return new NotEqualsEqualityCheck(obj);
     }
 
-    public Contract satisfy(Contract contract) {
+    public IContract satisfy(IContract contract) {
         return new NotContract(contract);
     }
 }

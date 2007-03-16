@@ -23,7 +23,7 @@ import jdave.util.Collections;
 /**
  * @author Joni Freeman
  */
-abstract class CollectionContainment implements Containment {
+abstract class CollectionContainment implements IContainment {
     protected final Collection<?> elements;
 
     public CollectionContainment(Collection<?> elements) {

@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 /**
  * @author Joni Freeman
  */
-public class CloneableContract implements Contract {
+public class CloneableContract implements IContract {
     public void isSatisfied(Object obj) throws ExpectationFailedException {
         if (!(obj instanceof Cloneable)) {
             throw new ExpectationFailedException(obj + " does not implement Cloneable");

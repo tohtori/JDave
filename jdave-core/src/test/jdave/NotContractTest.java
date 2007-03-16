@@ -22,17 +22,17 @@ import junit.framework.TestCase;
  */
 public class NotContractTest extends TestCase {
     private Specification<Void> spec;
-    private Contract passingContract;
-    private Contract failingContract;
+    private IContract passingContract;
+    private IContract failingContract;
 
     @Override
     protected void setUp() throws Exception {
         spec = new Specification<Void>() {};
-        passingContract = new Contract() {
+        passingContract = new IContract() {
             public void isSatisfied(Object obj) throws ExpectationFailedException {
             }
         };
-        failingContract = new Contract() {
+        failingContract = new IContract() {
             public void isSatisfied(Object obj) throws ExpectationFailedException {
                 throw new ExpectationFailedException("fail");
             }

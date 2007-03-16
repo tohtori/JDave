@@ -20,7 +20,7 @@ import java.util.Collection;
 /**
  * @author Joni Freeman
  */
-class ObjectContainment implements Containment {
+class ObjectContainment implements IContainment {
     private final Object object;
 
     public ObjectContainment(Object object) {

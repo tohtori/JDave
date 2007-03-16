@@ -20,7 +20,7 @@ import java.util.Comparator;
 /**
  * @author Joni Freeman
  */
-public abstract class EqualsComparableContract<T> implements Contract {
+public abstract class EqualsComparableContract<T> implements IContract {
     private Comparator<T> comparator;
 
     public EqualsComparableContract() {        

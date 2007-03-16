@@ -44,7 +44,7 @@ package jdave;
  * 
  * @author Joni Freeman
  */
-public abstract class EqualsHashCodeContract<T> implements Contract {
+public abstract class EqualsHashCodeContract<T> implements IContract {
     public void isSatisfied(Object obj) throws ExpectationFailedException {
         if (obj.equals(null)) {
             throw new ExpectationFailedException(obj + " equals null");            

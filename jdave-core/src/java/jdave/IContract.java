@@ -18,6 +18,6 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public interface Contract {
+public interface IContract {
     void isSatisfied(Object obj) throws ExpectationFailedException;
 }

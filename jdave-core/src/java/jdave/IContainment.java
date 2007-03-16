@@ -20,7 +20,7 @@ import java.util.Collection;
 /**
  * @author Joni Freeman
  */
-public interface Containment {
+public interface IContainment {
     boolean matches(Collection<?> actual);
     String error(Collection<?> actual);
 }

@@ -24,7 +24,7 @@ import jdave.ExpectationFailedException;
  *
  * @author Pekka Enberg
  */
-public interface BehaviorResults {
+public interface IBehaviorResults {
     void expected(Method method);
     void unexpected(Method method, ExpectationFailedException e);
     void error(Method method, Throwable t);

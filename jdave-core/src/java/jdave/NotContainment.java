@@ -20,10 +20,10 @@ import java.util.Collection;
 /**
  * @author Pekka Enberg
  */
-public class NotContainment implements Containment {
-    private final Containment containment;
+public class NotContainment implements IContainment {
+    private final IContainment containment;
 
-    public NotContainment(Containment containment) {
+    public NotContainment(IContainment containment) {
         this.containment = containment;
     }
 
