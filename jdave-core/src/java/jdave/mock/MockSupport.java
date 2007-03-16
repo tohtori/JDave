@@ -65,7 +65,7 @@ public class MockSupport extends ContainmentSupport {
         Verifier.verifyObject(this);
     }
 
-    protected <T> Mock<T> mock(Class<T> mockType) {
+    public <T> Mock<T> mock(Class<T> mockType) {
         Mock<T> mock = new Mock<T>(newCoreMock(mockType, new Class[0], new Object[0]));
         registerToVerify(mock);
         return mock;
