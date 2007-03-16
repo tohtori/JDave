@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.runner.Context;
-import jdave.runner.BehaviorResults;
+import jdave.runner.IBehaviorResults;
 import jdave.runner.SpecRunner;
 import jdave.runner.ISpecVisitor;
 import jdave.runner.Behavior;
@@ -91,7 +91,7 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
         return behavior.run(new ResultAdapter(testCase, testResult));
     }
 
-    static class ResultAdapter implements BehaviorResults {
+    static class ResultAdapter implements IBehaviorResults {
         private final TestResult result;
         private final Test test;
 
