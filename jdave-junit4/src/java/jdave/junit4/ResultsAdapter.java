@@ -18,7 +18,7 @@ package jdave.junit4;
 import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
-import jdave.runner.BehaviorResults;
+import jdave.runner.IBehaviorResults;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
@@ -30,7 +30,7 @@ import org.junit.runner.notification.RunNotifier;
  * 
  * @author Lasse Koskela
  */
-public class ResultsAdapter implements BehaviorResults {
+public class ResultsAdapter implements IBehaviorResults {
     private final RunNotifier notifier;
     private final Description desc;
 
