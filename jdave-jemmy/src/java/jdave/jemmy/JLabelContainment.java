@@ -27,7 +27,7 @@ import org.netbeans.jemmy.operators.JLabelOperator;
 /**
  * @author Pekka Enberg
  */
-class JLabelContainment implements ContainerContainment {
+class JLabelContainment implements IContainerContainment {
     private final String expected;
 
     public JLabelContainment(String expected) {

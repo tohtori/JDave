@@ -64,13 +64,13 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
 
     protected abstract T newContainer();
 
-    public void specify(ContainerContainment containment) {
+    public void specify(IContainerContainment containment) {
         if (!containment.isIn(container)) {
             throw new ExpectationFailedException(containment.error(container));
         }
     }
 
-    public ContainerContainment containsLabel(String expected) {
+    public IContainerContainment containsLabel(String expected) {
         return new JLabelContainment(expected);
     }
 

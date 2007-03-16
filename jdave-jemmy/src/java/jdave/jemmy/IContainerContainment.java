@@ -20,7 +20,7 @@ import java.awt.Container;
 /**
  * @author Pekka Enberg
  */
-public interface ContainerContainment {
+public interface IContainerContainment {
     boolean isIn(Container container);
     String error(Container container);
 }
