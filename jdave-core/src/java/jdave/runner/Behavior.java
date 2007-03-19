@@ -18,6 +18,8 @@ package jdave.runner;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.jmock.core.DynamicMockError;
+
 import jdave.ExpectationFailedException;
 import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
@@ -47,6 +49,16 @@ public abstract class Behavior {
         } catch (InvocationTargetException e) {
             if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
                 results.unexpected(method, (ExpectationFailedException) e.getCause());
+            } else if (e.getCause().getClass().equals(DynamicMockError.class)) {
+                DynamicMockError dynamicMockError = (DynamicMockError) e.getCause();
+                /* We have to reset DynamicMock before calling DynamicMockError.getMessage()
+                 * or DynamicMockError.printStackTrace(), because otherwise it (or more 
+                 * specifically, AbstractDynamicMock.mockInvocation()) will end up re-throwing 
+                 * the same failure we're trying to report here and we will miss the real 
+                 * error message. 
+                 */
+                dynamicMockError.dynamicMock.reset();
+                results.error(method, dynamicMockError);
             } else {
                 results.error(method, e.getCause());
             }
