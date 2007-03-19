@@ -22,12 +22,17 @@ import java.util.List;
 import jdave.ContainmentSupport;
 
 import org.jmock.cglib.CGLIBCoreMock;
+import org.jmock.core.Constraint;
 import org.jmock.core.Formatting;
 import org.jmock.core.InvocationMatcher;
 import org.jmock.core.Stub;
 import org.jmock.core.Verifiable;
+import org.jmock.core.constraint.And;
+import org.jmock.core.constraint.HasPropertyWithValue;
+import org.jmock.core.constraint.IsAnything;
 import org.jmock.core.constraint.IsCloseTo;
 import org.jmock.core.constraint.IsEqual;
+import org.jmock.core.constraint.IsInstanceOf;
 import org.jmock.core.constraint.IsSame;
 import org.jmock.core.matcher.InvokeAtLeastOnceMatcher;
 import org.jmock.core.matcher.InvokeAtMostOnceMatcher;
@@ -119,6 +124,22 @@ public class MockSupport extends ContainmentSupport {
 
     public IsSame same(Object operand) {
         return new IsSame(operand);
+    }
+    
+    public HasPropertyWithValue hasPropertyWithValue(String propertyName, Constraint expectation) {
+        return new HasPropertyWithValue(propertyName, expectation);
+    }
+    
+    public And and(Constraint left, Constraint right) {
+        return new And(left, right);
+    }
+    
+    public IsInstanceOf isInstanceOf(Class<?> type) {
+        return new IsInstanceOf(type);
+    }
+    
+    public IsAnything isAnything() {
+        return new IsAnything();
     }
     
     public Stub returnValue(Object o) {
