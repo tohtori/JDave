@@ -1,10 +1,14 @@
 <projectDescription>
   <name>jdave-jemmy</name>
   <comment/>
-  <projects/>
+  <projects>
+    <project>jdave-core</project>
+    <project>jdave-junit4</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
     </buildCommand>
   </buildSpec>
   <natures>

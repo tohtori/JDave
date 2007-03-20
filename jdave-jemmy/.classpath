@@ -3,11 +3,11 @@
   <classpathentry kind="src" path="src/test" output="target/test-classes"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib-full/2.0/cglib-full-2.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jdave/jdave-core/0.6.0-SNAPSHOT/jdave-core-0.6.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-core/0.6.0-SNAPSHOT/jdave-core-0.6.0-SNAPSHOT-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/netbeans/jemmy/jemmy/2.2.7.7/jemmy-2.2.7.7.jar"/>
+  <classpathentry kind="src" path="/jdave-core"/>
   <classpathentry kind="var" path="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar" sourcepath="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/4.1/junit-4.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jdave/jdave-junit4/0.6.0-SNAPSHOT/jdave-junit4-0.6.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-junit4/0.6.0-SNAPSHOT/jdave-junit4-0.6.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0.jar" sourcepath="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib-full/2.0/cglib-full-2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/netbeans/jemmy/jemmy/2.2.7.7/jemmy-2.2.7.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.1/junit-4.1.jar" sourcepath="M2_REPO/junit/junit/4.1/junit-4.1-sources.jar"/>
+  <classpathentry kind="src" path="/jdave-junit4"/>
 </classpath>
