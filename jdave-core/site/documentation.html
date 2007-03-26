@@ -209,6 +209,13 @@ fields. This is often used for instance to inject Spring beans into specificatio
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/java/jdave/injection/InjectionSupport.java">[examples]</a>
 </p>
 
+<h2>Thread local isolation</h2>
+
+Some contexts set thread local variables. This may cause preceeding behaviors to fail if 
+they depend on initial thread local state. Thread locals can isolated for all behavior 
+methods of current specification by overiding the method 
+Specification.needsThreadLocalIsolation() and returning true. Then a new fresh thread 
+is created for all methods in the specification.
 
 </div>	
 </div>
