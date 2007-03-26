@@ -17,6 +17,11 @@ package jdave.runner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import org.jmock.core.DynamicMockError;
 
@@ -39,8 +44,37 @@ public abstract class Behavior {
         return method.getName();
     }
 
-    public Specification<?> run(IBehaviorResults results) throws Exception {
-        Specification<?> spec = newSpecification();
+    public Specification<?> run(final IBehaviorResults results) throws Exception {
+        final Specification<?> spec = newSpecification();
+        if (spec.needsThreadLocalIsolation()) {
+            runInNewThread(results, spec);
+        } else {
+            runInCurrentThread(results, spec);
+        }
+        return spec;
+    }
+
+    private void runInCurrentThread(final IBehaviorResults results, final Specification<?> spec) throws Exception {
+        runSpec(results, spec);
+    }
+
+    private void runInNewThread(final IBehaviorResults results, final Specification<?> spec) throws InterruptedException {
+        ExecutorService executor = Executors.newSingleThreadExecutor(new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                return new Thread(r);
+            }
+        });
+        executor.submit(new Callable<Void>() {
+            public Void call() throws Exception {
+                runInCurrentThread(results, spec);
+                return null;
+            }
+        });
+        executor.shutdown();
+        executor.awaitTermination(60, TimeUnit.SECONDS);
+    }
+
+    private void runSpec(IBehaviorResults results, Specification<?> spec) throws Exception {
         try {
             spec.create();
             Object context = newContext(spec);
@@ -70,7 +104,6 @@ public abstract class Behavior {
             destroyContext();
             spec.destroy();
         }
-        return spec;
     }
 
     protected abstract Specification<?> newSpecification() throws Exception;

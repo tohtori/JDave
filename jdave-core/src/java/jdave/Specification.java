@@ -218,4 +218,8 @@ public abstract class Specification<T> extends MockSupport {
      */
     public void destroy() {
     }
+    
+    public boolean needsThreadLocalIsolation() {
+        return false;
+    }
 }
