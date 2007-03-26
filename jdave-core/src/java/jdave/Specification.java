@@ -222,7 +222,7 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Some contexts set thread local variables. This may cause preceeding
      * behaviors to fail if they depend on initial thread local state.
-     * Thread locals can isolated for all behavior methods of current specification
+     * Thread locals can be isolated for all behavior methods of current specification
      * by overiding this method and returning true. Then a new fresh thread is created
      * for all methods in the specification.
      * @return true if thread local isolation is needed for this Specification, 
