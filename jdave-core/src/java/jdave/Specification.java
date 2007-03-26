@@ -220,7 +220,7 @@ public abstract class Specification<T> extends MockSupport {
     }
     
     /**
-     * Some contexts set thread local variables. This may cause preceeding
+     * Some contexts set thread local variables. This may cause following
      * behaviors to fail if they depend on initial thread local state.
      * Thread locals can be isolated for all behavior methods of current specification
      * by overiding this method and returning true. Then a new fresh thread is created
