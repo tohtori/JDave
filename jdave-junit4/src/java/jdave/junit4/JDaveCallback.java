@@ -47,8 +47,11 @@ public class JDaveCallback implements ISpecVisitor {
         Description desc = Description.createSuiteDescription(behavior.getName());
         notifier.fireTestStarted(desc);
         try {
-            Specification<?> spec = behavior.run(new ResultsAdapter(notifier, desc));
-            spec.verify();
+            ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
+            Specification<?> spec = behavior.run(resultsAdapter);
+            if (resultsAdapter.getErrorCount() == 0) {
+                spec.verify();
+            }
         } catch (Throwable t) {
             notifier.fireTestFailure(new Failure(desc, t));
         } finally {

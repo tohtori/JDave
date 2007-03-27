@@ -22,6 +22,7 @@ import java.util.List;
 import jdave.Specification;
 import jdave.runner.Context;
 import jdave.runner.Behavior;
+import jdave.runner.IBehaviorResults;
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -38,7 +39,8 @@ import org.junit.runner.notification.StoppedByUserException;
 public class JDaveCallbackTest extends TestCase {
     private List<String> events = new ArrayList<String>();
     private JDaveCallback callback;
-
+    private boolean specVerifyCalled;
+    
     @Override
     @Before
     public void setUp() throws Exception {
@@ -68,6 +70,7 @@ public class JDaveCallbackTest extends TestCase {
             }
         };
         callback = new JDaveCallback(notifier);
+        specVerifyCalled = false;
     }
 
     @Test
@@ -82,7 +85,32 @@ public class JDaveCallbackTest extends TestCase {
         Behavior method = createSpecMethodByName(getClass(), "testEventOrder");
         callback.onBehavior(method);
     }
-
+    
+    @Test
+    public void testShouldVerifySpec() throws Exception {
+        Behavior behavior = new StubBehavior() {
+            @Override
+            public Specification<?> run(IBehaviorResults results) throws Exception {
+                return new StubSpecification();
+            }
+        };
+        callback.onBehavior(behavior);
+        assertTrue(specVerifyCalled);
+    }
+    
+    @Test
+    public void testShouldNotVerifySpecIfRunHasOtherErrors() throws Exception {
+        Behavior behavior = new StubBehavior() {
+            @Override
+            public Specification<?> run(IBehaviorResults results) throws Exception {
+                results.error(null, new Throwable());
+                return new StubSpecification();
+            }
+        };
+        callback.onBehavior(behavior);
+        assertFalse(specVerifyCalled);
+    }
+    
     private Behavior createSpecMethodByName(final Class<?> target, String name)
             throws NoSuchMethodException {
         Behavior method = new Behavior(target.getDeclaredMethod(name)) {
@@ -106,5 +134,38 @@ public class JDaveCallbackTest extends TestCase {
             }
         };
         return method;
+    }
+    
+    private class StubBehavior extends Behavior {
+        public StubBehavior() throws SecurityException, NoSuchMethodException {
+            super(JDaveCallbackTest.class.getDeclaredMethod("setUp"));
+        }
+
+        @Override
+        protected void destroyContext() throws Exception {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        protected Object newContext(Specification<?> spec) throws Exception {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        protected Specification<?> newSpecification() throws Exception {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String getName() {
+            return "";
+        }
+    }
+
+    private class StubSpecification extends Specification<Object> {
+        @Override
+        public void verify() {
+            specVerifyCalled = true;
+        }
     }
 }

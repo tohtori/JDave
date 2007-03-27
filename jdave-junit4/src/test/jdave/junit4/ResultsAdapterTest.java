@@ -69,6 +69,13 @@ public class ResultsAdapterTest extends RunListener {
         adapter.expected(method);
         assertTrue(failures.isEmpty());
     }
+    
+    @Test
+    public void reportsNumberOfErrors() {
+        assertEquals(0, adapter.getErrorCount());
+        adapter.error(method, new Throwable());
+        assertEquals(1, adapter.getErrorCount());
+    }
 
     private void runNotifierShouldHaveReceived(Throwable e) {
         assertEquals(1, failures.size());

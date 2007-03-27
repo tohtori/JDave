@@ -33,13 +33,15 @@ import org.junit.runner.notification.RunNotifier;
 public class ResultsAdapter implements IBehaviorResults {
     private final RunNotifier notifier;
     private final Description desc;
-
+    private int errorCount;
+    
     ResultsAdapter(RunNotifier notifier, Description desc) {
         this.notifier = notifier;
         this.desc = desc;
     }
 
     public void error(Method m, Throwable e) {
+        errorCount++;
         notifier.fireTestFailure(new Failure(desc, e));
     }
 
@@ -49,5 +51,9 @@ public class ResultsAdapter implements IBehaviorResults {
 
     public void unexpected(Method m, ExpectationFailedException e) {
         notifier.fireTestFailure(new Failure(desc, e));
+    }
+    
+    public int getErrorCount() {
+        return errorCount;
     }
 }
