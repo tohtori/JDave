@@ -72,7 +72,7 @@ public class ResultsAdapterTest extends RunListener {
     }
     
     @Test
-    public void reportsNumberOfErrors() {
+    public void reportsHasErrors() {
         assertFalse(adapter.hasErrors());
         adapter.error(method, new Throwable());
         assertTrue(adapter.hasErrors());
