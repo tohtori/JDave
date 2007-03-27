@@ -53,7 +53,7 @@ public class ResultsAdapter implements IBehaviorResults {
         notifier.fireTestFailure(new Failure(desc, e));
     }
     
-    public int getErrorCount() {
-        return errorCount;
+    public boolean hasErrors() {
+        return errorCount > 0;
     }
 }

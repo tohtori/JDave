@@ -49,7 +49,7 @@ public class JDaveCallback implements ISpecVisitor {
         try {
             ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
             Specification<?> spec = behavior.run(resultsAdapter);
-            if (resultsAdapter.getErrorCount() == 0) {
+            if (!resultsAdapter.hasErrors()) {
                 spec.verify();
             }
         } catch (Throwable t) {
