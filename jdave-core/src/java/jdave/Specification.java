@@ -204,29 +204,35 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     /**
-     * Called before create() method in context has been called.
-     * Override this method to add common initialization code for contexts within
+     * Create this specification.
+     * <p>
+     * This method is called before the <code>create</code> method of the executed context has
+     * been called. Override this method to add common initialization code for contexts within
      * a specification.
      */
     public void create() {
     }
 
     /**
-     * Called after optional destroy() method in context has been called.
-     * Override this method to add common destroy code for contexts within
-     * a specification.
+     * Destroy this specification.
+     * <p>
+     * This method is called after the optional <code>destroy</code> method of the excuted context
+     * has been called. Override this method to add common destroy code for contexts within a
+     * specification.
      */
     public void destroy() {
     }
     
     /**
-     * Some contexts set thread local variables. This may cause following
-     * behaviors to fail if they depend on initial thread local state.
-     * Thread locals can be isolated for all behavior methods of current specification
-     * by overiding this method and returning true. Then a new fresh thread is created
-     * for all methods in the specification.
-     * @return true if thread local isolation is needed for this Specification, 
-     *   the default is false
+     * Returns <code>true</code> if thread local isolation is needed for this specification.
+     * <p>
+     * Some contexts set thread local variables. This may cause following behaviors to fail if
+     * they depend on initial thread local state. Thread locals can be isolated for all behavior
+     * methods of current specification by overiding this method and returning <code>true</code>.
+     * Then a new fresh thread is created for all methods in the specification.
+     *
+     * @return  <code>true</code> if thread local isolation is needed for this specification. The
+     *          default is <code>false</code>.
      */
     public boolean needsThreadLocalIsolation() {
         return false;
