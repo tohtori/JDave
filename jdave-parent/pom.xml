@@ -37,13 +37,13 @@
     <developer>
       <name>Lasse Koskela</name>
     </developer>
+    <developer>
+      <name>Mikko Peltonen</name>
+    </developer>
   </developers>
   <contributors>
     <contributor>
       <name>Esko Luontola</name>
-    </contributor>
-    <contributor>
-      <name>Mikko Peltonen</name>
     </contributor>
   </contributors>
   
