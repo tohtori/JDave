@@ -34,6 +34,36 @@ urchinTracker();
 		<h1 class="title">Documentation</h1>
 		<div></div>
 
+<h2>Intro</h2>
+
+JDave is a framework which provides an easy way to assert behavior of your classes. 
+Key consepts are <b>specification</b>, which is a container for <b>behaviors</b>.
+Behaviors define the behavior of a class and they are always expressed within 
+some <b>context</b>. Context defines the setting where particular behaviour applies.
+<p>
+For example, we could specify a <code>Stack</code> by first identifying that it has
+(at least) three interesting states, an empty stack, a full stack and a stack which
+is neither empty nor full. We would then continue by specifying the behavior of
+a <code>Stack</code> when it is in these states. The behavior can then be expressed as:
+<p>
+<blockquote>
+<pre>
+Stack specification
+    Empty stack
+        - is empty
+        - is no longer empty after push
+        - ...
+    Full stack
+        - is full
+        - complains on push
+        - contains all items
+        - ...
+    Stack which is neither empty nor full
+        - adds to the top when pushing new item
+        - ...
+</pre>
+</blockquote>
+
 <h2>Basics</h2>
 
 A specification is implemented by extending <code>jdave.Specification</code> base class.
