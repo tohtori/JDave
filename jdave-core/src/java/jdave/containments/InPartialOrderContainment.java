@@ -1,5 +1,5 @@
 /*
- * Copyright 2006 the original author or authors.
+ * Copyright 2007 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,37 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containments;
 
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.EqualsEqualityCheck;
+import jdave.IEqualityCheck;
+
 /**
+ * @author Esko Luontola
  * @author Joni Freeman
  */
-public class InOrderContainment extends CollectionContainment {
-    public InOrderContainment(Collection<?> elements) {
+public class InPartialOrderContainment extends CollectionContainment {
+    public InPartialOrderContainment(Collection<?> elements) {
         super(elements);
     }
     
-    public InOrderContainment(Iterator<?> elements) {
+    public InPartialOrderContainment(Iterator<?> elements) {
         super(elements);
     }
     
-    public InOrderContainment(Iterable<?> elements) {
+    public InPartialOrderContainment(Iterable<?> elements) {
         super(elements);
     }
-
+    
     public boolean matches(Collection<?> actual) {
-        if (elements.size() != actual.size()) {
-            return false;
-        }
         Iterator<?> i1 = elements.iterator();
         Iterator<?> i2 = actual.iterator();
         while (i1.hasNext()) {
-            if (!newEqualityCheck(i1.next()).matches(i2.next())) {
-                return false;
-            }
+            Object o1 = i1.next();
+            Object o2;
+            do {
+                if (!i2.hasNext()) {
+                    return false;
+                }
+                o2 = i2.next();
+            } while (!newEqualityCheck(o1).matches(o2));
         }
         return true;
     }

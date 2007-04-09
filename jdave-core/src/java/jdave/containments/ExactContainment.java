@@ -13,33 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containments;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Joni Freeman
  */
-class AnyContainment extends CollectionContainment {
-    public AnyContainment(Collection<?> elements) {
+public class ExactContainment extends CollectionContainment {
+    public ExactContainment(Collection<?> elements) {
         super(elements);
     }
     
-    public AnyContainment(Iterator<?> elements) {
+    public ExactContainment(Iterator<?> elements) {
         super(elements);
     }
     
-    public AnyContainment(Iterable<?> elements) {
+    public ExactContainment(Iterable<?> elements) {
         super(elements);
     }
 
     public boolean matches(Collection<?> actual) {
-        for (Object object : elements) {
-            if (actual.contains(object)) {
-                return true;
-            }
-        }
-        return false;
+        Set<?> expected = new HashSet<Object>(elements);
+        return expected.equals(new HashSet<Object>(actual));
     }
 }

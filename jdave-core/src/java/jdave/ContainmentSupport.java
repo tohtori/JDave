@@ -19,6 +19,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.containments.AllContainment;
+import jdave.containments.AnyContainment;
+import jdave.containments.ExactContainment;
+import jdave.containments.InOrderContainment;
+import jdave.containments.InPartialOrderContainment;
+import jdave.containments.ObjectContainment;
 import jdave.util.Primitives;
 
 /**

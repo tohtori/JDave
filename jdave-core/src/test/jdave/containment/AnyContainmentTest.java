@@ -13,33 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containment;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
+import jdave.IContainment;
+import jdave.containments.AnyContainment;
 import junit.framework.TestCase;
 
 /**
  * @author Joni Freeman
  */
-public class AllContainmentTest extends TestCase {
+public class AnyContainmentTest extends TestCase {
     private IContainment containment;
 
     @Override
     protected void setUp() throws Exception {
-        containment = new AllContainment(new Iterable<Integer>() {
+        containment = new AnyContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
             }
         });
     }
     
-    public void testIsInEqualList() {
-        assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
+    public void testIsInPartialList() {
+        assertTrue(containment.matches(Arrays.asList(2)));
     }
         
-    public void testIsNotInPartialList() {
-        assertFalse(containment.matches(Arrays.asList(1, 2)));
+    public void testIsNotInListWhichDoesNotHaveAnyEqualElements() {
+        assertFalse(containment.matches(Arrays.asList(4)));
     }
 }

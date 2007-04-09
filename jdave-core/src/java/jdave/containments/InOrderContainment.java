@@ -13,31 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containments;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+
+import jdave.EqualsEqualityCheck;
+import jdave.IEqualityCheck;
 
 /**
  * @author Joni Freeman
  */
-class ExactContainment extends CollectionContainment {
-    public ExactContainment(Collection<?> elements) {
+public class InOrderContainment extends CollectionContainment {
+    public InOrderContainment(Collection<?> elements) {
         super(elements);
     }
     
-    public ExactContainment(Iterator<?> elements) {
+    public InOrderContainment(Iterator<?> elements) {
         super(elements);
     }
     
-    public ExactContainment(Iterable<?> elements) {
+    public InOrderContainment(Iterable<?> elements) {
         super(elements);
     }
 
     public boolean matches(Collection<?> actual) {
-        Set<?> expected = new HashSet<Object>(elements);
-        return expected.equals(new HashSet<Object>(actual));
+        if (elements.size() != actual.size()) {
+            return false;
+        }
+        Iterator<?> i1 = elements.iterator();
+        Iterator<?> i2 = actual.iterator();
+        while (i1.hasNext()) {
+            if (!newEqualityCheck(i1.next()).matches(i2.next())) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    protected IEqualityCheck newEqualityCheck(Object expected) {
+        return new EqualsEqualityCheck(expected);
     }
 }

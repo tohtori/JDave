@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containments;
 
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.IContainment;
 import jdave.util.Collections;
 
 /**
  * @author Joni Freeman
  */
-abstract class CollectionContainment implements IContainment {
+public abstract class CollectionContainment implements IContainment {
     protected final Collection<?> elements;
 
     public CollectionContainment(Collection<?> elements) {

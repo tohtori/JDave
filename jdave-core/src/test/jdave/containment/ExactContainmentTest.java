@@ -13,41 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containment;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
+import jdave.IContainment;
+import jdave.containments.ExactContainment;
 import junit.framework.TestCase;
 
 /**
  * @author Joni Freeman
  */
-public class InOrderContainmentTest extends TestCase {
+public class ExactContainmentTest extends TestCase {
     private IContainment containment;
 
     @Override
     protected void setUp() throws Exception {
-        containment = new InOrderContainment(new Iterable<Integer>() {
+        containment = new ExactContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
             }
         });
     }
     
-    public void testIsInOrder() {
-        assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
+    public void testIsInListWhichIsInDifferentOrder() {
+        assertTrue(containment.matches(Arrays.asList(2, 3, 1, 1)));
     }
         
-    public void testIsNotInOrder() {
-        assertFalse(containment.matches(Arrays.asList(1, 3, 2)));
+    public void testIsNotInListWhichMissesElement() {
+        assertFalse(containment.matches(Arrays.asList(1, 2, 2)));
     }
     
-    public void testIsNotInOrderWhenActualHasMoreElements() {
+    public void testIsNotInListWhichHasExtraElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
-    }
-    
-    public void testIsNotInOrderWhenActualHasLessElements() {
-        assertFalse(containment.matches(Arrays.asList(1, 2)));
     }
 }
