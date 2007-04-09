@@ -21,23 +21,22 @@ package jdave;
  * 
  * Example:
  * <blockquote>
+ * <pre>
  * public void isConsistentWithEqualsAndHashCode() {
  *     object = new SampleDomainObject(1).setName("John");
- *     specify(object, satisfies(new EqualsHashCodeContract<SampleDomainObject>() {
- *         @Override
+ *     specify(object, satisfies(new EqualsHashCodeContract&lt;SampleDomainObject&gt;() {
  *         protected SampleDomainObject equal() {
  *            return new SampleDomainObject(1);
  *         }
- *         @Override
  *         protected SampleDomainObject nonEqual() {
  *            return new SampleDomainObject(2);
  *         }
- *         @Override
  *         protected SampleDomainObject subType() {
  *            return new SampleDomainObject(1) {};
  *         }
  *      }));
  *  }
+ * </pre>
  * </blockquote>
  * 
  * @see java.lang.Object#equals(Object)
