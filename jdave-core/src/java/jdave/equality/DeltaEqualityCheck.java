@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.equality;
+
+import jdave.IEqualityCheck;
 
 /**
  * @author Joni Freeman
  */
-public class EqualsEqualityCheck implements IEqualityCheck {
-    private final Object expected;
+public class DeltaEqualityCheck implements IEqualityCheck {
+    private final Number expectedNumber;
+    private final double delta;
 
-    public EqualsEqualityCheck(Object expected) {
-        this.expected = expected;        
+    public DeltaEqualityCheck(Number expectedNumber, double delta) {
+        this.expectedNumber = expectedNumber;
+        this.delta = delta;
     }
-    
+
     public boolean matches(Object actual) {
-        if (expected == null) {
-            return actual == null;
-        }
-        return expected.equals(actual);
+        return (Math.abs(((Number) actual).doubleValue() - expectedNumber.doubleValue()) <= delta);
     }
-    
+
     public String error(Object actual) {
-        return "Expected: " + expected + ", but was: " + actual;
+        return "Expected: " + expectedNumber + ", but was: " + actual;
     }
 }

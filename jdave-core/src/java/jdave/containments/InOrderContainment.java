@@ -18,8 +18,8 @@ package jdave.containments;
 import java.util.Collection;
 import java.util.Iterator;
 
-import jdave.EqualsEqualityCheck;
 import jdave.IEqualityCheck;
+import jdave.equality.EqualsEqualityCheck;
 
 /**
  * @author Joni Freeman

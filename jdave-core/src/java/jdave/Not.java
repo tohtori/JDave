@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import jdave.containments.NotContainment;
 import jdave.contract.NotContract;
+import jdave.equality.NotEqualsEqualityCheck;
 
 /**
  * @author Pekka Enberg

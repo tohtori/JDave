@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.equality.DeltaEqualityCheck;
+import jdave.equality.EqualsEqualityCheck;
 import jdave.mock.MockSupport;
 import jdave.util.Collections;
 import jdave.util.Primitives;
