@@ -15,9 +15,11 @@
  */
 package jdave;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
@@ -35,6 +37,7 @@ public abstract class Specification<T> extends MockSupport {
     private boolean actualState = true;
     public T be;
     public T context;
+    private List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
     
     public Not<T> not() {
         actualState = false;
@@ -238,5 +241,29 @@ public abstract class Specification<T> extends MockSupport {
      */
     public boolean needsThreadLocalIsolation() {
         return false;
+    }
+    
+    /**
+     * Add a <code>ILifecycleListener</code> listener to specification.
+     * <p>
+     * ILifecycleListener will be notified when contexts are instantiated and context objects 
+     * are created.
+     * 
+     * @param listener a listener to get lifecycle event notifications
+     */
+    protected void addListener(ILifecycleListener listener) {
+        listeners.add(listener);
+    }
+
+    public void fireAfterContextInstantiation(Object contextInstance) {
+        for (ILifecycleListener listener : listeners) {
+            listener.afterContextInstantiation(contextInstance);
+        }
+    }
+
+    public void fireAfterContextCreation(Object contextInstance, Object createdContext) {
+        for (ILifecycleListener listener : listeners) {
+            listener.afterContextCreation(contextInstance, createdContext);
+        }
     }
 }

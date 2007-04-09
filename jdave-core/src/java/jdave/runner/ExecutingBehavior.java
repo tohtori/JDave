@@ -49,9 +49,11 @@ final class ExecutingBehavior extends Behavior {
     @Override
     protected Object newContext(Specification<?> spec) throws Exception {
         context = newContextInstance(spec);
+        spec.fireAfterContextInstantiation(context);
         Object contextObject = newContextObject(context);
         Fields.set(spec, "be", contextObject);
         Fields.set(spec, "context", contextObject);
+        spec.fireAfterContextCreation(context, contextObject);
         return context;
     }
 
