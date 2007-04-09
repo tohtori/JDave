@@ -18,7 +18,7 @@ package jdave;
 import java.util.Collection;
 import java.util.Iterator;
 
-import jdave.containments.NotContainment;
+import jdave.containment.NotContainment;
 import jdave.contract.NotContract;
 import jdave.equality.NotEqualsEqualityCheck;
 

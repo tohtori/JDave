@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.containments;
+package jdave.containment;
 
 import java.util.Collection;
-
-import jdave.IContainment;
+import java.util.Iterator;
 
 /**
  * @author Joni Freeman
  */
-public class ObjectContainment implements IContainment {
-    private final Object object;
-
-    public ObjectContainment(Object object) {
-        this.object = object;
+public class AnyContainment extends CollectionContainment {
+    public AnyContainment(Collection<?> elements) {
+        super(elements);
+    }
+    
+    public AnyContainment(Iterator<?> elements) {
+        super(elements);
+    }
+    
+    public AnyContainment(Iterable<?> elements) {
+        super(elements);
     }
 
     public boolean matches(Collection<?> actual) {
-        return actual.contains(object);
-    }
-
-    public String error(Collection<?> actual) {
-        return "The specified collection " + actual + " does not contain '" + this + "'";
-    }
-    
-    @Override
-    public String toString() {
-        return object.toString();
+        for (Object object : elements) {
+            if (actual.contains(object)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

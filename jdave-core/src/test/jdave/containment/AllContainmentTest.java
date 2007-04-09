@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import jdave.IContainment;
-import jdave.containments.AllContainment;
+import jdave.containment.AllContainment;
 import junit.framework.TestCase;
 
 /**

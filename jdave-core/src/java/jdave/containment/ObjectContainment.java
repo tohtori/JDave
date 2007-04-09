@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 the original author or authors.
+ * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.containments;
+package jdave.containment;
 
 import java.util.Collection;
 
 import jdave.IContainment;
 
 /**
- * @author Pekka Enberg
+ * @author Joni Freeman
  */
-public class NotContainment implements IContainment {
-    private final IContainment containment;
+public class ObjectContainment implements IContainment {
+    private final Object object;
 
-    public NotContainment(IContainment containment) {
-        this.containment = containment;
+    public ObjectContainment(Object object) {
+        this.object = object;
     }
 
     public boolean matches(Collection<?> actual) {
-        return !containment.matches(actual);
+        return actual.contains(object);
     }
 
     public String error(Collection<?> actual) {
-        return "The specified collection " + actual + " contains '" + containment + "'";
+        return "The specified collection " + actual + " does not contain '" + this + "'";
+    }
+    
+    @Override
+    public String toString() {
+        return object.toString();
     }
 }

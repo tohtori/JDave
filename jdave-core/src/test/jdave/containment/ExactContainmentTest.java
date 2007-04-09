@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import jdave.IContainment;
-import jdave.containments.ExactContainment;
+import jdave.containment.ExactContainment;
 import junit.framework.TestCase;
 
 /**
