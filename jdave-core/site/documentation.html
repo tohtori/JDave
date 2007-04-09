@@ -245,9 +245,9 @@ fields. This is often used for instance to inject Spring beans into specificatio
 <h2>Thread local isolation</h2>
 
 Some contexts set thread local variables. This may cause following behaviors to fail if 
-they depend on initial thread local state. Thread locals can isolated for all behavior 
+they depend on initial thread local state. Thread locals can be isolated for all behavior 
 methods of current specification by overiding the method 
-<code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a new fresh thread 
+<code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a fresh new thread 
 is created for all methods in the specification.
 
 </div>	
