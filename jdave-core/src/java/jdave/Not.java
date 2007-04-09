@@ -18,6 +18,9 @@ package jdave;
 import java.util.Collection;
 import java.util.Iterator;
 
+import jdave.containments.NotContainment;
+import jdave.contract.NotContract;
+
 /**
  * @author Pekka Enberg
  */

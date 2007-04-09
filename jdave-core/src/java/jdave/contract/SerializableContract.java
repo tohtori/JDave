@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.contract;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+
+import jdave.ExpectationFailedException;
+import jdave.IContract;
 
 /**
  * @author Joni Freeman

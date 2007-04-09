@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.containments;
 
 import java.util.Collection;
+
+import jdave.IContainment;
 
 /**
  * @author Pekka Enberg

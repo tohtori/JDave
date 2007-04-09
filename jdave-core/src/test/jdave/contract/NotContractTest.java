@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.contract;
 
+import jdave.ExpectationFailedException;
+import jdave.IContract;
+import jdave.Specification;
 import junit.framework.TestCase;
 
 /**
@@ -41,13 +44,13 @@ public class NotContractTest extends TestCase {
     
     public void testIsNegationOfPassingContract() {
         try {
-            spec.specify(null, spec.should.not().satisfy(passingContract));
+            spec.specify(null, spec.not().satisfy(passingContract));
             fail();
         } catch (ExpectationFailedException e) {
         }
     }
     
     public void testIsNegationOfFailingContract() {
-        spec.specify(null, spec.should.not().satisfy(failingContract));        
+        spec.specify(null, spec.not().satisfy(failingContract));        
     }
 }

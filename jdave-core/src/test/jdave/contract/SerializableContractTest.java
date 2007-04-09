@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.contract;
 
+import jdave.ExpectationFailedException;
+import jdave.Specification;
 import junit.framework.TestCase;
 
 /**
