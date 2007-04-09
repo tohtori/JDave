@@ -15,11 +15,11 @@
  */
 package jdave.examples;
 
-import jdave.CloneableContract;
-import jdave.EqualsComparableContract;
-import jdave.EqualsHashCodeContract;
-import jdave.SerializableContract;
 import jdave.Specification;
+import jdave.contract.CloneableContract;
+import jdave.contract.EqualsComparableContract;
+import jdave.contract.EqualsHashCodeContract;
+import jdave.contract.SerializableContract;
 import jdave.examples.contract.SampleDomainObject;
 
 /**
