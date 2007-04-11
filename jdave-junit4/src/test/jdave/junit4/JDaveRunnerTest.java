@@ -43,7 +43,15 @@ public class JDaveRunnerTest extends TestCase {
         JDaveRunner runner = new JDaveRunner(DiverseSpec.class);
         runner.run(notifier);
     }
-
+    
+    @Test
+    public void bothContextsAreStartedAndFinished() throws Exception {
+        shouldHaveHappened("fireTestStarted:FirstContext");
+        shouldHaveHappened("fireTestFinished:FirstContext");
+        shouldHaveHappened("fireTestStarted:SecondContext");
+        shouldHaveHappened("fireTestFinished:SecondContext");
+    }
+    
     @Test
     public void testFailingSpecMethodsAreRecordedWithFailure() throws Exception {
         shouldHaveHappened("fireTestStarted:fails");

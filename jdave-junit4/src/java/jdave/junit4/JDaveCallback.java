@@ -41,6 +41,11 @@ public class JDaveCallback implements ISpecVisitor {
     }
 
     public void onContext(Context context) {
+        notifier.fireTestStarted(Description.createSuiteDescription(context.getName()));
+    }
+    
+    public void afterContext(Context context) {
+        notifier.fireTestFinished(Description.createSuiteDescription(context.getName()));
     }
 
     public void onBehavior(Behavior behavior) throws Exception {
