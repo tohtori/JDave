@@ -30,6 +30,7 @@ import jdave.runner.Behavior;
 public class SpecVisitorAdapter implements ISpecVisitor {
     private final IBehaviorResults results;
     private List<String> contextNames = new ArrayList<String>();
+    private List<String> finishedContextNames = new ArrayList<String>();
 
     public SpecVisitorAdapter(IBehaviorResults results) {
         this.results = results;        
@@ -39,6 +40,10 @@ public class SpecVisitorAdapter implements ISpecVisitor {
         contextNames.add(context.getName());
     }
     
+    public void afterContext(Context context) {
+        finishedContextNames.add(context.getName());
+    }
+    
     public void onBehavior(Behavior method) throws Exception {
         method.run(results);
     }
@@ -46,5 +51,10 @@ public class SpecVisitorAdapter implements ISpecVisitor {
     public List<String> getContextNames() {
         Collections.sort(contextNames);
         return contextNames;
+    }
+    
+    public List<String> getFinishedContextNames() {
+        Collections.sort(finishedContextNames);
+        return finishedContextNames;
     }
 }

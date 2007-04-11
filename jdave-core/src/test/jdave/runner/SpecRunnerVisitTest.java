@@ -37,6 +37,9 @@ public class SpecRunnerVisitTest extends TestCase {
 
             public void onBehavior(Behavior method) throws Exception {
                 visitedMethod = method;
+            }
+
+            public void afterContext(Context context) {
             }            
         });
         assertEquals(visitedMethod.getClass(), VisitingBehavior.class);

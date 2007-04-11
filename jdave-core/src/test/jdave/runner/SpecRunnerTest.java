@@ -67,6 +67,12 @@ public class SpecRunnerTest extends TestCase {
         assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
+    public void testShouldNotifyCallbackWhenContextHasFinished() throws Exception {
+        SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
+        runner.run(BooleanSpec.class, adapter);
+        assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getFinishedContextNames());
+    }
+    
     public void testShouldCallDestroyForEachMethod() throws Exception {
         BooleanSpec.destroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
