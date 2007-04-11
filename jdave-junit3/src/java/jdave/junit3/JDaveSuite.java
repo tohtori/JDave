@@ -87,6 +87,9 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
         });
     }
     
+    public void afterContext(Context context) {
+    }
+    
     protected Specification<?> runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) throws Throwable {
         return behavior.run(new ResultAdapter(testCase, testResult));
     }
