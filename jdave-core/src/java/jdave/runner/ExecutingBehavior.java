@@ -39,11 +39,7 @@ final class ExecutingBehavior extends Behavior {
 
     @Override
     protected Specification<?> newSpecification() throws Exception {
-        try {
-            return specType.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return specType.newInstance();
     }
 
     @Override
