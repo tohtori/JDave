@@ -19,54 +19,45 @@ import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
 import jdave.junit3.JDaveSuite.ResultAdapter;
-
-import org.jmock.Mock;
-import org.jmock.cglib.MockObjectTestCase;
-import org.jmock.core.Constraint;
-
+import jdave.mock.UnsafeHackConcreteClassImposteriser;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
+
+import org.jmock.Expectations;
+import org.jmock.integration.junit3.MockObjectTestCase;
 
 /**
  * @author Joni Freeman
  */
 public class ResultAdapterTest extends MockObjectTestCase {
     private TestCase test;
-    private Mock result;
+    private TestResult result;
     private ResultAdapter adapter;
     private Method method;
-
+    
     @Override
     protected void setUp() throws Exception {
+        setImposteriser(UnsafeHackConcreteClassImposteriser.INSTANCE);
         result = mock(TestResult.class);
         test = new TestCase("test") {};
-        adapter = new JDaveSuite.ResultAdapter(test, (TestResult) result.proxy());
+        adapter = new JDaveSuite.ResultAdapter(test, result);
         method = ResultAdapterTest.class.getDeclaredMethod("setUp");
     }
     
     public void testShouldAdaptError() {
-        Throwable t = new Exception();
-        result.expects(once()).method("addError").with(eq(test), eq(t));
+        final Throwable t = new Exception();
+        checking(new Expectations() {{
+            one(result).addError(test, t);
+        }});
         adapter.error(method, t);
     }
     
     public void testShouldAdaptFailure() {
         final ExpectationFailedException e = new ExpectationFailedException("");
-        result.expects(once()).method("addFailure").with(eq(test), new Constraint() {
-            public boolean eval(Object o) {
-                if (o instanceof AssertionFailedError) {
-                    AssertionFailedError error = (AssertionFailedError) o;
-                    return error.getCause() == e && error.getMessage().equals("ResultAdapterTest setUp");
-                }
-                return false;
-            }
-
-            public StringBuffer describeTo(StringBuffer buffer) {
-                buffer.append("instanceof");
-                return buffer;
-            }
-        });
+        checking(new Expectations() {{
+            one(result).addFailure(with(equal(test)), with(any(AssertionFailedError.class)));
+        }});
         adapter.unexpected(method, e);
     }
 }

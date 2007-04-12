@@ -74,7 +74,7 @@ public class JDaveSuiteTest extends TestCase {
     
     public class StubSpecification extends Specification<Object> {
         @Override
-        public void verify() {
+        public void verifyMocks() {
             verifyCalled = true;
         }
     }

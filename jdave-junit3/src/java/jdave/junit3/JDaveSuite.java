@@ -63,7 +63,7 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
                 try {
                     runTest();
                     if (!hasErrorsOrFailures()) {
-                        spec.verify();
+                        spec.verifyMocks();
                     }
                 } finally {
                     tearDown();
