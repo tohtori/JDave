@@ -19,26 +19,28 @@ import jdave.ILifecycleListener;
 import jdave.SpecVisitorAdapter;
 import jdave.Specification;
 
-import org.jmock.Mock;
-import org.jmock.MockObjectTestCase;
+import org.jmock.Expectations;
+import org.jmock.integration.junit3.MockObjectTestCase;
 
 /**
  * @author Joni Freeman
  */
 public class LifecycleListenerTest extends MockObjectTestCase {
-    private static Mock listener;
+    private static ILifecycleListener listener;
     
     public void testCallsListenerForEachContext() throws Exception {
         listener = mock(ILifecycleListener.class);
-        listener.expects(exactly(2)).method("afterContextInstantiation");
-        listener.expects(exactly(2)).method("afterContextCreation");
+        checking(new Expectations() {{
+            exactly(2).of(listener).afterContextInstantiation(with(anything()));
+            exactly(2).of(listener).afterContextCreation(with(anything()), with(anything()));
+        }});
         new SpecRunner().run(TestSpec.class, new SpecVisitorAdapter(new DummyBehaviorResults()));
         verify();
     }
     
     public static class TestSpec extends Specification<Void> {
         public TestSpec() {
-            addListener((ILifecycleListener) listener.proxy());
+            addListener(listener);
         }
         
         public class Context {

@@ -15,35 +15,12 @@
  */
 package jdave.mock;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import jdave.ContainmentSupport;
 
-import org.jmock.cglib.CGLIBCoreMock;
-import org.jmock.core.Constraint;
-import org.jmock.core.Formatting;
-import org.jmock.core.InvocationMatcher;
-import org.jmock.core.Stub;
-import org.jmock.core.Verifiable;
-import org.jmock.core.constraint.And;
-import org.jmock.core.constraint.HasPropertyWithValue;
-import org.jmock.core.constraint.IsAnything;
-import org.jmock.core.constraint.IsCloseTo;
-import org.jmock.core.constraint.IsEqual;
-import org.jmock.core.constraint.IsInstanceOf;
-import org.jmock.core.constraint.IsSame;
-import org.jmock.core.matcher.InvokeAtLeastOnceMatcher;
-import org.jmock.core.matcher.InvokeAtMostOnceMatcher;
-import org.jmock.core.matcher.InvokeCountMatcher;
-import org.jmock.core.matcher.InvokeOnceMatcher;
-import org.jmock.core.matcher.TestFailureMatcher;
-import org.jmock.core.stub.DoAllStub;
-import org.jmock.core.stub.ReturnIteratorStub;
-import org.jmock.core.stub.ReturnStub;
-import org.jmock.core.stub.StubSequence;
-import org.jmock.util.Verifier;
+import org.jmock.Mockery;
+import org.jmock.Sequence;
+import org.jmock.States;
+import org.jmock.internal.ExpectationBuilder;
 
 /**
  * Note, most of these methods are copied from jmock MockObjectTestCase.
@@ -53,116 +30,92 @@ import org.jmock.util.Verifier;
  * @author Joni Freeman
  */
 public class MockSupport extends ContainmentSupport {
-    private List<Verifiable> objectsThatRequireVerification = new ArrayList<Verifiable>();
-    
-    public void registerToVerify(Verifiable verifiable) {
-        objectsThatRequireVerification.add(verifiable);
+    private final Mockery mockery = new Mockery();
+
+    protected MockSupport() {
+        mockery.setExpectationErrorTranslator(JDaveErrorTranslator.INSTANCE); 
+        mockery.setImposteriser(UnsafeHackConcreteClassImposteriser.INSTANCE);
     }
 
-    public void unregisterToVerify(Verifiable verifiable) {
-        objectsThatRequireVerification.remove(verifiable);
-    }
-
-    public void verify() {
-        for (Verifiable verifiable : objectsThatRequireVerification) {
-            verifiable.verify();
-        }
-        Verifier.verifyObject(this);
-    }
-
-    public <T> Mock<T> mock(Class<T> mockType) {
-        Mock<T> mock = new Mock<T>(newCoreMock(mockType, new Class[0], new Object[0]));
-        registerToVerify(mock);
-        return mock;
+    public Mockery mockery() {
+        return mockery;
     }
     
-    public <T> Mock<T> mock(Class<T> mockType, Class[] constructorArgumentTypes, Object[] constructorArguments) {
-        Mock<T> mock = new Mock<T>(newCoreMock(mockType, constructorArgumentTypes, constructorArguments));
-        registerToVerify(mock);
-        return mock;
+    public void verifyMocks() {
+        mockery.assertIsSatisfied();
     }
     
-    private CGLIBCoreMock newCoreMock(Class<?> mockType, Class[] constructorArgumentTypes, Object[] constructorArguments) {
-        return new CGLIBCoreMock(mockType, defaultMockNameForType(mockType), constructorArgumentTypes, constructorArguments);
-    }
-
-    public String defaultMockNameForType(Class<?> mockedType) {
-        return "mock" + Formatting.classShortName(mockedType);
-    }
-
-    public InvocationMatcher once() {
-        return new InvokeOnceMatcher();
-    }
-
-    public InvocationMatcher atLeastOnce() {
-        return new InvokeAtLeastOnceMatcher();
-    }
-
-    public InvocationMatcher atMostOnce() {
-        return new InvokeAtMostOnceMatcher();
-    }
-
-    public InvocationMatcher exactly(int expectedCount) {
-        return new InvokeCountMatcher(expectedCount);
-    }
-
-    public InvocationMatcher never() {
-        return new TestFailureMatcher("not expected");
-    }
-
-    public InvocationMatcher never(String errorMessage) {
-        return new TestFailureMatcher("not expected (" + errorMessage + ")");
-    }
-
-    public IsEqual eq(Object operand) {
-        return new IsEqual(operand);
-    }
-
-    public IsCloseTo eq(double operand, double error) {
-        return new IsCloseTo(operand, error);
-    }
-
-    public IsSame same(Object operand) {
-        return new IsSame(operand);
+    /**
+     * Sets the result returned for the given type when no return value has been explicitly
+     * specified in the expectation.
+     *
+     * @param type
+     *    The type for which to return <var>result</var>.
+     * @param result
+     *    The value to return when a method of return type <var>type</var>
+     *    is invoked for which an explicit return value has has not been specified.
+     */
+    public void setDefaultResultForType(Class<?> type, Object result) {
+        mockery.setDefaultResultForType(type, result);
     }
     
-    public HasPropertyWithValue hasPropertyWithValue(String propertyName, Constraint expectation) {
-        return new HasPropertyWithValue(propertyName, expectation);
-    }
-    
-    public And and(Constraint left, Constraint right) {
-        return new And(left, right);
-    }
-    
-    public IsInstanceOf isInstanceOf(Class<?> type) {
-        return new IsInstanceOf(type);
-    }
-    
-    public IsAnything isAnything() {
-        return new IsAnything();
-    }
-    
-    public Stub returnValue(Object o) {
-        return new ReturnStub(o);
+    /**
+     * Specify expectations upon the mock objects in the test.
+     */
+    public void checking(ExpectationBuilder expectations) {
+        mockery.checking(expectations);
     }
 
-    public Stub returnIterator(Collection<?> collection) {
-        return new ReturnIteratorStub(collection);
+    /**
+     * Create a mock object of type T with an explicit name.
+     *
+     * @param typeToMock
+     *  The type to be mocked
+     * @param name
+     *  The name of the new mock object that is used to identify the mock object
+     *  in error messages
+     * @return
+     *  A new mock object of type
+     */
+    public <T> T mock(Class<T> typeToMock, String name) {
+        return mockery.mock(typeToMock, name);
     }
 
-    public Stub returnIterator(Object[] array) {
-        return new ReturnIteratorStub(array);
-    }
-    
-    public Stub onConsecutiveCalls(Stub... stubs ) {
-        return new StubSequence(stubs);
+    /**
+     * Create a mock object of type T with a name derived from its type.
+     *
+     * @param typeToMock
+     *  The type to be mocked
+     * @return
+     *  A new mock object of type
+     */
+    public <T> T mock(Class<T> typeToMock) {
+        return mockery.mock(typeToMock);
     }
 
-    public Stub doAll(Stub... stubs) {
-        return new DoAllStub(stubs);
+    /**
+     * Returns a new sequence that is used to constrain the order in which
+     * expectations can occur.
+     *
+     * @param name
+     *     The name of the sequence.
+     * @return
+     *     A new sequence with the given name.
+     */
+    public Sequence sequence(String name) {
+        return mockery.sequence(name);
     }
     
-    public Stub throwException(Throwable t) {
-        return new ThrowStub(t);
+    /**
+     * Returns a new state machine that is used to constrain the order in which
+     * expectations can occur.
+     *
+     * @param name
+     *     The name of the state machine.
+     * @return
+     *     A new state machine with the given name.
+     */
+    public States states(String name) {
+        return mockery.states(name);
     }
 }
