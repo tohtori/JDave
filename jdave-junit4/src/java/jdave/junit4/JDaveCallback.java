@@ -55,7 +55,7 @@ public class JDaveCallback implements ISpecVisitor {
             ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
             Specification<?> spec = behavior.run(resultsAdapter);
             if (!resultsAdapter.hasErrors()) {
-                spec.verify();
+                spec.verifyMocks();
             }
         } catch (Throwable t) {
             notifier.fireTestFailure(new Failure(desc, t));

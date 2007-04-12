@@ -4,8 +4,10 @@
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="src" path="/jdave-core"/>
-  <classpathentry kind="var" path="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0.jar" sourcepath="M2_REPO/jmock/jmock/1.1.0/jmock-1.1.0-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/cglib/cglib-full/2.0/cglib-full-2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jmock/jmock-junit3/2.0.0/jmock-junit3-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jmock/jmock/2.0.0/jmock-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-library/1.0/hamcrest-library-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.1/junit-4.1.jar" sourcepath="M2_REPO/junit/junit/4.1/junit-4.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar" sourcepath="M2_REPO/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" sourcepath="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar"/>
 </classpath>

@@ -164,7 +164,7 @@ public class JDaveCallbackTest extends TestCase {
 
     private class StubSpecification extends Specification<Object> {
         @Override
-        public void verify() {
+        public void verifyMocks() {
             specVerifyCalled = true;
         }
     }
