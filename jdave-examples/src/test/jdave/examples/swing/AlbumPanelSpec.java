@@ -16,13 +16,14 @@
 package jdave.examples.swing;
 
 import jdave.jemmy.JemmyContainerSpecification;
-import jdave.mock.Mock;
+
+import org.jmock.Expectations;
 
 /**
  * @author Pekka Enberg
  */
 public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
-    private Mock<AlbumPresentationModel> presentationModelMock;
+    private AlbumPresentationModel presentationModel;
 
     public class Panel {
         public AlbumPanel create() {
@@ -30,7 +31,9 @@ public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
         }
         
         public void notifiesPresentationModelWhenSaveButtonIsClicked() {
-            presentationModelMock.expects(once()).method("save").withNoArguments();
+            checking(new Expectations() {{
+                one(presentationModel).save();
+            }});
             frame.pack();
             jemmy.pushButton("Save");
         }
@@ -38,7 +41,7 @@ public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
 
     @Override
     protected AlbumPanel newContainer() {
-        presentationModelMock = mock(AlbumPresentationModel.class, new Class[] { IModel.class }, new Object[] { new Model<Album>() });
-        return new AlbumPanel(presentationModelMock.proxy());
+        presentationModel = mock(AlbumPresentationModel.class);
+        return new AlbumPanel(presentationModel);
     }
 }

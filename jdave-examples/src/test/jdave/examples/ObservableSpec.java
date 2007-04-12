@@ -18,7 +18,8 @@ package jdave.examples;
 import jdave.Specification;
 import jdave.examples.observer.Observable;
 import jdave.examples.observer.Observer;
-import jdave.mock.Mock;
+
+import org.jmock.Expectations;
 
 /**
  * @author Joni Freeman
@@ -26,17 +27,19 @@ import jdave.mock.Mock;
 public class ObservableSpec extends Specification<Observable> {
     public class ObservableHavingObserver {
         private Observable observable;
-        private Mock<Observer> observer;
+        private Observer observer;
         
         public Observable create() {
             observable = new Observable();
             observer = mock(Observer.class);
-            observable.register(observer.proxy());
+            observable.register(observer);
             return observable;
         }
         
         public void callsOnActionWhenSignificantEventHappens() {
-            observer.expects(once()).method("onAction").with(eq(observable));
+            checking(new Expectations() {{
+                one(observer).onAction(observable);
+            }});
             observable.significantEvent();
         }
     }
