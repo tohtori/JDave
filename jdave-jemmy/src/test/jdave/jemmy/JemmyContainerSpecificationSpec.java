@@ -26,8 +26,8 @@ import jdave.Block;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.mock.Mock;
 
+import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 /**
@@ -99,7 +99,7 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
     
     public class JPanelWithButton {
         private JemmyContainerSpecification<JPanel> spec;
-        private Mock<PresentationModel> presentationModelMock;
+        private PresentationModel presentationModelMock;
 
         public JemmyContainerSpecification<JPanel> create() {
             presentationModelMock = mock(PresentationModel.class);
@@ -110,7 +110,7 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     JButton button = new JButton();
                     button.setAction(new AbstractAction("Hello") {
                         public void actionPerformed(ActionEvent event) {
-                            presentationModelMock.proxy().onClick();
+                            presentationModelMock.onClick();
                         }
                     });
                     button.setText("Hello");
@@ -123,7 +123,9 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
         }
         
         public void buttonPushInvokesAction() {
-            presentationModelMock.expects(once()).method("onClick");
+            checking(new Expectations() {{
+                one(presentationModelMock).onClick();
+            }});
             spec.jemmy.pushButton("Hello");
         }
     }

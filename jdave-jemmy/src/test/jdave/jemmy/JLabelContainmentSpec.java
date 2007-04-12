@@ -22,8 +22,8 @@ import javax.swing.JLabel;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.mock.Mock;
 
+import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
 @RunWith(JDaveRunner.class)
 public class JLabelContainmentSpec extends Specification<JLabelContainment> {
     public class EmptyContainer {
-        private Mock<Container> containerMock;
+        private Container containerMock;
         private JLabelContainment containment;
 
         public JLabelContainment create() {
@@ -42,14 +42,16 @@ public class JLabelContainmentSpec extends Specification<JLabelContainment> {
         }
 
         public void doesNotContainLabel() {
-            containerMock.expects(once()).method("getComponents").will(returnValue(new Component[] { }));
-            specify(containment.error(containerMock.proxy()), "Expected label with text \"Hello\", but there are no labels in container.");
+            checking(new Expectations() {{
+                one(containerMock).getComponents(); will(returnValue(new Component[] { }));
+            }});
+            specify(containment.error(containerMock), "Expected label with text \"Hello\", but there are no labels in container.");
         }
     }
     
     public class ContainerWithChildrenThatHaveLabels {
-        private Mock<Container> childContainerMock;
-        private Mock<Container> containerMock;
+        private Container childContainerMock;
+        private Container containerMock;
         private JLabelContainment containment;
 
         public JLabelContainment create() {
@@ -60,9 +62,11 @@ public class JLabelContainmentSpec extends Specification<JLabelContainment> {
         }
 
         public void doesNotContainLabel() {
-            containerMock.expects(once()).method("getComponents").will(returnValue(new Component[] { childContainerMock.proxy() }));
-            childContainerMock.expects(once()).method("getComponents").will(returnValue(new Component[] { new JLabel("Text 1"), new JLabel("Text 2") }));
-            specify(containment.error(containerMock.proxy()), "Expected label with text \"Hello\", but container has only the following labels: [Text 1, Text 2].");
+            checking(new Expectations() {{
+                one(containerMock).getComponents(); will(returnValue(new Component[] { childContainerMock }));
+                one(childContainerMock).getComponents(); will(returnValue(new Component[] { new JLabel("Text 1"), new JLabel("Text 2") }));
+            }});
+            specify(containment.error(containerMock), "Expected label with text \"Hello\", but container has only the following labels: [Text 1, Text 2].");
         }
     }
 }
