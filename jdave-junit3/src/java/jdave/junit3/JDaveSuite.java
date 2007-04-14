@@ -60,7 +60,6 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
             public void runBare() throws Throwable {
                 setUp();
                 try {
-                    // FIXME does not propagate exception when ntli
                     runTest();
                 } finally {
                     tearDown();
@@ -101,7 +100,6 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
         }
         
         public void error(Method method, Throwable t) {
-            System.out.println("error");
             result.addError(test, t);
         }
 
