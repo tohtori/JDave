@@ -81,7 +81,7 @@ public class ExecutingBehavior extends Behavior {
     private void runSpec(IBehaviorResults results, Specification<?> spec) {
         try {
             spec.create();
-            Object context = newContext(spec);
+            context = newContext(spec);
             method.invoke(context);
             spec.verifyMocks();
             results.expected(method);
@@ -94,7 +94,7 @@ public class ExecutingBehavior extends Behavior {
         } catch (ExpectationFailedException e) {
             results.unexpected(method, (ExpectationFailedException) e.getCause());
         } catch (Throwable t) {
-            results.error(method, t.getCause());
+            results.error(method, t);
         } finally {
             destroyContext();
             spec.destroy();
@@ -110,7 +110,7 @@ public class ExecutingBehavior extends Behavior {
     }
 
     protected Object newContext(Specification<?> spec) throws Exception {
-        context = newContextInstance(spec);
+        Object context = newContextInstance(spec);
         spec.fireAfterContextInstantiation(context);
         Object contextObject = newContextObject(context);
         Fields.set(spec, "be", contextObject);
@@ -120,7 +120,9 @@ public class ExecutingBehavior extends Behavior {
     }
 
     protected void destroyContext() {
-        invokeDisposer(context);
+        if (context != null) {
+            invokeDisposer(context);
+        }
     }
         
     private Object newContextInstance(Specification<?> spec) {
