@@ -17,8 +17,6 @@ package jdave.runner;
 
 import java.lang.reflect.Method;
 
-import jdave.Specification;
-
 /**
  * @author Joni Freeman
  */
@@ -28,17 +26,7 @@ final class VisitingBehavior extends Behavior {
     }
 
     @Override
-    protected void destroyContext() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected Object newContext(Specification<?> spec) throws Exception {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected Specification<?> newSpecification() {
+    public void run(IBehaviorResults results) {
         throw new UnsupportedOperationException();
     }
 }

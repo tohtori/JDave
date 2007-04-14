@@ -16,8 +16,15 @@
 package jdave.runner;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
+import jdave.ExpectationFailedException;
 import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 import jdave.util.Fields;
@@ -26,18 +33,74 @@ import jdave.util.Fields;
  * @author Joni Freeman
  * @author Pekka Enberg
  */
-final class ExecutingBehavior extends Behavior {
+public class ExecutingBehavior extends Behavior {
     private final Class<?> contextType;
     private final Class<? extends Specification<?>> specType;
     private Object context;
     
-    ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+    public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
         super(method);
         this.specType = specType;
         this.contextType = contextType;
     }
 
     @Override
+    public void run(final IBehaviorResults results) {
+        Specification<?> spec = newSpecification();
+        if (spec.needsThreadLocalIsolation()) {
+            runInNewThread(results, spec);
+        } else {
+            runInCurrentThread(results, spec);
+        }
+    }
+
+    private void runInCurrentThread(final IBehaviorResults results, final Specification<?> spec) {
+        runSpec(results, spec);
+    }
+
+    private void runInNewThread(final IBehaviorResults results, final Specification<?> spec) {
+        ExecutorService executor = Executors.newSingleThreadExecutor(new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                return new Thread(r);
+            }
+        });
+        executor.submit(new Callable<Void>() {
+            public Void call() throws Exception {
+                runSpec(results, spec);
+                return null;
+            }
+        });
+        executor.shutdown();
+        try {
+            executor.awaitTermination(60, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            // do not mind
+        }
+    }
+
+    private void runSpec(IBehaviorResults results, Specification<?> spec) {
+        try {
+            spec.create();
+            Object context = newContext(spec);
+            method.invoke(context);
+            spec.verifyMocks();
+            results.expected(method);
+        } catch (InvocationTargetException e) {
+            if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
+                results.unexpected(method, (ExpectationFailedException) e.getCause());
+            } else {
+                results.error(method, e.getCause());
+            }
+        } catch (ExpectationFailedException e) {
+            results.unexpected(method, (ExpectationFailedException) e.getCause());
+        } catch (Throwable t) {
+            results.error(method, t.getCause());
+        } finally {
+            destroyContext();
+            spec.destroy();
+        }
+    }
+
     protected Specification<?> newSpecification() {
         try {
             return specType.newInstance();
@@ -46,7 +109,6 @@ final class ExecutingBehavior extends Behavior {
         }
     }
 
-    @Override
     protected Object newContext(Specification<?> spec) throws Exception {
         context = newContextInstance(spec);
         spec.fireAfterContextInstantiation(context);
@@ -57,7 +119,6 @@ final class ExecutingBehavior extends Behavior {
         return context;
     }
 
-    @Override
     protected void destroyContext() {
         invokeDisposer(context);
     }
