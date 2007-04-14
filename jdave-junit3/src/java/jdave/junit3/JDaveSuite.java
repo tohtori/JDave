@@ -55,16 +55,13 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
     public void onBehavior(final Behavior behavior) {
         suite.addTest(new TestCase(behavior.getName()) {
             private TestResult result;
-            private Specification<?> spec;
             
             @Override
             public void runBare() throws Throwable {
                 setUp();
                 try {
+                    // FIXME does not propagate exception when ntli
                     runTest();
-                    if (!hasErrorsOrFailures()) {
-                        spec.verifyMocks();
-                    }
                 } finally {
                     tearDown();
                 }
@@ -81,8 +78,8 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
             }
 
             @Override
-            protected void runTest() throws Throwable {
-                spec = runBehavior(behavior, this, result);
+            protected void runTest() {
+                runBehavior(behavior, this, result);
             }
         });
     }
@@ -90,8 +87,8 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
     public void afterContext(Context context) {
     }
     
-    protected Specification<?> runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) throws Throwable {
-        return behavior.run(new ResultAdapter(testCase, testResult));
+    protected void runBehavior(Behavior behavior, TestCase testCase, TestResult testResult) {
+        behavior.run(new ResultAdapter(testCase, testResult));
     }
 
     static class ResultAdapter implements IBehaviorResults {
@@ -104,6 +101,7 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
         }
         
         public void error(Method method, Throwable t) {
+            System.out.println("error");
             result.addError(test, t);
         }
 
