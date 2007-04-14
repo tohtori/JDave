@@ -42,11 +42,7 @@ public abstract class Behavior {
     }
 
     public void run(final IBehaviorResults results) {
-        Specification<?> spec = null;
-        try {
-            spec = newSpecification();
-        } catch (Throwable t) {
-        }
+        Specification<?> spec = newSpecification();
         if (spec.needsThreadLocalIsolation()) {
             runInNewThread(results, spec);
         } else {
