@@ -92,7 +92,7 @@ public class ExecutingBehavior extends Behavior {
                 results.error(method, e.getCause());
             }
         } catch (ExpectationFailedException e) {
-            results.unexpected(method, (ExpectationFailedException) e.getCause());
+            results.unexpected(method, e);
         } catch (Throwable t) {
             results.error(method, t);
         } finally {
