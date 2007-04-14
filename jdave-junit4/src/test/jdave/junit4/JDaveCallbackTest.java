@@ -22,6 +22,8 @@ import java.util.List;
 import jdave.Specification;
 import jdave.runner.Behavior;
 import jdave.runner.Context;
+import jdave.runner.ExecutingBehavior;
+import jdave.runner.IBehaviorResults;
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -87,8 +89,7 @@ public class JDaveCallbackTest extends TestCase {
         
     private Behavior createSpecMethodByName(final Class<?> target, String name)
             throws NoSuchMethodException {
-        Behavior method = new Behavior(target.getDeclaredMethod(name)) {
-
+        Behavior method = new ExecutingBehavior(target.getDeclaredMethod(name), null, null) {
             @Override
             protected void destroyContext() {
             }
@@ -114,25 +115,14 @@ public class JDaveCallbackTest extends TestCase {
         public StubBehavior() throws SecurityException, NoSuchMethodException {
             super(JDaveCallbackTest.class.getDeclaredMethod("setUp"));
         }
-
-        @Override
-        protected void destroyContext() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        protected Object newContext(Specification<?> spec) throws Exception {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        protected Specification<?> newSpecification() {
-            throw new UnsupportedOperationException();
-        }
-
+        
         @Override
         public String getName() {
             return "";
+        }
+        
+        @Override
+        public void run(IBehaviorResults results) {
         }
     }
 }
