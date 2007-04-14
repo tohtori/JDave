@@ -38,8 +38,12 @@ final class ExecutingBehavior extends Behavior {
     }
 
     @Override
-    protected Specification<?> newSpecification() throws Exception {
-        return specType.newInstance();
+    protected Specification<?> newSpecification() {
+        try {
+            return specType.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -54,40 +58,36 @@ final class ExecutingBehavior extends Behavior {
     }
 
     @Override
-    protected void destroyContext() throws Exception {
+    protected void destroyContext() {
         invokeDisposer(context);
     }
         
     private Object newContextInstance(Specification<?> spec) {
-        Object context = null;
         try {
             Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
-            context = constructor.newInstance(spec);
+            return constructor.newInstance(spec);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return context;
     }
 
     private Object newContextObject(Object context) throws Exception {
-        Method method = null;
         try {
-            method = context.getClass().getMethod(Context.INITIALIZER_NAME);
+            Method method = context.getClass().getMethod(Context.INITIALIZER_NAME);
+            return method.invoke(context);
         } catch (NoSuchMethodException e) {
             throw new NoContextInitializerSpecifiedException(
                     "Initializer missing for " + context.getClass(), e);
         }
-        return method.invoke(context);
     }
 
-    private void invokeDisposer(Object context) throws Exception {
-        Method method = null;
+    private void invokeDisposer(Object context) {
         try {
-            method = context.getClass().getMethod(Context.DISPOSER_NAME);
+            Method method = context.getClass().getMethod(Context.DISPOSER_NAME);
+            method.invoke(context);
         } catch (Exception e) {
             /* Disposer is optional so ignore the exception.  */
             return;
         }
-        method.invoke(context);
     }
 }

@@ -35,7 +35,7 @@ public class SpecRunnerVisitTest extends TestCase {
             public void onContext(Context context) {
             }
 
-            public void onBehavior(Behavior method) throws Exception {
+            public void onBehavior(Behavior method) {
                 visitedMethod = method;
             }
 

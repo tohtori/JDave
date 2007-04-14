@@ -28,7 +28,7 @@ final class VisitingBehavior extends Behavior {
     }
 
     @Override
-    protected void destroyContext() throws Exception {
+    protected void destroyContext() {
         throw new UnsupportedOperationException();
     }
 
@@ -38,7 +38,7 @@ final class VisitingBehavior extends Behavior {
     }
 
     @Override
-    protected Specification<?> newSpecification() throws Exception {
+    protected Specification<?> newSpecification() {
         throw new UnsupportedOperationException();
     }
 }

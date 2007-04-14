@@ -15,6 +15,8 @@
  */
 package jdave;
 
+import java.lang.reflect.Method;
+
 import jdave.runner.SpecRunner;
 import junit.framework.TestCase;
 
@@ -23,19 +25,22 @@ import junit.framework.TestCase;
  */
 public class NoContextInitializerSpecifiedTest extends TestCase {
     private SpecRunner runner;
+    private int errorCount;
     
     @Override
     protected void setUp() throws Exception {
         runner = new SpecRunner();
     }
 
-    public void testShouldThrowExceptionIfContextMethodIsMissing() throws Exception {
-        try {
-            runner.run(NoContextInitializerSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
-            fail();
-        } catch (NoContextInitializerSpecifiedException e) {
-            assertEquals("Initializer missing for class jdave.NoContextInitializerSpecifiedTest$NoContextInitializerSpecification$NoInitializer", e.getMessage());
-        }
+    public void testReposrtsErrorIfContextMethodIsMissing() throws Exception {
+        ResultsAdapter results = new ResultsAdapter() {
+            @Override
+            public void error(Method method, Throwable t) {
+                errorCount++;
+            }
+        };
+        runner.run(NoContextInitializerSpecification.class, new SpecVisitorAdapter(results));
+        assertEquals(1, errorCount);
     }
 
     public static class NoContextInitializerSpecification extends Specification<Object> {

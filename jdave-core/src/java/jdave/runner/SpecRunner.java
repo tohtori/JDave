@@ -25,7 +25,7 @@ import jdave.Specification;
  * @author Joni Freeman
  */
 public class SpecRunner {
-    public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) throws Exception {
+    public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             if (isContextClass(specType, contextType)) {
                 Context context = new Context(specType, contextType) {
@@ -40,7 +40,7 @@ public class SpecRunner {
         }
     }
     
-    public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) throws Exception {
+    public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
             if (isContextClass(specType, contextType)) {
                 Context context = new Context(specType, contextType) {

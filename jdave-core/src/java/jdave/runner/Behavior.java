@@ -24,7 +24,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import jdave.ExpectationFailedException;
-import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 
 /**
@@ -42,21 +41,24 @@ public abstract class Behavior {
         return method.getName();
     }
 
-    public Specification<?> run(final IBehaviorResults results) throws Exception {
-        final Specification<?> spec = newSpecification();
+    public void run(final IBehaviorResults results) {
+        Specification<?> spec = null;
+        try {
+            spec = newSpecification();
+        } catch (Throwable t) {
+        }
         if (spec.needsThreadLocalIsolation()) {
             runInNewThread(results, spec);
         } else {
             runInCurrentThread(results, spec);
         }
-        return spec;
     }
 
-    private void runInCurrentThread(final IBehaviorResults results, final Specification<?> spec) throws Exception {
+    private void runInCurrentThread(final IBehaviorResults results, final Specification<?> spec) {
         runSpec(results, spec);
     }
 
-    private void runInNewThread(final IBehaviorResults results, final Specification<?> spec) throws InterruptedException {
+    private void runInNewThread(final IBehaviorResults results, final Specification<?> spec) {
         ExecutorService executor = Executors.newSingleThreadExecutor(new ThreadFactory() {
             public Thread newThread(Runnable r) {
                 return new Thread(r);
@@ -64,19 +66,24 @@ public abstract class Behavior {
         });
         executor.submit(new Callable<Void>() {
             public Void call() throws Exception {
-                runInCurrentThread(results, spec);
+                runSpec(results, spec);
                 return null;
             }
         });
         executor.shutdown();
-        executor.awaitTermination(60, TimeUnit.SECONDS);
+        try {
+            executor.awaitTermination(60, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            // do not mind
+        }
     }
 
-    private void runSpec(IBehaviorResults results, Specification<?> spec) throws Exception {
+    private void runSpec(IBehaviorResults results, Specification<?> spec) {
         try {
             spec.create();
             Object context = newContext(spec);
             method.invoke(context);
+            spec.verifyMocks();
             results.expected(method);
         } catch (InvocationTargetException e) {
             if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
@@ -84,17 +91,17 @@ public abstract class Behavior {
             } else {
                 results.error(method, e.getCause());
             }
-        } catch (NoContextInitializerSpecifiedException e) {
-            throw e;
+        } catch (ExpectationFailedException e) {
+            results.unexpected(method, (ExpectationFailedException) e.getCause());
         } catch (Throwable t) {
-            throw new RuntimeException(t);
+            results.error(method, t.getCause());
         } finally {
             destroyContext();
             spec.destroy();
         }
     }
 
-    protected abstract Specification<?> newSpecification() throws Exception;
+    protected abstract Specification<?> newSpecification();
     protected abstract Object newContext(Specification<?> spec) throws Exception;
-    protected abstract void destroyContext() throws Exception;
+    protected abstract void destroyContext();
 }

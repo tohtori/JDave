@@ -44,7 +44,7 @@ public class SpecVisitorAdapter implements ISpecVisitor {
         finishedContextNames.add(context.getName());
     }
     
-    public void onBehavior(Behavior method) throws Exception {
+    public void onBehavior(Behavior method) {
         method.run(results);
     }
     

@@ -40,7 +40,7 @@ public abstract class Context {
     
     protected abstract Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
     
-    void run(ISpecVisitor callback) throws Exception {
+    void run(ISpecVisitor callback) {
         for (Method method : contextType.getMethods()) {
             if (isBehavior(method)) {
                 callback.onBehavior(newBehavior(method, specType, contextType));
