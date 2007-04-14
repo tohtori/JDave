@@ -15,13 +15,11 @@
  */
 package jdave.junit4;
 
-import jdave.Specification;
 import jdave.runner.Behavior;
 import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
 
 import org.junit.runner.Description;
-import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -48,17 +46,12 @@ public class JDaveCallback implements ISpecVisitor {
         notifier.fireTestFinished(Description.createSuiteDescription(context.getName()));
     }
 
-    public void onBehavior(Behavior behavior) throws Exception {
+    public void onBehavior(Behavior behavior) {
         Description desc = Description.createSuiteDescription(behavior.getName());
         notifier.fireTestStarted(desc);
         try {
             ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
-            Specification<?> spec = behavior.run(resultsAdapter);
-            if (!resultsAdapter.hasErrors()) {
-                spec.verifyMocks();
-            }
-        } catch (Throwable t) {
-            notifier.fireTestFailure(new Failure(desc, t));
+            behavior.run(resultsAdapter);
         } finally {
             notifier.fireTestFinished(desc);
         }

@@ -49,10 +49,6 @@ public class JDaveRunner extends Runner {
     @Override
     public void run(final RunNotifier notifier) {
         notifier.addListener(new Result().createListener());
-        try {
-            new SpecRunner().run(spec, new JDaveCallback(notifier));
-        } catch (Throwable t) {
-            // intentional, exceptions are reported at lower level
-        }
+        new SpecRunner().run(spec, new JDaveCallback(notifier));
     }
 }

@@ -57,7 +57,7 @@ public class DescriptionFactory implements ISpecVisitor {
         description.addChild(contextDescription);
     }
     
-    public void onBehavior(Behavior behavior) throws Exception {
+    public void onBehavior(Behavior behavior) {
         contextDescription.addChild(Description.createSuiteDescription(behavior.getName()));
     }
     

@@ -18,7 +18,6 @@ package jdave.junit4;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import java.lang.reflect.Method;
 import java.util.LinkedList;
@@ -71,13 +70,6 @@ public class ResultsAdapterTest extends RunListener {
         assertTrue(failures.isEmpty());
     }
     
-    @Test
-    public void reportsHasErrors() {
-        assertFalse(adapter.hasErrors());
-        adapter.error(method, new Throwable());
-        assertTrue(adapter.hasErrors());
-    }
-
     private void runNotifierShouldHaveReceived(Throwable e) {
         assertEquals(1, failures.size());
         Failure failure = failures.getFirst();
