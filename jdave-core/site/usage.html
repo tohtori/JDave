@@ -39,12 +39,12 @@ To use the framework you need following jars in the CLASSPATH.
 <ul>
   <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-core/0.6.0/jdave-core-0.6.0.jar">jdave-core.jar</a></li>
   <li>
-    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.6.0/jdave-junit3-0.6.0.jar">jdave-junit3.jar</a> or 
-    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit4/0.6.0/jdave-junit4-0.6.0.jar">jdave-junit4.jar</a>
+    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit4/0.6.0/jdave-junit4-0.6.0.jar">jdave-junit4.jar</a> or
+    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.6.0/jdave-junit3-0.6.0.jar">jdave-junit3.jar</a> 
   </li>
   <li>
-    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit3.jar</a> or
-    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/4.1/junit-4.1.jar">junit4.jar</a>
+    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/4.1/junit-4.1.jar">junit4.jar</a> or
+    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit3.jar</a>
   </li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock/1.1.0/jmock-1.1.0.jar">jmock.jar</a></li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/jmock/jmock-cglib/1.1.0/jmock-cglib-1.1.0.jar">jmock-cglib.jar</a></li>
@@ -66,7 +66,7 @@ Maven 2 users can get all these dependencies by adding following snippet to pom.
   &lt;dependencies&gt;
     &lt;dependency&gt;
       &lt;groupId&gt;jdave&lt;/groupId&gt;
-      &lt;artifactId&gt;jdave-junit3&lt;/artifactId&gt; &lt;!-- or jdave-junit4 --&gt;
+      &lt;artifactId&gt;jdave-junit4&lt;/artifactId&gt; &lt;!-- or jdave-junit3 --&gt;
       &lt;version&gt;0.6.0&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
@@ -83,6 +83,15 @@ details. <a href="examples.html">A set of examples</a> illustrate currently avai
 
 Specifications can be launched using JUnit 3 or JUnit 4 adapter.
 
+JUnit 4 can be used by annotating the specification with @RunWith annotation.
+
+<pre>
+@RunWith(JDaveRunner.class)
+public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
+}
+</pre>
+
+Below is a suite which can be run with any JUnit 3 runner. 
 <pre>
 public class ExampleSuite extends TestSuite {
     public ExampleSuite() {
@@ -95,17 +104,6 @@ public class ExampleSuite extends TestSuite {
     }
 }
 </pre>
-
-The above suite can be run with any JUnit 3 runner. JUnit 4 can be used
-by annotating the specification with @RunWith annotation.
-
-<pre>
-@RunWith(JDaveRunner.class)
-public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
-}
-</pre>
-
-
 
 </div>	
 </div>
