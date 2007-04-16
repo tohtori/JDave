@@ -1,6 +1,6 @@
 > Update docs (version numbers, examples, documentation, front page news).
-./bin/prepare-release.sh (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
-> commit updated poms manually
+##### does not work: ./bin/prepare-release.sh (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
+> update pom version and commit
 rm -rf ~/.m2/repository/jdave (delete local jdave repo)
 mvn install
 scp -r ~/.m2/repository/jdave/ inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/maven2/
