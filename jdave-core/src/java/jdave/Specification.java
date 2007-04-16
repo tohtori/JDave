@@ -144,6 +144,26 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
     
+    /**
+     * Matches the actual object using Hamcrest Matcher.
+     * <p>
+     * Provides a library of matcher objects allowing 'match' rules to be defined declaratively.
+     * <blockquote>
+     * <code>
+     * import static org.hamcrest.Matchers.*;
+     * 
+     * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
+     *     public class SampleContext {
+     *         public void sample() {
+     *             specify(person.getAge(), greaterThan(30));
+     *         }
+     *     }
+     * }
+     * </code>
+     * </blockquote>
+     * <p>
+     * See http://code.google.com/p/hamcrest/
+     */
     public void specify(Object actual, Matcher<?> matcher) {
         try {
             if (!matcher.matches(actual)) {
