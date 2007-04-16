@@ -9,10 +9,11 @@ mvn-no-tests clean package assembly:directory   (in jdave-parent)
 cd target/jdave-parent-0.5.0-bin/
 rm jdave-parent-0.5.0/jdave-parent-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
 jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
-scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
+scp ~/workspace/jdave-core/site/*[.html,.xml] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
 scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
 cd jdave-core; mvn javadoc:javadoc
-scp -r target/site/apidocs inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/api
+mv target/site/apidocs target/site/api
+scp -r target/site/api inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
 > update pom versions to be x.x.x-SNAPSHOT
 
 Test:
