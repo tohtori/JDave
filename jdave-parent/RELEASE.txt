@@ -7,6 +7,7 @@ scp -r ~/.m2/repository/jdave/ inhuman@www.laughingpanda.org:/var/www/localhost/
 svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpanda.org/svn/jdave/tags/0.5.0 -m "tag release"
 mvn-no-tests clean package assembly:directory   (in jdave-parent)
 cd target/jdave-parent-0.5.0-bin/
+rm jdave-parent-0.5.0/jdave-parent-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
 jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
 scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
 scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
