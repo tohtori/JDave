@@ -23,18 +23,20 @@ import jdave.Specification;
  */
 public class HamcrestSampleSpec extends Specification<Person> {
     public class SampleContext {
-        private Person person = new Person("John",  "Doe");
+        private Person person = new Person("John",  "Doe", 35);
+        
         public Person create() {
             return person;
         }
         
         @SuppressWarnings("unchecked")
         public void sample() {
-            specify(context, is(Person.class));
-            specify(context, hasProperty("firstname", equalTo("John")));
-            specify(context, allOf(
+            specify(person, is(Person.class));
+            specify(person, hasProperty("firstname", equalTo("John")));
+            specify(person, allOf(
                     hasProperty("firstname", equalTo("John")),
                     hasProperty("surname", equalTo("Doe"))));
+            specify(person.getAge(), greaterThan(30));
         }
     }
 }

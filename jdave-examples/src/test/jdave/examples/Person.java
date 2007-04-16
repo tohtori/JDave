@@ -19,12 +19,14 @@ package jdave.examples;
  * @author Joni Freeman
  */
 public class Person {
-    private String firstname;
-    private String surname;
+    private final String firstname;
+    private final String surname;
+    private final int age;
     
-    public Person(String firstname, String surname) {
+    public Person(String firstname, String surname, int age) {
         this.firstname = firstname;
-        this.surname = surname;        
+        this.surname = surname;
+        this.age = age;        
     }
     
     public String getFirstname() {
@@ -33,5 +35,9 @@ public class Person {
     
     public String getSurname() {
         return surname;
+    }
+    
+    public int getAge() {
+        return age;
     }
 }
