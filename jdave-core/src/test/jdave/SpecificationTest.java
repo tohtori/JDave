@@ -281,7 +281,7 @@ public class SpecificationTest extends TestCase {
         });
     }
     
-    public void failsWhenHamcrestMatcherPasses() {
+    public void failsWhenHamcrestMatcherFails() {
         try {
             specification.specify(null, new BaseMatcher<Object>() {
                 public boolean matches(Object item) {
