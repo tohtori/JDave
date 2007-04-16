@@ -8,7 +8,6 @@ svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpan
 mvn-no-tests clean package assembly:directory   (in jdave-parent)
 cd target/jdave-parent-0.5.0-bin/
 jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
-> commit
 scp ~/workspace/jdave-core/site/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
 scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
 cd jdave-core; mvn javadoc:javadoc
