@@ -17,6 +17,9 @@ package jdave;
 
 import java.util.Arrays;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+
 import junit.framework.TestCase;
 
 /**
@@ -266,6 +269,30 @@ public class SpecificationTest extends TestCase {
     public void testNotDoesNotAffectNextSpecifyStatement() {
         specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
         specification.specify(null, true);
+    }
+    
+    public void passesWhenHamcrestMatcherPasses() {
+        specification.specify(null, new BaseMatcher<Object>() {
+            public boolean matches(Object item) {
+                return true;
+            }
+            public void describeTo(Description description) {
+            }            
+        });
+    }
+    
+    public void failsWhenHamcrestMatcherPasses() {
+        try {
+            specification.specify(null, new BaseMatcher<Object>() {
+                public boolean matches(Object item) {
+                    return false;
+                }
+                public void describeTo(Description description) {
+                }            
+            });
+            fail();
+        } catch (ExpectationFailedException e) {            
+        }
     }
     
     class EmptyStack {

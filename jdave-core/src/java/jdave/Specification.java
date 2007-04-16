@@ -27,6 +27,9 @@ import jdave.mock.MockSupport;
 import jdave.util.Collections;
 import jdave.util.Primitives;
 
+import org.hamcrest.Matcher;
+import org.hamcrest.StringDescription;
+
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
@@ -135,6 +138,16 @@ public abstract class Specification<T> extends MockSupport {
         try {
             if (!equalityCheck.matches(actual)) {
                 throw new ExpectationFailedException(equalityCheck.error(actual));
+            }
+        } finally {
+            resetActualState();
+        }
+    }
+    
+    public void specify(Object actual, Matcher<?> matcher) {
+        try {
+            if (!matcher.matches(actual)) {
+                throw new ExpectationFailedException(StringDescription.toString(matcher));
             }
         } finally {
             resetActualState();
