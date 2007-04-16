@@ -236,7 +236,7 @@ JMock 2.0 is integrated as mocking framework. Please refer to
 <h2>Injecting values into fields</h2>
 
 InjectionSupport can be used to inject values into specification (or any other object) 
-fields. This is often used for instance to inject Spring beans into specification.
+fields. This is often used for instance to inject Spring managed beans into specification.
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/java/jdave/injection/InjectionSupport.java">[examples]</a>
@@ -249,6 +249,10 @@ they depend on initial thread local state. Thread locals can be isolated for all
 methods of current specification by overiding the method 
 <code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a fresh new thread 
 is created for all methods in the specification.
+
+<h2>API</h2>
+
+<a href="api/">Javadoc</a>
 
 </div>	
 </div>
