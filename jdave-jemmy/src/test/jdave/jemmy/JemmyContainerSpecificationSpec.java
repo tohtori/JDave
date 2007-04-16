@@ -122,7 +122,7 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
             return spec;
         }
         
-        public void buttonPushInvokesAction() {
+        private void buttonPushInvokesAction() {
             checking(new Expectations() {{
                 one(presentationModelMock).onClick();
             }});
