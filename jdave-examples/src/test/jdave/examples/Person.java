@@ -15,25 +15,23 @@
  */
 package jdave.examples;
 
-import jdave.examples.swing.AlbumPanelSpec;
-import jdave.junit3.JDaveSuite;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * @author Joni Freeman
  */
-public class ExampleSuite extends TestSuite {
-    public ExampleSuite() throws Exception {
-        addTest(new JDaveSuite(StackSpec.class));
-        addTest(new JDaveSuite(ObservableSpec.class));
-        addTest(new JDaveSuite(ContainmentSampleSpec.class));
-        addTest(new JDaveSuite(ContractEnforcementSampleSpec.class));
-        addTest(new JDaveSuite(AlbumPanelSpec.class));
-        addTest(new JDaveSuite(HamcrestSampleSpec.class));
+public class Person {
+    private String firstname;
+    private String surname;
+    
+    public Person(String firstname, String surname) {
+        this.firstname = firstname;
+        this.surname = surname;        
     }
     
-    public static Test suite() throws Exception {
-        return new ExampleSuite();
+    public String getFirstname() {
+        return firstname;
+    }
+    
+    public String getSurname() {
+        return surname;
     }
 }

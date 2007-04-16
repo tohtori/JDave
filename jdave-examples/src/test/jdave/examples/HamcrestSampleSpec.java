@@ -15,25 +15,26 @@
  */
 package jdave.examples;
 
-import jdave.examples.swing.AlbumPanelSpec;
-import jdave.junit3.JDaveSuite;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import static org.hamcrest.Matchers.*;
+import jdave.Specification;
 
 /**
  * @author Joni Freeman
  */
-public class ExampleSuite extends TestSuite {
-    public ExampleSuite() throws Exception {
-        addTest(new JDaveSuite(StackSpec.class));
-        addTest(new JDaveSuite(ObservableSpec.class));
-        addTest(new JDaveSuite(ContainmentSampleSpec.class));
-        addTest(new JDaveSuite(ContractEnforcementSampleSpec.class));
-        addTest(new JDaveSuite(AlbumPanelSpec.class));
-        addTest(new JDaveSuite(HamcrestSampleSpec.class));
-    }
-    
-    public static Test suite() throws Exception {
-        return new ExampleSuite();
+public class HamcrestSampleSpec extends Specification<Person> {
+    public class SampleContext {
+        private Person person = new Person("John",  "Doe");
+        public Person create() {
+            return person;
+        }
+        
+        @SuppressWarnings("unchecked")
+        public void sample() {
+            specify(context, is(Person.class));
+            specify(context, hasProperty("firstname", equalTo("John")));
+            specify(context, allOf(
+                    hasProperty("firstname", equalTo("John")),
+                    hasProperty("surname", equalTo("Doe"))));
+        }
     }
 }
