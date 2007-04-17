@@ -36,7 +36,7 @@ public class HamcrestSampleSpec extends Specification<Person> {
             specify(person, allOf(
                     hasProperty("firstname", equalTo("John")),
                     hasProperty("surname", equalTo("Doe"))));
-            specify(person.getAge(), greaterThan(30));
+            specify(person.getAge(), is(greaterThan(30)));
         }
     }
 }
