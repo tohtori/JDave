@@ -19,7 +19,6 @@ import jdave.Specification;
 import jdave.runner.SpecRunner;
 
 import org.junit.runner.Description;
-import org.junit.runner.Result;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 
@@ -39,16 +38,11 @@ public class JDaveRunner extends Runner {
 
     @Override
     public Description getDescription() {
-        try {
-            return DescriptionFactory.create(spec);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return DescriptionFactory.create(spec);
     }
 
     @Override
     public void run(final RunNotifier notifier) {
-        notifier.addListener(new Result().createListener());
         new SpecRunner().run(spec, new JDaveCallback(notifier));
     }
 }

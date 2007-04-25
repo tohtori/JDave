@@ -45,7 +45,7 @@ public class DescriptionFactory implements ISpecVisitor {
         this.description = description;
     }
 
-    public static Description create(Class<? extends Specification<?>> spec) throws Exception {
+    public static Description create(Class<? extends Specification<?>> spec) {
         Description description = Description.createSuiteDescription(spec.getName());
         DescriptionFactory factory = new DescriptionFactory(description);
         new SpecRunner().visit(spec, factory);
