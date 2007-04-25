@@ -36,6 +36,7 @@ public class SpecRunner {
                 };
                 callback.onContext(context);
                 context.run(callback);
+                callback.afterContext(context);
             }
         }
     }
