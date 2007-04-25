@@ -24,7 +24,8 @@ import java.util.List;
  * used to inject e.g. beans in Spring context into Specification.
  * 
  * <blockquote>
- * public class MySpecification extends Specification<Something> {
+ * <pre>
+ * public class MySpecification extends Specification&lt;Something&gt; {
  *     private SomeInjectedField field;
  *     
  *     public MySpecification() {
@@ -45,6 +46,7 @@ import java.util.List;
  *         }
  *     }
  * }
+ * </pre>
  * </blockquote>
  * 
  * @author Joni Freeman
