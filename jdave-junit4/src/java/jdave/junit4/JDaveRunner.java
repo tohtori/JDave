@@ -31,14 +31,16 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveRunner extends Runner {
     private final Class<? extends Specification<?>> spec;
+    private Description description;
 
     public JDaveRunner(Class<? extends Specification<?>> spec) {
         this.spec = spec;
+        description = DescriptionFactory.create(spec);
     }
 
     @Override
     public Description getDescription() {
-        return DescriptionFactory.create(spec);
+        return description;
     }
 
     @Override
