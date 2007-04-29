@@ -40,6 +40,7 @@ import org.junit.runner.Description;
 public class DescriptionFactory implements ISpecVisitor {
     private final Description description;
     private Description contextDescription;
+    private Context context;
 
     public DescriptionFactory(Description description) {
         this.description = description;
@@ -58,7 +59,11 @@ public class DescriptionFactory implements ISpecVisitor {
     }
     
     public void onBehavior(Behavior behavior) {
-        contextDescription.addChild(Description.createSuiteDescription(behavior.getName()));
+        contextDescription.addChild(newDescription(behavior));
+    }
+
+    static Description newDescription(Behavior behavior) {
+        return Description.createTestDescription(behavior.getMethod().getDeclaringClass(), behavior.getName());
     }
     
     public void afterContext(Context context) {

@@ -45,28 +45,28 @@ public class JDaveRunnerTest extends TestCase {
     }
     
     @Test
-    public void bothContextsAreStartedAndFinished() throws Exception {
-        shouldHaveHappened("fireTestStarted:FirstContext");
-        shouldHaveHappened("fireTestFinished:FirstContext");
-        shouldHaveHappened("fireTestStarted:SecondContext");
-        shouldHaveHappened("fireTestFinished:SecondContext");
+    public void testBothContextsAreStartedAndFinished() throws Exception {
+        shouldHaveHappened("fireTestStarted:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestFinished:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestStarted:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFinished:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
     }
     
     @Test
     public void testFailingSpecMethodsAreRecordedWithFailure() throws Exception {
-        shouldHaveHappened("fireTestStarted:fails");
-        shouldHaveHappened("fireTestFailure:fails");
-        shouldHaveHappened("fireTestFinished:fails");
-        shouldHaveHappened("fireTestStarted:throwsException");
-        shouldHaveHappened("fireTestFailure:throwsException");
-        shouldHaveHappened("fireTestFinished:throwsException");
+        shouldHaveHappened("fireTestStarted:fails(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestFailure:fails(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestFinished:fails(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestStarted:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFailure:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFinished:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
     }
 
     @Test
     public void testPassingSpecMethodsAreRecordedWithoutFailure() throws Exception {
-        shouldHaveHappened("fireTestStarted:passes");
-        shouldHaveHappened("fireTestFinished:passes");
-        shouldNotHaveHappened("fireTestFailure:passes");
+        shouldHaveHappened("fireTestStarted:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldHaveHappened("fireTestFinished:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
+        shouldNotHaveHappened("fireTestFailure:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
     }
 
     private void shouldHaveHappened(String event) {

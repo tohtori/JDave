@@ -45,7 +45,7 @@ public class JDaveCallback implements ISpecVisitor {
     }
 
     public void onBehavior(Behavior behavior) {
-        Description desc = Description.createSuiteDescription(behavior.getName());
+        Description desc = DescriptionFactory.newDescription(behavior);
         notifier.fireTestStarted(desc);
         try {
             ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
