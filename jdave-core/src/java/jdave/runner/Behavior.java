@@ -32,5 +32,9 @@ public abstract class Behavior {
         return method.getName();
     }
     
+    public Method getMethod() {
+        return method;
+    }
+    
     public abstract void run(final IBehaviorResults results);
 }

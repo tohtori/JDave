@@ -38,6 +38,10 @@ public abstract class Context {
         return contextType.getSimpleName();
     }
     
+    public Class<?> getContextType() {
+        return contextType;
+    }
+    
     protected abstract Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
     
     void run(ISpecVisitor callback) {
