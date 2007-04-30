@@ -34,6 +34,7 @@ public class SpecdoxTest extends MockObjectTestCase {
     
     public void testSavesPlainTextVersionToDoxStore() {
         final String expectedOutput = 
+            "StackSpec:\n\n" + 
             "Full stack\n" +
             "  - complains on push\n";
         checking(new Expectations() {{ 

@@ -20,6 +20,11 @@ package jdave.tools;
  */
 public class PlainTextFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
+    private String specName;
+    
+    public void newSpec(String specName) {
+        this.specName = specName;
+    }
     
     public void newContext(String contextName) {
         if (dox.length() > 0) {
@@ -55,6 +60,6 @@ public class PlainTextFormat implements IDoxFormat {
     
     @Override
     public String toString() {
-        return dox.toString();
+        return specName + ":\n\n" + dox.toString();
     }
 }

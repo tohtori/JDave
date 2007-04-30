@@ -32,6 +32,7 @@ public class Specdox {
     }
 
     public void generate(Class<? extends Specification<?>> specType, final IDoxFormat format) {
+        format.newSpec(specType.getSimpleName());
         new SpecRunner().visit(specType, new ISpecVisitor() {
             public void afterContext(Context context) {
             }

@@ -19,6 +19,7 @@ package jdave.tools;
  * @author Joni Freeman
  */
 public interface IDoxFormat {
+    void newSpec(String specName);
     void newContext(String contextName);
     void newBehavior(String behaviorName);
     String suffix();
