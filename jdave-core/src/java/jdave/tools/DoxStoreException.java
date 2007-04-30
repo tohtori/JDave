@@ -15,9 +15,12 @@
  */
 package jdave.tools;
 
+
 /**
  * @author Joni Freeman
  */
-public interface IDoxStore {
-    void store(String doxName, String suffix, String content);
+public class DoxStoreException extends RuntimeException {
+    public DoxStoreException(Exception e) {
+        super(e);
+    }
 }

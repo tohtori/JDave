@@ -44,6 +44,6 @@ public class Specdox {
                 format.newBehavior(behavior.getName());
             }
         });
-        fileStore.store(specType.getSimpleName(), format.toString());
+        fileStore.store(specType.getSimpleName(), format.suffix(), format.toString());
     }
 }

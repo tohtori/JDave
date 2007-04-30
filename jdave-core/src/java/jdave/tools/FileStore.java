@@ -15,9 +15,32 @@
  */
 package jdave.tools;
 
+import java.io.File;
+import java.io.IOException;
+
+import jdave.support.IO;
+
 /**
  * @author Joni Freeman
  */
-public interface IDoxStore {
-    void store(String doxName, String suffix, String content);
+public class FileStore implements IDoxStore {
+    private String dir;
+
+    public FileStore(String dir) {
+        this.dir = dir;
+    }
+
+    public void store(String doxName, String suffix, String content) {
+        try {
+            File file = newFile(new File(dir), doxName + "." + suffix);
+            IO.write(file, content);
+        } catch (IOException e) {
+            throw new DoxStoreException(e);
+        }
+    }
+    
+    @SuppressWarnings("unused")
+    protected File newFile(File dir, String name) throws IOException {
+        return new File(dir, name);
+    }
 }

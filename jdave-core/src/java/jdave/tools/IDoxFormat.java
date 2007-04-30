@@ -21,5 +21,6 @@ package jdave.tools;
 public interface IDoxFormat {
     void newContext(String contextName);
     void newBehavior(String behaviorName);
+    String suffix();
     String toString();
 }

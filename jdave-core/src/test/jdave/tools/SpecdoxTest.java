@@ -37,7 +37,7 @@ public class SpecdoxTest extends MockObjectTestCase {
             "Full stack\n" +
             "  - complains on push\n";
         checking(new Expectations() {{ 
-            one(doxStore).store("StackSpec", expectedOutput);
+            one(doxStore).store("StackSpec", "txt", expectedOutput);
         }});
         dox.generate(StackSpec.class, new PlainTextFormat());
     }

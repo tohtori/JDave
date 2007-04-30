@@ -32,6 +32,10 @@ public class PlainTextFormat implements IDoxFormat {
         dox.append("\n");
     }
     
+    public String suffix() {
+        return "txt";
+    }
+    
     private String camelCaseToSentence(String s) {
         StringBuilder sentence = new StringBuilder();        
         for (int pos = 0; pos < s.length(); pos++) {
