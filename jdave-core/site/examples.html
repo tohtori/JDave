@@ -36,7 +36,9 @@ urchinTracker();
 <pre>
 import jdave.Block;
 import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 
+@RunWith(JDaveRunner.class)
 public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
     public class EmptyStack {
         private Stack&lt;String&gt; stack;
