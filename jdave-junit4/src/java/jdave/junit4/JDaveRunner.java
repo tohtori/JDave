@@ -17,6 +17,7 @@ package jdave.junit4;
 
 import jdave.Specification;
 import jdave.runner.SpecRunner;
+import jdave.tools.SpecdoxRunner;
 
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
@@ -46,5 +47,6 @@ public class JDaveRunner extends Runner {
     @Override
     public void run(RunNotifier notifier) {
         new SpecRunner().run(spec, new JDaveCallback(notifier));
+        new SpecdoxRunner().generate(spec);
     }
 }
