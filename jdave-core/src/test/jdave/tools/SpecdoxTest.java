@@ -32,7 +32,7 @@ public class SpecdoxTest extends MockObjectTestCase {
         dox = new Specdox(doxStore);
     }
     
-    public void testSavesPlainTextVersionToFileStore() {
+    public void testSavesPlainTextVersionToDoxStore() {
         final String expectedOutput = 
             "Full stack\n" +
             "  - complains on push\n";
