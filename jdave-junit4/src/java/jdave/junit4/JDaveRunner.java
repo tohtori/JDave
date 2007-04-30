@@ -31,7 +31,7 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveRunner extends Runner {
     private final Class<? extends Specification<?>> spec;
-    private Description description;
+    private final Description description;
 
     public JDaveRunner(Class<? extends Specification<?>> spec) {
         this.spec = spec;
@@ -44,7 +44,7 @@ public class JDaveRunner extends Runner {
     }
 
     @Override
-    public void run(final RunNotifier notifier) {
+    public void run(RunNotifier notifier) {
         new SpecRunner().run(spec, new JDaveCallback(notifier));
     }
 }
