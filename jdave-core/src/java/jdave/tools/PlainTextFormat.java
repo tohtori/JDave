@@ -22,6 +22,9 @@ public class PlainTextFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
     
     public void newContext(String contextName) {
+        if (dox.length() > 0) {
+            dox.append("\n");
+        }
         dox.append(camelCaseToSentence(contextName));
         dox.append("\n");
     }
