@@ -40,7 +40,6 @@ import org.junit.runner.Description;
 public class DescriptionFactory implements ISpecVisitor {
     private final Description description;
     private Description contextDescription;
-    private Context context;
 
     public DescriptionFactory(Description description) {
         this.description = description;
