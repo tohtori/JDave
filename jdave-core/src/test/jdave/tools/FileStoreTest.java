@@ -33,7 +33,7 @@ public class FileStoreTest extends TestCase {
     
     @Override
     protected void setUp() throws Exception {
-        store = new FileStore("target") {
+        store = new FileStore("target/jdave") {
             @Override
             protected File newFile(File dir, String name) throws IOException {
                 file = File.createTempFile(name, "", dir);

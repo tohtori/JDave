@@ -32,7 +32,11 @@ public class FileStore implements IDoxStore {
 
     public void store(String doxName, String suffix, String content) {
         try {
-            File file = newFile(new File(dir), doxName + "." + suffix);
+            File directory = new File(dir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            File file = newFile(directory, doxName + "." + suffix);
             IO.write(file, content);
         } catch (IOException e) {
             throw new DoxStoreException(e);
