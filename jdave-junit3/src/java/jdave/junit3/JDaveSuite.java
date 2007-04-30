@@ -24,6 +24,7 @@ import jdave.runner.IBehaviorResults;
 import jdave.runner.SpecRunner;
 import jdave.runner.ISpecVisitor;
 import jdave.runner.Behavior;
+import jdave.tools.SpecdoxRunner;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -45,6 +46,7 @@ public class JDaveSuite extends TestSuite implements ISpecVisitor {
     private void run(Class<? extends Specification<?>> specType) throws Exception {
         setName(specType.getName());
         new SpecRunner().run(specType, this);
+        new SpecdoxRunner().generate(specType);
     }
     
     public void onContext(Context context) {
