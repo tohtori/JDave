@@ -74,6 +74,19 @@ public class SpecificationTest extends TestCase {
         specification.specify(1.0, specification.should.equal(new Double(1.001), 0.01));
     }
     
+    public void testShouldPassWhenInvertedExpectationWithinDeltaMet() {
+        specification.specify(1.01, specification.should.not().equal(1, 0.001));
+    }
+    
+    public void testShouldFailWhenInvertedExpectationWithinDeltaNotMet() {
+        try {
+            specification.specify(1.001, specification.should.not().equal(1, 0.01));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Did not expect: 1, but was: 1.001", e.getMessage());            
+        }
+    }
+    
     public void testShouldFailWhenBooleanExpectationNotMet() {
         try {
             specification.specify(null, false);

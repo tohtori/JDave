@@ -129,7 +129,11 @@ public class Not<T> extends ContainmentSupport {
     public IEqualityCheck equal(Object obj) {
         return new NotEqualsEqualityCheck(obj);
     }
-
+    
+    public IEqualityCheck equal(Number expectedNumber, double delta) {
+        return new NotDeltaEqualityCheck(expectedNumber, delta);
+    }
+    
     public IContract satisfy(IContract contract) {
         return new NotContract(contract);
     }
