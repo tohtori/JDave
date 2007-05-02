@@ -49,7 +49,7 @@
   
   <dependencies>
     <dependency>
-      <groupId>jmock</groupId>
+      <groupId>org.jmock</groupId>
       <artifactId>jmock</artifactId>
       <version>2.0.0</version>
     </dependency>
@@ -59,7 +59,7 @@
       <version>2.1_3</version>
     </dependency>
     <dependency>
-      <groupId>jmock</groupId>
+      <groupId>org.jmock</groupId>
       <artifactId>jmock-junit3</artifactId>
       <version>2.0.0</version>
       <scope>provided</scope>
