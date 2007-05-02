@@ -122,6 +122,37 @@ which was returned from <code>create()</code> method (be == create()).
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/StackSpec.java">[examples]</a>
 </p>
 
+<h2>Expectations</h2>
+
+Expectations are set using <code>specify(..., ...)</code> method.
+
+<ul>
+  <li>Basic:</li>
+<pre><code>
+specify(actual, boolean);
+specify(actual.getAge(), should.equal(20));
+specify(actual, should.be.empty());
+</code></pre>
+  <li>Collection:</li>
+<pre><code>
+specify(actual, containsInOrder(1, 2, 3));
+</code></pre>
+  <li>Exception:</li>
+<pre><code>
+specify(new Block() {}, should.not().raise(SomeException.class));
+specify(new Block() {}, should.raise(SomeException.class));
+</code></pre>
+  <li>Contract:</li>
+<pre><code>
+specify(actual, satisfies(new SerializableContract()));
+</code></pre>
+  <li>Hamcrest:</li>
+<pre><code>
+import static org.hamcrest.Matchers.*;
+specify(person.getAge(), is(greaterThan(30)));
+</code></pre>
+</ul>
+
 <h2>Lifecycle</h2>
 
 A new <code>Specification</code> and context instance is created before executing
@@ -249,6 +280,36 @@ they depend on initial thread local state. Thread locals can be isolated for all
 methods of current specification by overiding the method 
 <code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a fresh new thread 
 is created for all methods in the specification.
+
+<a name="reporting"></a>
+<h2>Reporting</h2>
+
+Report generation can be activated by setting system property <code>jdave.tools.specdox.format</code>.
+Possible values are <code>txt</code> or <code>xml</code>. The target directory is configured by
+setting system property <code>jdave.tools.specdox.dir</code> (default is target/jdave). 
+Sample report generated with <code>txt</code> format:
+
+<blockquote>
+<pre>
+StackSpec:
+
+Empty stack
+  - is empty
+  - is no longer empty after push
+
+Full stack
+  - is full
+  - complains on push
+  - contains all items
+  
+Stack which is neither empty nor full
+  - adds to the top when sent push
+</pre>  
+</blockquote>
+
+<p>
+See a sample <a href="pom.xml">pom.xml</a> for how to configure specdox as part of a maven build.
+</p>
 
 <h2>API</h2>
 

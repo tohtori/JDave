@@ -65,6 +65,16 @@
           <includes>
             <include>**/*Spec.java</include>
           </includes>
+          <systemProperties>
+            <property>
+              <name>jdave.tools.specdox.format</name>
+              <value>txt</value>
+            </property>
+            <property>
+              <name>jdave.tools.specdox.dir</name>
+              <value>target/jdave</value>
+            </property>
+          </systemProperties>          
         </configuration>
       </plugin>
     </plugins>

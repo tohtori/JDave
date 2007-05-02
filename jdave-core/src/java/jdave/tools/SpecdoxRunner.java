@@ -33,7 +33,7 @@ public class SpecdoxRunner {
     }
 
     private String dirname() {
-        return System.getProperty(DIRNAME, "target");
+        return System.getProperty(DIRNAME, "target/jdave");
     }
 
     protected IDoxFormat formatFor(String formatName) {

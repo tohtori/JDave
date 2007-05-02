@@ -43,12 +43,19 @@ should be reflected in used tools too.
 <p>
 JDave is a BDD framework for Java. It is inspired by 
 <a href="http://rspec.rubyforge.org">rspec</a> and integrates 
-<a href="http://www.jmock.org">JMock 2</a> as mocking framework. It currently uses JUnit
-adapter to launch JDave specifications. This way it is possible to have IDE and build tool 
-support from day one.
+<a href="http://www.jmock.org">JMock 2</a> as mocking framework and 
+<a href="http://code.google.com/p/hamcrest/">Hamcrest</a> as matching library. 
+It uses JUnit adapter to launch JDave specifications. This way it is possible to have IDE, build tool 
+and coverage tool support from day one.
 </p>
 <p/>
 News:<br/>
+<ul>
+  <li>May ?? 2007, version 0.8.0 released</li>
+    - <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/HamcrestSampleSpec.java">Hamcrest machers</a> can be used to set expectations<br>
+    - <a href="documentation.html#reporting">Agiledox</a> style reporting<br>
+    - <a href="http://www.laughingpanda.org/jira/secure/IssueNavigator.jspa?reset=true&pid=10060&fixfor=10054">issues...</a><br>
+</ul>
 <ul>
   <li>Apr 16 2007, version 0.7.0 released</li>
     - <a href="http://www.jmock.org">JMock 2</a> replaces JMock 1<br>
@@ -62,12 +69,6 @@ News:<br/>
     - <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContainmentSampleSpec.java">containsInPartialOrder</a><br>
     - refined exception expectations: should.raise/raiseExactly, should.not().raise/raiseExactly<br>
     - <a href="http://www.laughingpanda.org/jira/secure/IssueNavigator.jspa?reset=true&pid=10060&fixfor=10052">issues...</a><br>
-</ul>
-<ul>
-  <li>Feb 25 2007, version 0.5.0 released</li>
-    - <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/java/jdave/injection/InjectionSupport.java">injection support</a><br>
-    - create()/destroy() methods for Specification<br>
-    - <a href="http://www.laughingpanda.org/jira/secure/ReleaseNote.jspa?projectId=10060&styleName=Html&version=10051">bugs got fixed...</a><br>
 </ul>
 </div>	
 </div>
