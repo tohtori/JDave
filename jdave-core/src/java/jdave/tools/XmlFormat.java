@@ -22,27 +22,27 @@ public class XmlFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
     
     public void newSpec(String specName) {
-        dox.append("<specification name=\"" + specName + "\">");
-        dox.append("  <contexts>");
+        dox.append("<specification name=\"" + specName + "\">\n");
+        dox.append("  <contexts>\n");
     }
     
     public void endSpec(String specName) {
-        dox.append("  </contexts>");
-        dox.append("</specification>");
+        dox.append("  </contexts>\n");
+        dox.append("</specification>\n");
     }
     
     public void newContext(String contextName) {
-        dox.append("    <context name=\"" + Sentence.fromCamelCase(contextName) + "\">");
-        dox.append("      <behaviors>");
+        dox.append("    <context name=\"" + Sentence.fromCamelCase(contextName) + "\">\n");
+        dox.append("      <behaviors>\n");
     }
     
     public void endContext(String name) {
-        dox.append("      </behaviors>");
-        dox.append("    </context>");
+        dox.append("      </behaviors>\n");
+        dox.append("    </context>\n");
     }
 
     public void newBehavior(String behaviorName) {
-        dox.append("        <behavior name=\"" + Sentence.fromCamelCase(behaviorName) + "\" />");
+        dox.append("        <behavior name=\"" + Sentence.fromCamelCase(behaviorName) + "\" />\n");
     }
     
     public String suffix() {

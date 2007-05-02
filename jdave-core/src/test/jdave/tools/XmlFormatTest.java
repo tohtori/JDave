@@ -32,15 +32,15 @@ public class XmlFormatTest extends MockObjectTestCase {
     
     public void testFormatsSpecInXml() {
         final String expectedOutput = 
-            "<specification name=\"StackSpec\">" +
-            "  <contexts>" +
-            "    <context name=\"Full stack\">" +
-            "      <behaviors>" +
-            "        <behavior name=\"complains on push\" />" +
-            "      </behaviors>" +
-            "    </context>" +
-            "  </contexts>" +
-            "</specification>";
+            "<specification name=\"StackSpec\">\n" +
+            "  <contexts>\n" +
+            "    <context name=\"Full stack\">\n" +
+            "      <behaviors>\n" +
+            "        <behavior name=\"complains on push\" />\n" +
+            "      </behaviors>\n" +
+            "    </context>\n" +
+            "  </contexts>\n" +
+            "</specification>\n";
         checking(new Expectations() {{ 
             one(doxStore).store("StackSpec", "xml", expectedOutput);
         }});
