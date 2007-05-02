@@ -32,9 +32,11 @@ public class Specdox {
     }
 
     public void generate(Class<? extends Specification<?>> specType, final IDoxFormat format) {
-        format.newSpec(specType.getSimpleName());
+        String specName = specType.getSimpleName();
+        format.newSpec(specName);
         new SpecRunner().visit(specType, new ISpecVisitor() {
             public void afterContext(Context context) {
+                format.endContext(context.getName());
             }
             
             public void onContext(Context context) {
@@ -45,6 +47,7 @@ public class Specdox {
                 format.newBehavior(behavior.getName());
             }
         });
+        format.endSpec(specName);
         fileStore.store(specType.getSimpleName(), format.suffix(), format.toString());
     }
 }

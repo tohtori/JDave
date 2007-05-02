@@ -15,15 +15,14 @@
  */
 package jdave.tools;
 
-/**
- * @author Joni Freeman
- */
-public interface IDoxFormat {
-    void newSpec(String specName);
-    void endSpec(String specName);
-    void newContext(String contextName);
-    void endContext(String name);
-    void newBehavior(String behaviorName);
-    String suffix();
-    String toString();
+import jdave.Specification;
+
+public class StackSpec extends Specification<Void> {
+    public class FullStack {
+        public void create() {                
+        }
+        
+        public void complainsOnPush() {                
+        }
+    }
 }

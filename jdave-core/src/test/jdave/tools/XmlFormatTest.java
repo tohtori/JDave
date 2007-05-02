@@ -15,14 +15,13 @@
  */
 package jdave.tools;
 
-
 import org.jmock.Expectations;
 import org.jmock.integration.junit3.MockObjectTestCase;
 
 /**
  * @author Joni Freeman
  */
-public class SpecdoxTest extends MockObjectTestCase {
+public class XmlFormatTest extends MockObjectTestCase {
     private IDoxStore doxStore = mock(IDoxStore.class);
     private Specdox dox;
     
@@ -31,14 +30,20 @@ public class SpecdoxTest extends MockObjectTestCase {
         dox = new Specdox(doxStore);
     }
     
-    public void testSavesPlainTextVersionToDoxStore() {
+    public void testFormatsSpecInXml() {
         final String expectedOutput = 
-            "StackSpec:\n\n" + 
-            "Full stack\n" +
-            "  - complains on push\n";
+            "<specification name=\"StackSpec\">" +
+            "  <contexts>" +
+            "    <context name=\"Full stack\">" +
+            "      <behaviors>" +
+            "        <behavior name=\"complains on push\" />" +
+            "      </behaviors>" +
+            "    </context>" +
+            "  </contexts>" +
+            "</specification>";
         checking(new Expectations() {{ 
-            one(doxStore).store("StackSpec", "txt", expectedOutput);
+            one(doxStore).store("StackSpec", "xml", expectedOutput);
         }});
-        dox.generate(StackSpec.class, new PlainTextFormat());
+        dox.generate(StackSpec.class, new XmlFormat());
     }
 }

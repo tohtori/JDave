@@ -42,7 +42,9 @@ public class SpecdoxRunnerTest extends MockObjectTestCase {
         System.setProperty(SpecdoxRunner.FORMAT, "txt");
         checking(new Expectations() {{ 
             one(format).newSpec("TestSpec");
+            one(format).endSpec("TestSpec");
             one(format).newContext("Context");
+            one(format).endContext("Context");
             one(format).newBehavior("behavior");
             ignoring(format).suffix();
         }});

@@ -39,6 +39,8 @@ public class SpecdoxRunner {
     protected IDoxFormat formatFor(String formatName) {
         if (formatName.equals("txt")) {
             return new PlainTextFormat();
+        } else if (formatName.equals("xml")) {
+            return new XmlFormat();
         }
         throw new RuntimeException("unknown format '" + formatName + "'");
     }

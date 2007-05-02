@@ -18,40 +18,39 @@ package jdave.tools;
 /**
  * @author Joni Freeman
  */
-public class PlainTextFormat implements IDoxFormat {
+public class XmlFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
-    private String specName;
     
     public void newSpec(String specName) {
-        this.specName = specName;
+        dox.append("<specification name=\"" + specName + "\">");
+        dox.append("  <contexts>");
     }
     
     public void endSpec(String specName) {
+        dox.append("  </contexts>");
+        dox.append("</specification>");
     }
     
     public void newContext(String contextName) {
-        if (dox.length() > 0) {
-            dox.append("\n");
-        }
-        dox.append(Sentence.fromCamelCase(contextName));
-        dox.append("\n");
+        dox.append("    <context name=\"" + Sentence.fromCamelCase(contextName) + "\">");
+        dox.append("      <behaviors>");
     }
     
     public void endContext(String name) {
+        dox.append("      </behaviors>");
+        dox.append("    </context>");
     }
-    
+
     public void newBehavior(String behaviorName) {
-        dox.append("  - ");
-        dox.append(Sentence.fromCamelCase(behaviorName));
-        dox.append("\n");
+        dox.append("        <behavior name=\"" + Sentence.fromCamelCase(behaviorName) + "\" />");
     }
     
     public String suffix() {
-        return "txt";
+        return "xml";
     }
-    
+        
     @Override
     public String toString() {
-        return specName + ":\n\n" + dox.toString();
+        return dox.toString();
     }
 }
