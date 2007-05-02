@@ -2,9 +2,9 @@
   <name>jdave-examples</name>
   <comment/>
   <projects>
-    <project>jdave-jemmy</project>
-    <project>jdave-junit3</project>
     <project>jdave-core</project>
+    <project>jdave-junit3</project>
+    <project>jdave-jemmy</project>
   </projects>
   <buildSpec>
     <buildCommand>
