@@ -37,7 +37,7 @@ urchinTracker();
 <h2>Intro</h2>
 
 JDave is a framework which provides an easy way to specify behavior of your classes. 
-Key consepts are <b>specification</b>, which is a container for <b>behaviors</b>.
+Key concepts are <b>specification</b>, which is a container for <b>behaviors</b>.
 Behaviors define the behavior of a class and they are always expressed within 
 some <b>context</b>. Context defines the setting where particular behavior applies.
 <p>
@@ -129,13 +129,13 @@ Expectations are set using <code>specify(..., ...)</code> method.
 <ul>
   <li>Basic:</li>
 <pre><code>
-specify(actual, boolean);
 specify(actual.getAge(), should.equal(20));
 specify(actual, should.be.empty());
 </code></pre>
   <li>Collection:</li>
 <pre><code>
 specify(actual, containsInOrder(1, 2, 3));
+specify(actual, containsExactly(1, 2, 3));
 </code></pre>
   <li>Exception:</li>
 <pre><code>
@@ -306,6 +306,19 @@ Stack which is neither empty nor full
   - adds to the top when sent push
 </pre>  
 </blockquote>
+
+<p>
+Generated XML files can be converted to HTML report using XSL styleheet. Install Saxon 8
+(or some other XSLT 2 compliant processor). Then download
+<a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/scripts/specdox.xsl">specdox.xsl</a> and
+<a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/scripts/specdox.xsl">dox2html.sh</a>
+to a same directory. Process styleseet by running the script:
+<blockquote>
+<code>dox2html.sh [path/to/spec/xml/dir/]</code>
+</blockquote>
+
+Sample HTML report:
+<iframe src="specdox-sample/index.html" height="200" width="100%"></iframe>
 
 <p>
 See a sample <a href="pom.xml">pom.xml</a> for how to configure specdox as part of a maven build.
