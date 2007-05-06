@@ -18,12 +18,15 @@ package jdave.examples;
 import jdave.Specification;
 import jdave.examples.observer.Observable;
 import jdave.examples.observer.Observer;
+import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
+import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
  */
+@RunWith(JDaveRunner.class)
 public class ObservableSpec extends Specification<Observable> {
     public class ObservableHavingObserver {
         private Observable observable;

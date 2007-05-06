@@ -11,11 +11,16 @@
   <artifactId>jdave-examples</artifactId>
   <name>jdave-examples</name>
   <packaging>jar</packaging>
-    
+  
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>jdave-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>jdave-junit4</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -28,6 +33,11 @@
       <artifactId>jdave-jemmy</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.3</version>
+    </dependency>
   </dependencies>
   
   <build>
@@ -38,6 +48,16 @@
           <includes>
             <include>**/*Suite.java</include>
           </includes>
+          <systemProperties>
+            <property>
+              <name>jdave.tools.specdox.format</name>
+              <value>xml</value>
+            </property>
+            <property>
+              <name>jdave.tools.specdox.dir</name>
+              <value>target/jdave</value>
+            </property>
+          </systemProperties>          
         </configuration>
       </plugin>
     </plugins>

@@ -16,11 +16,16 @@
 package jdave.examples;
 
 import static org.hamcrest.Matchers.*;
+
+import org.junit.runner.RunWith;
+
 import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 
 /**
  * @author Joni Freeman
  */
+@RunWith(JDaveRunner.class)
 public class HamcrestSampleSpec extends Specification<Person> {
     public class SampleContext {
         private Person person = new Person("John",  "Doe", 35);

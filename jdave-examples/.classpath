@@ -3,14 +3,15 @@
   <classpathentry kind="src" path="src/test" output="target/test-classes"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jdave/jdave-jemmy/0.8.0-SNAPSHOT/jdave-jemmy-0.8.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-jemmy/0.8.0-SNAPSHOT/jdave-jemmy-0.8.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/netbeans/jemmy/jemmy/2.2.7.7/jemmy-2.2.7.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock/2.0.0/jmock-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit3/2.0.0/jmock-junit3-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jdave/jdave-core/0.8.0-SNAPSHOT/jdave-core-0.8.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-core/0.8.0-SNAPSHOT/jdave-core-0.8.0-SNAPSHOT-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-library/1.0/hamcrest-library-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/netbeans/jemmy/jemmy/2.2.7.7/jemmy-2.2.7.7.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit3/2.0.0/jmock-junit3-2.0.0.jar"/>
-  <classpathentry kind="src" path="/jdave-core"/>
-  <classpathentry kind="src" path="/jdave-junit3"/>
-  <classpathentry kind="src" path="/jdave-jemmy"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.3/junit-4.3.jar" sourcepath="M2_REPO/junit/junit/4.3/junit-4.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" sourcepath="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock/2.0.0/jmock-2.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jdave/jdave-junit4/0.8.0-SNAPSHOT/jdave-junit4-0.8.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-junit4/0.8.0-SNAPSHOT/jdave-junit4-0.8.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jdave/jdave-junit3/0.8.0-SNAPSHOT/jdave-junit3-0.8.0-SNAPSHOT.jar" sourcepath="M2_REPO/jdave/jdave-junit3/0.8.0-SNAPSHOT/jdave-junit3-0.8.0-SNAPSHOT-sources.jar"/>
 </classpath>

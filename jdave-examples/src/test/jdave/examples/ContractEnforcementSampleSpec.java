@@ -15,18 +15,22 @@
  */
 package jdave.examples;
 
+import org.junit.runner.RunWith;
+
 import jdave.Specification;
 import jdave.contract.CloneableContract;
 import jdave.contract.EqualsComparableContract;
 import jdave.contract.EqualsHashCodeContract;
 import jdave.contract.SerializableContract;
 import jdave.examples.contract.SampleDomainObject;
+import jdave.junit4.JDaveRunner;
 
 /**
  * @author Joni Freeman
  */
+@RunWith(JDaveRunner.class)
 public class ContractEnforcementSampleSpec extends Specification<SampleDomainObject> {
-    public class NormalDomainObject {
+    public class DomainObject {
         private SampleDomainObject object;
 
         public SampleDomainObject create() {
@@ -42,7 +46,7 @@ public class ContractEnforcementSampleSpec extends Specification<SampleDomainObj
             specify(object, satisfies(new CloneableContract()));
         }
         
-        public void isConsistentWithEqualsAndHashCode() {
+        public void hasConsistentEqualsAndHashCode() {
             specify(object, satisfies(new EqualsHashCodeContract<SampleDomainObject>() {
                 @Override
                 protected SampleDomainObject equal() {
@@ -59,7 +63,7 @@ public class ContractEnforcementSampleSpec extends Specification<SampleDomainObj
             }));
         }
         
-        public void isConsistentWithEqualsAndCompareTo() {
+        public void hasConsistentEqualsAndCompareTo() {
             specify(object, satisfies(new EqualsComparableContract<SampleDomainObject>() {
                 @Override
                 protected SampleDomainObject preceding() {

@@ -18,7 +18,10 @@ package jdave.examples;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.runner.RunWith;
+
 import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 
 /**
  * Note, this is not a good example for how to write specs.
@@ -27,6 +30,7 @@ import jdave.Specification;
  * 
  * @author Joni Freeman
  */
+@RunWith(JDaveRunner.class)
 public class ContainmentSampleSpec extends Specification<Object> {
     public class SampleWithVariousContainments {
         private List<Integer> elements;

@@ -21,6 +21,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
+ * Example junit3 suite. Recommended way is to use junit4 runners.
+ * For junit4 there's no need to create a suite. Just tag the specs
+ * with @RunWith(JDaveRunner.class) annotation.
+ * 
  * @author Joni Freeman
  */
 public class ExampleSuite extends TestSuite {

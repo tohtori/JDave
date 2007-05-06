@@ -16,12 +16,15 @@
 package jdave.examples.swing;
 
 import jdave.jemmy.JemmyContainerSpecification;
+import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
+import org.junit.runner.RunWith;
 
 /**
  * @author Pekka Enberg
  */
+@RunWith(JDaveRunner.class)
 public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
     private AlbumPresentationModel presentationModel;
 

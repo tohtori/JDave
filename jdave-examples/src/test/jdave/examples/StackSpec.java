@@ -15,13 +15,17 @@
  */
 package jdave.examples;
 
+import org.junit.runner.RunWith;
+
 import jdave.Block;
 import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 
 /**
  * @author Joni Freeman
  * @author Pekka Enberg
  */
+@RunWith(JDaveRunner.class)
 public class StackSpec extends Specification<Stack<?>> {
     public class EmptyStack {
         private Stack<String> stack;
