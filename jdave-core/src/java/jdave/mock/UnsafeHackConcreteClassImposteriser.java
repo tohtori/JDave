@@ -3,6 +3,7 @@ package jdave.mock;
 import java.io.ObjectStreamClass;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
@@ -46,7 +47,7 @@ public class UnsafeHackConcreteClassImposteriser implements Imposteriser {
     private static final Unsafe unsafe = obtainAnUnsafeObjectByADodgyReflectionHack();
 
     public boolean canImposterise(Class<?> type) {
-        return !type.isPrimitive(); 
+        return !type.isPrimitive() && !Modifier.isFinal(type.getModifiers()); 
     }
     
     public <T> T imposterise(final Invokable mockObject, Class<T> mockedType, Class<?>... ancilliaryTypes) {
