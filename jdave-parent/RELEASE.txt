@@ -10,6 +10,8 @@ cd target/jdave-parent-0.5.0-bin/
 rm jdave-parent-0.5.0/jdave-parent-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
 jar cvf ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip .
 scp ~/workspace/jdave-core/site/*[.html,.xml] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
+scp ~/workspace/jdave-core/site/specdox-sample/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/specdox-sample/
+scp ~/workspace/jdave-core/site/images/*[.jpg,.gif,.png] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/images/
 scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
 cd jdave-core; mvn javadoc:javadoc
 mv target/site/apidocs target/site/api
