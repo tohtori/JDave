@@ -1,7 +1,12 @@
 <projectDescription>
   <name>jdave-examples</name>
   <comment/>
-  <projects/>
+  <projects>
+    <project>jdave-junit4</project>
+    <project>jdave-core</project>
+    <project>jdave-junit3</project>
+    <project>jdave-jemmy</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
