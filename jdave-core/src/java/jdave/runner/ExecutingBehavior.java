@@ -46,11 +46,15 @@ public class ExecutingBehavior extends Behavior {
 
     @Override
     public void run(final IBehaviorResults results) {
-        Specification<?> spec = newSpecification();
-        if (spec.needsThreadLocalIsolation()) {
-            runInNewThread(results, spec);
-        } else {
-            runInCurrentThread(results, spec);
+        try {
+            Specification<?> spec = newSpecification();
+            if (spec.needsThreadLocalIsolation()) {
+                runInNewThread(results, spec);
+            } else {
+                runInCurrentThread(results, spec);
+            }
+        } catch (RuntimeException e) {
+            results.error(method, e);
         }
     }
 

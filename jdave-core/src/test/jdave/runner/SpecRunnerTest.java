@@ -90,6 +90,18 @@ public class SpecRunnerTest extends TestCase {
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(3, BooleanSpec.specDestroyCalled);        
     }
+    
+    public void testReportsErrorIfSpecificationConstructionFails() {
+        final List<Method> errors = new ArrayList<Method>();
+        runner.run(FailingSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
+            @Override
+            public void error(Method method, Throwable t) {
+                errors.add(method);
+            }
+        }));
+        assertEquals(1, errors.size());
+        assertEquals("someBehavior", errors.get(0).getName());
+    }
 
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
@@ -164,6 +176,20 @@ public class SpecRunnerTest extends TestCase {
         @Override
         public void destroy() {
             specDestroyCalled++;
+        }
+    }
+    
+    public class FailingSpec extends Specification<Void> {
+        public FailingSpec() {
+            throw new RuntimeException();
+        }
+        
+        public class Context {
+            public void create() {
+            }
+            
+            public void someBehavior() {
+            }
         }
     }
 }
