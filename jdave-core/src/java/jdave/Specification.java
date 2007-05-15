@@ -147,9 +147,9 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Matches the actual object using Hamcrest Matcher.
      * <p>
-     * Provides a library of matcher objects allowing 'match' rules to be defined declaratively.
+     * Hamcrest provides a library of matcher objects allowing 'match' rules to be defined declaratively.
      * <blockquote>
-     * <code>
+     * <pre><code>
      * import static org.hamcrest.Matchers.*;
      * 
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
@@ -159,7 +159,7 @@ public abstract class Specification<T> extends MockSupport {
      *         }
      *     }
      * }
-     * </code>
+     * </code></pre>
      * </blockquote>
      * <p>
      * See http://code.google.com/p/hamcrest/
@@ -174,6 +174,57 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
     
+    /**
+     * Matches all the actual objects using Hamcrest Matcher.
+     * <p>
+     * Hamcrest provides a library of matcher objects allowing 'match' rules to be defined declaratively.
+     * <blockquote>
+     * <pre><code>
+     * import static org.hamcrest.Matchers.*;
+     * 
+     * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
+     *     public class SampleContext {
+     *         public void sample() {
+     *             specify(persons, new Where&lt;Person&gt;() {{ each(item.getAge(), is(greaterThan(30))); }});
+     *         }
+     *     }
+     * }
+     * </code></pre>
+     * </blockquote>
+     * <p>
+     * See http://code.google.com/p/hamcrest/
+     */
+    public <E> void specify(Collection<E> actual, Where<E> where) {
+        specify(actual.iterator(), where);
+    }
+    
+    /**
+     * @see #specify(Collection, Where)
+     */
+    public <E> void specify(Iterable<E> actual, Where<E> where) {
+        specify(actual.iterator(), where);
+    }
+    
+    /**
+     * @see #specify(Collection, Where)
+     */
+    public <E> void specify(E[] actual, Where<E> where) {
+        specify(Arrays.asList(actual), where);
+    }
+    
+    /**
+     * @see #specify(Collection, Where)
+     */
+    public <E> void specify(Iterator<E> actual, Where<E> where) {
+        try {
+            while (actual.hasNext()) {
+                where.match(actual.next());
+            }
+        } finally {
+            resetActualState();
+        }
+    }
+
     public <V extends Throwable> void specify(Block block, ExpectedException<V> expectation) {
         try {
             specifyThrow(block, expectation);

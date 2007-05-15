@@ -15,7 +15,11 @@
  */
 package jdave;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
+
 import java.util.Arrays;
+import java.util.List;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -284,7 +288,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(null, true);
     }
     
-    public void passesWhenHamcrestMatcherPasses() {
+    public void testPassesWhenHamcrestMatcherPasses() {
         specification.specify(null, new BaseMatcher<Object>() {
             public boolean matches(Object item) {
                 return true;
@@ -294,7 +298,7 @@ public class SpecificationTest extends TestCase {
         });
     }
     
-    public void failsWhenHamcrestMatcherFails() {
+    public void testFailsWhenHamcrestMatcherFails() {
         try {
             specification.specify(null, new BaseMatcher<Object>() {
                 public boolean matches(Object item) {
@@ -305,6 +309,34 @@ public class SpecificationTest extends TestCase {
             });
             fail();
         } catch (ExpectationFailedException e) {            
+        }
+    }
+    
+    public void testPassesWhenHamcrestMatcherPassesAllElements() {
+        List<Money> m = Arrays.asList(new Money(4), new Money(5), new Money(6));
+        specification.specify(m, 
+                new Where<Money>() {{ each(item.value(), is(greaterThan(3))); }});
+    }
+    
+    public void testFailsWhenHamcrestMatcherFailsAnyElements() {
+        List<Money> m = Arrays.asList(new Money(4), new Money(5), new Money(6));
+        try {
+            specification.specify((Iterable<Money>) m, 
+                    new Where<Money>() {{ each(item.value(), is(greaterThan(5))); }});
+            fail();
+        } catch (ExpectationFailedException e) {            
+        }
+    }
+    
+    public static class Money {
+        private final int value;
+
+        public Money(int value) {
+            this.value = value;            
+        }
+        
+        public Integer value() {
+            return value;
         }
     }
     
