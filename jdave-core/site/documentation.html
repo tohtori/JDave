@@ -150,6 +150,8 @@ specify(actual, satisfies(new SerializableContract()));
 <pre><code>
 import static org.hamcrest.Matchers.*;
 specify(person.getAge(), is(greaterThan(30)));
+specify(persons, new Where<Person>() {{ each(item.getSurname(), is(equalTo("Doe"))); }});
+specify(persons, new Where<Person>() {{ each(item.getAge(), is(greaterThan(30))); }});
 </code></pre>
 </ul>
 
