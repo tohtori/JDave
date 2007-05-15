@@ -15,33 +15,47 @@
  */
 package jdave.examples;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.runner.RunWith;
+import java.util.Arrays;
+import java.util.List;
 
 import jdave.Specification;
+import jdave.Where;
 import jdave.junit4.JDaveRunner;
+
+import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class HamcrestSampleSpec extends Specification<Person> {
+public class HamcrestSampleSpec extends Specification<List<Person>> {
     public class SampleContext {
-        private Person person = new Person("John",  "Doe", 35);
+        private List<Person> persons;
         
-        public Person create() {
-            return person;
+        public List<Person> create() {
+            persons = Arrays.asList(new Person("John", "Doe", 35), new Person("Jill", "Doe", 31));
+            return persons;
         }
         
         @SuppressWarnings("unchecked")
         public void sample() {
-            specify(person, is(Person.class));
-            specify(person, hasProperty("firstname", equalTo("John")));
-            specify(person, allOf(
+            specify(persons.get(0), is(Person.class));
+            specify(persons.get(0), hasProperty("firstname", equalTo("John")));
+            specify(persons.get(0), allOf(
                     hasProperty("firstname", equalTo("John")),
                     hasProperty("surname", equalTo("Doe"))));
-            specify(person.getAge(), is(greaterThan(30)));
+            specify(persons.get(0).getAge(), is(greaterThan(30)));
+        }
+        
+        public void collectionSample() {
+            specify(persons, new Where<Person>() {{ each(item.getSurname(), is(equalTo("Doe"))); }});
+            specify(persons, new Where<Person>() {{ each(item.getAge(), is(greaterThan(30))); }});
         }
     }
 }

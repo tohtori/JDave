@@ -37,7 +37,7 @@ public class Person {
         return surname;
     }
     
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 }
