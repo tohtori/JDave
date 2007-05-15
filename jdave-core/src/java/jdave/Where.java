@@ -37,7 +37,7 @@ public class Where <T> {
      */ 
     protected T item; 
     private Invocation invocation;
-    private Matcher<Integer> matcher;
+    private Matcher<?> matcher;
     
     public Where() {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -52,7 +52,7 @@ public class Where <T> {
         }, type);
     }
 
-    protected void each(Object itemToMatch, Matcher<Integer> matcher) {
+    protected void each(Object itemToMatch, Matcher<?> matcher) {
         this.matcher = matcher;
     }
 
