@@ -15,8 +15,7 @@
  */
 package jdave;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -312,14 +311,23 @@ public class SpecificationTest extends TestCase {
         }
     }
     
-    public void testPassesWhenHamcrestMatcherPassesAllElements() {
-        List<Money> m = Arrays.asList(new Money(4), new Money(5), new Money(6));
+    public void testPassesWhenHamcrestMatcherPassesAllElementsWithPrimitiveGetter() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         specification.specify(m, 
                 new Where<Money>() {{ each(item.value(), is(greaterThan(3))); }});
     }
     
+    public void testPassesWhenHamcrestMatcherPassesAllElementsWithObjectGetter() {
+        final Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        specification.specify(m, 
+                new Where<Money>() {{ each(item.currency(), is(equalTo(EUR))); }});
+    }
+    
     public void testFailsWhenHamcrestMatcherFailsAnyElements() {
-        List<Money> m = Arrays.asList(new Money(4), new Money(5), new Money(6));
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         try {
             specification.specify((Iterable<Money>) m, 
                     new Where<Money>() {{ each(item.value(), is(greaterThan(5))); }});
@@ -330,13 +338,41 @@ public class SpecificationTest extends TestCase {
     
     public static class Money {
         private final int value;
+        private final Currency currency;
 
-        public Money(int value) {
-            this.value = value;            
+        public Money(int value, Currency currency) {
+            this.value = value;
+            this.currency = currency;            
         }
         
-        public Integer value() {
+        public int value() {
             return value;
+        }
+        
+        public Currency currency() {
+            return currency;
+        }
+    }
+    
+    public class Currency {
+        private final String name;
+        
+        public Currency(String name) {
+            this.name = name;            
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null || !obj.getClass().equals(Currency.class)) {
+                return false;
+            }
+            Currency other = (Currency) obj;
+            return name.equals(other.name);
+        }
+        
+        @Override
+        public int hashCode() {
+            return name.hashCode();
         }
     }
     

@@ -17,6 +17,8 @@ package jdave;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
 
 import jdave.mock.UnsafeHackConcreteClassImposteriser;
 
@@ -27,8 +29,6 @@ import org.jmock.api.Invocation;
 import org.jmock.api.Invokable;
 
 /**
- * FIXME methods which return primitive can't recorded
- * 
  * @author Joni Freeman
  */
 public class Where <T> {
@@ -39,6 +39,17 @@ public class Where <T> {
     private Invocation invocation;
     private Matcher<?> matcher;
     
+    private static final Map<Class<?>, Object> BOXED_VALUES = new HashMap<Class<?>, Object>() {{
+        put(boolean.class, Boolean.TRUE);
+        put(byte.class, new Byte((byte) 0));
+        put(char.class, 'a');
+        put(short.class, new Short((short) 0));
+        put(int.class, new Integer(0));
+        put(long.class, new Long(0));
+        put(float.class, new Float(0));
+        put(double.class, new Double(0));
+    }};
+
     public Where() {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         @SuppressWarnings("unchecked")
@@ -47,9 +58,13 @@ public class Where <T> {
         item = hack.imposterise(new Invokable() {
             public Object invoke(Invocation invocation) throws Throwable {
                 Where.this.invocation = invocation;
-                return null;
+                return nullOrBoxed(invocation);
             }
         }, type);
+    }
+    
+    private Object nullOrBoxed(Invocation invocation) {
+        return BOXED_VALUES.get(invocation.getInvokedMethod().getReturnType());        
     }
 
     protected void each(Object itemToMatch, Matcher<?> matcher) {
