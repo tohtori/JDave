@@ -102,6 +102,32 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    public void testShouldFailWhenExpectingAnExactExceptionButWrongMessageIsGiven() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException("invalid range");
+                }
+            }, specification.raiseExactly(IllegalArgumentException.class, "argument is null"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected the exception message to be \"argument is null\", but was: \"invalid range\".", e.getMessage());
+        }
+    }
+    
+    public void testShouldFailWhenExpectingAnExactExceptionWithMessageButSubclassIsGiven() {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.raiseExactly(Throwable.class, "argument is null"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block should throw java.lang.Throwable but java.lang.IllegalArgumentException was thrown.", e.getMessage());
+        }
+    }
+    
     public void testShouldFailWhenExpectedExceptionNotRaised() {
         try {
             specification.specify(new Block() {

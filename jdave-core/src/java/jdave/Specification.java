@@ -288,6 +288,10 @@ public abstract class Specification<T> extends MockSupport {
         return new ExactExpectedException<E>(expected);
     }
 
+    public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected, String expectedMessage) {
+        return new ExactExpectedExceptionWithMessage<E>(expected, expectedMessage);
+    }
+
     public IContract satisfies(IContract contract) {
         return contract;
     }
