@@ -225,6 +225,22 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
+    /**
+     * The given block is expected to throw an exception.
+     * <p>
+     * There's two variants for setting exception expectations. 
+     * <blockquote><pre><code>
+     * specify(new Block() { ... }, should.raise(SomeException.class);
+     * specify(new Block() { ... }, should.raiseExactly(SomeException.class);
+     * </code></pre></blockquote>
+     * The first one accepts the given exception or any of its subclasses, the second
+     * one expects an exact exception type. Both can additionally be checked against
+     * expected exception message:
+     * <blockquote><pre><code>
+     * specify(new Block() { ... }, should.raise(SomeException.class, "expected message");
+     * specify(new Block() { ... }, should.raiseExactly(SomeException.class, "expected message");
+     * </code></pre></blockquote>
+     */
     public <V extends Throwable> void specify(Block block, ExpectedException<V> expectation) {
         try {
             specifyThrow(block, expectation);
@@ -245,6 +261,18 @@ public abstract class Specification<T> extends MockSupport {
         throw new ExpectationFailedException(expectation.notThrown());
     }
 
+    /**
+     * The given block is expected to not throw an exception.
+     * <p>
+     * There's two variants for setting exception expectations. 
+     * <blockquote><pre><code>
+     * specify(new Block() { ... }, should.not().raise(SomeException.class);
+     * specify(new Block() { ... }, should.not().raiseExactly(SomeException.class);
+     * </code></pre></blockquote>
+     * The first one expects that the given block does not throw the exception or any of 
+     * its subclasses, the second one expects that the given block does not throw the given
+     * exact exception type. 
+     */
     public <V extends Throwable> void specify(Block block, ExpectedNoThrow<V> expectation) throws Throwable {
         try {
             specifyNoThrow(block, expectation);
@@ -276,18 +304,34 @@ public abstract class Specification<T> extends MockSupport {
         return new DeltaEqualityCheck(expectedNumber, delta);
     }
 
+    /**
+     * @see #specify(Block, ExpectedException)
+     * @see #specify(Block, ExpectedNoThrow)
+     */
     public <E extends Throwable> ExpectedException<E> raise(Class<E> expected) {
         return new ExpectedException<E>(expected);
     }
 
+    /**
+     * @see #specify(Block, ExpectedException)
+     * @see #specify(Block, ExpectedNoThrow)
+     */
     public <E extends Throwable> ExpectedException<E> raise(Class<E> expectedType, String expectedMessage) {
         return new ExpectedExceptionWithMessage<E>(expectedType, expectedMessage);
     }
 
+    /**
+     * @see #specify(Block, ExpectedException)
+     * @see #specify(Block, ExpectedNoThrow)
+     */
     public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected) {
         return new ExactExpectedException<E>(expected);
     }
 
+    /**
+     * @see #specify(Block, ExpectedException)
+     * @see #specify(Block, ExpectedNoThrow)
+     */
     public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected, String expectedMessage) {
         return new ExactExpectedExceptionWithMessage<E>(expected, expectedMessage);
     }
