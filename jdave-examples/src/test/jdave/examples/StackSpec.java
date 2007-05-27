@@ -43,14 +43,6 @@ public class StackSpec extends Specification<Stack<?>> {
             stack.push("anything");
             specify(stack, should.not().be.empty());
         }
-        
-        /**
-         * Note, it is possible to use implicit variable 'context' to
-         * refer the object returned from create() method.
-         */
-        public void isEmpty2() {
-            specify(context, should.be.empty());
-        }        
     }
 
     public class FullStack {
@@ -105,8 +97,8 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void addsToTheTopWhenSentPush() {
-            stack.push(new Integer(100));
-            specify(stack.peek(), should.equal(new Integer(100)));
+            stack.push(100);
+            specify(stack.peek(), should.equal(100));
         }
     }
 }

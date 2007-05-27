@@ -19,13 +19,14 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 import java.util.Arrays;
 import java.util.List;
 
+import jdave.Each;
 import jdave.Specification;
-import jdave.Where;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
@@ -53,9 +54,16 @@ public class HamcrestSampleSpec extends Specification<List<Person>> {
             specify(persons.get(0).getAge(), is(greaterThan(30)));
         }
         
-        public void collectionSample() {
-            specify(persons, new Where<Person>() {{ each(item.getSurname(), is(equalTo("Doe"))); }});
-            specify(persons, new Where<Person>() {{ each(item.getAge(), is(greaterThan(30))); }});
+        public void collectionSampleWithSharedMatcher() {
+            specify(persons, where(new Each<Person>() {{ matches(item.getSurname(), is("Doe")); }}));
+            specify(persons, where(new Each<Person>() {{ matches(item.getAge(), is(greaterThan(30))); }}));
+        }
+        
+        public void collectionSampleWithIndividualMatchers() {
+            specify(persons, where(new Each<Person>() {{ matches(item.getFirstname(), is("John"), is("Jill")); }}));
+            specify(persons, where(new Each<Person>() {{ matches(item.getAge(), is(35), is(31)); }}));
+            specify(persons, where(new Each<Person>() {{ 
+                matches(item, instanceOf(Person.class), instanceOf(Person.class)); }}));            
         }
     }
 }
