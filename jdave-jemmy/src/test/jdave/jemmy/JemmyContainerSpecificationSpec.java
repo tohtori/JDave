@@ -121,7 +121,8 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
             spec.create();
             return spec;
         }
-        
+
+        // FIXME: enable, this fails sometimes
         private void buttonPushInvokesAction() {
             checking(new Expectations() {{
                 one(presentationModelMock).onClick();
