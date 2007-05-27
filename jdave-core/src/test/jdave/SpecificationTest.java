@@ -315,14 +315,21 @@ public class SpecificationTest extends TestCase {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         specification.specify(m, 
-                new Where<Money>() {{ each(item.value(), is(greaterThan(3))); }});
+                specification.where(new Each<Money>() {{ matches(item.value(), is(greaterThan(3))); }}));
     }
     
     public void testPassesWhenHamcrestMatcherPassesAllElementsWithObjectGetter() {
         final Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         specification.specify(m, 
-                new Where<Money>() {{ each(item.currency(), is(equalTo(EUR))); }});
+                specification.where(new Each<Money>() {{ matches(item.currency(), is(equalTo(EUR))); }}));
+    }
+    
+    public void testPassesWhenHamcrestMatcherPassesAllElementsWithoutCallingAnyMethodFromItem() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        specification.specify(m, 
+                specification.where(new Each<Money>() {{ matches(item, instanceOf(Money.class)); }}));
     }
     
     public void testFailsWhenHamcrestMatcherFailsAnyElements() {
@@ -330,7 +337,48 @@ public class SpecificationTest extends TestCase {
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         try {
             specification.specify((Iterable<Money>) m, 
-                    new Where<Money>() {{ each(item.value(), is(greaterThan(5))); }});
+                    specification.where(new Each<Money>() {{ matches(item.value(), is(greaterThan(5))); }}));
+            fail();
+        } catch (ExpectationFailedException e) {            
+        }
+    }
+    
+    public void testPassesIfAllElementsPassTheirIndividualHamcrestMatcher() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        specification.specify(m, 
+                specification.where(new Each<Money>() {{ matches(item.value(), is(4), is(5), is(6)); }}));
+    }
+    
+    
+    public void testFailsIfAnyElementFailItsIndividualHamcrestMatcher() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        try {
+            specification.specify(m, 
+                    specification.where(new Each<Money>() {{ matches(item.value(), is(4), is(5), is(7)); }}));
+            fail();
+        } catch (ExpectationFailedException e) {            
+        }
+    }
+    
+    public void testFailsIfNumberOfHamcrestMatchersIsBiggerThatNumberOfElements() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        try {
+            specification.specify(m, 
+                    specification.where(new Each<Money>() {{ matches(item.value(), is(4), is(5), is(6), is(7)); }}));
+            fail();
+        } catch (ExpectationFailedException e) {            
+        }
+    }
+    
+    public void testFailsIfNumberOfHamcrestMatchersIsSmallerThatNumberOfElements() {
+        Currency EUR = new Currency("EUR");
+        List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
+        try {
+            specification.specify(m, 
+                    specification.where(new Each<Money>() {{ matches(item.value(), is(4), is(5)); }}));
             fail();
         } catch (ExpectationFailedException e) {            
         }

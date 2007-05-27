@@ -185,7 +185,7 @@ public abstract class Specification<T> extends MockSupport {
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
      *     public class SampleContext {
      *         public void sample() {
-     *             specify(persons, new Where&lt;Person&gt;() {{ each(item.getAge(), is(greaterThan(30))); }});
+     *             specify(persons, where(new Each&lt;Person&gt;() {{ matches(item.getAge(), is(greaterThan(30))); }}));
      *         }
      *     }
      * }
@@ -194,35 +194,44 @@ public abstract class Specification<T> extends MockSupport {
      * <p>
      * See http://code.google.com/p/hamcrest/
      */
-    public <E> void specify(Collection<E> actual, Where<E> where) {
+    public <E> void specify(Collection<E> actual, Where<? extends E> where) {
         specify(actual.iterator(), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterable<E> actual, Where<E> where) {
+    public <E> void specify(Iterable<E> actual, Where<? extends E> where) {
         specify(actual.iterator(), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(E[] actual, Where<E> where) {
+    public <E> void specify(E[] actual, Where<? extends E> where) {
         specify(Arrays.asList(actual), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterator<E> actual, Where<E> where) {
+    public <E> void specify(Iterator<E> actual, Where<? extends E> where) {
+        @SuppressWarnings("unchecked")
+        Where<E> unsafeWhere = (Where<E>) where;
         try {
+            int index = 0;
             while (actual.hasNext()) {
-                where.match(actual.next());
+                unsafeWhere.match(actual.next(), index);
+                index++;
             }
+            where.areAllMatchersUsed(index);
         } finally {
             resetActualState();
         }
+    }
+    
+    public <E> Where<E> where(Each<E> each) {
+        return new Where<E>(each);
     }
 
     /**

@@ -110,8 +110,8 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         }
 
         public void addsToTheTopWhenSentPush() {
-            stack.push(new Integer(100));
-            specify(stack.peek(), should.equal(new Integer(100)));
+            stack.push(100);
+            specify(stack.peek(), should.equal(100));
         }
     }
 }

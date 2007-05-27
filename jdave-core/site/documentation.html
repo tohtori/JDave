@@ -127,31 +127,45 @@ which was returned from <code>create()</code> method (be == create()).
 Expectations are set using <code>specify(..., ...)</code> method.
 
 <ul>
-  <li>Basic:</li>
+  <li><b>Basic:</b></li>
 <pre><code>
 specify(actual.getAge(), should.equal(20));
 specify(actual, should.be.empty());
 </code></pre>
-  <li>Collection:</li>
+  <li><b>Collection, array, iterator:</b></li>
 <pre><code>
 specify(actual, containsInOrder(1, 2, 3));
 specify(actual, containsExactly(1, 2, 3));
 </code></pre>
-  <li>Exception:</li>
+  <li><b>Exception:</b></li>
 <pre><code>
 specify(new Block() {}, should.not().raise(SomeException.class));
-specify(new Block() {}, should.raise(SomeException.class));
+specify(new Block() {}, should.raise(SomeException.class, "message"));
+specify(new Block() {}, should.raiseExactly(SomeException.class));
 </code></pre>
-  <li>Contract:</li>
+  <li><b>Contract:</b></li>
 <pre><code>
 specify(actual, satisfies(new SerializableContract()));
+specify(actual, should.not().satisfy(new CloneableContract()));
 </code></pre>
-  <li>Hamcrest:</li>
+  <li><b>Hamcrest:</b></li>
 <pre><code>
 import static org.hamcrest.Matchers.*;
 specify(person.getAge(), is(greaterThan(30)));
-specify(persons, new Where<Person>() {{ each(item.getSurname(), is(equalTo("Doe"))); }});
-specify(persons, new Where<Person>() {{ each(item.getAge(), is(greaterThan(30))); }});
+
+// Using a shared matcher for all collection elements:
+specify(persons, where(
+  new Each&lt;Person&gt;() {{ matches(item.getSurname(), is("Doe")); }}));
+specify(persons, where(
+  new Each&lt;Person&gt;() {{ matches(item.getAge(), is(greaterThan(30))); }}));
+specify(persons, where(
+  new Each&lt;Person&gt;() {{ matches(item, instanceOf(Person.class)); }}));
+
+// Using individual matcher for each collection element, fails if
+// number of matchers does not equal with number of elements:
+specify(persons, where(
+  new Each&lt;Person&gt;() {{ matches(item.getAge(), is(35), is(31)); }}));
+
 </code></pre>
 </ul>
 
@@ -261,6 +275,10 @@ interface.
 
 JMock 2.0 is integrated as mocking framework. Please refer to 
 <a href="http://www.jmock.org">JMock documentation</a>.
+<p>
+JMock <code>Mockery</code> instance can be accessed using specification field <code>mockery</code>.
+By default, JDave uses imposteriser which allows mocking of concrete classes. This default can
+be changed with <code>mockery.setImposteriser</code> method.
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ObservableSpec.java">[examples]</a>
@@ -317,7 +335,7 @@ Generated XML files can be converted to HTML report using XSL styleheet. Install
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-core/src/scripts/dox2html.sh">dox2html.sh</a>
 to a same directory. Process styleseet by running the script:
 <blockquote>
-<code>dox2html.sh [path/to/spec/xml/dir/]</code>
+<code>dox2html.sh [/path/to/spec/xml/dir/]</code>
 </blockquote>
 
 Sample HTML report:
