@@ -28,15 +28,13 @@ public class JDaveSuiteTest extends TestCase {
     }
     
     public class TestSpec extends Specification<Object> {
-        public class C1 {}
-        public class C2 {}
-    }
-
-    public class TestSpecWithMethod extends Specification<Object> {
         public class C1 {
-            @SuppressWarnings("unused")
             public void specMethod() {
-            }
+            }            
+        }
+        public class C2 {
+            public void specMethod() {
+            }                        
         }
     }
 }
