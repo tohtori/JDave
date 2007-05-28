@@ -153,6 +153,9 @@ public class SpecRunnerTest extends TestCase {
             }
         }
         
+        public class ContextWithoutBehaviors {            
+        }
+        
         public abstract class SomeAbstractClass {            
         }
         

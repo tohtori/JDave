@@ -16,7 +16,6 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import jdave.Specification;
 
@@ -27,54 +26,33 @@ import jdave.Specification;
 public class SpecRunner {
     public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
-            if (isContextClass(specType, contextType)) {
-                Context context = new Context(specType, contextType) {
-                    @Override
-                    protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-                        return new VisitingBehavior(method);
-                    }
-                };
-                callback.onContext(context);
-                context.run(callback);
-                callback.afterContext(context);
-            }
+            Context context = new Context(specType, contextType) {
+                @Override
+                protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                    return new VisitingBehavior(method);
+                }
+            };
+            run(callback, context);
         }
     }
     
     public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : specType.getDeclaredClasses()) {
-            if (isContextClass(specType, contextType)) {
-                Context context = new Context(specType, contextType) {
-                    @Override
-                    protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-                        return new ExecutingBehavior(method, specType, contextType);
-                    }
-                };
-                callback.onContext(context);
-                context.run(callback);
-                callback.afterContext(context);
-            }
+            Context context = new Context(specType, contextType) {
+                @Override
+                protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                    return new ExecutingBehavior(method, specType, contextType);
+                }
+            };
+            run(callback, context);
         }
     }
-
-    private boolean isContextClass(Class<?> specType, Class<?> contextType) {
-        if (!isConcreteAndPublic(contextType)) {
-            return false;
-        }
-        return isInnerClass(specType, contextType);
-    }
-
-    private boolean isConcreteAndPublic(Class<?> contextType) {
-        int mod = contextType.getModifiers();
-        return (Modifier.isPublic(mod) && !Modifier.isAbstract(mod));
-    }
-
-    private boolean isInnerClass(Class<?> specType, Class<?> contextType) {
-        try {
-            contextType.getDeclaredConstructor(specType);
-            return true;
-        } catch (Exception e) {
-            return false;
+    
+    private void run(ISpecVisitor callback, Context context) {
+        if (context.isContextClass()) {
+            callback.onContext(context);
+            context.run(callback);
+            callback.afterContext(context);
         }
     }
 }

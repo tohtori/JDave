@@ -16,6 +16,7 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import jdave.Specification;
 
@@ -59,5 +60,38 @@ public abstract class Context {
             return false;
         }
         return true;
+    }
+
+    public boolean isContextClass() {
+        if (!isConcreteAndPublic()) {
+            return false;
+        }
+        if (!hasBehaviors()) {
+            return false;
+        }
+        return isInnerClass();
+    }
+
+    private boolean hasBehaviors() {
+        for (Method method : contextType.getMethods()) {
+            if (isBehavior(method)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isConcreteAndPublic() {
+        int mod = contextType.getModifiers();
+        return (Modifier.isPublic(mod) && !Modifier.isAbstract(mod));
+    }
+
+    private boolean isInnerClass() {
+        try {
+            contextType.getDeclaredConstructor(specType);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
