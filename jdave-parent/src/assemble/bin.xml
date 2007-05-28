@@ -19,6 +19,7 @@
         <include>jdave:jdave-junit3</include>
         <include>jdave:jdave-junit4</include>
         <include>jdave:jdave-jemmy</include>
+        <include>jdave:jdave-wicket</include>
         <include>jdave:jdave-examples</include>
       </includes>
       <binaries>
