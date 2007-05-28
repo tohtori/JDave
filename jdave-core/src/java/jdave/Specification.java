@@ -25,7 +25,6 @@ import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
 import jdave.mock.MockSupport;
 import jdave.util.Collections;
-import jdave.util.Diff;
 import jdave.util.Primitives;
 
 import org.hamcrest.Matcher;
@@ -133,20 +132,6 @@ public abstract class Specification<T> extends MockSupport {
         } finally {
             resetActualState();
         }
-    }
-    
-    /**
-     * Specifies that the given Strings must equal.
-     */
-    public void specify(String actual, String expected) {
-        try {
-            if (!actual.equals(expected)) {
-                Diff diff = Diff.diff(actual, expected);
-                throw new ExpectationFailedException("The given strings do not match:\n" + diff.verbose());
-            }
-        } finally {
-            resetActualState();
-        }        
     }
     
     public void specify(Object actual, IEqualityCheck equalityCheck) {
@@ -320,6 +305,10 @@ public abstract class Specification<T> extends MockSupport {
         contract.isSatisfied(obj);
     }
 
+    public IEqualityCheck equal(String obj) {
+        return new StringEqualsEqualityCheck(obj);
+    }
+    
     public IEqualityCheck equal(Object obj) {
         return new EqualsEqualityCheck(obj);
     }

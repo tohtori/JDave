@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.equality;
+package jdave;
 
-import jdave.IEqualityCheck;
+import jdave.equality.EqualsEqualityCheck;
+import jdave.util.Diff;
 
 /**
  * @author Joni Freeman
  */
-public class EqualsEqualityCheck implements IEqualityCheck {
-    protected final Object expected;
-
-    public EqualsEqualityCheck(Object expected) {
-        this.expected = expected;        
+public class StringEqualsEqualityCheck extends EqualsEqualityCheck {
+    public StringEqualsEqualityCheck(String expected) {
+        super(expected);
     }
     
-    public boolean matches(Object actual) {
-        if (expected == null) {
-            return actual == null;
-        }
-        return expected.equals(actual);
-    }
-    
+    @Override
     public String error(Object actual) {
-        return "Expected: " + expected + ", but was: " + actual;
+        if (!actual.getClass().equals(String.class)) {
+            return super.error(actual);
+        }
+        Diff diff = Diff.diff((String) actual, (String) expected);
+        return "The given strings do not match:\n" + diff.verbose();
     }
 }

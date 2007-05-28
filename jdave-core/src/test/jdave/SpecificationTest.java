@@ -54,7 +54,7 @@ public class SpecificationTest extends TestCase {
         String expected = "some long different string which will get chopped for readability";
         Diff diff = Diff.diff(actual, expected);
         try {
-            specification.specify(actual, expected);
+            specification.specify(actual, specification.should.equal(expected));
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("The given strings do not match:\n" + diff.verbose(), e.getMessage());            
