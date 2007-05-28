@@ -20,6 +20,8 @@ import static org.hamcrest.Matchers.*;
 import java.util.Arrays;
 import java.util.List;
 
+import jdave.util.Diff;
+
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
@@ -45,6 +47,18 @@ public class SpecificationTest extends TestCase {
     
     public void testShouldPassWhenExpectationMet() {
         specification.specify(1, 1);
+    }
+    
+    public void testShouldFailWithDiffMessageWhenTwoStringsDoNotEqual() {
+        String actual = "some long string which will get chopped for readability";
+        String expected = "some long different string which will get chopped for readability";
+        Diff diff = Diff.diff(actual, expected);
+        try {
+            specification.specify(actual, expected);
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The given strings do not match:\n" + diff.verbose(), e.getMessage());            
+        }
     }
     
     public void testShouldPassWhenInvertedExpectationMet() {
