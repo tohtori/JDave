@@ -18,10 +18,18 @@
       <artifactId>jdave-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- Wicket POM is broken in ibiblio!
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket</artifactId>
       <version>1.3.0-incubating-beta1</version>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.3</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -32,7 +40,20 @@
   </dependencies>
   
   <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/java</directory>
+      </testResource>
+    </testResources>
+  
     <plugins>
+    <!-- FIXME: disable in Maven run since wicket pom is broken
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -41,6 +62,7 @@
           </includes>
         </configuration>
       </plugin>
+      -->
     </plugins>
   </build>
   
