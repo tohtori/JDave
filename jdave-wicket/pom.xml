@@ -40,15 +40,15 @@
   </dependencies>
   
   <build>
-    <sourceDirectory>src/main/java</sourceDirectory>
+    <sourceDirectory>src/java</sourceDirectory>
     <resources>
       <resource>
-        <directory>src/main/java</directory>
+        <directory>src/java</directory>
       </resource>
     </resources>
     <testResources>
       <testResource>
-        <directory>src/test/java</directory>
+        <directory>src/test</directory>
       </testResource>
     </testResources>
   
