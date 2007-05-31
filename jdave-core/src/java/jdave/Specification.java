@@ -194,34 +194,34 @@ public abstract class Specification<T> extends MockSupport {
      * <p>
      * See http://code.google.com/p/hamcrest/
      */
-    public <E> void specify(Collection<E> actual, Where<? extends E> where) {
+    public void specify(Collection<?> actual, Where<?> where) {
         specify(actual.iterator(), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterable<E> actual, Where<? extends E> where) {
+    public void specify(Iterable<?> actual, Where<?> where) {
         specify(actual.iterator(), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(E[] actual, Where<? extends E> where) {
+    public void specify(Object[] actual, Where<?> where) {
         specify(Arrays.asList(actual), where);
     }
     
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterator<E> actual, Where<? extends E> where) {
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
+    public <E> void specify(Iterator<?> actual, Where<?> where) {
         Where<E> unsafeWhere = (Where<E>) where;
         try {
             int index = 0;
             while (actual.hasNext()) {
-                unsafeWhere.match(actual.next(), index);
+                unsafeWhere.match((E) actual.next(), index);
                 index++;
             }
             where.areAllMatchersUsed(index);
