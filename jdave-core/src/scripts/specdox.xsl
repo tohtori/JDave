@@ -2,22 +2,23 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
 	<xsl:output method="html" indent="yes" />
 	<xsl:param name="spec-file-dir" />
+	<xsl:param name="output-dir">.</xsl:param>
 	<xsl:variable name="frameset-index-filename">index.html</xsl:variable>
 	<xsl:variable name="index-frame-filename">specifications-frame.html</xsl:variable>
 	<xsl:variable name="content-frame-filename">specifications-contents.html</xsl:variable>
 
 	<xsl:template match="/">
-		<xsl:result-document href="{$index-frame-filename}">
+		<xsl:result-document href="{$output-dir}/{$index-frame-filename}">
 			<xsl:call-template name="generate-frame-html">
 				<xsl:with-param name="frame-type">index</xsl:with-param>
 			</xsl:call-template>
 		</xsl:result-document>
-		<xsl:result-document href="{$content-frame-filename}">
+		<xsl:result-document href="{$output-dir}/{$content-frame-filename}">
 			<xsl:call-template name="generate-frame-html">
 				<xsl:with-param name="frame-type">content</xsl:with-param>
 			</xsl:call-template>
 		</xsl:result-document>
-		<xsl:result-document href="{$frameset-index-filename}">
+		<xsl:result-document href="{$output-dir}/{$frameset-index-filename}">
 			<html>
 				<frameset cols="20%,80%">
 					<frame src="{$index-frame-filename}" name="indexFrame" />
