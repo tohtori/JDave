@@ -3,7 +3,7 @@
 	<xsl:output method="html" indent="yes" />
 	<xsl:param name="spec-file-dir" />
 	<xsl:param name="output-dir">.</xsl:param>
-	<xsl:variable name="frameset-index-filename">index.html</xsl:variable>
+	<xsl:param name="frameset-index-filename">index.html</xsl:param>
 	<xsl:variable name="index-frame-filename">specifications-frame.html</xsl:variable>
 	<xsl:variable name="content-frame-filename">specifications-contents.html</xsl:variable>
 
