@@ -21,6 +21,8 @@ import junit.framework.TestCase;
  * @author Joni Freeman
  */
 public class DiffTest extends TestCase {
+    private static final String NEW_LINE = System.getProperty("line.separator");
+
     public void testFailsToPrintVerboseMessageWithEqualStrings() {
         Diff diff = Diff.diff("foo", "foo");
         try {
@@ -35,7 +37,7 @@ public class DiffTest extends TestCase {
                 "this is a pretty long string which will get chopped", 
                 "this is a pretty long different string which will get chopped");
         assertEquals(
-                "  Actual: ... a pretty long string which wi...\n" +
+                "  Actual: ... a pretty long string which wi..." + NEW_LINE +
                 "Expected: ... a pretty long different strin...",
                 diff.verbose());
     }
@@ -45,7 +47,7 @@ public class DiffTest extends TestCase {
                 "this is a string", 
                 "this is another string");
         assertEquals(
-                "  Actual: this is a string\n" +
+                "  Actual: this is a string" + NEW_LINE +
                 "Expected: this is another string",
                 diff.verbose());
     }
