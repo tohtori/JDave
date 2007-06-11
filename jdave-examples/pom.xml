@@ -63,4 +63,13 @@
     </plugins>
   </build>
   
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.jdave</groupId>
+        <artifactId>maven-jdave-report-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  
 </project>
