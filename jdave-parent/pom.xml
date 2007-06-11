@@ -26,6 +26,7 @@
     <module>../jdave-jemmy</module>
     <module>../jdave-wicket</module>
     <module>../jdave-examples</module>
+    <module>../jdave-report-plugin</module>
   </modules>
   
   <developers>
