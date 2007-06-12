@@ -56,7 +56,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
 
     /**
      * Start container for context.
-     * @model: The model passed to container that is used for context.
+     * @param model The model passed to container that is used for context.
      */
     public T startContainer(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
