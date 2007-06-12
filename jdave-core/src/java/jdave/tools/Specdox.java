@@ -33,7 +33,7 @@ public class Specdox {
 
     public void generate(Class<? extends Specification<?>> specType, final IDoxFormat format) {
         String specName = specType.getSimpleName();
-        format.newSpec(specName);
+        format.newSpec(specName, specType.getName());
         new SpecRunner().visit(specType, new ISpecVisitor() {
             public void afterContext(Context context) {
                 format.endContext(context.getName());

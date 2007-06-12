@@ -21,8 +21,8 @@ package jdave.tools;
 public class XmlFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
     
-    public void newSpec(String specName) {
-        dox.append("<specification name=\"" + specName + "\">\n");
+    public void newSpec(String specName, String fqn) {
+        dox.append("<specification name=\"" + specName + "\" fqn=\"" + fqn + "\">\n");
         dox.append("  <contexts>\n");
     }
     

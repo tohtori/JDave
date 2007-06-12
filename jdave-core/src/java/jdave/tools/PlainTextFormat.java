@@ -22,7 +22,7 @@ public class PlainTextFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
     private String specName;
     
-    public void newSpec(String specName) {
+    public void newSpec(String specName, String fqn) {
         this.specName = specName;
     }
     

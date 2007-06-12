@@ -19,7 +19,7 @@ package jdave.tools;
  * @author Joni Freeman
  */
 public interface IDoxFormat {
-    void newSpec(String specName);
+    void newSpec(String specName, String fqn);
     void endSpec(String specName);
     void newContext(String contextName);
     void endContext(String name);

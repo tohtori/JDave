@@ -41,7 +41,7 @@ public class SpecdoxRunnerTest extends MockObjectTestCase {
     public void testGeneratesDoxIfSystemPropertyPresent() {
         System.setProperty(SpecdoxRunner.FORMAT, "txt");
         checking(new Expectations() {{ 
-            one(format).newSpec("TestSpec");
+            one(format).newSpec("TestSpec", TestSpec.class.getName());
             one(format).endSpec("TestSpec");
             one(format).newContext("Context");
             one(format).endContext("Context");

@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
 	<xsl:output method="html" indent="yes" />
 	<xsl:param name="spec-file-dir" />
+	<xsl:param name="xref">#</xsl:param>
 	<xsl:param name="output-dir">.</xsl:param>
 	<xsl:param name="frameset-index-filename">index.html</xsl:param>
 	<xsl:variable name="index-frame-filename">specifications-frame.html</xsl:variable>
@@ -60,7 +61,12 @@
 		<xsl:element name="a">
 			<xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
 		</xsl:element>
-		<h3><xsl:value-of select="@name" /></h3>
+		<h3>
+		<xsl:element name="a">
+			<xsl:attribute name="href"><xsl:value-of select="$xref" />/<xsl:value-of select="replace(@fqn,'\.','/')" />.html</xsl:attribute>
+			<xsl:value-of select="@name" />
+		</xsl:element>
+		</h3>
 		<xsl:for-each select="contexts/context">
 			<p><strong><xsl:value-of select="@name" /></strong></p>
 			<ul>

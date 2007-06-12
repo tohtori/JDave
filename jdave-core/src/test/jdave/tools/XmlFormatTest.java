@@ -32,7 +32,7 @@ public class XmlFormatTest extends MockObjectTestCase {
     
     public void testFormatsSpecInXml() {
         final String expectedOutput = 
-            "<specification name=\"StackSpec\">\n" +
+            "<specification name=\"StackSpec\" fqn=\"jdave.tools.StackSpec\">\n" +
             "  <contexts>\n" +
             "    <context name=\"Full stack\">\n" +
             "      <behaviors>\n" +
