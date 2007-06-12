@@ -15,6 +15,7 @@
  */
 package org.jdave.maven.report;
 
+import java.io.File;
 import java.io.StringReader;
 
 import javax.xml.transform.Source;
@@ -28,12 +29,10 @@ import jdave.tools.Specdox;
 import net.sf.saxon.TransformerFactoryImpl;
 
 /**
- * xref (needs fqn)
- * 
  * @author Joni Freeman
  */
 public class SpecdoxTransformer {
-    public void transform(String filename, String specXmlDir, String outputDir) throws TransformerException {
+    public void transform(String filename, String specXmlDir, String outputDir, File xref) throws TransformerException {
         Source xmlSource = new StreamSource(new StringReader("<?xml version=\"1.0\" ?><foo></foo>"));
         Source xsltSource = new StreamSource(Specdox.class.getResourceAsStream("/specdox.xsl"));
         xsltSource.setSystemId("/specdox.xsl");
@@ -42,6 +41,11 @@ public class SpecdoxTransformer {
         Transformer trans = transFact.newTransformer(xsltSource);
 
         trans.setParameter("spec-file-dir", specXmlDir);
+        if (xref.exists()) {
+            trans.setParameter("xref", xref.getAbsoluteFile());
+        } else {
+            trans.setParameter("xref", "#");            
+        }
         trans.setParameter("output-dir", outputDir);
         trans.setParameter("frameset-index-filename", filename);
         trans.transform(xmlSource, new StreamResult(System.out));
