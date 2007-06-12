@@ -48,7 +48,15 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
     private T specifiedComponent;
 
     /**
-     * Start the specified container.
+     * Start container under test.
+     */
+    public T startContainer() {
+        return startContainer(null);
+    }
+
+    /**
+     * Start container under test.
+     * @model: The model passed to container under test.
      */
     public T startContainer(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
