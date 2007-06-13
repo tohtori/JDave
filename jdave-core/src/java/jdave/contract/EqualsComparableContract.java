@@ -21,6 +21,27 @@ import jdave.ExpectationFailedException;
 import jdave.IContract;
 
 /**
+ * A contract which enforces the contract between equals method and Comparable
+ * interface (or Comparator interface). See the javadoc of those classes for
+ * explanation of the contract. Example usage:
+ * 
+ * <blockquote><pre><code>
+ * Integer obj = 5;
+ * specify(obj, should.satisfy(new EqualsComparableContract<Integer>() {
+ *     public Integer preceding() {
+ *         return 4;
+ *     }
+ *     public Integer subsequent() {
+ *         return 4;
+ *     }
+ *     public Integer equivalentByComparisonButNotByEqual() {
+ *         // There's no Integer which would be non equal with 5 and still be equal
+ *         // by comparision (comparaTo() == 0). So return null.
+ *         return null; 
+ *     }
+ * });
+ * </code></pre></blockquote>
+ * 
  * @author Joni Freeman
  */
 public abstract class EqualsComparableContract<T> implements IContract {
@@ -63,9 +84,24 @@ public abstract class EqualsComparableContract<T> implements IContract {
             }
         }
     }
-    
+
+    /**
+     * Return an instance which should preceed the given instance.
+     * @see #isSatisfied(Object)
+     */
     protected abstract T preceding();
+    
+    /**
+     * Return an instance which should be after the given instance.
+     * @see #isSatisfied(Object)
+     */
     protected abstract T subsequent();
+
+    /**
+     * Return an instance whose compareTo is 0 with given instance, but whose equal
+     * returns false. Return null if no such instance exists.
+     * @see #isSatisfied(Object)
+     */
     protected abstract T equivalentByComparisonButNotByEqual();
     
     private static class ComparableComparator<T extends Comparable<Object>> implements Comparator<T> {
