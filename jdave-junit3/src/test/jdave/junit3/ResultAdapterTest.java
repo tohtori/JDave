@@ -19,45 +19,33 @@ import java.lang.reflect.Method;
 
 import jdave.ExpectationFailedException;
 import jdave.junit3.JDaveSuite.ResultAdapter;
-import jdave.mock.UnsafeHackConcreteClassImposteriser;
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
-
-import org.jmock.Expectations;
-import org.jmock.integration.junit3.MockObjectTestCase;
 
 /**
  * @author Joni Freeman
  */
-public class ResultAdapterTest extends MockObjectTestCase {
+public class ResultAdapterTest extends TestCase {
     private TestCase test;
     private TestResult result;
     private ResultAdapter adapter;
     private Method method;
-    
+        
     @Override
     protected void setUp() throws Exception {
-        setImposteriser(UnsafeHackConcreteClassImposteriser.INSTANCE);
-        result = mock(TestResult.class);
+        result = new TestResult();
         test = new TestCase("test") {};
         adapter = new JDaveSuite.ResultAdapter(test, result);
         method = ResultAdapterTest.class.getDeclaredMethod("setUp");
     }
     
     public void testShouldAdaptError() {
-        final Throwable t = new Exception();
-        checking(new Expectations() {{
-            one(result).addError(test, t);
-        }});
-        adapter.error(method, t);
+        adapter.error(method, new Exception());
+        assertEquals(1, result.errorCount());
     }
     
     public void testShouldAdaptFailure() {
-        final ExpectationFailedException e = new ExpectationFailedException("");
-        checking(new Expectations() {{
-            one(result).addFailure(with(equal(test)), with(any(AssertionFailedError.class)));
-        }});
-        adapter.unexpected(method, e);
+        adapter.unexpected(method, new ExpectationFailedException(""));
+        assertEquals(1, result.failureCount());
     }
 }
