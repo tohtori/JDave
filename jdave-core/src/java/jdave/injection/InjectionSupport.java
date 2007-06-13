@@ -49,6 +49,32 @@ import java.util.List;
  * </pre>
  * </blockquote>
  * 
+ * Another use case is to inject mocks to private fields of a target class.
+ * <blockquote>
+ * <pre>
+ * public class TargetClass {
+ *     private SomeObjectWhichWillBeMocked foo;
+ * }
+ * 
+ * public class MySpecification extends Specification&lt;TargetClass&gt; {
+ *     public class SomeContext {
+ *         public TargetClass create() {
+ *             TargetClass target = new TargetClass();
+ *             final SomeObjectWhichWillBeMocked mock = mock(SomeObjectWhichWillBeMocked.class);
+ *             new InjectionSupport().inject(target, new IFieldInjector() {
+ *                 public void inject(Field field) {
+ *                     if (field.field().getName() == "foo") {                        
+ *                         field.set(mock);
+ *                     }
+ *                 }
+ *             }
+ *             return target;
+ *         }
+ *     }
+ * }
+ * </pre>
+ * </blockquote>
+ * 
  * @author Joni Freeman
  */
 public class InjectionSupport {
