@@ -21,6 +21,7 @@ import org.jmock.Mockery;
 import org.jmock.Sequence;
 import org.jmock.States;
 import org.jmock.internal.ExpectationBuilder;
+import org.jmock.lib.legacy.ClassImposteriser;
 
 /**
  * Note, most of these methods are copied from jmock MockObjectTestCase.
@@ -34,7 +35,7 @@ public class MockSupport extends ContainmentSupport {
 
     protected MockSupport() {
         mockery.setExpectationErrorTranslator(JDaveErrorTranslator.INSTANCE); 
-        mockery.setImposteriser(UnsafeHackConcreteClassImposteriser.INSTANCE);
+        mockery.setImposteriser(ClassImposteriser.INSTANCE);
     }
 
     public Mockery mockery() {

@@ -20,13 +20,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
 
-import jdave.mock.UnsafeHackConcreteClassImposteriser;
-
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.jmock.api.Imposteriser;
 import org.jmock.api.Invocation;
 import org.jmock.api.Invokable;
+import org.jmock.lib.legacy.ClassImposteriser;
 
 /**
  * @author Joni Freeman
@@ -55,8 +54,8 @@ public class Each<T> {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         @SuppressWarnings("unchecked")
         Class<T> type = (Class<T>) superclass.getActualTypeArguments()[0];
-        Imposteriser hack = UnsafeHackConcreteClassImposteriser.INSTANCE;
-        item = hack.imposterise(new Invokable() {
+        Imposteriser imposteriser = ClassImposteriser.INSTANCE;
+        item = imposteriser.imposterise(new Invokable() {
             public Object invoke(Invocation invocation) throws Throwable {
                 Each.this.invocation = invocation;
                 return nullOrBoxed(invocation);
