@@ -29,7 +29,7 @@ import java.util.List;
  *     private SomeInjectedField field;
  *     
  *     public MySpecification() {
- *         new InjectionSupport.inject(this, new SpringInjector());
+ *         new InjectionSupport().inject(this, new SpringInjector());
  *     }
  *     
  *     public class SomeContext {
