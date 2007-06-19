@@ -38,13 +38,10 @@ public class DataViewSpec extends MarkupContainerSpecification<DataView> {
     protected DataView newContainer(String id, IModel model) {
         return dataView = new DataView(id, new ListDataProvider(Arrays
                 .asList("one", "two", "three"))) {
-            private static final long serialVersionUID = 1L;
-
             @Override
             protected void populateItem(Item item) {
             }
         };
-
     }
 
     public class WhenContainerIsStarted {
@@ -59,7 +56,5 @@ public class DataViewSpec extends MarkupContainerSpecification<DataView> {
         public void dataViewIsInitialized() {
             specify(context.size(), should.equal(3));
         }
-
     }
-
 }
