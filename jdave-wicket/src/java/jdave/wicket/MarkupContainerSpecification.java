@@ -40,7 +40,7 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 
 /**
  * A base class for Wicket's <code>MarkupContainer</code> specifications.
- * 
+ *
  * @author Joni Freeman
  */
 public abstract class MarkupContainerSpecification<T extends MarkupContainer> extends Specification<T> {
@@ -68,9 +68,14 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         } else if (Border.class.isAssignableFrom(type)) {
             startBorder(model);
         } else {
-            throw new RuntimeException("unsupported type " + type);
+            startComponent(model);
         }
         return specifiedComponent;
+    }
+
+    private void startComponent(final IModel model) {
+        specifiedComponent = newContainer("component",model);
+        wicket.startComponent(specifiedComponent);
     }
 
     private void startBorder(final IModel model) {
@@ -112,7 +117,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         }
         return (Item) items.next();
     }
-    
+
     /**
      * Select an item from a <code>ListView</code>.
      */
@@ -123,7 +128,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         }
         return (ListItem) items.next();
     }
-    
+
     /**
      * Collect model objects from given components.
      */
@@ -136,20 +141,20 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         }
         return objects;
     }
-    
+
     /**
      * Create a <code>WicketTester</code> for the specification.
      * <p>
      * By default, <code>WicketTester</code> is created as:
      * <pre><blockquote><code>
-     * 
+     *
      * return new BaseWicketTester(newApplication());
-     * 
+     *
      * <code></blockquote></pre>
-     * 
-     * So, it is possible to overwrite <code>newApplication</code> if you just need 
+     *
+     * So, it is possible to overwrite <code>newApplication</code> if you just need
      * a different <code>Application</code> for a specification.
-     * 
+     *
      * @see #newApplication()
      */
     protected BaseWicketTester newWicketTester() {
@@ -162,13 +167,13 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
     protected WebApplication newApplication() {
         return new DummyWebApplication();
     }
-    
+
     /**
      * Create a new instance of a container to be specified.
      * <p>
      * The container must get given id. If the container is a <code>Page</code>,
      * the id is null.
-     * 
+     *
      * @param id The id of a container, null if the container is a <code>Page</code>,
      * @param model A model for the container which was passed in <code>startContainer</code> method.
      * @see #startContainer(IModel)

@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  
+
   <parent>
     <groupId>org.jdave</groupId>
     <artifactId>jdave-parent</artifactId>
-    <version>0.9.0-SNAPSHOT</version>    
+    <version>0.9.0-SNAPSHOT</version>
     <relativePath>../jdave-parent</relativePath>
   </parent>
 
   <artifactId>jdave-wicket</artifactId>
   <name>jdave-wicket</name>
   <packaging>jar</packaging>
-  
+
   <!-- Wicket 1.3-beta1 POM is broken in ibiblio. -->
   <repositories>
     <repository>
@@ -20,7 +20,7 @@
       <url>http://wicketstuff.org/maven/repository/</url>
     </repository>
   </repositories>
-  
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -44,8 +44,20 @@
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>servlet-api</artifactId>
+    	<version>2.4</version>
+    	<type>jar</type>
+    	<scope>provided</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-log4j12</artifactId>
+    	<version>1.3.1</version>
+    </dependency>
   </dependencies>
-  
+
   <build>
     <sourceDirectory>src/java</sourceDirectory>
     <resources>
@@ -58,7 +70,7 @@
         <directory>src/test</directory>
       </testResource>
     </testResources>
-  
+
     <plugins>
     <!-- FIXME: disable in Maven run since wicket pom is broken
       <plugin>
@@ -72,5 +84,5 @@
       -->
     </plugins>
   </build>
-  
+
 </project>
