@@ -72,7 +72,6 @@
     </testResources>
 
     <plugins>
-    <!-- FIXME: disable in Maven run since wicket pom is broken
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -81,7 +80,6 @@
           </includes>
         </configuration>
       </plugin>
-      -->
     </plugins>
   </build>
 
