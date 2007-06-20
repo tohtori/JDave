@@ -31,11 +31,11 @@ import org.junit.runner.RunWith;
  * @author Janne Hietam&auml;ki
  */
 @RunWith(JDaveRunner.class)
-public class DataViewSpec extends MarkupContainerSpecification<DataView> {
+public class DataViewSpec extends ComponentSpecification<DataView> {
     DataView dataView;
 
     @Override
-    protected DataView newContainer(String id, IModel model) {
+    protected DataView newComponent(String id, IModel model) {
         return dataView = new DataView(id, new ListDataProvider(Arrays
                 .asList("one", "two", "three"))) {
             @Override
@@ -46,7 +46,7 @@ public class DataViewSpec extends MarkupContainerSpecification<DataView> {
 
     public class WhenContainerIsStarted {
         public DataView create() {
-            return startContainer(null);
+            return startComponent(null);
         }
 
         public void theContextIsSameInstanceAsDataViewCreatedInNewContainer() {

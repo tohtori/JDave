@@ -33,12 +33,12 @@ import org.junit.runner.RunWith;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class PageWithItemsSpec extends MarkupContainerSpecification<PageWithItems> {
+public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
     public class WhenListHasItems {
         private List<Integer> list = Arrays.asList(0, 1, 2);
         
         public PageWithItems create() {
-            return startContainer(new Model((Serializable) list));
+            return startComponent(new Model((Serializable) list));
         }
         
         public void theItemsCanBeReferencedEasilyInListView() {
@@ -58,7 +58,7 @@ public class PageWithItemsSpec extends MarkupContainerSpecification<PageWithItem
     }
     
     @Override
-    protected PageWithItems newContainer(String id, IModel model) {
+    protected PageWithItems newComponent(String id, IModel model) {
         return new PageWithItems(model);
     }
 }

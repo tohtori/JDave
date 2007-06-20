@@ -25,12 +25,12 @@ import org.junit.runner.RunWith;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class EmptyPanelSpec extends MarkupContainerSpecification<EmptyPanel> {
+public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel> {
     private EmptyPanel panel;
     
     public class WhenContainerIsStarted {
         public EmptyPanel create() {
-            return startContainer(null);
+            return startComponent(null);
         }
         
         public void theContextIsSameInstanceAsPanelCreatedInNewContainer() {
@@ -43,7 +43,7 @@ public class EmptyPanelSpec extends MarkupContainerSpecification<EmptyPanel> {
     }
 
     @Override
-    protected EmptyPanel newContainer(String id, IModel model) {
+    protected EmptyPanel newComponent(String id, IModel model) {
         return panel = new EmptyPanel(id);
     }
 }

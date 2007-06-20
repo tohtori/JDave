@@ -23,7 +23,6 @@ import java.util.List;
 import jdave.Specification;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -43,22 +42,22 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
  *
  * @author Joni Freeman
  */
-public abstract class MarkupContainerSpecification<T extends MarkupContainer> extends Specification<T> {
+public abstract class ComponentSpecification<T extends Component> extends Specification<T> {
     protected final BaseWicketTester wicket = newWicketTester();
     private T specifiedComponent;
 
     /**
      * Start container for context.
      */
-    public T startContainer() {
-        return startContainer(null);
+    public T startComponent() {
+        return startComponent(null);
     }
 
     /**
      * Start container for context.
      * @param model The model passed to container that is used for context.
      */
-    public T startContainer(final IModel model) {
+    public T startComponent(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> type = (Class<?>) superclass.getActualTypeArguments()[0];
         if (Page.class.isAssignableFrom(type)) {
@@ -68,13 +67,13 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         } else if (Border.class.isAssignableFrom(type)) {
             startBorder(model);
         } else {
-            startComponent(model);
+            startComponent0(model);
         }
         return specifiedComponent;
     }
 
-    private void startComponent(final IModel model) {
-        specifiedComponent = newContainer("component",model);
+    private void startComponent0(final IModel model) {
+        specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
     }
 
@@ -82,7 +81,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 Panel panel = new Container(panelId);
-                specifiedComponent = newContainer("component", model);
+                specifiedComponent = newComponent("component", model);
                 panel.add(specifiedComponent);
                 return panel;
             }
@@ -92,7 +91,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
     private void startPanel(final IModel model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
-                specifiedComponent = newContainer(panelId, model);
+                specifiedComponent = newComponent(panelId, model);
                 return (Panel) specifiedComponent;
             }
         });
@@ -101,7 +100,7 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
     private void startPage(final IModel model) {
         wicket.startPage(new ITestPageSource() {
             public Page getTestPage() {
-                specifiedComponent = newContainer(null, model);
+                specifiedComponent = newComponent(null, model);
                 return (Page) specifiedComponent;
             }
         });
@@ -169,14 +168,14 @@ public abstract class MarkupContainerSpecification<T extends MarkupContainer> ex
     }
 
     /**
-     * Create a new instance of a container to be specified.
+     * Create a new instance of a Wicket component to be specified.
      * <p>
-     * The container must get given id. If the container is a <code>Page</code>,
+     * The component must get given id. If the component is a <code>Page</code>,
      * the id is null.
      *
-     * @param id The id of a container, null if the container is a <code>Page</code>,
-     * @param model A model for the container which was passed in <code>startContainer</code> method.
-     * @see #startContainer(IModel)
+     * @param id The id of a component, null if the component is a <code>Page</code>,
+     * @param model A model for the component which was passed in <code>startComponent</code> method.
+     * @see #startComponent(IModel)
      */
-    protected abstract T newContainer(String id, IModel model);
+    protected abstract T newComponent(String id, IModel model);
 }
