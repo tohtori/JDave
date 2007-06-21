@@ -67,12 +67,12 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         } else if (Border.class.isAssignableFrom(type)) {
             startBorder(model);
         } else {
-            startComponent0(model);
+            startComponentWithoutMarkup(model);
         }
         return specifiedComponent;
     }
 
-    private void startComponent0(final IModel model) {
+    public void startComponentWithoutMarkup(final IModel model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
     }
