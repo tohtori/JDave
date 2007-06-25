@@ -31,7 +31,21 @@ public class ResolutionTest extends TestCase {
         assertFalse(resolution.includes("g3"));
     }
     
+    public void testExcludesGroupIfItIsIncludedButAlsoExcluded() throws Exception {
+        Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
+        assertFalse(resolution.includes("g1"));
+    }
+    
+    public void testIncludesGroupIfItIsIncludedAndNotExcluded() throws Exception {
+        Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
+        assertTrue(resolution.includes("g3"));
+    }
+    
     @Groups(include={ "g1", "g2" })
-    public static class WhenGroupsAreIncluded {        
+    public static class WhenGroupsAreIncluded {
+    }
+    
+    @Groups(include={ Groups.ALL  }, exclude={ "g1", "g2" })
+    public static class WhenGroupsAreExcluded {
     }
 }

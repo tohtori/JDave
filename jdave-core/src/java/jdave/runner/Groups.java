@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Groups {
+    public static final String ALL = "__all_groups";
+    
     public String[] include();
     public String[] exclude() default {};
 }

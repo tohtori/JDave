@@ -29,11 +29,30 @@ public class Resolution {
     }
 
     public boolean includes(String group) {
-        for (String includedGroup : groups.include()) {            
-            if (group.equals(includedGroup)) {
+        for (String groupToInclude : groups.include()) {            
+            if (includes(group, groupToInclude)) {
+                return !excludes(group);
+            }
+        }
+        return false;
+    }
+
+    private boolean excludes(String group) {
+        for (String groupToExclude : groups.exclude()) {
+            if (groupToExclude.equals(Groups.ALL)) {
+                return true;
+            }
+            if (groupToExclude.equals(group)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean includes(String group, String groupToInclude) {
+        if (groupToInclude.equals(Groups.ALL)) {
+            return true;
+        }
+        return group.equals(groupToInclude);
     }
 }
