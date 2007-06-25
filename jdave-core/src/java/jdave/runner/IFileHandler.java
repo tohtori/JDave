@@ -20,6 +20,6 @@ import java.io.File;
 /**
  * @author Joni Freeman
  */
-public interface IFileHandler {
+interface IFileHandler {
     void handle(File file);
 }

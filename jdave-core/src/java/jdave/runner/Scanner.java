@@ -21,14 +21,14 @@ import java.util.Stack;
 /**
  * @author Joni Freeman
  */
-public class Scanner {
+class Scanner {
     private final String path;
 
-    public Scanner(String path) {
+    Scanner(String path) {
         this.path = path;
     }
 
-    public void forEach(String extension, IFileHandler fileHandler) {
+    void forEach(String extension, IFileHandler fileHandler) {
         Stack<File> dirs = new Stack<File>();
         dirs.push(new File(path));
         forEach(extension, fileHandler, dirs);
