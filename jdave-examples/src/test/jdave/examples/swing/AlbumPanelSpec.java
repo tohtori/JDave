@@ -30,14 +30,13 @@ public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
 
     public class Panel {
         public AlbumPanel create() {
-            return container;
+            return startContainer();
         }
         
         public void notifiesPresentationModelWhenSaveButtonIsClicked() {
             checking(new Expectations() {{
                 one(presentationModel).save();
             }});
-            frame.pack();
             jemmy.pushButton("Save");
         }
     }

@@ -32,20 +32,22 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Pekka Enberg
+ * @author Mikko Peltonen
  */
 @RunWith(JDaveRunner.class)
 public class JemmyContainerSpecificationSpec extends Specification<JemmyContainerSpecification<JPanel>> {
+    private JemmyContainerSpecification<JPanel> spec;
+    
     public class EmptyPanel {
-        private JemmyContainerSpecification<JPanel> spec;
-
         public JemmyContainerSpecification<JPanel> create() {
-            spec = new JemmyContainerSpecification<JPanel>() {
+            spec = new JemmyContainerSpecification<JPanel>() {              
                 @Override
                 protected JPanel newContainer() {
                     return new JPanel();
                 }
             };
-            spec.create();
+            spec.fireAfterContextInstantiation(null);
+            spec.startContainer();
             return spec;
         }
 
@@ -67,9 +69,7 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
     }
 
     public class JPanelWithLabels {
-        private JemmyContainerSpecification<JPanel> spec;
-
-        public JemmyContainerSpecification<JPanel> create() {
+         public JemmyContainerSpecification<JPanel> create() {
             spec = new JemmyContainerSpecification<JPanel>() {
                 @Override
                 protected JPanel newContainer() {
@@ -79,7 +79,8 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     return panel;
                 }
             };
-            spec.create();
+            spec.fireAfterContextInstantiation(null);
+            spec.startContainer();
             return spec;
         }
 
@@ -98,7 +99,6 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
     }
     
     public class JPanelWithButton {
-        private JemmyContainerSpecification<JPanel> spec;
         private PresentationModel presentationModelMock;
 
         public JemmyContainerSpecification<JPanel> create() {
@@ -118,12 +118,12 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     return panel;
                 }
             };
-            spec.create();
+            spec.fireAfterContextInstantiation(null);
+            spec.startContainer();
             return spec;
         }
 
-        // FIXME: enable, this fails sometimes
-        private void buttonPushInvokesAction() {
+        public void buttonPushInvokesAction() {
             checking(new Expectations() {{
                 one(presentationModelMock).onClick();
             }});
@@ -133,5 +133,10 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
     
     public interface PresentationModel {
         void onClick();
+    }
+
+    @Override
+    public void destroy() {
+        spec.fireAfterContextDestroy(null);
     }
 }

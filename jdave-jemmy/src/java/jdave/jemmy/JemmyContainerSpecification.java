@@ -21,32 +21,37 @@ import java.io.InputStream;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import jdave.DefaultLifecycleListener;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * @author Pekka Enberg
+ * @author Mikko Peltonen
  */
 public abstract class JemmyContainerSpecification<T extends Container> extends Specification<T> {
     protected JemmyOperations jemmy = new JemmyOperations();
-    protected JFrame frame;
+    protected JFrameOperator frame;
     protected T container;
-
-    @Override
-    public void create() {
+    
+    public JemmyContainerSpecification() {
         initJemmy();
-        container = newContainer();
-        frame = new JFrame();
-        frame.setVisible(true);
-        frame.add(container);
-    }
+        addListener(new DefaultLifecycleListener() {
+            @Override
+            public void afterContextInstantiation(Object contextInstance) {
+                frame = new JFrameOperator(new JFrame());
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
 
-    @Override
-    public void destroy() {
-        frame.dispose();
+            @Override
+            public void afterContextDestroy(Object contextInstance) {
+                frame.close();
+            }
+        });
     }
 
     protected void initJemmy() {
@@ -63,7 +68,15 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     }
 
     protected abstract T newContainer();
-
+    
+    protected T startContainer() {
+        container = newContainer();
+        frame.add(container);
+        frame.setVisible(true);
+        frame.pack();
+        return container;
+    }
+       
     public void specify(IContainerContainment containment) {
         if (!containment.isIn(container)) {
             throw new ExpectationFailedException(containment.error(container));
