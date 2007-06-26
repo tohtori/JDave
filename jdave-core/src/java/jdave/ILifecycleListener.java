@@ -37,4 +37,11 @@ public interface ILifecycleListener {
      * @param createdContext the object which was returned from <code>create</code> method
      */
     void afterContextCreation(Object contextInstance, Object createdContext);
+    
+    /**
+     * Called just after context's <code>destroy</code> method has been called.
+     * 
+     * @param contextInstance the context instance
+     */
+    void afterContextDestroy(Object contextInstance);
 }

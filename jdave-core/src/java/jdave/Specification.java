@@ -392,7 +392,7 @@ public abstract class Specification<T> extends MockSupport {
      * Add a <code>ILifecycleListener</code> listener to specification.
      * <p>
      * ILifecycleListener will be notified when contexts are instantiated and context objects 
-     * are created.
+     * are created and destroyed.
      * 
      * @param listener a listener to get lifecycle event notifications
      */
@@ -409,6 +409,12 @@ public abstract class Specification<T> extends MockSupport {
     public void fireAfterContextCreation(Object contextInstance, Object createdContext) {
         for (ILifecycleListener listener : listeners) {
             listener.afterContextCreation(contextInstance, createdContext);
+        }
+    }
+    
+    public void fireAfterContextDestroy(Object contextInstance) {
+        for (ILifecycleListener listener : listeners) {
+            listener.afterContextDestroy(contextInstance);
         }
     }
 }

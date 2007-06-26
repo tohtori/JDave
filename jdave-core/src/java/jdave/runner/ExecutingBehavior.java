@@ -101,6 +101,7 @@ public class ExecutingBehavior extends Behavior {
             results.error(method, t);
         } finally {
             destroyContext();
+            spec.fireAfterContextDestroy(context);
             spec.destroy();
         }
     }

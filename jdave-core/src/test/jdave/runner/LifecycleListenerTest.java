@@ -33,6 +33,7 @@ public class LifecycleListenerTest extends MockObjectTestCase {
         checking(new Expectations() {{
             exactly(2).of(listener).afterContextInstantiation(with(anything()));
             exactly(2).of(listener).afterContextCreation(with(anything()), with(anything()));
+            exactly(2).of(listener).afterContextDestroy(with(anything()));
         }});
         new SpecRunner().run(TestSpec.class, new SpecVisitorAdapter(new DummyBehaviorResults()));
         verify();
