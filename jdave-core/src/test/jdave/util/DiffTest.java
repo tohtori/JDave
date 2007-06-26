@@ -28,27 +28,38 @@ public class DiffTest extends TestCase {
         try {
             diff.verbose();
             fail();
-        } catch (IllegalArgumentException e) {            
+        } catch (IllegalArgumentException e) {
         }
     }
-    
+
     public void testPrintsVerboseMessageWithEllipsisIfStringGetChopped() {
         Diff diff = Diff.diff(
-                "this is a pretty long string which will get chopped", 
+                "this is a pretty long string which will get chopped",
                 "this is a pretty long different string which will get chopped");
         assertEquals(
                 "  Actual: ... a pretty long string which wi..." + NEW_LINE +
                 "Expected: ... a pretty long different strin...",
                 diff.verbose());
     }
-    
+
     public void testPrintsVerboseMessageWithoutEllipsisIfStringDoesNotGetChopped() {
         Diff diff = Diff.diff(
-                "this is a string", 
+                "this is a string",
                 "this is another string");
         assertEquals(
                 "  Actual: this is a string" + NEW_LINE +
                 "Expected: this is another string",
                 diff.verbose());
     }
+
+    public void testPrintsVerboseMessageIfStringIsEmpty() {
+        Diff diff = Diff.diff(
+                "",
+                "this is another string");
+        assertEquals(
+                "  Actual: " + NEW_LINE +
+                "Expected: this is another...",
+                diff.verbose());
+    }
+
 }

@@ -47,8 +47,12 @@ public class Diff {
         message.append(ellipsisStart + expected.substring(diffStart, diffEndExpected) + ellipsisEndExpected);
         return message.toString();
     }
-    
+
     private int diffIndex() {
+        if(actual.length()==0 || expected.length()==0){
+            return 0;
+        }
+
         for (int i = 0; i < actual.length() && i < expected.length(); ++i) {
             if (actual.charAt(i) != expected.charAt(i)) {
                 return i;
@@ -56,7 +60,7 @@ public class Diff {
         }
         return -1;
     }
-    
+
     public static Diff diff(String actual, String expected) {
         return new Diff(actual, expected);
     }
