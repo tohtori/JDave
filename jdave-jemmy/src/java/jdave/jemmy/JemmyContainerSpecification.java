@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import jdave.DefaultLifecycleListener;
 import jdave.ExpectationFailedException;
@@ -44,7 +45,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
             @Override
             public void afterContextInstantiation(Object contextInstance) {
                 frame = new JFrameOperator(new JFrame());
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             }
 
             @Override
