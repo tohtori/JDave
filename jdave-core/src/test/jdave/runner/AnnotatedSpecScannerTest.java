@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  * @author Joni Freeman
  */
 public class AnnotatedSpecScannerTest extends TestCase {
-    public void testFindsClassesWithGivenAnnotation() {
+    public void testFindsClassesWithGroupAnnotation() {
         AnnotatedSpecScanner scanner = new AnnotatedSpecScanner(getClass().getProtectionDomain().getCodeSource().getLocation().getPath() +
             "/jdave/runner/dummies");
         final Map<String, String[]> annotatedSpecs = new HashMap<String, String[]>();
