@@ -27,6 +27,7 @@ import jdave.ExpectationFailedException;
 import jdave.Specification;
 
 import org.netbeans.jemmy.JemmyProperties;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -75,6 +76,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
         frame.add(container);
         frame.setVisible(true);
         frame.pack();
+        jemmy.queue.waitEmpty();
         return container;
     }
        
@@ -89,6 +91,8 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     }
 
     protected class JemmyOperations {
+    	public QueueTool queue = new QueueTool();
+    	
         public void pushButton(String text) {
             JButton button = JButtonOperator.findJButton(container, text, true, true);
             if (button == null) {
