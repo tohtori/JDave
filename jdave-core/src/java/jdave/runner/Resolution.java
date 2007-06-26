@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import java.util.Collection;
+
 import jdave.support.Assert;
 
 /**
@@ -28,31 +30,31 @@ public class Resolution {
         this.groups = groups;
     }
 
-    public boolean includes(String group) {
-        for (String groupToInclude : groups.include()) {            
-            if (includes(group, groupToInclude)) {
-                return !excludes(group);
+    public boolean includes(Collection<String> groupsToCheck) {
+        for (String groupToInclude : groups.include()) {
+            if (includes(groupsToCheck, groupToInclude)) {
+                return !excludes(groupsToCheck);
             }
         }
         return false;
     }
 
-    private boolean excludes(String group) {
+    private boolean excludes(Collection<String> groupsToCheck) {
         for (String groupToExclude : groups.exclude()) {
             if (groupToExclude.equals(Groups.ALL)) {
                 return true;
             }
-            if (groupToExclude.equals(group)) {
+            if (groupsToCheck.contains(groupToExclude)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean includes(String group, String groupToInclude) {
+    private boolean includes(Collection<String> groupsToCheck, String groupToInclude) {
         if (groupToInclude.equals(Groups.ALL)) {
             return true;
         }
-        return group.equals(groupToInclude);
+        return groupsToCheck.contains(groupToInclude);
     }
 }

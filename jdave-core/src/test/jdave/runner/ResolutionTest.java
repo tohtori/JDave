@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 
 /**
@@ -23,29 +25,29 @@ import junit.framework.TestCase;
 public class ResolutionTest extends TestCase {
     public void testIncludesGroupIfItIsIncluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreIncluded.class.getAnnotation(Groups.class));
-        assertTrue(resolution.includes("g1"));
+        assertTrue(resolution.includes(Arrays.asList("g1", "g2")));
     }
     
     public void testExcludesGroupIfItIsNotIncluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreIncluded.class.getAnnotation(Groups.class));
-        assertFalse(resolution.includes("g3"));
+        assertFalse(resolution.includes(Arrays.asList("g3")));
     }
     
     public void testExcludesGroupIfItIsIncludedButAlsoExcluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
-        assertFalse(resolution.includes("g1"));
+        assertFalse(resolution.includes(Arrays.asList("g1")));
     }
     
     public void testIncludesGroupIfItIsIncludedAndNotExcluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
-        assertTrue(resolution.includes("g3"));
+        assertTrue(resolution.includes(Arrays.asList("g2", "g3")));
     }
     
     @Groups(include={ "g1", "g2" })
     public static class WhenGroupsAreIncluded {
     }
     
-    @Groups(include={ Groups.ALL  }, exclude={ "g1", "g2" })
+    @Groups(include={ Groups.ALL  }, exclude={ "g1" })
     public static class WhenGroupsAreExcluded {
     }
 }
