@@ -49,7 +49,7 @@ public class Diff {
     }
 
     private int diffIndex() {
-        if(actual.length() == 0 || expected.length() == 0) {
+        if (actual.length() == 0 || expected.length() == 0) {
             return 0;
         }
 
