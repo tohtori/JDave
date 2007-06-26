@@ -15,7 +15,6 @@
  */
 package jdave.junit4;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +24,6 @@ import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
 import jdave.runner.Resolution;
-import jdave.support.Assert;
 
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
@@ -48,7 +46,8 @@ public class JDaveGroupRunner extends Runner {
         specs.clear();
         final Description desc = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        newAnnotatedSpecScanner(findSuiteLocation()).forEach(new IAnnotatedSpecHandler() {
+        CodeSource codeSource = CodeSource.of(suite);
+        newAnnotatedSpecScanner(codeSource.getDirectory()).forEach(new IAnnotatedSpecHandler() {
             public void handle(String classname, String... groups) {
                 if (resolution.includes(Arrays.asList(groups))) {
                     Class<? extends Specification<?>> spec = loadClass(classname);
@@ -62,14 +61,6 @@ public class JDaveGroupRunner extends Runner {
     
     protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
         return new AnnotatedSpecScanner(suiteLocation);
-    }
-
-    private String findSuiteLocation() {
-        String resource = suite.getName().replace('.', '/').concat(".class");
-        URL location = suite.getClassLoader().getResource(resource);
-        Assert.notNull(location, "can't find suite '" + suite.getName() + "' with classloader");
-        String path = location.getPath();
-        return path.substring(0, path.lastIndexOf(resource));
     }
     
     @SuppressWarnings("unchecked")
