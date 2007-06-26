@@ -85,8 +85,7 @@ public class JDaveGroupRunner extends Runner {
     @Override
     public void run(RunNotifier notifier) {
         for (Class<? extends Specification<?>> spec : specs) {
-            JDaveRunner runner = new JDaveRunner(spec);
-            runner.run(notifier);
+            new JDaveRunner(spec).run(notifier);
         }
     }
 }
