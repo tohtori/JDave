@@ -47,9 +47,7 @@ public class JDaveGroupRunner extends Runner {
         specs = new ArrayList<Class<? extends Specification<?>>>();
         final Description desc = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        String suiteLocation = findSuiteLocation();
-        AnnotatedSpecScanner scanner = newAnnotatedSpecScanner(suiteLocation);
-        scanner.forEach(new IAnnotatedSpecHandler() {
+        newAnnotatedSpecScanner(findSuiteLocation()).forEach(new IAnnotatedSpecHandler() {
             public void handle(String classname, String... groups) {
                 if (resolution.includes(Arrays.asList(groups))) {
                     Class<? extends Specification<?>> spec = loadClass(classname);
