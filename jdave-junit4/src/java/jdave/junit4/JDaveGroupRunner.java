@@ -36,7 +36,8 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveGroupRunner extends Runner {
     private final Class<?> suite;
-    private List<Class<? extends Specification<?>>> specs;
+    private final List<Class<? extends Specification<?>>> specs = 
+        new ArrayList<Class<? extends Specification<?>>>();
 
     public JDaveGroupRunner(Class<?> suite) {
         this.suite = suite;        
@@ -44,7 +45,7 @@ public class JDaveGroupRunner extends Runner {
 
     @Override
     public Description getDescription() {
-        specs = new ArrayList<Class<? extends Specification<?>>>();
+        specs.clear();
         final Description desc = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
         newAnnotatedSpecScanner(findSuiteLocation()).forEach(new IAnnotatedSpecHandler() {
