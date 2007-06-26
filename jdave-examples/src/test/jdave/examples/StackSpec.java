@@ -18,6 +18,7 @@ package jdave.examples;
 import org.junit.runner.RunWith;
 
 import jdave.Block;
+import jdave.Group;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -26,6 +27,7 @@ import jdave.junit4.JDaveRunner;
  * @author Pekka Enberg
  */
 @RunWith(JDaveRunner.class)
+@Group("basic")
 public class StackSpec extends Specification<Stack<?>> {
     public class EmptyStack {
         private Stack<String> stack;

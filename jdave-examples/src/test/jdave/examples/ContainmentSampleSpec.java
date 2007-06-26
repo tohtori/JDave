@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.junit.runner.RunWith;
 
+import jdave.Group;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -31,6 +32,7 @@ import jdave.junit4.JDaveRunner;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
+@Group("basic")
 public class ContainmentSampleSpec extends Specification<Object> {
     public class SampleWithVariousContainments {
         private List<Integer> elements;
