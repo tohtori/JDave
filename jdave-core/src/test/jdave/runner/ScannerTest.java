@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import static java.util.Collections.sort;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +37,9 @@ public class ScannerTest extends TestCase {
                 files.add(file.getName());
             }
         });
-        assertEquals(Arrays.asList("Dummy1.class", "Dummy2.class", "Dummy3.class"), files);
+        sort(files);
+        List<String> expected = Arrays.asList("Dummy1.class", "Dummy2.class", "Dummy3.class");
+        sort(expected);
+        assertEquals(expected, files);
     }
 }
