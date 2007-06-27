@@ -28,6 +28,5 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveGroupRunner.class)
 @Groups(include={ "basic" })
-public class SampleGroupSuite {
-
+public class SuiteForBasicSpecs {
 }
