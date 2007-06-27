@@ -15,18 +15,30 @@
  */
 package jdave.junit4;
 
+import java.util.Collection;
+import java.util.List;
+
 import jdave.Group;
 import jdave.Specification;
 import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
+import net.sf.cglib.asm.Attribute;
+import net.sf.cglib.asm.ClassAdapter;
+import net.sf.cglib.asm.ClassReader;
+import net.sf.cglib.asm.ClassWriter;
+import net.sf.cglib.asm.attrs.Annotation;
+import net.sf.cglib.asm.attrs.Attributes;
+import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
 
 import org.jmock.Expectations;
 import org.jmock.integration.junit3.MockObjectTestCase;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.RunNotifier;
 
 
@@ -39,6 +51,10 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
     protected void setUp() throws Exception {
         setImposteriser(ClassImposteriser.INSTANCE);
         notifier = mock(RunNotifier.class);
+    }
+    
+    @Test
+    public void testRunsBehaviorsFromEachMatchingSpec() throws Exception {
         runner = new JDaveGroupRunner(Suite.class) {
             @Override
             protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
@@ -48,13 +64,14 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
                         annotatedSpecHandler.handle(Spec1.class.getName(), new String[] { "any" });
                         annotatedSpecHandler.handle(Spec2.class.getName(), new String[] { "any" });
                     }
+                    
+                    @Override
+                    public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                        return false;
+                    }
                 };
             }
         };
-    }
-    
-    @Test
-    public void testRunsBehaviorsFromEachMatchingSpec() throws Exception {
         runner.getDescription();
         checking(new Expectations() {{ 
             exactly(2).of(notifier).fireTestStarted(with(any(Description.class)));
@@ -63,6 +80,52 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
         runner.run(notifier);
     }
     
+    @Test
+    public void testCategorizesSpecToDefaultGroupIfItHasRunWithJDaveRunnerAnnotation() throws Exception {
+        runner = new JDaveGroupRunner(DefaultSpec.class);
+        ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$DefaultSpec.class"));
+        AnnotationCollector collector = new AnnotationCollector();
+        reader.accept(collector, Attributes.getDefaultAttributes(), true);
+        assertTrue(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+    }
+    
+    @Test
+    public void testDoesNotCategorizeSpecToDefaultGroupIfItDoesNotHaveRunWithAnnotation() throws Exception {
+        runner = new JDaveGroupRunner(DefaultSpec.class);
+        ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$SpecWithUnrecognizedAnnotation.class"));
+        AnnotationCollector collector = new AnnotationCollector();
+        reader.accept(collector, Attributes.getDefaultAttributes(), true);
+        assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+    }
+    
+    private static class AnnotationCollector extends ClassAdapter {
+        List<Annotation> annotations;
+        
+        public AnnotationCollector() {
+            super(new ClassWriter(false));
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public void visitAttribute(Attribute attr) {
+            if (attr instanceof RuntimeVisibleAnnotations) {
+                annotations = ((RuntimeVisibleAnnotations) attr).annotations;
+            }
+        }
+    }
+
+    @RunWith(JDaveRunner.class)
+    public static class DefaultSpec extends Specification<Void> {
+        public class Context {
+            public void create() {}
+            public void behavior() {}
+        }
+    }
+    
+    @Ignore
+    public static class SpecWithUnrecognizedAnnotation extends Specification<Void> {
+    }
+
     @Groups(include={ "any" })
     public static class Suite {
     }
