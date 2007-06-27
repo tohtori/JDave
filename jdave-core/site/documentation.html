@@ -301,6 +301,36 @@ methods of current specification by overiding the method
 <code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a fresh new thread 
 is created for all methods in the specification.
 
+<a name="grouping"></a>
+<h2>Grouping</h2>
+
+Specifications can be grouped by tagging them with @Group annotation. The annotation takes
+an array of group names as an argument:
+
+<pre>
+<code>
+@Group({ "slow", "database" })
+public class MySpecification extends Specification&lt;Foo&gt; {
+}
+</code>
+</pre>
+
+The tagged suites can then be run with suite runners:
+<pre>
+<code>
+@RunWith(JDaveGroupRunner.class)
+@Groups(include={ "slow" })
+public class SuiteForSlowSpecs {
+}
+
+@RunWith(JDaveGroupRunner.class)
+@Groups(include={ Groups.ALL }, exclude={ "slow" })
+public class SuiteForNonSlowSpecs {
+}
+</code>
+</pre>
+
+
 <a name="reporting"></a>
 <h2>Reporting</h2>
 
