@@ -15,8 +15,8 @@
   </distributionManagement>
   
   <scm>
-    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/tags/jdave-parent-0.8.0</connection>
-    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/tags/jdave-parent-0.8.0</developerConnection>
+    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</connection>
+    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</developerConnection>
   </scm>
   
   <modules>
