@@ -38,14 +38,8 @@ urchinTracker();
 To use the framework you need following jars in the CLASSPATH.
 <ul>
   <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-core/0.8.0/jdave-core-0.8.0.jar">jdave-core.jar</a></li>
-  <li>
-    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit4/0.8.0/jdave-junit4-0.8.0.jar">jdave-junit4.jar</a> or
-    <a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit3/0.8.0/jdave-junit3-0.8.0.jar">jdave-junit3.jar</a> 
-  </li>
-  <li>
-    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/4.3/junit-4.3.jar">junit4.jar</a> or
-    <a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/3.8.2/junit-3.8.2.jar">junit3.jar</a>
-  </li>
+  <li><a href="http://www.laughingpanda.org/maven2/jdave/jdave-junit4/0.8.0/jdave-junit4-0.8.0.jar">jdave-junit4.jar</a></li>
+  <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/junit/junit/4.3/junit-4.3.jar">junit4.jar</a></li>
   <li><a href="http://www.jmock.org/dist/jmock-2.0.0-jars.zip">jmock + hamcrest + objenesis jars</a></li>
   <li><a href="http://mirrors.ibiblio.org/pub/mirrors/maven2/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar">cglib-nodep.jar</a></li>
 </ul>
@@ -65,7 +59,7 @@ Maven 2 users can get all these dependencies by adding following snippet to pom.
   &lt;dependencies&gt;
     &lt;dependency&gt;
       &lt;groupId&gt;jdave&lt;/groupId&gt;
-      &lt;artifactId&gt;jdave-junit4&lt;/artifactId&gt; &lt;!-- or jdave-junit3 --&gt;
+      &lt;artifactId&gt;jdave-junit4&lt;/artifactId&gt;
       &lt;version&gt;0.8.0&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
@@ -80,27 +74,13 @@ details. <a href="examples.html">A set of examples</a> illustrate currently avai
 
 <h2>Creating a suite to launch specifications</h2>
 
-Specifications can be launched using JUnit 3 or JUnit 4 adapter.
+Specifications can be launched using JUnit 4 adapter.
 
-JUnit 4 can be used by annotating the specification with @RunWith annotation.
+JUnit 4 runners can be used by annotating the specification with @RunWith annotation.
 
 <pre>
 @RunWith(JDaveRunner.class)
 public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
-}
-</pre>
-
-Below is a suite which can be run with any JUnit 3 runner. 
-<pre>
-public class ExampleSuite extends TestSuite {
-    public ExampleSuite() throws Exception {
-        addTest(new JDaveSuite(StackSpec.class));
-        addTest(new JDaveSuite(ObservableSpec.class));
-    }
-    
-    public static Test suite() throws Exception {
-        return new ExampleSuite();
-    }
 }
 </pre>
 
