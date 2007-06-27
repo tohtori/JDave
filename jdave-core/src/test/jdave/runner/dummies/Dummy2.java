@@ -18,6 +18,6 @@ package jdave.runner.dummies;
 /**
  * @author Joni Freeman
  */
+@Other
 public class Dummy2 {
-
 }

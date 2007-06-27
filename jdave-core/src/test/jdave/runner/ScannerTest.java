@@ -38,7 +38,7 @@ public class ScannerTest extends TestCase {
             }
         });
         sort(files);
-        List<String> expected = Arrays.asList("Dummy1.class", "Dummy2.class", "Dummy3.class");
+        List<String> expected = Arrays.asList("Dummy1.class", "Dummy2.class", "Dummy3.class", "Other.class");
         sort(expected);
         assertEquals(expected, files);
     }

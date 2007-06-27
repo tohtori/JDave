@@ -16,20 +16,26 @@
 package jdave.runner;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import jdave.runner.dummies.Dummy1;
-
+import jdave.runner.dummies.Dummy2;
 import junit.framework.TestCase;
+import net.sf.cglib.asm.attrs.Annotation;
 
 /**
  * @author Joni Freeman
  */
 public class AnnotatedSpecScannerTest extends TestCase {
     public void testFindsClassesWithGroupAnnotation() {
-        AnnotatedSpecScanner scanner = new AnnotatedSpecScanner(getClass().getProtectionDomain().getCodeSource().getLocation().getPath() +
-            "/jdave/runner/dummies");
+        AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
+            @Override
+            public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                return false;
+            }
+        };
         final Map<String, String[]> annotatedSpecs = new HashMap<String, String[]>();
         scanner.forEach(new IAnnotatedSpecHandler() {
             public void handle(String classname, String... groups) {
@@ -37,7 +43,24 @@ public class AnnotatedSpecScannerTest extends TestCase {
             }
         });
         assertEquals(1, annotatedSpecs.size());
-        assertTrue(annotatedSpecs.containsKey(Dummy1.class.getName()));
         assertEquals(Arrays.asList("group1", "group2"), Arrays.asList(annotatedSpecs.get(Dummy1.class.getName())));
+    }
+    
+    public void testHandlesSpecsWhichAreInDefaultGroup() throws Exception {
+        AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
+            @Override
+            public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                return classname.equals(Dummy2.class.getName());
+            }
+        };
+        final Map<String, String[]> annotatedSpecs = new HashMap<String, String[]>();
+        scanner.forEach(new IAnnotatedSpecHandler() {
+            public void handle(String classname, String... groups) {
+                annotatedSpecs.put(classname, groups);
+            }
+        });
+        assertEquals(2, annotatedSpecs.size());
+        assertEquals(Arrays.asList("group1", "group2"), Arrays.asList(annotatedSpecs.get(Dummy1.class.getName())));
+        assertEquals(Arrays.asList(Groups.DEFAULT), Arrays.asList(annotatedSpecs.get(Dummy2.class.getName())));
     }
 }

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
 /**
  * @author Joni Freeman
  */
-public class AnnotatedSpecScanner {
+public abstract class AnnotatedSpecScanner {
     private Scanner scanner;
 
     public AnnotatedSpecScanner(String path) {
@@ -56,6 +57,8 @@ public class AnnotatedSpecScanner {
             }
         });
     }
+    
+    public abstract boolean isInDefaultGroup(String classname, Collection<Annotation> annotations);
     
     class AnnotationReader extends ClassAdapter {
         private String classname;
@@ -88,6 +91,13 @@ public class AnnotatedSpecScanner {
         }
 
         private void visitRuntimeVisibleAnnotations(RuntimeVisibleAnnotations annotations) {
+            checkIfGroupAnnotationPresent(annotations);
+            if (groups == null) {
+                checkIfInDefaultGroup(annotations);
+            }
+        }
+
+        private void checkIfGroupAnnotationPresent(RuntimeVisibleAnnotations annotations) {
             for (Object object : annotations.annotations) {
                 Annotation annotation = (Annotation) object;
                 if (annotation.type.equals("Ljdave/Group;")) {
@@ -96,6 +106,13 @@ public class AnnotatedSpecScanner {
             }
         }
 
+        @SuppressWarnings("unchecked")
+        private void checkIfInDefaultGroup(RuntimeVisibleAnnotations annotations) {
+            if (isInDefaultGroup(classname, annotations.annotations)) {
+                groups = new String[] { Groups.DEFAULT };
+            }
+        }
+        
         private void visitGroupAnnotation(Annotation annotation) {
             List<?> elementValues = annotation.elementValues;
             for (Iterator<?> i = elementValues.iterator(); i.hasNext();) {

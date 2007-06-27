@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.runner;
+package jdave.runner.dummies;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -25,10 +25,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Groups {
-    public static final String ALL = "__all_groups";
-    static final String DEFAULT = "__default_group";
-    
-    public String[] include();
-    public String[] exclude() default {};
+public @interface Other {
 }
