@@ -114,7 +114,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * This is most often used with <code>RefreshingViews</code> and <code>ListViews</code>.
      * <pre><blockquote><code>
      *
-     * ListView list = new ListView("comments", Arrays.asList("Larry", "Moe", "Curly")) { ... };
+     * ListView list = new ListView("stooges", Arrays.asList("Larry", "Moe", "Curly")) { ... };
      * specify(list, containsInOrder("Larry", "Moe", "Curly");
      *
      * <code></blockquote></pre>
