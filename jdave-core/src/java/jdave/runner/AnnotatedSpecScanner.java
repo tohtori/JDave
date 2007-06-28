@@ -80,7 +80,7 @@ public abstract class AnnotatedSpecScanner {
 
         @Override
         public void visit(int access, int arg1, String name, String superName, String[] interfaces, String sourceFile) {
-            classname = name.replace(File.separatorChar, '.');
+            classname = name.replace('/', '.');
         }
         
         @Override
