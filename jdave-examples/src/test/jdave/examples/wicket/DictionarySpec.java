@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.examples.swing.wicket;
+package jdave.examples.wicket;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+import jdave.examples.wicket.DictionaryPanel;
+import jdave.examples.wicket.IDictionaryService;
 import jdave.junit4.JDaveRunner;
 import jdave.wicket.ComponentSpecification;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.examples.swing.wicket;
+package jdave.examples.wicket;
 
 import java.util.List;
 
