@@ -45,11 +45,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>javax.servlet</groupId>
-    	<artifactId>servlet-api</artifactId>
-    	<version>2.4</version>
-    	<type>jar</type>
-    	<scope>provided</scope>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
     	<groupId>org.slf4j</groupId>
