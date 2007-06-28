@@ -60,6 +60,11 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
             ListView listView = (ListView) context.get("listView");
             specify(listView, containsInOrder(0, 1, 2));
         }
+        
+        public void theModelObjectsCanBeUsedInNegativeContainmentExpectations() {
+            ListView listView = (ListView) context.get("listView");
+            specify(listView, does.not().containAll(0, 1, 2, 4));
+        }
     }
     
     @Override
