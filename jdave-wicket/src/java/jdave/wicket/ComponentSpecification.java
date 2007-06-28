@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import jdave.IContainment;
 import jdave.Specification;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -104,6 +106,24 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
                 return (Page) specifiedComponent;
             }
         });
+    }
+    
+    /**
+     * Specify that given container contains given model objects.
+     * <p>
+     * This is most often used with <code>RefreshingViews</code> and <code>ListViews</code>.
+     * <pre><blockquote><code>
+     *
+     * ListView list = new ListView("comments", Arrays.asList("Larry", "Moe", "Curly")) { ... };
+     * specify(list, containsInOrder("Larry", "Moe", "Curly");
+     *
+     * <code></blockquote></pre>
+     * 
+     * @param actual the container of Wicket components
+     * @param containment any containment (see: http://www.jdave.org/documentation.html#containments)
+     */
+    public void specify(MarkupContainer actual, IContainment containment) {
+        super.specify(modelObjects(actual.iterator()), containment);
     }
 
     /**
