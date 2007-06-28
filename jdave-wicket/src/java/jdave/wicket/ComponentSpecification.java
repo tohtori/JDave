@@ -120,7 +120,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * <code></blockquote></pre>
      * 
      * @param actual the container of Wicket components
-     * @param containment any containment (see: http://www.jdave.org/documentation.html#containments)
+     * @param containment any containment, see: http://www.jdave.org/documentation.html#containments
      */
     public void specify(MarkupContainer actual, IContainment containment) {
         super.specify(modelObjects(actual.iterator()), containment);
