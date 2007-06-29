@@ -38,7 +38,7 @@ public class ExactContainmentTest extends TestCase {
     }
     
     public void testIsInListWhichIsInDifferentOrder() {
-        assertTrue(containment.matches(Arrays.asList(2, 3, 1, 1)));
+        assertTrue(containment.matches(Arrays.asList(2, 3, 1)));
     }
         
     public void testIsNotInListWhichMissesElement() {
@@ -47,5 +47,9 @@ public class ExactContainmentTest extends TestCase {
     
     public void testIsNotInListWhichHasExtraElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
+    }
+    
+    public void testIsNotInListWhichContainsDuplicateElement() {
+        assertFalse(containment.matches(Arrays.asList(1, 2, 3, 3)));
     }
 }

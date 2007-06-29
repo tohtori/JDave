@@ -37,6 +37,9 @@ public class ExactContainment extends CollectionContainment {
     }
 
     public boolean matches(Collection<?> actual) {
+        if (elements.size() != actual.size()) {
+            return false;
+        }
         Set<?> expected = new HashSet<Object>(elements);
         return expected.equals(new HashSet<Object>(actual));
     }
