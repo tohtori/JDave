@@ -1,19 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>jdave-report-plugin</name>
-	<comment></comment>
-	<projects>
-		<project>jdave-core</project>
-		<project>jdave-junit4</project>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures>
+  <name>maven-jdave-report-plugin</name>
+  <comment/>
+  <projects>
+    <project>jdave-junit4</project>
+    <project>jdave-core</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
 </projectDescription>
