@@ -49,15 +49,15 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     private T specifiedComponent;
 
     /**
-     * Start container for context.
+     * Start component for context.
      */
     public T startComponent() {
         return startComponent(null);
     }
 
     /**
-     * Start container for context.
-     * @param model The model passed to container that is used for context.
+     * Start component for context.
+     * @param model The model passed to component that is used for context.
      */
     public T startComponent(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -74,6 +74,13 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         return specifiedComponent;
     }
 
+    /**
+     * Start component for context.
+     * <p>
+     * The markup file of a component is not needed.
+     * 
+     * @param model The model passed to component that is used for context.
+     */
     public void startComponentWithoutMarkup(final IModel model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
