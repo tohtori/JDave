@@ -16,9 +16,7 @@
 package jdave.containment;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author Joni Freeman
@@ -40,7 +38,11 @@ public class ExactContainment extends CollectionContainment {
         if (elements.size() != actual.size()) {
             return false;
         }
-        Set<?> expected = new HashSet<Object>(elements);
-        return expected.equals(new HashSet<Object>(actual));
+        for (Object element : elements) {
+            if (!actual.contains(element)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
