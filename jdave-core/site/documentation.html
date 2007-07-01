@@ -372,6 +372,27 @@ Sample HTML report:
 <iframe src="specdox-sample/index.html" height="200" width="100%"></iframe>
 
 <p>
+Specdox can be generated using a maven plugin too (note, it is required to activate specdox
+generation to generate xml format  <code>jdave.tools.specdox.format=xml</code>). The generated HTML 
+will be added to maven reports when generating the site with 'mvn site'. The generated docs will have 
+source xrefs if used with maven-jxr-plugin:
+
+<blockquote>
+<pre>
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.jdave&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-jdave-report-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-jxr-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+</pre>  
+</blockquote>
+
+<p>
 See a sample <a href="pom.xml">pom.xml</a> for how to configure specdox as part of a maven build.
 </p>
 
