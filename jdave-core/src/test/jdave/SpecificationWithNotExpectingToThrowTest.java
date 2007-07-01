@@ -48,6 +48,19 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
             assertEquals("The specified block threw java.lang.IllegalArgumentException", e.getMessage());
         }
     }
+    
+    public void testFailsIfAnyExceptionIsThrownFromBlockWhichDoesNotExpectAnyException() throws Throwable {
+        try {
+            specification.specify(new Block() {
+                public void run() throws Throwable {
+                    throw new IllegalArgumentException();
+                }
+            }, specification.not().raiseAnyException());
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("The specified block threw java.lang.IllegalArgumentException", e.getMessage());
+        }        
+    }
 
     public void testShouldFailIfThrowsSubclassOfExpectedException() throws Throwable {
         try {

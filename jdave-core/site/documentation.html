@@ -142,6 +142,7 @@ specify(actual, containsExactly(1, 2, 3));
 specify(new Block() {}, should.not().raise(SomeException.class));
 specify(new Block() {}, should.raise(SomeException.class, "message"));
 specify(new Block() {}, should.raiseExactly(SomeException.class));
+specify(new Block() {}, should.not().raiseAnyException());
 </code></pre>
   <li><b>Contract:</b></li>
 <pre><code>
