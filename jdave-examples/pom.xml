@@ -11,7 +11,15 @@
   <artifactId>jdave-examples</artifactId>
   <name>jdave-examples</name>
   <packaging>jar</packaging>
-  
+   
+  <pluginRepositories>
+    <pluginRepository>
+      <id>laughing-panda</id>
+      <name>Laughing Panda</name>
+      <url>http://www.laughingpanda.org/maven2/</url>
+    </pluginRepository>
+  </pluginRepositories>
+    
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
