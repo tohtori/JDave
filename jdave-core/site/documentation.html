@@ -163,7 +163,7 @@ specify(persons, where(
   new Each&lt;Person&gt;() {{ matches(item, instanceOf(Person.class)); }}));
 
 // Using individual matcher for each collection element, fails if
-// number of matchers does not equal with number of elements:
+// number of matchers do not equal with number of elements:
 specify(persons, where(
   new Each&lt;Person&gt;() {{ matches(item.getAge(), is(35), is(31)); }}));
 
