@@ -40,7 +40,7 @@ import org.apache.wicket.util.tester.TestPanelSource;
 import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 
 /**
- * A base class for Wicket's <code>MarkupContainer</code> specifications.
+ * A base class for Wicket's <code>Component</code> specifications.
  *
  * @author Joni Freeman
  */
