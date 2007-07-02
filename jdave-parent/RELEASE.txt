@@ -1,11 +1,10 @@
 > Update docs (version numbers, examples, documentation, front page news).
 ##### does not work: ./bin/prepare-release.sh (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
 > update pom version and commit
-rm -rf ~/.m2/repository/jdave (delete local jdave repo)
-mvn install
-scp -r ~/.m2/repository/jdave/ inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/maven2/
+mvn clean install
+mvn deploy
 svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpanda.org/svn/jdave/tags/0.5.0 -m "tag release"
-rm jdave-parent-0.5.0/jdave-parent-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
+rm jdave-core-0.5.0/jdave-core-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
 mvn-no-tests clean package assembly:assembly   (in jdave-parent)
 cp target/jdave-parent-0.5.0.zip ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0.zip
 scp ~/workspace/jdave-core/site/*[.html,.xml] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/

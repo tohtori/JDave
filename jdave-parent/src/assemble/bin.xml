@@ -15,12 +15,12 @@
   <moduleSets>
     <moduleSet>
       <includes>
-        <include>jdave:jdave-core</include>
-        <include>jdave:jdave-junit3</include>
-        <include>jdave:jdave-junit4</include>
-        <include>jdave:jdave-jemmy</include>
-        <include>jdave:jdave-wicket</include>
-        <include>jdave:jdave-examples</include>
+        <include>org.jdave:jdave-core</include>
+        <include>org.jdave:jdave-junit3</include>
+        <include>org.jdave:jdave-junit4</include>
+        <include>org.jdave:jdave-jemmy</include>
+        <include>org.jdave:jdave-wicket</include>
+        <include>org.jdave:jdave-examples</include>
       </includes>
       <binaries>
         <outputDirectory>lib/</outputDirectory>
