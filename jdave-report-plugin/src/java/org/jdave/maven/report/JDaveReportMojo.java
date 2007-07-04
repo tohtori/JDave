@@ -78,7 +78,7 @@ public class JDaveReportMojo extends AbstractMavenReport {
             getSink().rawText("<iframe src=\"jdave.html\" width=\"100%\" height=\"800\" />");
             getSink().flush();
             getSink().close();
-            new SpecdoxTransformer().transform("jdave.html", reportsDirectory.getAbsolutePath(), outputDirectory, xrefLocation);
+            new SpecdoxTransformer().transform("jdave.html", reportsDirectory.toURI().toString(), outputDirectory, xrefLocation);
         } catch (TransformerException e) {
             throw new MavenReportException("could not create a file", e);
         }
