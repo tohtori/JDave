@@ -8,7 +8,7 @@
     <relativePath>../jdave-parent</relativePath>
   </parent>
 
-  <artifactId>maven-jdave-report-plugin</artifactId>
+  <artifactId>jdave-report-plugin</artifactId>
   <name>Maven JDave report plugin</name>
   <packaging>maven-plugin</packaging>
   

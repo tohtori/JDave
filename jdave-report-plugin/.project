@@ -1,10 +1,7 @@
 <projectDescription>
-  <name>maven-jdave-report-plugin</name>
+  <name>jdave-report-plugin</name>
   <comment/>
-  <projects>
-    <project>jdave-junit4</project>
-    <project>jdave-core</project>
-  </projects>
+  <projects/>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>

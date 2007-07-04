@@ -2,11 +2,11 @@
   <name>jdave-examples</name>
   <comment/>
   <projects>
+    <project>jdave-jemmy</project>
     <project>jdave-junit3</project>
     <project>jdave-junit4</project>
-    <project>jdave-wicket</project>
     <project>jdave-core</project>
-    <project>jdave-jemmy</project>
+    <project>jdave-wicket</project>
   </projects>
   <buildSpec>
     <buildCommand>
