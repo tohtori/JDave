@@ -74,6 +74,15 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    public void testShouldFailWhenActualIsNullAndExpectedIsNot() {
+        try {
+            specification.specify(null, specification.should.equal("Hello"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected: Hello, but was: null", e.getMessage());            
+        }
+    }
+    
     public void testShouldPassWhenExpectationWithinDelta() {
         specification.specify(1.0, specification.should.equal(1.001, 0.01));
     }

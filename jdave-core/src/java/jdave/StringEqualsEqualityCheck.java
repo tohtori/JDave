@@ -28,7 +28,7 @@ public class StringEqualsEqualityCheck extends EqualsEqualityCheck {
     
     @Override
     public String error(Object actual) {
-        if (!actual.getClass().equals(String.class)) {
+        if (actual == null || !actual.getClass().equals(String.class)) {
             return super.error(actual);
         }
         Diff diff = Diff.diff((String) actual, (String) expected);
