@@ -23,7 +23,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>jdave</groupId>
+      <groupId>org.jdave</groupId>
       <artifactId>jdave-junit4</artifactId>
       <version>0.9.0</version>
       <scope>test</scope>
