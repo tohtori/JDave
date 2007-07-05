@@ -15,16 +15,34 @@
  */
 package jdave.wicket.selenium;
 
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
- * @author janneh
+ * @author Janne Hietam&auml;ki
  */
 public class PanelWithLink extends Panel {
+    int counter = 0;
 
     public PanelWithLink(String id, IModel model) {
         super(id, model);
+        add(new Label("value", new AbstractReadOnlyModel() {
+
+            @Override
+            public Object getObject() {
+                return counter;
+            }
+
+        }));
+        add(new Link("link") {
+            @Override
+            public void onClick() {
+                counter++;
+            }
+        });
     }
 
 }
