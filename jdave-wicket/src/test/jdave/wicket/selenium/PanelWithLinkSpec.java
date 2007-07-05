@@ -25,10 +25,10 @@ import org.junit.runner.RunWith;
  * @author Janne Hietam&auml;ki
  */
 @RunWith(JDaveRunner.class)
-public class PageWithLinkSpec extends SeleniumSpecification<PanelWithLink> {
+public class PanelWithLinkSpec extends SeleniumSpecification<PageWithLink> {
 
     public class WhenNewPageIsCreated {
-        public PanelWithLink create() {
+        public PageWithLink create() {
             return startComponent();
         }
 
@@ -40,7 +40,7 @@ public class PageWithLinkSpec extends SeleniumSpecification<PanelWithLink> {
     }
 
     @Override
-    protected PanelWithLink newComponent(String id, IModel model) {
-        return new PanelWithLink(id, model);
+    protected PageWithLink newComponent(String id, IModel model) {
+        return new PageWithLink();
     }
 }

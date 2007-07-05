@@ -18,7 +18,6 @@ package jdave.wicket.selenium;
 import jdave.Specification;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 
 import com.thoughtworks.selenium.Selenium;
@@ -39,14 +38,14 @@ public abstract class SeleniumSpecification<T extends MarkupContainer> extends S
         addListener(lifeCycleListener);
     }
 
-    IComponentFactory getComponentFactory() {
-        return new IComponentFactory() {
+    IMarkupContainerFactory getComponentFactory() {
+        return new IMarkupContainerFactory() {
             @SuppressWarnings("unchecked")
-            public Page getPage() {
+            public MarkupContainer getMarkupContainer() {
                 try {
                     SeleniumContextFactory<T> seleniumContextFactory = (SeleniumContextFactory<T>) getContextObjectFactory();
                     context = seleniumContextFactory.createNewContextObject();
-                    return (Page) context;
+                    return context;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -67,7 +66,7 @@ public abstract class SeleniumSpecification<T extends MarkupContainer> extends S
     protected abstract T newComponent(String id, IModel model);
 
     public T startComponent(final IModel model) {
-        return newComponent("component", model);
+        return newComponent(SeleniumTestWebPage.COMPONENT_ID, model);
     }
 
     protected T startComponent() {

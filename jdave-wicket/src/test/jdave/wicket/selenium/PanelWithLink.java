@@ -15,13 +15,16 @@
  */
 package jdave.wicket.selenium;
 
-import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
 /**
- * @author Janne Hietam&auml;ki
+ * @author janneh
  */
-public interface IComponentFactory {
+public class PanelWithLink extends Panel {
 
-    Page getPage();
+    public PanelWithLink(String id, IModel model) {
+        super(id, model);
+    }
 
 }

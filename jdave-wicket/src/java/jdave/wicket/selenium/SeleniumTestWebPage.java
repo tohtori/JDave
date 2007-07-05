@@ -16,6 +16,8 @@
 package jdave.wicket.selenium;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
@@ -26,10 +28,17 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class SeleniumTestWebPage extends WebPage {
 
+    public final static String COMPONENT_ID="component";
+
     public SeleniumTestWebPage() {
         WebApplication application = (WebApplication) Application.get();
-        IComponentFactory factory = (IComponentFactory) application.getServletContext()
+        IMarkupContainerFactory factory = (IMarkupContainerFactory) application.getServletContext()
                 .getAttribute(SeleniumSpecification.COMPONENTFACTORY);
-        setResponsePage(factory.getPage());
+        MarkupContainer container = factory.getMarkupContainer();
+        if (container instanceof Page) {
+            setResponsePage((Page) container);
+        } else {
+            add(container);
+        }
     }
 }
