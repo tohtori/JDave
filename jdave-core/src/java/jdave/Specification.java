@@ -162,7 +162,7 @@ public abstract class Specification<T> extends MockSupport {
      * </code></pre>
      * </blockquote>
      * <p>
-     * See http://code.google.com/p/hamcrest/
+     * See <a href="http://code.google.com/p/hamcrest/">Hamcrest home page</a>
      */
     public void specify(Object actual, Matcher<?> matcher) {
         try {
@@ -192,7 +192,7 @@ public abstract class Specification<T> extends MockSupport {
      * </code></pre>
      * </blockquote>
      * <p>
-     * See http://code.google.com/p/hamcrest/
+     * See <a href="http://code.google.com/p/hamcrest/">Hamcrest home page</a>
      */
     public void specify(Collection<?> actual, Where<?> where) {
         specify(actual.iterator(), where);
