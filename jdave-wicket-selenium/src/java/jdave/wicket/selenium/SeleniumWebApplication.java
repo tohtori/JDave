@@ -21,10 +21,8 @@ import org.apache.wicket.protocol.http.WebApplication;
  * @author Janne Hietam&auml;ki
  */
 public class SeleniumWebApplication extends WebApplication {
-
     @Override
-    public Class getHomePage() {
+    public Class<?> getHomePage() {
         return SeleniumTestWebPage.class;
     }
-
 }
