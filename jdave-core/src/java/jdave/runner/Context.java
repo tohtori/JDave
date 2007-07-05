@@ -25,7 +25,7 @@ import jdave.Specification;
  * @author Pekka Enberg
  */
 public abstract class Context {
-    static final String INITIALIZER_NAME = "create";
+    public static final String INITIALIZER_NAME = "create";
     static final String DISPOSER_NAME = "destroy";
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
@@ -38,9 +38,9 @@ public abstract class Context {
     public String getName() {
         return contextType.getSimpleName();
     }
-        
+
     protected abstract Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
-    
+
     void run(ISpecVisitor callback) {
         for (Method method : contextType.getMethods()) {
             if (isBehavior(method)) {

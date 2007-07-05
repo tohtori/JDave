@@ -25,7 +25,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import jdave.ExpectationFailedException;
-import jdave.NoContextInitializerSpecifiedException;
 import jdave.Specification;
 import jdave.util.Fields;
 
@@ -37,7 +36,7 @@ public class ExecutingBehavior extends Behavior {
     private final Class<?> contextType;
     private final Class<? extends Specification<?>> specType;
     private Object context;
-    
+
     public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
         super(method);
         this.specType = specType;
@@ -117,7 +116,7 @@ public class ExecutingBehavior extends Behavior {
     protected Object newContext(Specification<?> spec) throws Exception {
         Object context = newContextInstance(spec);
         spec.fireAfterContextInstantiation(context);
-        Object contextObject = newContextObject(context);
+        Object contextObject = spec.getContextObjectFactory().newContextObject(context);
         Fields.set(spec, "be", contextObject);
         Fields.set(spec, "context", contextObject);
         spec.fireAfterContextCreation(context, contextObject);
@@ -129,23 +128,13 @@ public class ExecutingBehavior extends Behavior {
             invokeDisposer(context);
         }
     }
-        
+
     private Object newContextInstance(Specification<?> spec) {
         try {
             Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
             return constructor.newInstance(spec);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private Object newContextObject(Object context) throws Exception {
-        try {
-            Method method = context.getClass().getMethod(Context.INITIALIZER_NAME);
-            return method.invoke(context);
-        } catch (NoSuchMethodException e) {
-            throw new NoContextInitializerSpecifiedException(
-                    "Initializer missing for " + context.getClass(), e);
         }
     }
 

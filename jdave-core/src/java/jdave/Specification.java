@@ -41,7 +41,8 @@ public abstract class Specification<T> extends MockSupport {
     public T be;
     public T context;
     private List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
-    
+    private IContextObjectFactory<T> contextObjectFactory = new DefaultContextObjectFactory<T>();
+
     public Not<T> not() {
         actualState = false;
         return new Not<T>(this);
@@ -133,7 +134,7 @@ public abstract class Specification<T> extends MockSupport {
             resetActualState();
         }
     }
-    
+
     public void specify(Object actual, IEqualityCheck equalityCheck) {
         try {
             if (!equalityCheck.matches(actual)) {
@@ -143,7 +144,7 @@ public abstract class Specification<T> extends MockSupport {
             resetActualState();
         }
     }
-    
+
     /**
      * Matches the actual object using Hamcrest Matcher.
      * <p>
@@ -151,7 +152,7 @@ public abstract class Specification<T> extends MockSupport {
      * <blockquote>
      * <pre><code>
      * import static org.hamcrest.Matchers.*;
-     * 
+     *
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
      *     public class SampleContext {
      *         public void sample() {
@@ -173,7 +174,7 @@ public abstract class Specification<T> extends MockSupport {
             resetActualState();
         }
     }
-    
+
     /**
      * Matches all the actual objects using Hamcrest Matcher.
      * <p>
@@ -181,7 +182,7 @@ public abstract class Specification<T> extends MockSupport {
      * <blockquote>
      * <pre><code>
      * import static org.hamcrest.Matchers.*;
-     * 
+     *
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
      *     public class SampleContext {
      *         public void sample() {
@@ -197,21 +198,21 @@ public abstract class Specification<T> extends MockSupport {
     public void specify(Collection<?> actual, Where<?> where) {
         specify(actual.iterator(), where);
     }
-    
+
     /**
      * @see #specify(Collection, Where)
      */
     public void specify(Iterable<?> actual, Where<?> where) {
         specify(actual.iterator(), where);
     }
-    
+
     /**
      * @see #specify(Collection, Where)
      */
     public void specify(Object[] actual, Where<?> where) {
         specify(Arrays.asList(actual), where);
     }
-    
+
     /**
      * @see #specify(Collection, Where)
      */
@@ -229,7 +230,7 @@ public abstract class Specification<T> extends MockSupport {
             resetActualState();
         }
     }
-    
+
     public <E> Where<E> where(Each<E> each) {
         return new Where<E>(each);
     }
@@ -237,7 +238,7 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * The given block is expected to throw an exception.
      * <p>
-     * There's two variants for setting exception expectations. 
+     * There's two variants for setting exception expectations.
      * <blockquote><pre><code>
      * specify(new Block() { ... }, should.raise(SomeException.class);
      * specify(new Block() { ... }, should.raiseExactly(SomeException.class);
@@ -273,14 +274,14 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * The given block is expected to not throw an exception.
      * <p>
-     * There's two variants for setting exception expectations. 
+     * There's two variants for setting exception expectations.
      * <blockquote><pre><code>
      * specify(new Block() { ... }, should.not().raise(SomeException.class);
      * specify(new Block() { ... }, should.not().raiseExactly(SomeException.class);
      * </code></pre></blockquote>
-     * The first one expects that the given block does not throw the exception or any of 
+     * The first one expects that the given block does not throw the exception or any of
      * its subclasses, the second one expects that the given block does not throw the given
-     * exact exception type. 
+     * exact exception type.
      */
     public <V extends Throwable> void specify(Block block, ExpectedNoThrow<V> expectation) throws Throwable {
         try {
@@ -308,7 +309,7 @@ public abstract class Specification<T> extends MockSupport {
     public IEqualityCheck equal(String obj) {
         return new StringEqualsEqualityCheck(obj);
     }
-    
+
     public IEqualityCheck equal(Object obj) {
         return new EqualsEqualityCheck(obj);
     }
@@ -372,7 +373,7 @@ public abstract class Specification<T> extends MockSupport {
      */
     public void destroy() {
     }
-    
+
     /**
      * Returns <code>true</code> if thread local isolation is needed for this specification.
      * <p>
@@ -387,13 +388,21 @@ public abstract class Specification<T> extends MockSupport {
     public boolean needsThreadLocalIsolation() {
         return false;
     }
-    
+
+    protected void setContextObjectFactory(IContextObjectFactory<T> factory) {
+        this.contextObjectFactory = factory;
+    }
+
+    public IContextObjectFactory<T> getContextObjectFactory() {
+        return contextObjectFactory;
+    }
+
     /**
      * Add a <code>ILifecycleListener</code> listener to specification.
      * <p>
-     * ILifecycleListener will be notified when contexts are instantiated and context objects 
+     * ILifecycleListener will be notified when contexts are instantiated and context objects
      * are created and destroyed.
-     * 
+     *
      * @param listener a listener to get lifecycle event notifications
      */
     protected void addListener(ILifecycleListener listener) {
@@ -411,7 +420,7 @@ public abstract class Specification<T> extends MockSupport {
             listener.afterContextCreation(contextInstance, createdContext);
         }
     }
-    
+
     public void fireAfterContextDestroy(Object contextInstance) {
         for (ILifecycleListener listener : listeners) {
             listener.afterContextDestroy(contextInstance);
