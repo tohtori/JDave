@@ -43,6 +43,9 @@
     <developer>
       <name>Mikko Peltonen</name>
     </developer>
+    <developer>
+      <name>Janne Hietamäki</name>
+    </developer>
   </developers>
   <contributors>
     <contributor>
@@ -50,9 +53,6 @@
     </contributor>
     <contributor>
       <name>Petteri Valkonen</name>
-    </contributor>
-    <contributor>
-      <name>Janne Hietamäki</name>
     </contributor>
   </contributors>
   
