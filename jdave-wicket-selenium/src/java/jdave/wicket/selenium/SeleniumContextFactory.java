@@ -30,7 +30,8 @@ public class SeleniumContextFactory<T extends MarkupContainer> extends DefaultCo
         this.specification = specification;
     }
 
-    public T newContextObject(Object context) throws Exception {
+    @Override
+	public T newContextObject(Object context) throws Exception {
         this.context = context;
         return specification.lifeCycleListener.createContext();
     }
@@ -38,5 +39,4 @@ public class SeleniumContextFactory<T extends MarkupContainer> extends DefaultCo
     public T createNewContextObject() throws Exception {
         return super.newContextObject(context);
     }
-
 }
