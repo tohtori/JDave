@@ -16,9 +16,20 @@
 package jdave;
 
 /**
+ * A block is a group of statements that must be evaluated lazily. In other
+ * words, a block is an approximation of a lambda function for JDave.
+ * 
+ * @see Specification#specify(Block, ExpectedException)
+ * @see Specification#specify(Block, ExpectedNoThrow)
+ * 
  * @author Joni Freeman
  * @author Pekka Enberg
  */
 public interface Block {
+    /**
+     * Evaluate this block.
+     * 
+     * @throws Throwable if an exception is thrown during block evaluation.
+     */
     void run() throws Throwable;
 }
