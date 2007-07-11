@@ -50,8 +50,14 @@ public class JDaveGroupRunner extends Runner {
         specs.clear();
         final Description desc = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        CodeSource codeSource = CodeSource.of(suite);
-        newAnnotatedSpecScanner(codeSource.getDirectory()).forEach(new IAnnotatedSpecHandler() {
+        for (String dir : findRootDirs()) {        
+            scanDir(dir, desc, resolution);
+        }
+        return desc;
+    }
+
+    private void scanDir(String dir, final Description desc, final Resolution resolution) {
+        newAnnotatedSpecScanner(dir).forEach(new IAnnotatedSpecHandler() {
             public void handle(String classname, String... groups) {
                 if (resolution.includes(Arrays.asList(groups))) {
                     Class<? extends Specification<?>> spec = loadClass(classname);
@@ -60,7 +66,17 @@ public class JDaveGroupRunner extends Runner {
                 }
             }
         });
-        return desc;
+    }
+
+    private List<String> findRootDirs() {
+        List<String> rootDirs = new ArrayList<String>();
+        if (suite.isAnnotationPresent(SpecDirs.class)) {
+            rootDirs.addAll(Arrays.asList(suite.getAnnotation(SpecDirs.class).value()));
+        } else {
+            CodeSource codeSource = CodeSource.of(suite);
+            rootDirs.add(codeSource.getDirectory());
+        }
+        return rootDirs;
     }
     
     protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {

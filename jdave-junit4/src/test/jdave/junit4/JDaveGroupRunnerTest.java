@@ -15,6 +15,8 @@
  */
 package jdave.junit4;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -98,6 +100,27 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
         assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
     }
     
+    public void testUsesDirectoriesSpecifiedBySpecDirsIfAnnotationIsPresent() throws Exception {
+        final List<String> dirs = new ArrayList<String>();
+        runner = new JDaveGroupRunner(SuiteWithSpecifiedDirs.class) {
+            @Override
+            protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
+                dirs.add(suiteLocation);
+                return new AnnotatedSpecScanner(suiteLocation) {
+                    @Override
+                    public void forEach(IAnnotatedSpecHandler annotatedSpecHandler) {
+                    }
+                    @Override
+                    public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                        return false;
+                    }
+                };
+            }
+        };
+        runner.getDescription();
+        assertEquals(Arrays.asList("foo", "bar"), dirs);
+    }
+    
     private static class AnnotationCollector extends ClassAdapter {
         List<Annotation> annotations;
         
@@ -112,6 +135,12 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
                 annotations = ((RuntimeVisibleAnnotations) attr).annotations;
             }
         }
+    }
+    
+    @RunWith(JDaveGroupRunner.class)
+    @Groups(include="any")
+    @SpecDirs({"foo", "bar"})
+    public static class SuiteWithSpecifiedDirs {        
     }
 
     @RunWith(JDaveRunner.class)
