@@ -1,0 +1,5 @@
+Note, there's not yet any real scala support but this sample can be a starting point.
+
+1. install scala eclipse plugin
+2. import both projects found in scala-sample.tgz into eclipse
+3. run the suite found from Java project
