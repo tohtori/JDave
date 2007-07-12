@@ -1,5 +1,6 @@
 Note, there's not yet any real scala support but this sample can be a starting point.
 
 1. install scala eclipse plugin
-2. import both projects found in scala-sample.tgz into eclipse
-3. run the suite found from Java project
+2. get latest jdave-core + jdave-junit4 1.0-SNAPSHOTS from laughingpanda maven repo
+3. import both projects found in scala-sample.tgz into eclipse
+4. run the suite found from Java project
