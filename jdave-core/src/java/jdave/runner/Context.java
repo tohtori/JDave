@@ -59,6 +59,9 @@ public abstract class Context {
         if (method.getName().equals(DISPOSER_NAME)) {
             return false;
         }
+        if (method.isSynthetic()) {
+            return false;
+        }
         return true;
     }
 
