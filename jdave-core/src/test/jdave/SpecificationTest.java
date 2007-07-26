@@ -15,17 +15,14 @@
  */
 package jdave;
 
-import static org.hamcrest.Matchers.*;
-
 import java.util.Arrays;
 import java.util.List;
 
 import jdave.util.Diff;
-
+import junit.framework.TestCase;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-
-import junit.framework.TestCase;
+import static org.hamcrest.Matchers.*;
 
 /**
  * @author Joni Freeman
@@ -82,6 +79,28 @@ public class SpecificationTest extends TestCase {
             assertEquals("Expected: Hello, but was: null", e.getMessage());            
         }
     }
+
+    public void testChecksNotNull() {
+        specification.specify(1, specification.isNotNull());
+        assertExpectationFails("Expected a non-null value", new Block() {
+            public void run() throws Throwable {
+                specification.specify(null, specification.isNotNull());
+            }
+        });
+    }
+
+    private void assertExpectationFails(String expectedMessage, Block block) {
+        try {
+            block.run();
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals(expectedMessage, e.getMessage());
+        } catch (Throwable throwable) {
+            throw new RuntimeException(throwable);
+        }
+    }
+
+
     
     public void testShouldPassWhenExpectationWithinDelta() {
         specification.specify(1.0, specification.should.equal(1.001, 0.01));
@@ -97,7 +116,7 @@ public class SpecificationTest extends TestCase {
     }
     
     public void testShouldPassWhenExpectationWithinDeltaForWrapper() {
-        specification.specify(1.0, specification.should.equal(new Double(1.001), 0.01));
+        specification.specify(1.0, specification.should.equal(1.001, 0.01));
     }
     
     public void testShouldPassWhenInvertedExpectationWithinDeltaMet() {
@@ -124,7 +143,7 @@ public class SpecificationTest extends TestCase {
     
     public void testShouldFailWhenBooleanExpectationWithWrapperNotMet() {
         try {
-            specification.specify(null, new Boolean(false));
+            specification.specify(null, Boolean.FALSE);
             fail();
         } catch (ExpectationFailedException e) {
             assertEquals("Expected: true, but was: false", e.getMessage());

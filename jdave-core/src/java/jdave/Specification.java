@@ -23,6 +23,7 @@ import java.util.List;
 
 import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
+import jdave.equality.NotEqualsEqualityCheck;
 import jdave.mock.MockSupport;
 import jdave.util.Collections;
 import jdave.util.Primitives;
@@ -425,5 +426,14 @@ public abstract class Specification<T> extends MockSupport {
         for (ILifecycleListener listener : listeners) {
             listener.afterContextDestroy(contextInstance);
         }
+    }
+
+    public IEqualityCheck isNotNull() {
+        return new NotEqualsEqualityCheck(null) {
+            @Override
+            public String error(Object actual) {
+                return "Expected a non-null value";
+            }
+        };
     }
 }
