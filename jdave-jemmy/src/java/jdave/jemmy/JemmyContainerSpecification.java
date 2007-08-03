@@ -39,7 +39,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     protected JemmyOperations jemmy = new JemmyOperations();
     protected JFrameOperator frame;
     protected T container;
-    
+
     public JemmyContainerSpecification() {
         initJemmy();
         addListener(newLifecycleListener());
@@ -47,15 +47,15 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
 
     protected DefaultLifecycleListener newLifecycleListener() {
         return new DefaultLifecycleListener() {
-			@Override
+            @Override
             public void afterContextDestroy(Object contextInstance) {
-			    assertFrameCreated();
+                assertFrameCreated();
                 frame.dispose();
                 frame.waitClosed();
             }
         };
     }
-    
+
     protected void assertFrameCreated() {
         Assert.notNull(frame, "Frame is null. Make sure startContainer() is called in context's create method.");
     }
@@ -74,9 +74,9 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     }
 
     protected abstract T newContainer();
-    
+
     protected T startContainer() {
-    	frame = new JFrameOperator(new JFrame());
+        frame = new JFrameOperator(new JFrame());
         container = newContainer();
         frame.add(container);
         frame.setVisible(true);
@@ -84,7 +84,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
         jemmy.queue.waitEmpty();
         return container;
     }
-       
+
     public void specify(IContainerContainment containment) {
         if (!containment.isIn(container)) {
             throw new ExpectationFailedException(containment.error(container));
@@ -96,8 +96,8 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     }
 
     protected class JemmyOperations {
-    	public QueueTool queue = new QueueTool();
-    	
+        public QueueTool queue = new QueueTool();
+
         public void pushButton(String text) {
             JButton button = JButtonOperator.findJButton(container, text, true, true);
             if (button == null) {
