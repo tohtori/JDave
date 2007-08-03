@@ -26,35 +26,35 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Mikko Peltonen
  */
 public abstract class JemmyApplicationSpecification<T extends JFrame> extends JemmyContainerSpecification<T> {
-	@SuppressWarnings("unchecked")
-	protected T startApplication(String className, String frameTitle) {
-		try {
-			new ClassReference(className).startApplication();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		preFindFrame();
-		frame = new JFrameOperator(frameTitle);
-		container = (T) frame.getSource();		
-		jemmy.queue.waitEmpty();
-		return container;
-	}
-		
+    @SuppressWarnings("unchecked")
+    protected T startApplication(String className, String frameTitle) {
+        try {
+            new ClassReference(className).startApplication();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        preFindFrame();
+        frame = new JFrameOperator(frameTitle);
+        container = (T) frame.getSource();
+        jemmy.queue.waitEmpty();
+        return container;
+    }
+
     @Override
     protected void assertFrameCreated() {
         Assert.notNull(frame, "Frame is null. Make sure startApplication() is called in context's create method.");
     }
 
     protected void preFindFrame() {
-	}
-    
-	@Override
-	protected final T newContainer() {
-		throw new UnsupportedOperationException();
-	}
+    }
 
-	@Override
-	protected final T startContainer() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    protected final T newContainer() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected final T startContainer() {
+        throw new UnsupportedOperationException();
+    }
 }
