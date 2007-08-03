@@ -15,6 +15,7 @@
  */
 package jdave.examples.swing;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ public class AlbumPanel extends JPanel {
     public AlbumPanel(final AlbumPresentationModel presentationModel) {
         this.presentationModel = presentationModel;
         add(new JLabel("Album"));
-        add(new JTextField() {
+        JTextField textField = new JTextField() {
             @Override
             public void setText(String t) {
                 getAlbum().setName(t);
@@ -40,7 +41,9 @@ public class AlbumPanel extends JPanel {
             public String getText() {
                 return getAlbum().getName();
             }
-        });
+        };
+        textField.setPreferredSize(new Dimension(80, 20));
+        add(textField);
         add(new Button("Save") {
             @Override
             protected void onClick(ActionEvent event) {
