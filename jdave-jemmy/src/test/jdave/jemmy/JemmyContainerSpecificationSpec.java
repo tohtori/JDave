@@ -46,7 +46,6 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     return new JPanel();
                 }
             };
-            spec.fireAfterContextInstantiation(null);
             spec.startContainer();
             return spec;
         }
@@ -79,7 +78,6 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     return panel;
                 }
             };
-            spec.fireAfterContextInstantiation(null);
             spec.startContainer();
             return spec;
         }
@@ -118,7 +116,6 @@ public class JemmyContainerSpecificationSpec extends Specification<JemmyContaine
                     return panel;
                 }
             };
-            spec.fireAfterContextInstantiation(null);
             spec.startContainer();
             return spec;
         }

@@ -20,11 +20,11 @@ import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import jdave.DefaultLifecycleListener;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
+import jdave.support.Assert;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.QueueTool;
@@ -42,18 +42,22 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     
     public JemmyContainerSpecification() {
         initJemmy();
-        addListener(new DefaultLifecycleListener() {
-            @Override
-            public void afterContextInstantiation(Object contextInstance) {
-                frame = new JFrameOperator(new JFrame());
-                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            }
+        addListener(newLifecycleListener());
+    }
 
-            @Override
+    protected DefaultLifecycleListener newLifecycleListener() {
+        return new DefaultLifecycleListener() {
+			@Override
             public void afterContextDestroy(Object contextInstance) {
-                frame.close();
+			    assertFrameCreated();
+                frame.dispose();
+                frame.waitClosed();
             }
-        });
+        };
+    }
+    
+    protected void assertFrameCreated() {
+        Assert.notNull(frame, "Frame is null. Make sure startContainer() is called in context's create method.");
     }
 
     protected void initJemmy() {
@@ -72,6 +76,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
     protected abstract T newContainer();
     
     protected T startContainer() {
+    	frame = new JFrameOperator(new JFrame());
         container = newContainer();
         frame.add(container);
         frame.setVisible(true);
