@@ -32,11 +32,11 @@ import jdave.IContract;
  *         return 4;
  *     }
  *     public Integer subsequent() {
- *         return 4;
+ *         return 6;
  *     }
  *     public Integer equivalentByComparisonButNotByEqual() {
  *         // There's no Integer which would be non equal with 5 and still be equal
- *         // by comparision (comparaTo() == 0). So return null.
+ *         // by comparison (comparaTo() == 0). So return null.
  *         return null; 
  *     }
  * });
