@@ -23,25 +23,27 @@ import jdave.Specification;
 public class SpecdoxRunner {
     public static final String FORMAT = "jdave.tools.specdox.format";
     public static final String DIRNAME = "jdave.tools.specdox.dir";
-
+    private final Formats formats;
+    
+    public SpecdoxRunner() {
+        this(new Formats());
+    }
+    
+    public SpecdoxRunner(Formats formats) {
+        this.formats = formats;        
+    }
+    
     public void generate(Class<? extends Specification<?>> specType) {
         if (System.getProperty(FORMAT) != null) {
-            IDoxFormat format = formatFor(System.getProperty(FORMAT));
-            Specdox specdox = new Specdox(new FileStore(dirname()));
-            specdox.generate(specType, format);
+            for (String s : System.getProperty(FORMAT).split("\\s+")) {
+                IDoxFormat format = formats.formatFor(s);
+                Specdox specdox = new Specdox(new FileStore(dirname()));
+                specdox.generate(specType, format);
+            }
         }
-    }
+    } 
 
     private String dirname() {
         return System.getProperty(DIRNAME, "target/jdave");
-    }
-
-    protected IDoxFormat formatFor(String formatName) {
-        if (formatName.equals("txt")) {
-            return new PlainTextFormat();
-        } else if (formatName.equals("xml")) {
-            return new XmlFormat();
-        }
-        throw new RuntimeException("unknown format '" + formatName + "'");
     }
 }

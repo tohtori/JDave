@@ -19,6 +19,7 @@ import jdave.Specification;
 
 import org.jmock.Expectations;
 import org.jmock.integration.junit3.MockObjectTestCase;
+import org.jmock.lib.legacy.ClassImposteriser;
 
 /**
  * @author Joni Freeman
@@ -26,16 +27,19 @@ import org.jmock.integration.junit3.MockObjectTestCase;
 public class SpecdoxRunnerTest extends MockObjectTestCase {
     private SpecdoxRunner runner;
     private IDoxFormat format = mock(IDoxFormat.class);
+    private Formats formats;
 
     @Override
     protected void setUp() throws Exception {
+        setImposteriser(ClassImposteriser.INSTANCE);
+        formats = mock(Formats.class);
         System.setProperty(SpecdoxRunner.DIRNAME, "target");
-        runner = new SpecdoxRunner() {
+        runner = new SpecdoxRunner(new Formats() {
             @Override
-            protected IDoxFormat formatFor(String formatName) {
+            public IDoxFormat formatFor(String formatName) {
                 return format;
             }
-        };
+        });
     }
     
     public void testGeneratesDoxIfSystemPropertyPresent() {
@@ -49,6 +53,16 @@ public class SpecdoxRunnerTest extends MockObjectTestCase {
             ignoring(format).suffix();
         }});
         runner.generate(TestSpec.class);
+    }
+    
+    public void testParsesFormatsFromSpaceLimitedList() throws Exception {
+        runner = new SpecdoxRunner(formats);
+        System.setProperty(SpecdoxRunner.FORMAT, "txt xml");
+        checking(new Expectations() {{ 
+            one(formats).formatFor("txt");
+            one(formats).formatFor("xml");
+        }});
+        runner.generate(TestSpec.class);        
     }
     
     public static class TestSpec extends Specification<Void> {
