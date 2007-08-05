@@ -75,4 +75,13 @@ public class DiffTest extends TestCase {
                 "Expected: <<null>>",
                 diff.verbose());
     }
+    
+    // see https://www.laughingpanda.org/jira/browse/JDAVE-19
+    public void testJDave19() {
+        Diff diff = Diff.diff("foo1", "foo");
+        assertEquals(
+                "  Actual: foo1" + NEW_LINE +
+                "Expected: foo",
+                diff.verbose());
+    }
 }

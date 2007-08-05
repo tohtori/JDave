@@ -65,10 +65,14 @@ public class Diff {
             return 0;
         }
 
-        for (int i = 0; i < actual.length() && i < expected.length(); ++i) {
+        int i = 0;
+        for (; i < actual.length() && i < expected.length(); ++i) {
             if (actual.charAt(i) != expected.charAt(i)) {
                 return i;
             }
+        }
+        if (actual.length() != expected.length()) {
+            return i;
         }
         return -1;
     }
