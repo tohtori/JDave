@@ -64,7 +64,7 @@
           <systemProperties>
             <property>
               <name>jdave.tools.specdox.format</name>
-              <value>xml</value>
+              <value>xml txt</value>
             </property>
             <property>
               <name>jdave.tools.specdox.dir</name>
