@@ -53,13 +53,26 @@ public class DiffTest extends TestCase {
     }
 
     public void testPrintsVerboseMessageIfStringIsEmpty() {
-        Diff diff = Diff.diff(
-                "",
-                "this is another string");
+        Diff diff = Diff.diff("", "this is another string");
         assertEquals(
                 "  Actual: " + NEW_LINE +
                 "Expected: this is another...",
                 diff.verbose());
     }
 
+    public void testPrintsVerboseMessageIfActualIsNull() {
+        Diff diff = Diff.diff(null, "this is another string");
+        assertEquals(
+                "  Actual: <<null>>" + NEW_LINE +
+                "Expected: this is another...",
+                diff.verbose());
+    }
+    
+    public void testPrintsVerboseMessageIfExpectedIsNull() {
+        Diff diff = Diff.diff("this is a string", null);
+        assertEquals(
+                "  Actual: this is a strin..." + NEW_LINE +
+                "Expected: <<null>>",
+                diff.verbose());
+    }
 }

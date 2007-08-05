@@ -35,20 +35,32 @@ public class Diff {
         }
         int diffStart = Math.max(0, diffIndex - CHOP_AT);
         String ellipsisStart = (diffIndex > CHOP_AT ? "..." : "");
-        int diffEndActual = Math.min(actual.length(), diffIndex + CHOP_AT);
-        String ellipsisEndActual = (actual.length() > diffIndex + CHOP_AT ? "..." : "");
-        int diffEndExpected = Math.min(expected.length(), diffIndex + CHOP_AT);
-        String ellipsisEndExpected = (expected.length() > diffIndex + CHOP_AT ? "..." : "");
+        int diffEndActual = Math.min(length(actual), diffIndex + CHOP_AT);
+        String ellipsisEndActual = (length(actual) > diffIndex + CHOP_AT ? "..." : "");
+        int diffEndExpected = Math.min(length(expected), diffIndex + CHOP_AT);
+        String ellipsisEndExpected = (length(expected) > diffIndex + CHOP_AT ? "..." : "");
         StringBuilder message = new StringBuilder();
         message.append("  Actual: ");
-        message.append(ellipsisStart + actual.substring(diffStart, diffEndActual) + ellipsisEndActual);
+        message.append(ellipsisStart + substring(actual, diffStart, diffEndActual) + ellipsisEndActual);
         message.append(System.getProperty("line.separator"));
         message.append("Expected: ");
-        message.append(ellipsisStart + expected.substring(diffStart, diffEndExpected) + ellipsisEndExpected);
+        message.append(ellipsisStart + substring(expected, diffStart, diffEndExpected) + ellipsisEndExpected);
         return message.toString();
+    }
+    
+    private String substring(String s, int begin, int end) {
+        return s == null ? "<<null>>" : s.substring(begin, end);
+    }
+    
+    private int length(String s) {
+        return s == null ? 0 : s.length();
     }
 
     private int diffIndex() {
+        if (actual == null || expected == null) {
+            return 0;
+        }
+        
         if (actual.length() == 0 || expected.length() == 0) {
             return 0;
         }
