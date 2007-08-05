@@ -38,7 +38,8 @@ public class InPartialOrderContainment extends CollectionContainment {
         super(elements);
     }
     
-    public boolean matches(Collection<?> actual) {
+    @Override
+    public boolean nullSafeMatches(Collection<?> actual) {
         Iterator<?> i1 = elements.iterator();
         Iterator<?> i2 = actual.iterator();
         while (i1.hasNext()) {

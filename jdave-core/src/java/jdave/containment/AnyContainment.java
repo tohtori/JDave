@@ -34,7 +34,8 @@ public class AnyContainment extends CollectionContainment {
         super(elements);
     }
 
-    public boolean matches(Collection<?> actual) {
+    @Override
+    public boolean nullSafeMatches(Collection<?> actual) {
         for (Object object : elements) {
             if (actual.contains(object)) {
                 return true;

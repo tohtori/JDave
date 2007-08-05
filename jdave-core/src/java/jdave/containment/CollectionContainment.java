@@ -39,6 +39,15 @@ public abstract class CollectionContainment implements IContainment {
         this(elements.iterator());
     }
     
+    public boolean matches(Collection<?> actual) {
+        if (actual == null) {
+            return false;
+        }
+        return nullSafeMatches(actual);
+    }
+    
+    protected abstract boolean nullSafeMatches(Collection<?> actual);
+    
     @Override
     public String toString() {
         return elements.toString();

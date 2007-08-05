@@ -1,5 +1,5 @@
 /*
- * Copyright 2006 the original author or authors.
+ * Copyright 2007 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,16 @@
  */
 package jdave.containment;
 
-import java.util.Collection;
-import java.util.Iterator;
+import jdave.IContainment;
+import junit.framework.TestCase;
 
 /**
  * @author Joni Freeman
  */
-public class AllContainment extends CollectionContainment {
-    public AllContainment(Collection<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterator<?> elements) {
-        super(elements);
-    }
-    
-    public AllContainment(Iterable<?> elements) {
-        super(elements);
-    }
+public abstract class ContainmentTest extends TestCase {
+    protected IContainment containment;
 
-    @Override
-    public boolean nullSafeMatches(Collection<?> actual) {
-        return actual.containsAll(elements);
+    public void testShouldNotThrowNullPointerExceptionIfActualIsNull() throws Exception {
+        containment.matches(null);
     }
 }

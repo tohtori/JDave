@@ -34,7 +34,8 @@ public class ExactContainment extends CollectionContainment {
         super(elements);
     }
 
-    public boolean matches(Collection<?> actual) {
+    @Override
+    public boolean nullSafeMatches(Collection<?> actual) {
         if (elements.size() != actual.size()) {
             return false;
         }

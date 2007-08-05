@@ -18,16 +18,10 @@ package jdave.containment;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import jdave.IContainment;
-import jdave.containment.AllContainment;
-import junit.framework.TestCase;
-
 /**
  * @author Joni Freeman
  */
-public class AllContainmentTest extends TestCase {
-    private IContainment containment;
-
+public class AllContainmentTest extends ContainmentTest {
     @Override
     protected void setUp() throws Exception {
         containment = new AllContainment(new Iterable<Integer>() {
