@@ -286,6 +286,61 @@ be changed with <code>mockery.setImposteriser</code> method.
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ObservableSpec.java">[examples]</a>
 </p>
 
+<h2>Extending default vocabulary</h2>
+
+Extending the default vocabulary is done by overriding fields <b><i>should</i></b> and <b><i>does</i></b>.
+Then adding new <code>specify(...)</code> and factory methods which provide the extension. Negation
+can be extended by overriding <code>not()</code> method. 
+<p>
+Let's go through an example which adds following extension to the vocabulary:
+<pre>
+<code>
+specify(a, should.approximate(b));
+</code>
+</pre>
+
+A possible implementation could be done by extending base <code>Specification</code> and encapsulating
+the extension there.
+<pre>
+<code>
+public abstract class ExtendedSpecification&lt;T&gt; extends Specification&lt;T&gt; {
+    protected ExtendedSpecification&lt;T&gt; should = this;
+    protected ExtendedSpecification&lt;T&gt; does = this;
+    
+    public void specify(double actual, Approximation approximation) {
+        approximation.approximate(actual);
+    }
+        
+    public Approximation approximate(double expected) {
+        return new Approximation(expected);
+    }
+}
+
+class Approximation {
+    private final double expected;
+
+    Approximation(double expected) {
+        this.expected = expected;        
+    }
+    
+    public void approximate(double actual) {
+        if (Math.abs(actual - expected) &gt; 0.01) {
+            throw new ExpectationFailedException(actual + 
+                " is not an approximation of " + expected);
+        }
+    }
+}
+</code>
+</pre>
+
+To use the extension simply extend the specification from <code>ExtendedSpecification</code>.
+See a complete example which supports <code>not()</code> too below:
+
+<p>
+<a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ExtendedSpecification.java">[extension]</a><br>
+<a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ApproximationSampleSpec.java">[usage of extension]</a>
+</p>
+
 <h2>Injecting values into fields</h2>
 
 InjectionSupport can be used to inject values into specification (or any other object) 
@@ -299,7 +354,7 @@ fields. This is often used for instance to inject Spring managed beans into spec
 
 Some contexts set thread local variables. This may cause following behaviors to fail if 
 they depend on initial thread local state. Thread locals can be isolated for all behavior 
-methods of current specification by overiding the method 
+methods of current specification by overriding the method 
 <code>Specification.needsThreadLocalIsolation()</code> and returning true. Then a fresh new thread 
 is created for all methods in the specification.
 
