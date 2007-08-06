@@ -27,7 +27,7 @@ public class ApproximationSampleSpec extends ExtendedSpecification<Void> {
     public class Sample {
         public void create() {}
         
-        public void sampleWhichUsesExtenstionMethod() {
+        public void sampleWhichUsesExtensionMethod() {
             specify(1.5, should.approximate(1.5005));
             specify(1.5, should.not().approximate(1.6));
         }
