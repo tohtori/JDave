@@ -300,7 +300,8 @@ specify(a, should.approximate(b));
 </pre>
 
 A possible implementation could be done by extending base <code>Specification</code> and encapsulating
-the extension there.
+the extension there. (Note, the extension can also be done as static methods if inheritance is too cumbersome.
+The methods can then be statically imported to specification which needs them.)
 <pre>
 <code>
 public abstract class ExtendedSpecification&lt;T&gt; extends Specification&lt;T&gt; {
