@@ -107,12 +107,22 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     }
 
     private void startPage(final IModel model) {
-        wicket.startPage(new ITestPageSource() {
-            public Page getTestPage() {
-                specifiedComponent = newComponent(null, model);
-                return (Page) specifiedComponent;
-            }
-        });
+        specifiedComponent = newComponent(null, model);
+        TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
+        wicket.startPage(testPageSource);
+    }
+
+    private static class TestPageSource implements ITestPageSource {
+
+        Page page; 
+        
+        public TestPageSource(Page page) {
+            this.page = page;
+        }
+        
+        public Page getTestPage() {
+            return page;
+        }              
     }
     
     /**
