@@ -43,6 +43,7 @@ public class JDaveReportMojoSpec extends Specification<JDaveReportMojo> {
                 }
             };
             mojo.outputDirectory = out.getAbsolutePath();
+            mojo.xrefLocation = new File("any");
             mojo.reportsDirectory = new File(out, "JDaveReportMojoSpec");
             if (!mojo.reportsDirectory.exists()) {
                 mojo.reportsDirectory.mkdir();

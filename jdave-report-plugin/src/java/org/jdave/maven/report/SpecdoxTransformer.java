@@ -39,13 +39,8 @@ public class SpecdoxTransformer {
         
         TransformerFactory transFact = new TransformerFactoryImpl();
         Transformer trans = transFact.newTransformer(xsltSource);
-
         trans.setParameter("spec-file-dir", specXmlDir);
-        if (xref.exists()) {
-            trans.setParameter("xref", xref.getAbsoluteFile());
-        } else {
-            trans.setParameter("xref", "#");            
-        }
+        trans.setParameter("xref", xref.getName());
         trans.setParameter("output-dir", outputDir);
         trans.setParameter("frameset-index-filename", filename);
         trans.transform(xmlSource, new StreamResult(System.out));

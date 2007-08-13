@@ -68,7 +68,7 @@ public class JDaveReportMojo extends AbstractMavenReport {
     /**
      * Location of the Xrefs to link.
      *
-     * @parameter default-value="${project.reporting.outputDirectory}/xref-test"
+     * @parameter default-value="xref-test"
      */
     protected File xrefLocation;
     
