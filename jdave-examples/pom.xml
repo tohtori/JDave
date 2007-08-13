@@ -80,7 +80,7 @@
     <plugins>
       <plugin>
         <groupId>org.jdave</groupId>
-        <artifactId>maven-jdave-report-plugin</artifactId>
+        <artifactId>jdave-report-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
