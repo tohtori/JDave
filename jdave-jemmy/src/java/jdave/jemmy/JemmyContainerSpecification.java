@@ -111,7 +111,7 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
         }
         
         public JButton findButton(String text) {
-            return JButtonOperator.findJButton(container, text, true, true, 0);
+            return findButton(text, 0);
         }
         
         public JButton findButton(String text, int index) {
