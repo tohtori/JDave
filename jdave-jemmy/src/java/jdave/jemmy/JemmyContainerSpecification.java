@@ -99,11 +99,23 @@ public abstract class JemmyContainerSpecification<T extends Container> extends S
         public QueueTool queue = new QueueTool();
 
         public void pushButton(String text) {
-            JButton button = JButtonOperator.findJButton(container, text, true, true);
+            pushButton(text, 0);
+        }
+
+        public void pushButton(String text, int index) {
+            JButton button = findButton(text, index);
             if (button == null) {
                 throw new NoSuchButtonException(text);
             }
             new JButtonOperator(button).push();
+        }
+        
+        public JButton findButton(String text) {
+            return JButtonOperator.findJButton(container, text, true, true, 0);
+        }
+        
+        public JButton findButton(String text, int index) {
+            return JButtonOperator.findJButton(container, text, true, true, index);
         }
     }
 }
