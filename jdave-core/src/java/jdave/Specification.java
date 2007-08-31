@@ -169,7 +169,7 @@ public abstract class Specification<T> extends MockSupport {
     public void specify(Object actual, Matcher<?> matcher) {
         try {
             if (!matcher.matches(actual)) {
-                throw new ExpectationFailedException(StringDescription.toString(matcher));
+                throw new ExpectationFailedException(actual + " " + StringDescription.toString(matcher));
             }
         } finally {
             resetActualState();
