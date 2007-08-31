@@ -102,6 +102,18 @@ public class SpecRunnerTest extends TestCase {
         assertEquals(1, errors.size());
         assertEquals("someBehavior", errors.get(0).getName());
     }
+    
+    public void testAllowsContextHavingCreateMethodWithVoidReturnValue() throws Exception {
+        SpecForOtherCreations.whenCreateIsVoid = 0;
+        runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(1, SpecForOtherCreations.whenCreateIsVoid);                
+    }
+    
+    public void testAllowsContextWithoutCreateMethod() throws Exception {
+        SpecForOtherCreations.whenCreateDoesNotExist = 0;
+        runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(1, SpecForOtherCreations.whenCreateDoesNotExist);                        
+    }
 
     public static class BooleanSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
@@ -179,6 +191,26 @@ public class SpecRunnerTest extends TestCase {
         @Override
         public void destroy() {
             specDestroyCalled++;
+        }
+    }
+
+    public static class SpecForOtherCreations extends Specification<Void> {
+        public static int whenCreateIsVoid = 0;
+        public static int whenCreateDoesNotExist = 0;
+
+        public class ContextWithVoidCreateMethod {
+            public void create() {                
+            }
+
+            public void whenCreateIsVoid() {    
+                whenCreateIsVoid++;
+            }
+        }
+        
+        public class ContextWithoutCreateMethod {
+            public void whenCreateDoesNotExist() {
+                whenCreateDoesNotExist++;
+            }
         }
     }
     

@@ -25,16 +25,13 @@ import jdave.runner.Context;
  * @author Janne Hietam&auml;ki
  */
 public class DefaultContextObjectFactory<T> implements IContextObjectFactory<T> {
-
     @SuppressWarnings("unchecked")
     public T newContextObject(Object context) throws Exception {
         try {
             Method method = context.getClass().getMethod(Context.INITIALIZER_NAME);
             return (T) method.invoke(context);
         } catch (NoSuchMethodException e) {
-            throw new NoContextInitializerSpecifiedException("Initializer missing for "
-                    + context.getClass(), e);
+            return null;
         }
     }
-
 }

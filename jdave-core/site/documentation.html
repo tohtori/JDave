@@ -69,9 +69,10 @@ Stack specification
 A specification is implemented by extending <code>jdave.Specification</code> base class.
 It is parametrized by the type of object which is created in contexts. Contexts are
 implemented as public non-static inner classes in the specification class. They do not
-have to extend any base class or implement any interface. The only requirement is that
-they have to have a public method <code>create()</code> which returns a context object.
-They can optionally have a public void method <code>destroy()</code>.
+have to extend any base class or implement any interface. Context can optionally have a public
+method <code>create()</code> which either returns a context object or is void. If <code>create()</code>
+methods returns something, it is bound to variables <code>context</code> and <code>be</code>.
+Context can also optionally have a public void method <code>destroy()</code>.
 All other public methods in context class are behaviors.
 
 <pre>
@@ -81,8 +82,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         private Stack&lt;String&gt; stack;
 
         public Stack&lt;String&gt; create() {
-            stack = new Stack&lt;String&gt;();
-            return stack;
+            return stack = new Stack&lt;String&gt;();
         }
 
         public void someBehavior() {
@@ -180,7 +180,7 @@ method.
 <li> spec = new SomeSpecification();</li>
 <li> spec.create();</li>
 <li> ctx = spec.new SomeContext();</li>
-<li> be = ctx.create();</li>
+<li> be = ctx.create();</li> // if exists</li>
 <li> <i>[run some behavior]</i></li>
 <li> ctx.destroy(); // if exists</li>
 <li> spec.destroy();</li>
