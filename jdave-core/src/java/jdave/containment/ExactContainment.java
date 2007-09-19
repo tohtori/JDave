@@ -15,8 +15,10 @@
  */
 package jdave.containment;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Joni Freeman
@@ -36,14 +38,10 @@ public class ExactContainment extends CollectionContainment {
 
     @Override
     public boolean nullSafeMatches(Collection<?> actual) {
-        if (elements.size() != actual.size()) {
-            return false;
-        }
+        List<Object> remaining = new ArrayList<Object>(actual);
         for (Object element : elements) {
-            if (!actual.contains(element)) {
-                return false;
-            }
+            remaining.remove(element);
         }
-        return true;
+        return remaining.isEmpty();
     }
 }
