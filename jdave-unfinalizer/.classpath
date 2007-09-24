@@ -1,0 +1,16 @@
+<classpath>
+  <classpathentry kind="src" path="src/java"/>
+  <classpathentry kind="src" path="src/test" output="target/test-classes"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-legacy/2.1.0/jmock-legacy-2.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit3/2.1.0/jmock-junit3-2.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock/2.1.0/jmock-2.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-library/1.0/hamcrest-library-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jdave/jdave-junit4/1.0-SNAPSHOT/jdave-junit4-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jdave/jdave-core/1.0-SNAPSHOT/jdave-core-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.3/junit-4.3.jar"/>
+</classpath>
