@@ -1,0 +1,60 @@
+<h1>jdave-unfinalizer</h1>
+<h2>license</h2>
+<pre>
+Copyright 2007 the original author or authors.
+ 
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+ 
+http://www.apache.org/licenses/LICENSE-2.0
+ 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+</pre>
+<h2>motivation</h2>
+<p>the final keyword protects classes and methods from being overridden.
+</p>
+<p>sometimes you want to mock a class or a method that has been declared final in a 3rd party library.
+this is not what final should be protecting against, so jdave-unfinalizer removes these restrictions on
+mocking.</p>
+<h2>how it works</h2>
+<p>removing the final from a class or method at the bytecode level is fairly straightforward: just flip a bit
+off.  it is however not a hotswappable operation in current jvm implementations.  changing the access of a
+class must be done at load time.
+</p>
+<p>jdave-unfinalizer declares a Premain-Class in its manifest which contains a
+static method premain() which is called when the jar is loaded.  a jvm parameter (-javaagent:) tells java to
+expect a Premain-Class in a specific jar.
+</p>
+<p>
+the premain()-method adds a ClassFileTransformer to the Instrumentation objects it receives.  everytime a Class
+is loaded by the jvm, it is first processed by jdave-unfinalizer's transformer, which strips the final bit, if
+present, before the class is loaded.
+</p>
+<h2>usage</h2>
+<p>
+jdave-unfinalizer may be used independently of the rest of the jdave suite.
+</p>
+<p>
+to load jdave-unfinalizer, and thereby unfinalize most classes(*), build the jar using:</p>
+<p>
+mvn jar:jar
+</p>
+<p>
+and then launch your tests with the following vm parameter:
+</p>
+<p>
+-javaagent:/path/to/workspace/jdave-unfinalizer/target/jdave-unfinalizer-jar-name.jar
+</p>
+<p>
+UnfinalizerAcceptanceSpec demonstrates the mocking of a final class and a final method.  both previously
+impossible.
+</p>
+<p>
+(*) nb: there is currently a restriction on the unfinalization of some system classes.  this is due to the
+possibility of infinite loops if the transformation itself requires a class that has not yet been unfinalized.
+</p>
