@@ -41,5 +41,20 @@
       <version>3.0</version>
     </dependency>
   </dependencies> 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Premain-Class>jdave.unfinalizer.UnfinalizerInstrumentationLoader</Premain-Class>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
    
 </project>
