@@ -24,19 +24,22 @@ import org.objectweb.asm.Opcodes;
  * @author Tuomas Karkkainen
  */
 public class UnfinalizingClassVisitor extends ClassAdapter {
+
     public UnfinalizingClassVisitor(final ClassVisitor classVisitor) {
         super(classVisitor);
     }
 
-    @Override
-    public void visit(final int version, final int access, final String name, final String signature,
-        final String superName, final String[] interfaces) {
-        super.visit(version, access & ~Opcodes.ACC_FINAL, name, signature, superName, interfaces);
+    @Override public void visit(final int version, final int access,
+            final String name, final String signature, final String superName,
+            final String[] interfaces) {
+        super.visit(version, access & ~Opcodes.ACC_FINAL, name, signature,
+                superName, interfaces);
     }
 
-    @Override
-    public MethodVisitor visitMethod(final int access, final String name, final String desc, final String signature,
-        final String[] exceptions) {
-        return super.visitMethod(access & ~Opcodes.ACC_FINAL, name, desc, signature, exceptions);
+    @Override public MethodVisitor visitMethod(final int access,
+            final String name, final String desc, final String signature,
+            final String[] exceptions) {
+        return super.visitMethod(access & ~Opcodes.ACC_FINAL, name, desc,
+                signature, exceptions);
     }
 }

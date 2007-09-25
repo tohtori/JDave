@@ -22,10 +22,12 @@ import org.objectweb.asm.ClassWriter;
  * @author Tuomas Karkkainen
  */
 public class Unfinalizer {
+
     public byte[] removeFinals(final byte[] originalClass) {
         final ClassReader reader = new ClassReader(originalClass);
         final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        reader.accept(new UnfinalizingClassVisitor(writer), ClassReader.SKIP_FRAMES);
+        reader.accept(new UnfinalizingClassVisitor(writer),
+                ClassReader.SKIP_FRAMES);
         return writer.toByteArray();
     }
 }

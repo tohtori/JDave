@@ -19,6 +19,7 @@ package jdave.unfinalizer.fake;
  * @author Tuomas Karkkainen
  */
 public class ClassWithFinalMethod {
+
     public final void finalMethod() {
         throw new RuntimeException("This method should be mocked.");
     }

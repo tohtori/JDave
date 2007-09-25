@@ -34,33 +34,40 @@ import org.objectweb.asm.Opcodes;
 /**
  * @author Tuomas Karkkainen
  */
-@RunWith(JDaveRunner.class)
-public class UnfinalizerSpec extends Specification<Class<?>> {
+@RunWith(JDaveRunner.class) public class UnfinalizerSpec extends
+        Specification<Class<?>> {
+
     public class WhenClassIsFinal {
+
         public Class<?> create() {
             return FinalClass.class;
         }
 
         public void isMadeNonFinal() throws IOException {
-            final byte[] nonFinalClass = new Unfinalizer().removeFinals(getOriginalClassAsByteArray(context));
+            final byte[] nonFinalClass = new Unfinalizer()
+                    .removeFinals(getOriginalClassAsByteArray(context));
             specify(classIsNotFinal(nonFinalClass));
         }
     }
+
     public class WhenMethodIsFinal {
+
         public Class<?> create() {
             return ClassWithFinalMethod.class;
         }
 
         public void theMethodIsMadeNonFinal() throws IOException {
             final byte[] classWithoutFinalMethods = new Unfinalizer()
-                .removeFinals(getOriginalClassAsByteArray(context));
+                    .removeFinals(getOriginalClassAsByteArray(context));
             specify(classHasNoFinalMethods(classWithoutFinalMethods));
         }
     }
 
-    public byte[] getOriginalClassAsByteArray(final Class<?> clazz) throws IOException {
-        final InputStream originalClass = ClassLoader.getSystemClassLoader().getResourceAsStream(
-            clazz.getName().replace('.', '/') + ".class");
+    public byte[] getOriginalClassAsByteArray(final Class<?> clazz)
+            throws IOException {
+        final InputStream originalClass = ClassLoader.getSystemClassLoader()
+                .getResourceAsStream(
+                        clazz.getName().replace('.', '/') + ".class");
         final byte[] originalClassBytes = new byte[originalClass.available()];
         originalClass.read(originalClassBytes);
         originalClass.close();
@@ -73,22 +80,26 @@ public class UnfinalizerSpec extends Specification<Class<?>> {
     }
 
     boolean classHasNoFinalMethods(final byte[] classWithoutFinalMethods) {
-        final ClassReader classReader = new ClassReader(classWithoutFinalMethods);
+        final ClassReader classReader = new ClassReader(
+                classWithoutFinalMethods);
         final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        final FinalMethodFindingClassAdapter classAdapter = new FinalMethodFindingClassAdapter(writer);
+        final FinalMethodFindingClassAdapter classAdapter = new FinalMethodFindingClassAdapter(
+                writer);
         classReader.accept(classAdapter, ClassReader.SKIP_FRAMES);
         return !classAdapter.hasFinalMethod;
     }
+
     private final class FinalMethodFindingClassAdapter extends ClassAdapter {
+
         protected boolean hasFinalMethod;
 
         FinalMethodFindingClassAdapter(final ClassVisitor classVisitor) {
             super(classVisitor);
         }
 
-        @Override
-        public MethodVisitor visitMethod(final int access, final String name, final String desc,
-            final String signature, final String[] exceptions) {
+        @Override public MethodVisitor visitMethod(final int access,
+                final String name, final String desc, final String signature,
+                final String[] exceptions) {
             final boolean methodIsFinal = (access & Opcodes.ACC_FINAL) != 0;
             if (methodIsFinal) {
                 hasFinalMethod = methodIsFinal;

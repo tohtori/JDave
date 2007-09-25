@@ -24,9 +24,11 @@ import org.junit.runner.RunWith;
 /**
  * @author Tuomas Karkkainen
  */
-@RunWith(JDaveRunner.class)
-public class UnfinalizingClassTransformerSpec extends Specification<UnfinalizingClassTransformer> {
-    public class Any {
+@RunWith(JDaveRunner.class) public class UnfinalizingClassTransformerSpec
+        extends Specification<UnfinalizingClassTransformer> {
+
+    public class WhenLoaderIsNotNull {
+
         Unfinalizer unfinalizer;
 
         public UnfinalizingClassTransformer create() {
@@ -34,25 +36,38 @@ public class UnfinalizingClassTransformerSpec extends Specification<Unfinalizing
             return new UnfinalizingClassTransformer(unfinalizer);
         }
 
-        public void unfinalizesClassIfLoaderIsNotNull() throws Exception {
+        public void returnOriginalClass() throws Exception {
+            final byte[] originalBytes = new byte[] { 1, 2, 3 };
+            final byte[] transformedBytes = context.transform(null, "lol",
+                    String.class, String.class.getProtectionDomain(),
+                    originalBytes);
+            specify(originalBytes, equal(transformedBytes));
+        }
+    }
+
+    public class WhenLoaderIsNull {
+
+        Unfinalizer unfinalizer;
+
+        public UnfinalizingClassTransformer create() {
+            unfinalizer = mock(Unfinalizer.class);
+            return new UnfinalizingClassTransformer(unfinalizer);
+        }
+
+        public void unfinalizesClass() throws Exception {
             final byte[] originalBytes = new byte[] { 1, 2, 3 };
             final byte[] transformedBytes = new byte[] { 4, 5, 6 };
             checking(new Expectations() {
+
                 {
                     one(unfinalizer).removeFinals(originalBytes);
                     will(returnValue(transformedBytes));
                 }
             });
-            final byte[] resultBytes = context.transform(ClassLoader.getSystemClassLoader(), "wut", String.class,
-                String.class.getProtectionDomain(), originalBytes);
+            final byte[] resultBytes = context.transform(ClassLoader
+                    .getSystemClassLoader(), "wut", String.class, String.class
+                    .getProtectionDomain(), originalBytes);
             specify(transformedBytes, equal(resultBytes));
-        }
-
-        public void returnOriginalClassIfLoaderIsNull() throws Exception {
-            final byte[] originalBytes = new byte[] { 1, 2, 3 };
-            final byte[] transformedBytes = context.transform(null, "lol", String.class, String.class
-                .getProtectionDomain(), originalBytes);
-            specify(originalBytes, equal(transformedBytes));
         }
     }
 }

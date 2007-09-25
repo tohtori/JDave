@@ -18,4 +18,5 @@ package jdave.unfinalizer.fake;
 /**
  * @author Tuomas Karkkainen
  */
-public final class FinalClass {}
+public final class FinalClass {
+}
