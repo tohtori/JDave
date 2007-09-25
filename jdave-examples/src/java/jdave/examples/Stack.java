@@ -103,7 +103,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public <V> V[] toArray(V[] a) {
-        throw new UnsupportedOperationException();
+        return stack.toArray(a);
     }
     
     @Override
