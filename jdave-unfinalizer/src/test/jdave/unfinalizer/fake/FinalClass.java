@@ -16,6 +16,9 @@
 package jdave.unfinalizer.fake;
 
 /**
+ * 
+ * I am final.
+ * 
  * @author Tuomas Karkkainen
  */
 public final class FinalClass {

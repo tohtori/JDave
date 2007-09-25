@@ -20,6 +20,9 @@ package jdave.unfinalizer.fake;
  */
 public class ClassWithFinalMethod {
 
+    /**
+     * I'm final. I can't be mocked.
+     */
     public final void finalMethod() {
         throw new RuntimeException("This method should be mocked.");
     }

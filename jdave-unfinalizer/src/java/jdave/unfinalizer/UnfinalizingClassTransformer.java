@@ -20,6 +20,13 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
+ * Delegates classes being loaded to the actual transformer if the classloader
+ * is not null.
+ * 
+ * This pseudo-magical rule has something to do with avoiding infinite loops
+ * caused by classes being requested for unfinalization during the
+ * unfinalization process itself.
+ * 
  * @author Tuomas Karkkainen
  */
 public class UnfinalizingClassTransformer implements ClassFileTransformer {

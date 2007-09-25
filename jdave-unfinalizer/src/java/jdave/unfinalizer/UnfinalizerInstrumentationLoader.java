@@ -18,6 +18,11 @@ package jdave.unfinalizer;
 import java.lang.instrument.Instrumentation;
 
 /**
+ * Adds unfinalizing transformer to instrumentation class loading stack.
+ * 
+ * premain is called when -javaagent:/path/to/JAR is specified and the manifest
+ * includes Premain-Class: jdave.unfinalizer.UnfinalizerInstrumentationLoader
+ * 
  * @author Tuomas Karkkainen
  */
 public class UnfinalizerInstrumentationLoader {

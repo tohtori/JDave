@@ -19,6 +19,9 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
 /**
+ * Delegate class file in byte array to ASM's UnfinalizingClassVisitor and
+ * returns transformed byte array.
+ * 
  * @author Tuomas Karkkainen
  */
 public class Unfinalizer {

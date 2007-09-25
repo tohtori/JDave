@@ -21,6 +21,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 /**
+ * Removes final from both class level and methods. Otherwise delegates to
+ * default implementations, i.e. keeps the class intact.
+ * 
  * @author Tuomas Karkkainen
  */
 public class UnfinalizingClassVisitor extends ClassAdapter {
