@@ -15,17 +15,14 @@
  */
 package jdave.unfinalizer;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
+import java.lang.instrument.Instrumentation;
 
 /**
  * @author Tuomas Karkkainen
  */
-public class Unfinalizer {
-    public byte[] removeFinals(final byte[] originalClass) {
-        final ClassReader reader = new ClassReader(originalClass);
-        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        reader.accept(new UnfinalizingClassVisitor(writer), ClassReader.SKIP_FRAMES);
-        return writer.toByteArray();
+public class UnfinalizerInstrumentationLoader {
+    public static void premain(@SuppressWarnings("unused")
+    final String agentArgs, final Instrumentation instrumentation) {
+        instrumentation.addTransformer(new UnfinalizingClassTransformer(new Unfinalizer()));
     }
 }
