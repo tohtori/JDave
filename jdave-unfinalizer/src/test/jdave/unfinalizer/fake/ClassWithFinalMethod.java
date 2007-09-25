@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.unfinalizer;
-
-import java.io.InputStream;
+package jdave.unfinalizer.fake;
 
 /**
  * @author Tuomas Karkkainen
  */
-public class Unfinalizer {
-    public Unfinalizer() {}
-
-    public InputStream removeFinal(final Class clazz) {
-        return ClassLoader.getSystemClassLoader().getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
+public class ClassWithFinalMethod {
+    public final void finalMethod() {
+        throw new RuntimeException("This method should be mocked.");
     }
 }
