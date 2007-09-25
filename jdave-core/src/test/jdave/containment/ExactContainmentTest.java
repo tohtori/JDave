@@ -43,6 +43,10 @@ public class ExactContainmentTest extends ContainmentTest {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
     
+    public void testIsNotInListWhichHasFewerElements() {
+        assertFalse(containment.matches(Arrays.asList(1, 2)));
+    }
+    
     public void testIsNotInListWhichContainsDuplicateElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 3)));
     }

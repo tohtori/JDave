@@ -38,6 +38,9 @@ public class ExactContainment extends CollectionContainment {
 
     @Override
     public boolean nullSafeMatches(Collection<?> actual) {
+        if (actual.size() != elements.size()) {
+            return false;
+        }
         List<Object> remaining = new ArrayList<Object>(actual);
         for (Object element : elements) {
             remaining.remove(element);
