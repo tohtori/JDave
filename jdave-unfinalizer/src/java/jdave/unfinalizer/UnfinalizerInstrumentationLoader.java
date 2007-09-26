@@ -26,10 +26,7 @@ import java.lang.instrument.Instrumentation;
  * @author Tuomas Karkkainen
  */
 public class UnfinalizerInstrumentationLoader {
-
-    public static void premain(@SuppressWarnings("unused")
-    final String agentArgs, final Instrumentation instrumentation) {
-        instrumentation.addTransformer(new UnfinalizingClassTransformer(
-                new Unfinalizer()));
+    public static void premain(@SuppressWarnings("unused") final String agentArgs, final Instrumentation instrumentation) {
+        instrumentation.addTransformer(new UnfinalizingClassTransformer(new Unfinalizer()));
     }
 }

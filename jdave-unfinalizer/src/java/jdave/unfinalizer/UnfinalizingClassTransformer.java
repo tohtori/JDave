@@ -30,17 +30,14 @@ import java.security.ProtectionDomain;
  * @author Tuomas Karkkainen
  */
 public class UnfinalizingClassTransformer implements ClassFileTransformer {
-
     private final Unfinalizer unfinalizer;
 
     public UnfinalizingClassTransformer(final Unfinalizer unfinalizer) {
         this.unfinalizer = unfinalizer;
     }
 
-    public byte[] transform(final ClassLoader loader, final String className,
-            final Class<?> classBeingRedefined,
-            final ProtectionDomain protectionDomain,
-            final byte[] classfileBuffer) throws IllegalClassFormatException {
+    public byte[] transform(final ClassLoader loader, final String className, final Class<?> classBeingRedefined,
+            final ProtectionDomain protectionDomain, final byte[] classfileBuffer) throws IllegalClassFormatException {
         if (loader == null) {
             return classfileBuffer;
         }

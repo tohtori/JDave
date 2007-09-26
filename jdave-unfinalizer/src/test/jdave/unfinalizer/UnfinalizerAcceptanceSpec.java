@@ -28,9 +28,7 @@ import jdave.unfinalizer.fake.FinalClass;
  */
 @RunWith(JDaveRunner.class)
 public class UnfinalizerAcceptanceSpec extends Specification<Class> {
-
     public class WhenClassIsFinal {
-
         public Class<FinalClass> create() {
             return FinalClass.class;
         }
@@ -41,7 +39,6 @@ public class UnfinalizerAcceptanceSpec extends Specification<Class> {
     }
 
     public class WhenMethodIsFinal {
-
         public Class<ClassWithFinalMethod> create() {
             return ClassWithFinalMethod.class;
         }
@@ -49,7 +46,6 @@ public class UnfinalizerAcceptanceSpec extends Specification<Class> {
         public void theMethodIsMadeNonFinal() {
             final ClassWithFinalMethod mock = mock(ClassWithFinalMethod.class);
             checking(new Expectations() {
-
                 {
                     one(mock).finalMethod();
                 }

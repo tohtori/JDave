@@ -1,4 +1,4 @@
-#Tue Sep 25 16:38:26 EEST 2007
+#Wed Sep 26 09:45:17 EEST 2007
 eclipse.preferences.version=1
 instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
@@ -84,7 +84,7 @@ org.eclipse.jdt.core.formatter.alignment_for_throws_clause_in_method_declaration
 org.eclipse.jdt.core.formatter.blank_lines_after_imports=1
 org.eclipse.jdt.core.formatter.blank_lines_after_package=1
 org.eclipse.jdt.core.formatter.blank_lines_before_field=1
-org.eclipse.jdt.core.formatter.blank_lines_before_first_class_body_declaration=1
+org.eclipse.jdt.core.formatter.blank_lines_before_first_class_body_declaration=0
 org.eclipse.jdt.core.formatter.blank_lines_before_imports=1
 org.eclipse.jdt.core.formatter.blank_lines_before_member_type=1
 org.eclipse.jdt.core.formatter.blank_lines_before_method=1
@@ -304,7 +304,7 @@ org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line=false
 org.eclipse.jdt.core.formatter.keep_empty_array_initializer_on_one_line=false
 org.eclipse.jdt.core.formatter.keep_imple_if_on_one_line=false
 org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line=false
-org.eclipse.jdt.core.formatter.lineSplit=80
+org.eclipse.jdt.core.formatter.lineSplit=140
 org.eclipse.jdt.core.formatter.never_indent_block_comments_on_first_column=false
 org.eclipse.jdt.core.formatter.never_indent_line_comments_on_first_column=false
 org.eclipse.jdt.core.formatter.number_of_blank_lines_at_beginning_of_method_body=0

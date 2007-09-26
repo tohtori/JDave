@@ -25,11 +25,8 @@ import org.junit.runner.RunWith;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class UnfinalizingClassTransformerSpec extends
-        Specification<UnfinalizingClassTransformer> {
-
+public class UnfinalizingClassTransformerSpec extends Specification<UnfinalizingClassTransformer> {
     public class WhenLoaderIsNotNull {
-
         Unfinalizer unfinalizer;
 
         public UnfinalizingClassTransformer create() {
@@ -39,15 +36,12 @@ public class UnfinalizingClassTransformerSpec extends
 
         public void returnOriginalClass() throws Exception {
             final byte[] originalBytes = new byte[] { 1, 2, 3 };
-            final byte[] transformedBytes = context.transform(null, "lol",
-                    String.class, String.class.getProtectionDomain(),
-                    originalBytes);
+            final byte[] transformedBytes = context.transform(null, "lol", String.class, String.class.getProtectionDomain(), originalBytes);
             specify(originalBytes, equal(transformedBytes));
         }
     }
 
     public class WhenLoaderIsNull {
-
         Unfinalizer unfinalizer;
 
         public UnfinalizingClassTransformer create() {
@@ -59,14 +53,12 @@ public class UnfinalizingClassTransformerSpec extends
             final byte[] originalBytes = new byte[] { 1, 2, 3 };
             final byte[] transformedBytes = new byte[] { 4, 5, 6 };
             checking(new Expectations() {
-
                 {
                     one(unfinalizer).removeFinals(originalBytes);
                     will(returnValue(transformedBytes));
                 }
             });
-            final byte[] resultBytes = context.transform(ClassLoader
-                    .getSystemClassLoader(), "wut", String.class, String.class
+            final byte[] resultBytes = context.transform(ClassLoader.getSystemClassLoader(), "wut", String.class, String.class
                     .getProtectionDomain(), originalBytes);
             specify(transformedBytes, equal(resultBytes));
         }
