@@ -32,10 +32,10 @@ import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**
- * FIXME, make this to scan classpath
- * 
+ * @deprecated use jdave.junit4.JDaveRunner
  * @author Joni Freeman
  */
+@Deprecated
 public class JDaveSuite extends TestSuite implements ISpecVisitor {
     private TestSuite suite;
 
