@@ -26,22 +26,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class UnfinalizingClassTransformerSpec extends Specification<UnfinalizingClassTransformer> {
-    public class WhenLoaderIsNotNull {
-        Unfinalizer unfinalizer;
-
-        public UnfinalizingClassTransformer create() {
-            unfinalizer = mock(Unfinalizer.class);
-            return new UnfinalizingClassTransformer(unfinalizer);
-        }
-
-        public void returnOriginalClass() throws Exception {
-            final byte[] originalBytes = new byte[] { 1, 2, 3 };
-            final byte[] transformedBytes = context.transform(null, "lol", String.class, String.class.getProtectionDomain(), originalBytes);
-            specify(originalBytes, equal(transformedBytes));
-        }
-    }
-
-    public class WhenLoaderIsNull {
+    public class WhenTransforming {
         Unfinalizer unfinalizer;
 
         public UnfinalizingClassTransformer create() {

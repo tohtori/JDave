@@ -15,13 +15,13 @@
  */
 package jdave.unfinalizer;
 
-import org.jmock.Expectations;
-import org.junit.runner.RunWith;
-
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import jdave.unfinalizer.fake.ClassWithFinalMethod;
 import jdave.unfinalizer.fake.FinalClass;
+
+import org.jmock.Expectations;
+import org.junit.runner.RunWith;
 
 /**
  * @author Tuomas Karkkainen
