@@ -281,7 +281,20 @@ JMock 2.0 is integrated as mocking framework. Please refer to
 JMock <code>Mockery</code> instance can be accessed using specification field <code>mockery</code>.
 By default, JDave uses imposteriser which allows mocking of concrete classes. This default can
 be changed with <code>mockery.setImposteriser</code> method.
-
+</p>
+<p>The final keyword protects classes and methods from being overridden.  Sometimes you want to mock a class or a method that has been declared final in a 3rd party library.
+this is not what final should be protecting against, so jdave-unfinalizer removes these restrictions on
+mocking.</p>
+<p>
+To load jdave-unfinalizer, and thereby unfinalize classes not in the boot classloader, launch your tests with the following vm parameter:
+</p>
+<p>
+-javaagent:/path/to/workspace/jdave-unfinalizer/target/jdave-unfinalizer-jar-name.jar
+</p>
+<p>
+UnfinalizerAcceptanceSpec demonstrates the mocking of a final class and a final method.  both previously
+impossible.
+</p>
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ObservableSpec.java">[examples]</a>
 </p>
