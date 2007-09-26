@@ -27,7 +27,7 @@ import jdave.unfinalizer.fake.FinalClass;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class UnfinalizerAcceptanceSpec extends Specification<Class> {
+public class UnfinalizerAcceptanceSpec extends Specification<Class<?>> {
     public class WhenClassIsFinal {
         public Class<FinalClass> create() {
             return FinalClass.class;
