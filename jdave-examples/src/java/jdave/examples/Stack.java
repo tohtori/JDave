@@ -99,7 +99,7 @@ public class Stack<T> implements Collection<T> {
     }
 
     public Object[] toArray() {
-        throw new UnsupportedOperationException();
+        return stack.toArray();
     }
 
     public <V> V[] toArray(V[] a) {
