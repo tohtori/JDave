@@ -15,18 +15,23 @@
  */
 package jdave.unfinalizer;
 
-import java.lang.instrument.Instrumentation;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
 
 /**
- * Adds unfinalizing transformer to instrumentation class loading stack.
- * 
- * premain is called when -javaagent:/path/to/JAR is specified and the manifest
- * includes Premain-Class: jdave.unfinalizer.UnfinalizerInstrumentationLoader
+ * Delegate class file in byte array to an ASM ClassVisitor and returns
+ * transformed byte array.
  * 
  * @author Tuomas Karkkainen
  */
-public class UnfinalizerInstrumentationLoader {
-    public static void premain(@SuppressWarnings("unused") final String agentArgs, final Instrumentation instrumentation) {
-        instrumentation.addTransformer(new UnfinalizingClassTransformer(new Unfinalizer()));
+public abstract class ClassVisitorDelegator {
+    public byte[] transform(final byte[] originalClass) {
+        final ClassReader reader = new ClassReader(originalClass);
+        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        reader.accept(createClassVisitor(writer), ClassReader.SKIP_FRAMES);
+        return writer.toByteArray();
     }
+
+    protected abstract ClassVisitor createClassVisitor(final ClassWriter writer);
 }

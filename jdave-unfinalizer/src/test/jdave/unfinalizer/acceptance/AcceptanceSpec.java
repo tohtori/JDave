@@ -13,10 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package jdave.unfinalizer;
+package jdave.unfinalizer.acceptance;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.unfinalizer.fake.ClassWithFinalMethod;
+import jdave.unfinalizer.fake.FinalClass;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -25,27 +27,30 @@ import org.junit.runner.RunWith;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class UnfinalizingClassTransformerSpec extends Specification<UnfinalizingClassTransformer> {
-    public class WhenTransforming {
-        Unfinalizer unfinalizer;
-
-        public UnfinalizingClassTransformer create() {
-            unfinalizer = mock(Unfinalizer.class);
-            return new UnfinalizingClassTransformer(unfinalizer);
+public class AcceptanceSpec extends Specification<Class<?>> {
+    public class WhenClassIsFinal {
+        public Class<FinalClass> create() {
+            return FinalClass.class;
         }
 
-        public void unfinalizesClass() throws Exception {
-            final byte[] originalBytes = new byte[] { 1, 2, 3 };
-            final byte[] transformedBytes = new byte[] { 4, 5, 6 };
+        public void isMadeNonFinal() {
+            mock(FinalClass.class);
+        }
+    }
+
+    public class WhenMethodIsFinal {
+        public Class<ClassWithFinalMethod> create() {
+            return ClassWithFinalMethod.class;
+        }
+
+        public void theMethodIsMadeNonFinal() {
+            final ClassWithFinalMethod mock = mock(ClassWithFinalMethod.class);
             checking(new Expectations() {
                 {
-                    one(unfinalizer).removeFinals(originalBytes);
-                    will(returnValue(transformedBytes));
+                    one(mock).finalMethod();
                 }
             });
-            final byte[] resultBytes = context.transform(ClassLoader.getSystemClassLoader(), "wut", String.class, String.class
-                    .getProtectionDomain(), originalBytes);
-            specify(transformedBytes, equal(resultBytes));
+            mock.finalMethod();
         }
     }
 }

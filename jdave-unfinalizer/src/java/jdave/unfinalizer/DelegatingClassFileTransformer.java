@@ -20,19 +20,30 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
- * Delegates classes being loaded to the actual transformer.
+ * Delegates classes being loaded to the actual transformer if the classloader
+ * is not null.
+ * 
+ * This pseudo-magical rule has something to do with avoiding infinite loops
+ * caused by classes being requested for unfinalization during the
+ * unfinalization process itself.
+ * 
+ * Although the acceptance spec passes without this magic, some real classes,
+ * for example XmlPullParser from wicket cannot be mocked without it.
  * 
  * @author Tuomas Karkkainen
  */
-public class UnfinalizingClassTransformer implements ClassFileTransformer {
-    private final Unfinalizer unfinalizer;
+public class DelegatingClassFileTransformer implements ClassFileTransformer {
+    private final ClassVisitorDelegator delegator;
 
-    public UnfinalizingClassTransformer(final Unfinalizer unfinalizer) {
-        this.unfinalizer = unfinalizer;
+    public DelegatingClassFileTransformer(final ClassVisitorDelegator delegator) {
+        this.delegator = delegator;
     }
 
     public byte[] transform(final ClassLoader loader, final String className, final Class<?> classBeingRedefined,
             final ProtectionDomain protectionDomain, final byte[] classfileBuffer) throws IllegalClassFormatException {
-        return this.unfinalizer.removeFinals(classfileBuffer);
+        if (loader == null) {
+            return classfileBuffer;
+        }
+        return this.delegator.transform(classfileBuffer);
     }
 }

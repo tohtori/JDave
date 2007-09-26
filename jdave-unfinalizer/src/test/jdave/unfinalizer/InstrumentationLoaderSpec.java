@@ -27,14 +27,16 @@ import org.junit.runner.RunWith;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class UnfinalizerInstrumentationLoaderSpec extends Specification<Void> {
-    public class WhenPreMainIsCalled {
+public class InstrumentationLoaderSpec extends Specification<Void> {
+    public class WhenPremainIsCalled {
         public void unfinalizingTransformerIsAdded() {
             final Instrumentation instrumentation = mock(Instrumentation.class);
-            checking(new Expectations() {{
-                one(instrumentation).addTransformer(with(any(UnfinalizingClassTransformer.class)));
-            }});
-            UnfinalizerInstrumentationLoader.premain(null, instrumentation);
+            checking(new Expectations() {
+                {
+                    one(instrumentation).addTransformer(with(any(DelegatingClassFileTransformer.class)));
+                }
+            });
+            InstrumentationLoader.premain(null, instrumentation);
         }
     }
 }

@@ -40,7 +40,7 @@
       <groupId>asm</groupId>
       <artifactId>asm-commons</artifactId>
       <version>3.0</version>
-    </dependency>
+    </dependency>   
   </dependencies> 
   <build>
     <plugins>
@@ -58,7 +58,7 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Premain-Class>jdave.unfinalizer.UnfinalizerInstrumentationLoader</Premain-Class>
+              <Premain-Class>jdave.unfinalizer.InstrumentationLoader</Premain-Class>
             </manifestEntries>
           </archive>
         </configuration>
