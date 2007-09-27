@@ -50,11 +50,11 @@ public class DelegatingClassFileTransformerSpec extends Specification<Delegating
     }
 
     public class WhenLoaderIsNull {
-        ClassVisitorDelegator unfinalizer;
+        ClassVisitorDelegator delegator;
 
         public DelegatingClassFileTransformer create() {
-            unfinalizer = mock(ClassVisitorDelegator.class);
-            return new DelegatingClassFileTransformer(unfinalizer);
+            delegator = mock(ClassVisitorDelegator.class);
+            return new DelegatingClassFileTransformer(delegator);
         }
 
         public void returnsOriginalClass() throws Exception {
