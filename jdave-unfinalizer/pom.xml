@@ -58,7 +58,7 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Premain-Class>jdave.unfinalizer.InstrumentationLoader</Premain-Class>
+              <Premain-Class>jdave.unfinalizer.InstrumentationAgent</Premain-Class>
             </manifestEntries>
           </archive>
         </configuration>

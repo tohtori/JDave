@@ -35,25 +35,18 @@ import org.objectweb.asm.Opcodes;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Class<?>> {
+public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
     public class WhenClassIsFinal {
-        public Class<?> create() {
-            return FinalClass.class;
-        }
-
         public void isMadeNonFinal() throws IOException {
-            final byte[] nonFinalClass = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(context));
+            final byte[] nonFinalClass = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(FinalClass.class));
             specify(classIsNotFinal(nonFinalClass));
         }
     }
 
     public class WhenMethodIsFinal {
-        public Class<?> create() {
-            return ClassWithFinalMethod.class;
-        }
-
         public void theMethodIsMadeNonFinal() throws IOException {
-            final byte[] classWithoutFinalMethods = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(context));
+            final byte[] classWithoutFinalMethods = new UnfinalizingClassVisitorDelegator()
+                    .transform(getOriginalClassAsByteArray(ClassWithFinalMethod.class));
             specify(classHasNoFinalMethods(classWithoutFinalMethods));
         }
     }

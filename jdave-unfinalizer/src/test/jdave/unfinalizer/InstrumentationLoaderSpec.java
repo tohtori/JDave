@@ -36,7 +36,7 @@ public class InstrumentationLoaderSpec extends Specification<Void> {
                     one(instrumentation).addTransformer(with(any(DelegatingClassFileTransformer.class)));
                 }
             });
-            InstrumentationLoader.premain(null, instrumentation);
+            InstrumentationAgent.premain(null, instrumentation);
         }
     }
 }
