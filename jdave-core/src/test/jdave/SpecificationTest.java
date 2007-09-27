@@ -35,7 +35,13 @@ public class SpecificationTest extends TestCase {
         specification = new Specification<EmptyStack>() { };
         specification.be = new EmptyStack();
     }
-    
+
+    public void testAliasesToSpecification() {
+        assertTrue(specification.should == specification);
+        assertTrue(specification.does == specification);
+        assertTrue(specification.must == specification);
+    }
+
     public void testPassesWhenActualAndExpectedAreBothNull() {
         Object actual = null;
         Object expected = null;

@@ -38,6 +38,7 @@ import org.hamcrest.StringDescription;
 public abstract class Specification<T> extends MockSupport {
     protected Specification<T> should = this;
     protected Specification<T> does = this;
+    protected Specification<T> must = this;
     private boolean actualState = true;
     public T be;
     public T context;
