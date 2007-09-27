@@ -37,9 +37,9 @@ public class SpecificationTest extends TestCase {
     }
 
     public void testAliasesToSpecification() {
-        assertTrue(specification.should == specification);
-        assertTrue(specification.does == specification);
-        assertTrue(specification.must == specification);
+        assertSame(specification.should, specification);
+        assertSame(specification.does, specification);
+        assertSame(specification.must, specification);
     }
 
     public void testPassesWhenActualAndExpectedAreBothNull() {
