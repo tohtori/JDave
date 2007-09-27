@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class InstrumentationLoaderSpec extends Specification<Void> {
+public class InstrumentationAgentSpec extends Specification<Void> {
     public class WhenPremainIsCalled {
         public void unfinalizingTransformerIsAdded() {
             final Instrumentation instrumentation = mock(Instrumentation.class);

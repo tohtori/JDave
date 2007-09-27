@@ -15,6 +15,7 @@
  */
 package jdave.unfinalizer.acceptance;
 
+import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import jdave.unfinalizer.fake.ClassWithFinalMethod;
@@ -29,8 +30,12 @@ import org.junit.runner.RunWith;
 @RunWith(JDaveRunner.class)
 public class AcceptanceSpec extends Specification<Void> {
     public class WhenClassIsFinal {
-        public void itIsMadeNonFinal() {
-            mock(FinalClass.class);
+        public void itIsMadeNonFinal() throws Throwable {
+            specify(new Block() {
+                public void run() throws Throwable {
+                    mock(FinalClass.class);
+                }
+            }, should.not().raiseAnyException());
         }
     }
 

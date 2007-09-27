@@ -1,4 +1,4 @@
-#Wed Sep 26 09:45:17 EEST 2007
+#Thu Sep 27 11:25:40 EEST 2007
 eclipse.preferences.version=1
 instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
@@ -23,7 +23,7 @@ org.eclipse.jdt.core.compiler.problem.incompatibleNonInheritedInterfaceMethod=er
 org.eclipse.jdt.core.compiler.problem.incompleteEnumSwitch=error
 org.eclipse.jdt.core.compiler.problem.indirectStaticAccess=error
 org.eclipse.jdt.core.compiler.problem.localVariableHiding=error
-org.eclipse.jdt.core.compiler.problem.methodWithConstructorName=warning
+org.eclipse.jdt.core.compiler.problem.methodWithConstructorName=error
 org.eclipse.jdt.core.compiler.problem.missingDeprecatedAnnotation=error
 org.eclipse.jdt.core.compiler.problem.missingOverrideAnnotation=error
 org.eclipse.jdt.core.compiler.problem.missingSerialVersion=error
@@ -40,7 +40,7 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCheck=error
 org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=disabled
 org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=error
 org.eclipse.jdt.core.compiler.problem.suppressWarnings=enabled
-org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=error
+org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=ignore
 org.eclipse.jdt.core.compiler.problem.typeParameterHiding=error
 org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=warning
 org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=ignore
