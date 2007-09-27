@@ -43,7 +43,7 @@ public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
         }
     }
 
-    public class WhenMethodIsFinal {
+    public class WhenAMethodIsFinal {
         public void theMethodIsMadeNonFinal() throws IOException {
             final byte[] classWithoutFinalMethods = new UnfinalizingClassVisitorDelegator()
                     .transform(getOriginalClassAsByteArray(ClassWithFinalMethod.class));
