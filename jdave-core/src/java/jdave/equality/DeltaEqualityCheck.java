@@ -15,12 +15,12 @@
  */
 package jdave.equality;
 
-import jdave.IEqualityCheck;
+import jdave.EqualityCheck;
 
 /**
  * @author Joni Freeman
  */
-public class DeltaEqualityCheck implements IEqualityCheck {
+public class DeltaEqualityCheck extends EqualityCheck {
     private final Number expectedNumber;
     private final double delta;
 

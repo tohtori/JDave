@@ -44,6 +44,7 @@ public abstract class Specification<T> extends MockSupport {
     public T context;
     private List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
     private IContextObjectFactory<T> contextObjectFactory = new DefaultContextObjectFactory<T>();
+    private static IStringComparisonFailure stringComparisonFailure;
 
     public Not<T> not() {
         actualState = false;
@@ -139,9 +140,7 @@ public abstract class Specification<T> extends MockSupport {
 
     public void specify(Object actual, IEqualityCheck equalityCheck) {
         try {
-            if (!equalityCheck.matches(actual)) {
-                throw new ExpectationFailedException(equalityCheck.error(actual));
-            }
+            equalityCheck.verify(actual);
         } finally {
             resetActualState();
         }
@@ -309,7 +308,7 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public IEqualityCheck equal(String obj) {
-        return new StringEqualsEqualityCheck(obj);
+        return new StringEqualsEqualityCheck(this, obj);
     }
 
     public IEqualityCheck equal(Object obj) {
@@ -436,5 +435,13 @@ public abstract class Specification<T> extends MockSupport {
                 return "Expected a non-null value";
             }
         };
+    }
+    
+    public static void setStringComparisonFailure(IStringComparisonFailure failure) {
+        stringComparisonFailure = failure;
+    }
+
+    IStringComparisonFailure stringComparisonFailure() {
+        return stringComparisonFailure;
     }
 }

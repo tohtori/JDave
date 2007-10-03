@@ -18,7 +18,7 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public class NotDeltaEqualityCheck implements IEqualityCheck {
+public class NotDeltaEqualityCheck extends EqualityCheck {
     private final Number expectedNumber;
     private final double delta;
 

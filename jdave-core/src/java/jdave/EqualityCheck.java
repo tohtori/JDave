@@ -18,8 +18,10 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public interface IEqualityCheck {
-    void verify(Object actual);
-    boolean matches(Object actual);
-    String error(Object actual);
+public abstract class EqualityCheck implements IEqualityCheck {
+    public void verify(Object actual) {
+        if (!matches(actual)) {
+            throw new ExpectationFailedException(error(actual));
+        }
+    }
 }

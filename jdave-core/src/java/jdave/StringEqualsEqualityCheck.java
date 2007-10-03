@@ -22,8 +22,11 @@ import jdave.util.Diff;
  * @author Joni Freeman
  */
 public class StringEqualsEqualityCheck extends EqualsEqualityCheck {
-    public StringEqualsEqualityCheck(String expected) {
+    private final Specification<?> specification;
+
+    public StringEqualsEqualityCheck(Specification<?> specification, String expected) {
         super(expected);
+        this.specification = specification;
     }
     
     @Override
@@ -33,5 +36,12 @@ public class StringEqualsEqualityCheck extends EqualsEqualityCheck {
         }
         Diff diff = Diff.diff((String) actual, (String) expected);
         return "The given strings do not match:\n" + diff.verbose();
+    }
+    
+    @Override
+    public void verify(Object actual) {
+        if (!matches(actual)) {
+            specification.stringComparisonFailure().fail(error(actual), (String) expected, (String) actual);
+        }
     }
 }

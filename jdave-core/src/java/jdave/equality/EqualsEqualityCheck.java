@@ -15,12 +15,12 @@
  */
 package jdave.equality;
 
-import jdave.IEqualityCheck;
+import jdave.EqualityCheck;
 
 /**
  * @author Joni Freeman
  */
-public class EqualsEqualityCheck implements IEqualityCheck {
+public class EqualsEqualityCheck extends EqualityCheck {
     protected final Object expected;
 
     public EqualsEqualityCheck(Object expected) {

@@ -18,8 +18,6 @@ package jdave;
 /**
  * @author Joni Freeman
  */
-public interface IEqualityCheck {
-    void verify(Object actual);
-    boolean matches(Object actual);
-    String error(Object actual);
+public interface IStringComparisonFailure {
+    void fail(String message, String expected, String actual);
 }
