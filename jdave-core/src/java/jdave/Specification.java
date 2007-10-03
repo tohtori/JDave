@@ -44,7 +44,7 @@ public abstract class Specification<T> extends MockSupport {
     public T context;
     private List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
     private IContextObjectFactory<T> contextObjectFactory = new DefaultContextObjectFactory<T>();
-    private static IStringComparisonFailure stringComparisonFailure;
+    private static IStringComparisonFailure stringComparisonFailure = new ExpectationFailedStringComparisonFailure();
 
     public Not<T> not() {
         actualState = false;
