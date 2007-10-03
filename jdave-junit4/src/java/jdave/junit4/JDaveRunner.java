@@ -15,9 +15,11 @@
  */
 package jdave.junit4;
 
+import jdave.IStringComparisonFailure;
 import jdave.Specification;
 import jdave.runner.SpecRunner;
 import jdave.tools.SpecdoxRunner;
+import junit.framework.ComparisonFailure;
 
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
@@ -36,6 +38,11 @@ public class JDaveRunner extends Runner {
 
     public JDaveRunner(Class<? extends Specification<?>> spec) {
         this.spec = spec;
+        Specification.setStringComparisonFailure(new IStringComparisonFailure() {
+            public void fail(String message, String expected, String actual) {
+                throw new ComparisonFailure(message, expected, actual);
+            }
+        });
         description = DescriptionFactory.create(spec);
     }
 
