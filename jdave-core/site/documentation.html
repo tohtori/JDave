@@ -113,10 +113,21 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 </pre>
 
 Specification base class provides a limited vocabulary to be used for writing
-expectations. In the above example <b><i>should</i></b> is a supplemental word which
+expectations. In the above example <b><i>should</i></b> is a supplemental word (*) which
 does nothing. It is used to make expectation more readable. <b><i>not()</i></b> triggers
 following expectations to be negations. <b><i>be</i></b> refers to the object
 which was returned from <code>create()</code> method (be == create()).
+<p>
+
+(*) <b><i>does</i></b> and <b><i>must</i></b> can be used too, so these are equivalent:
+<pre>
+<code>
+specify(something, should.equal(...));
+specify(something, does.equal(...));
+specify(something, must.equal(...));
+</code>
+</pre>
+
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/StackSpec.java">[examples]</a>
