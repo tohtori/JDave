@@ -15,6 +15,7 @@
  */
 package jdave.wicket;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 
 import java.util.Arrays;
@@ -36,8 +37,7 @@ public class DataViewSpec extends ComponentSpecification<DataView> {
 
     @Override
     protected DataView newComponent(String id, IModel model) {
-        return dataView = new DataView(id, new ListDataProvider(Arrays
-                .asList("one", "two", "three"))) {
+        return dataView = new DataView(id, new ListDataProvider(Arrays.asList("one", "two", "three"))) {
             @Override
             protected void populateItem(Item item) {
             }
@@ -50,7 +50,7 @@ public class DataViewSpec extends ComponentSpecification<DataView> {
         }
 
         public void theContextIsSameInstanceAsDataViewCreatedInNewContainer() {
-            specify(context, sameInstance(dataView));
+            specify(context, is(sameInstance(dataView)));
         }
 
         public void dataViewIsInitialized() {
