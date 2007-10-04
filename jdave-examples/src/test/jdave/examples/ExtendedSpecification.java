@@ -34,6 +34,7 @@ import jdave.Specification;
 public abstract class ExtendedSpecification<T> extends Specification<T> {
     protected ExtendedSpecification<T> should = this;
     protected ExtendedSpecification<T> does = this;
+    protected ExtendedSpecification<T> must = this;
     
     public void specify(double actual, Approximation approximation) {
         approximation.approximate(actual);
