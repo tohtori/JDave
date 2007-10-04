@@ -312,7 +312,7 @@ impossible.
 
 <h2>Extending default vocabulary</h2>
 
-Extending the default vocabulary is done by overriding fields <b><i>should</i></b> and <b><i>does</i></b>.
+Extending the default vocabulary is done by overriding fields <b><i>should</i></b>, <b><i>must</i></b> and <b><i>does</i></b>.
 Then adding new <code>specify(...)</code> and factory methods which provide the extension. Negation
 can be extended by overriding <code>not()</code> method. 
 <p>
@@ -331,6 +331,7 @@ The methods can then be statically imported to specification which needs them.)
 public abstract class ExtendedSpecification&lt;T&gt; extends Specification&lt;T&gt; {
     protected ExtendedSpecification&lt;T&gt; should = this;
     protected ExtendedSpecification&lt;T&gt; does = this;
+    protected ExtendedSpecification&lt;T&gt; must = this;
     
     public void specify(double actual, Approximation approximation) {
         approximation.approximate(actual);
