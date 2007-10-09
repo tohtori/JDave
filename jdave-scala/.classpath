@@ -12,7 +12,7 @@
 	<classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" sourcepath="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-library/1.0/hamcrest-library-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jdave/jdave-junit4/1.0-SNAPSHOT/jdave-junit4-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/org/jdave/jdave-junit4/1.0-SNAPSHOT/jdave-junit4-1.0-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.3/junit-4.3.jar" sourcepath="M2_REPO/junit/junit/4.3/junit-4.3-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.4/junit-4.4.jar" sourcepath="M2_REPO/junit/junit/4.4/junit-4.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jmock/jmock/2.1.0/jmock-2.1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-api/1.0/hamcrest-api-1.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
