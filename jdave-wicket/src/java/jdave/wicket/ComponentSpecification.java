@@ -113,8 +113,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     }
 
     private static class TestPageSource implements ITestPageSource {
-
-        Page page; 
+        private Page page; 
         
         public TestPageSource(Page page) {
             this.page = page;
