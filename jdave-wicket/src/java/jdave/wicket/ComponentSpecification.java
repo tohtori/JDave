@@ -54,6 +54,9 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         onCreate();
     }
 
+    /**
+     * Called after create(). No need to call super.onCreate().
+     */
     protected void onCreate() {
     }
 
