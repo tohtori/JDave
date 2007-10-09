@@ -45,8 +45,17 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
  * @author Joni Freeman
  */
 public abstract class ComponentSpecification<T extends Component> extends Specification<T> {
-    protected final BaseWicketTester wicket = newWicketTester();
+    protected BaseWicketTester wicket;
     private T specifiedComponent;
+    
+    @Override
+    public final void create() {
+        wicket = newWicketTester();
+        onCreate();
+    }
+
+    protected void onCreate() {
+    }
 
     /**
      * Start component for context.
