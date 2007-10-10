@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Component.IVisitor;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.hamcrest.Matcher;
 
 /**
@@ -34,7 +33,7 @@ public class Selector {
         return firstMatch.isEmpty() ? null : firstMatch.get(0);
     }
 
-    public <T> Collection<T> all(WebMarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+    public <T> Collection<T> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
         return select(root, componentType, matcher, IVisitor.CONTINUE_TRAVERSAL);
     }
 
