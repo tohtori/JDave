@@ -33,7 +33,7 @@ public class Selector {
         return firstMatch.isEmpty() ? null : firstMatch.get(0);
     }
 
-    public <T> Collection<T> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+    public <T> Collection<T> all(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
         return select(root, componentType, matcher, IVisitor.CONTINUE_TRAVERSAL);
     }
 
