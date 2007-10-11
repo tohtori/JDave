@@ -16,7 +16,6 @@
 package jdave.wicket;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.Component;
@@ -33,7 +32,7 @@ public class Selector {
         return firstMatch.isEmpty() ? null : firstMatch.get(0);
     }
 
-    public <T> Collection<T> all(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
+    public <T> List<T> all(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
         return select(root, componentType, matcher, IVisitor.CONTINUE_TRAVERSAL);
     }
 

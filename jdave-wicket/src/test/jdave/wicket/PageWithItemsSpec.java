@@ -15,6 +15,9 @@
  */
 package jdave.wicket;
 
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.is;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -43,12 +46,12 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         
         public void theItemsCanBeReferencedEasilyInListView() {
             ListItem item = itemAt((ListView) context.get("listView"), 1);
-            specify(item.get("item").getModelObject(), should.equal("1"));
+            specify(item.get("item").getModelObject(), does.equal("1"));
         }
         
         public void theItemsCanBeReferencedEasilyInRefreshingView() {
             Item item = itemAt((RefreshingView) context.get("refreshingView"), 1);
-            specify(item.get("item").getModelObject(), should.equal("1"));
+            specify(item.get("item").getModelObject(), does.equal("1"));
         }
         
         public void theModelObjectsCanBeCollectedFromComponents() {
@@ -64,6 +67,17 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         public void theModelObjectsCanBeUsedInNegativeContainmentExpectations() {
             ListView listView = (ListView) context.get("listView");
             specify(listView, does.not().containAll(0, 1, 2, 4));
+        }
+        
+        public void theFirstItemCanBePickedUsingHamcrestMatcher() {
+            Item item = selectFirst(Item.class).from(context).which(is(0));
+            specify(item.get("item").getModelObject(), does.equal("0"));
+        }
+        
+        @SuppressWarnings("unchecked")
+        public void allItemsCanBePickedUsingHamcrestMatcher() {
+            List<Item> items = selectAll(Item.class).from(context).which(is(anyOf(is(0), is(1))));
+            specify(modelObjects(items.iterator()), containsInOrder(0, 1));
         }
     }
     

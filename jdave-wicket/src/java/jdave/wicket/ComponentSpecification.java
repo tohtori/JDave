@@ -38,6 +38,7 @@ import org.apache.wicket.util.tester.BaseWicketTester;
 import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.TestPanelSource;
 import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
+import org.hamcrest.Matcher;
 
 /**
  * A base class for Wicket's <code>Component</code> specifications.
@@ -197,7 +198,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      *
      * return new BaseWicketTester(newApplication());
      *
-     * <code></blockquote></pre>
+     * </code></blockquote></pre>
      *
      * So, it is possible to overwrite <code>newApplication</code> if you just need
      * a different <code>Application</code> for a specification.
@@ -216,6 +217,30 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     }
 
     /**
+     * Select first component whose model object matches given Hamcrest matcher:
+     * <pre><blockquote><code>
+     *
+     * Item item = selectFirst(Item.class).from(context).which(is(0));
+     *
+     * </code></blockquote></pre>
+     */
+    public <S extends Component> Selection<S> selectFirst(Class<S> type) {
+        return new Selection<S>(type);
+    }
+        
+    /**
+     * Select all components whose model objects match given Hamcrest matcher:
+     * <pre><blockquote><code>
+     *
+     * List<Label> labels = selectAll(Label.class).from(context).which(is(Person.class));
+     *
+     * </code></blockquote></pre>
+     */
+    public <S extends Component> MultiSelection<S> selectAll(Class<S> type) {
+        return new MultiSelection<S>(type);
+    }
+
+    /**
      * Create a new instance of a Wicket component to be specified.
      * <p>
      * The component must get given id. If the component is a <code>Page</code>,
@@ -226,4 +251,42 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @see #startComponent(IModel)
      */
     protected abstract T newComponent(String id, IModel model);
+}
+
+class Selection<S> {
+    private final Class<S> componentType;
+    private MarkupContainer root;
+    
+    Selection(Class<S> componentType) {
+        this.componentType = componentType;                
+    }
+
+    public Selection<S> from(MarkupContainer root) {
+        this.root = root;
+        return this;
+    }
+
+    public S which(Matcher<?> matcher) {
+        Selector selector = new Selector();
+        return selector.first(root, componentType, matcher);
+    }            
+}
+
+class MultiSelection<S> {
+    private final Class<S> componentType;
+    private MarkupContainer root;
+    
+    MultiSelection(Class<S> componentType) {
+        this.componentType = componentType;                
+    }
+
+    public MultiSelection<S> from(MarkupContainer root) {
+        this.root = root;
+        return this;
+    }
+
+    public List<S> which(Matcher<?> matcher) {
+        Selector selector = new Selector();
+        return selector.all(root, componentType, matcher);
+    }            
 }
