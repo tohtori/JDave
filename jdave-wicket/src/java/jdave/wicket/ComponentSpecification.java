@@ -38,7 +38,6 @@ import org.apache.wicket.util.tester.BaseWicketTester;
 import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.TestPanelSource;
 import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
-import org.hamcrest.Matcher;
 
 /**
  * A base class for Wicket's <code>Component</code> specifications.
@@ -251,42 +250,4 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @see #startComponent(IModel)
      */
     protected abstract T newComponent(String id, IModel model);
-}
-
-class Selection<S> {
-    private final Class<S> componentType;
-    private MarkupContainer root;
-    
-    Selection(Class<S> componentType) {
-        this.componentType = componentType;                
-    }
-
-    public Selection<S> from(MarkupContainer root) {
-        this.root = root;
-        return this;
-    }
-
-    public S which(Matcher<?> matcher) {
-        Selector selector = new Selector();
-        return selector.first(root, componentType, matcher);
-    }            
-}
-
-class MultiSelection<S> {
-    private final Class<S> componentType;
-    private MarkupContainer root;
-    
-    MultiSelection(Class<S> componentType) {
-        this.componentType = componentType;                
-    }
-
-    public MultiSelection<S> from(MarkupContainer root) {
-        this.root = root;
-        return this;
-    }
-
-    public List<S> which(Matcher<?> matcher) {
-        Selector selector = new Selector();
-        return selector.all(root, componentType, matcher);
-    }            
 }
