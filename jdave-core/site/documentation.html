@@ -105,7 +105,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(stack, should.not().be.empty());
+            specify(stack, must.not().be.empty());
         }
     }
 }
@@ -113,13 +113,13 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 </pre>
 
 Specification base class provides a limited vocabulary to be used for writing
-expectations. In the above example <b><i>should</i></b> is a supplemental word (*) which
+expectations. In the above example <b><i>must</i></b> is a supplemental word (*) which
 does nothing. It is used to make expectation more readable. <b><i>not()</i></b> triggers
 following expectations to be negations. <b><i>be</i></b> refers to the object
 which was returned from <code>create()</code> method (be == create()).
 <p>
 
-(*) <b><i>does</i></b> and <b><i>must</i></b> can be used too, so these are equivalent:
+(*) <b><i>does</i></b> and <b><i>should</i></b> can be used too, so these are equivalent:
 <pre>
 <code>
 specify(something, should.equal(...));
@@ -140,8 +140,8 @@ Expectations are set using <code>specify(..., ...)</code> method.
 <ul>
   <li><b>Basic:</b></li>
 <pre><code>
-specify(actual.getAge(), should.equal(20));
-specify(actual, should.be.empty());
+specify(actual.getAge(), must.equal(20));
+specify(actual, must.be.empty());
 </code></pre>
   <li><b>Collection, array, iterator:</b></li>
 <pre><code>
@@ -150,15 +150,15 @@ specify(actual, containsExactly(1, 2, 3));
 </code></pre>
   <li><b>Exception:</b></li>
 <pre><code>
-specify(new Block() {}, should.not().raise(SomeException.class));
-specify(new Block() {}, should.raise(SomeException.class, "message"));
-specify(new Block() {}, should.raiseExactly(SomeException.class));
-specify(new Block() {}, should.not().raiseAnyException());
+specify(new Block() {}, must.not().raise(SomeException.class));
+specify(new Block() {}, must.raise(SomeException.class, "message"));
+specify(new Block() {}, must.raiseExactly(SomeException.class));
+specify(new Block() {}, must.not().raiseAnyException());
 </code></pre>
   <li><b>Contract:</b></li>
 <pre><code>
 specify(actual, satisfies(new SerializableContract()));
-specify(actual, should.not().satisfy(new CloneableContract()));
+specify(actual, does.not().satisfy(new CloneableContract()));
 </code></pre>
   <li><b>Hamcrest:</b></li>
 <pre><code>

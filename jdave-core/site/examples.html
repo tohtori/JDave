@@ -49,12 +49,12 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         }
 
         public void isEmpty() {
-            specify(stack, should.be.empty());
+            specify(stack, must.be.empty());
         }
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(stack, should.not().be.empty());
+            specify(stack, must.not().be.empty());
         }
     }
 
@@ -70,7 +70,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
         }
 
         public void isFull() {
-            specify(stack, should.be.full());
+            specify(stack, must.be.full());
         }
 
         public void complainsOnPush() {
@@ -111,7 +111,7 @@ public class StackSpec extends Specification&lt;Stack&lt;?&gt;&gt; {
 
         public void addsToTheTopWhenSentPush() {
             stack.push(100);
-            specify(stack.peek(), should.equal(100));
+            specify(stack.peek(), must.equal(100));
         }
     }
 }
