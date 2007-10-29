@@ -43,7 +43,7 @@ public class StackSpec extends Specification<Stack<?>> {
 
         public void isNoLongerEmptyAfterPush() {
             stack.push("anything");
-            specify(stack, should.not().be.empty());
+            specify(stack, must.not().be.empty());
         }
     }
 
@@ -59,7 +59,7 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void isFull() {
-            specify(stack, should.be.full());
+            specify(stack, must.be.full());
         }
 
         public void complainsOnPush() {
@@ -100,7 +100,7 @@ public class StackSpec extends Specification<Stack<?>> {
 
         public void addsToTheTopWhenSentPush() {
             stack.push(100);
-            specify(stack.peek(), should.equal(100));
+            specify(stack.peek(), must.equal(100));
         }
     }
 }
