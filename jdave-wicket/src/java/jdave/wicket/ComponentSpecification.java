@@ -31,7 +31,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.BaseWicketTester;
@@ -155,10 +155,10 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     }
 
     /**
-     * Select an item from a <code>RefreshingView</code>.
+     * Select an item from a <code>RepeatingView</code>.
      */
-    public Item itemAt(RefreshingView view, int index) {
-        Iterator<?> items = view.getItems();
+    public Item itemAt(RepeatingView view, int index) {
+        Iterator<?> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
