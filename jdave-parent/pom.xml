@@ -28,6 +28,7 @@
     <module>../jdave-wicket-selenium</module>
     <module>../jdave-examples</module>
     <module>../jdave-report-plugin</module>
+    <module>../jdave-scala</module>
   </modules>
   
   <developers>
