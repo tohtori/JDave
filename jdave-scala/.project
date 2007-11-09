@@ -4,14 +4,14 @@
   <projects/>
   <buildSpec>
     <buildCommand>
-      <name>ch.epfl.lamp.sdt.core.scalabuilder</name>
+      <name>scala.plugin.scalabuilder</name>
     </buildCommand>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
     </buildCommand>
   </buildSpec>
   <natures>
-    <nature>ch.epfl.lamp.sdt.core.scalanature</nature>
+    <nature>scala.plugin.scalanature</nature>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>

@@ -90,10 +90,10 @@
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
           <projectnatures>
-            <java.lang.String>ch.epfl.lamp.sdt.core.scalanature</java.lang.String>
+            <java.lang.String>scala.plugin.scalanature</java.lang.String>
           </projectnatures>
           <buildcommands>
-            <java.lang.String>ch.epfl.lamp.sdt.core.scalabuilder</java.lang.String>
+            <java.lang.String>scala.plugin.scalabuilder</java.lang.String>
           </buildcommands>
         </configuration>
       </plugin>

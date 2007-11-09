@@ -1,7 +1,7 @@
-#Wed Jul 25 13:37:30 EEST 2007
+#Fri Sep 07 18:49:21 EEST 2007
 eclipse.preferences.version=1
 instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
-org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala
+org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala,*.scala
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5
 org.eclipse.jdt.core.compiler.source=1.5
