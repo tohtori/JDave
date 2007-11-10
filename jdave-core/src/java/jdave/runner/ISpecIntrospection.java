@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave;
+package jdave.runner;
 
 import java.lang.reflect.Method;
 
-import jdave.runner.DefaultSpecIntrospection;
-
 /**
- * Default implementation of IContextFactory
- *
- * @author Janne Hietam&auml;ki
+ * @author Joni Freeman
  */
-public class DefaultContextObjectFactory<T> implements IContextObjectFactory<T> {
-    @SuppressWarnings("unchecked")
-    public T newContextObject(Object context) throws Exception {
-        try {
-            Method method = context.getClass().getMethod(DefaultSpecIntrospection.INITIALIZER_NAME);
-            return (T) method.invoke(context);
-        } catch (NoSuchMethodException e) {
-            return null;
-        }
-    }
+public interface ISpecIntrospection {
+    boolean isBehavior(Method method);
+    boolean isContextClass(Class<?> specType, Class<?> possibleContext);
 }

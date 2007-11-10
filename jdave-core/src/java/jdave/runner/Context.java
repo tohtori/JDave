@@ -16,7 +16,6 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import jdave.Specification;
 
@@ -25,8 +24,6 @@ import jdave.Specification;
  * @author Pekka Enberg
  */
 public abstract class Context {
-    public static final String INITIALIZER_NAME = "create";
-    static final String DISPOSER_NAME = "destroy";
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
 
@@ -50,51 +47,10 @@ public abstract class Context {
     }
 
     private boolean isBehavior(Method method) {
-        if (method.getDeclaringClass().equals(Object.class)) {
-            return false;
-        }
-        if (method.getName().equals(INITIALIZER_NAME)) {
-            return false;
-        }
-        if (method.getName().equals(DISPOSER_NAME)) {
-            return false;
-        }
-        if (method.isSynthetic()) {
-            return false;
-        }
-        return true;
+        return new DefaultSpecIntrospection().isBehavior(method);
     }
 
     public boolean isContextClass() {
-        if (!isConcreteAndPublic()) {
-            return false;
-        }
-        if (!hasBehaviors()) {
-            return false;
-        }
-        return isInnerClass();
-    }
-
-    private boolean hasBehaviors() {
-        for (Method method : contextType.getMethods()) {
-            if (isBehavior(method)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isConcreteAndPublic() {
-        int mod = contextType.getModifiers();
-        return (Modifier.isPublic(mod) && !Modifier.isAbstract(mod));
-    }
-
-    private boolean isInnerClass() {
-        try {
-            contextType.getDeclaredConstructor(specType);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return new DefaultSpecIntrospection().isContextClass(specType, contextType);
     }
 }

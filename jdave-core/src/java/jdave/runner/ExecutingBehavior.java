@@ -140,7 +140,7 @@ public class ExecutingBehavior extends Behavior {
 
     private void invokeDisposer(Object context) {
         try {
-            Method method = context.getClass().getMethod(Context.DISPOSER_NAME);
+            Method method = context.getClass().getMethod(DefaultSpecIntrospection.DISPOSER_NAME);
             method.invoke(context);
         } catch (Exception e) {
             /* Disposer is optional so ignore the exception.  */
