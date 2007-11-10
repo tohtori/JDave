@@ -89,7 +89,6 @@
           </projectnatures>
           <buildcommands>
             <java.lang.String>scala.plugin.scalabuilder</java.lang.String>
-            <java.lang.String>org.eclipse.jdt.core.javabuilder</java.lang.String>
           </buildcommands>
         </configuration>
       </plugin>

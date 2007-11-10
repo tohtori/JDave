@@ -9,9 +9,6 @@
     <buildCommand>
       <name>scala.plugin.scalabuilder</name>
     </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
   </buildSpec>
   <natures>
     <nature>scala.plugin.scalanature</nature>
