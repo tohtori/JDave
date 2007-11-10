@@ -2,15 +2,19 @@
   <name>jdave-scala</name>
   <comment/>
   <projects>
-    <project>jdave-core</project>
     <project>jdave-junit4</project>
+    <project>jdave-core</project>
   </projects>
   <buildSpec>
     <buildCommand>
       <name>scala.plugin.scalabuilder</name>
     </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
   </buildSpec>
   <natures>
     <nature>scala.plugin.scalanature</nature>
+    <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>

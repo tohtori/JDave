@@ -50,7 +50,7 @@
     </resources>
     <testResources>
       <testResource>
-        <directory>src/test</directory>
+        <directory>src/java</directory>
       </testResource>
     </testResources>
 
@@ -85,9 +85,11 @@
         <configuration>
           <projectnatures>
             <java.lang.String>scala.plugin.scalanature</java.lang.String>
+            <java.lang.String>org.eclipse.jdt.core.javanature</java.lang.String>
           </projectnatures>
           <buildcommands>
             <java.lang.String>scala.plugin.scalabuilder</java.lang.String>
+            <java.lang.String>org.eclipse.jdt.core.javabuilder</java.lang.String>
           </buildcommands>
         </configuration>
       </plugin>

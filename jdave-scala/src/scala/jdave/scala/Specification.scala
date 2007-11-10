@@ -1,9 +1,9 @@
 package jdave.scala;
 
-import jdave.ExpectedException;
-import jdave.ExpectedNoThrow;
-import jdave.IContainment;
+import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
+import jdave.runner.IntrospectionStrategy;
 
+@IntrospectionStrategy(classOf[ScalaIntrospection])
 trait Specification[T] extends jdave.Specification {
   def specify(block: () => Unit, e: ExpectedException) {
     super.specify(new Block() {

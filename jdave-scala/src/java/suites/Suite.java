@@ -10,5 +10,4 @@ import org.junit.runner.RunWith;
 @Groups(include=Groups.ALL)
 @SpecDirs("target/classes")
 public class Suite {
-
 }
