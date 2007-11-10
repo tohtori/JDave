@@ -47,10 +47,22 @@ public abstract class Context {
     }
 
     private boolean isBehavior(Method method) {
-        return new DefaultSpecIntrospection().isBehavior(method);
+        return newIntrospection().isBehavior(method);
     }
 
     public boolean isContextClass() {
-        return new DefaultSpecIntrospection().isContextClass(specType, contextType);
+        return newIntrospection().isContextClass(specType, contextType);
+    }
+    
+    private ISpecIntrospection newIntrospection() {
+        try {
+            IntrospectionStrategy strategy = specType.getAnnotation(IntrospectionStrategy.class);
+            if (strategy != null) {
+                return strategy.value().newInstance();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return new DefaultSpecIntrospection();
     }
 }
