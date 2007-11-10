@@ -48,7 +48,7 @@ class StackSpec extends Specification[Stack[Any]] {
     }
 
     def complainsOnPush {
-      specify({ stack.push(100) }, should raise classOf[StackOverflowException])
+      specify({ stack.push(100) }, must raise classOf[StackOverflowException])
     }
     
     def containsAllItems {
@@ -76,7 +76,7 @@ class StackSpec extends Specification[Stack[Any]] {
 
     def addsToTheTopWhenSentPush {
       stack.push(100)
-      specify(stack.peek(), should equal 100)
+      specify(stack.peek(), must equal 100)
     }
   }
 }
