@@ -451,7 +451,7 @@ public abstract class Specification<T> extends MockSupport {
         return new MapContainment(keys);
     }
     
-    public void specify(Map<?, ?> map, MapContainment containment) {
-        containment.verify(map);
+    public void specify(Map<?, ?> actual, MapContainment containment) {
+        containment.verify(actual);
     }
 }

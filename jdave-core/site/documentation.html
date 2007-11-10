@@ -240,8 +240,16 @@ etc.
 </code>
 </pre>
 
-Application specific containments can be done by implementing <code>jdave.IContainment</code>
-interface.
+Application specific containments can be done by implementing <code>jdave.IContainment</code> interface.
+<p>
+Map containments can be specified using <code>maps(key1, key2, ...).to(value1, value2, ...)</code> construct:
+<pre>
+<code>
+Map&lt;Integer, String&gt; actual = Maps.map(1, "foo").map(2, "bar"); 
+specify(actual, maps(1, 2).to("foo", "bar"));
+</code>
+</pre>
+
 
 <p>
 <a href="http://svn.laughingpanda.org/svn/jdave/trunk/jdave-examples/src/test/jdave/examples/ContainmentSampleSpec.java">[examples]</a>
