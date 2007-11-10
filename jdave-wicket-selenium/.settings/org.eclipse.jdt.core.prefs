@@ -1,5 +1,6 @@
-#Sat Nov 10 11:59:17 GMT 2007
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
+#Sat Nov 10 12:15:29 GMT 2007
 eclipse.preferences.version=1
-org.eclipse.jdt.core.compiler.source=1.5
+instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5
+org.eclipse.jdt.core.compiler.source=1.5
