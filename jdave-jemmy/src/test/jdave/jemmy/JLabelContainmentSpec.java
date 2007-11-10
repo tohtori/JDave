@@ -56,7 +56,7 @@ public class JLabelContainmentSpec extends Specification<JLabelContainment> {
 
         public JLabelContainment create() {
             containerMock = mock(Container.class);
-            childContainerMock = mock(Container.class);
+            childContainerMock = mock(Container.class, "child");
             containment = new JLabelContainment("Hello");
             return containment;
         }
