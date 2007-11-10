@@ -23,7 +23,7 @@ class StackSpec extends Specification[Stack[Any]] {
   class EmptyStack {
     val stack = new Stack[String]
 
-    def create() = stack
+    def create = stack
 
     def isEmpty {
       //specify(stack, should be empty)
