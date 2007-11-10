@@ -73,7 +73,12 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      */
     public T startComponent(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
-        Class<?> type = (Class<?>) superclass.getActualTypeArguments()[0];
+        Class<?> type = null;
+        if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
+            type = (Class<?>) superclass.getActualTypeArguments()[0];            
+        } else {
+            type = (Class<?>) ((ParameterizedType) superclass.getActualTypeArguments()[0]).getRawType();
+        }
         if (Page.class.isAssignableFrom(type)) {
             startPage(model);
         } else if (Panel.class.isAssignableFrom(type)) {
