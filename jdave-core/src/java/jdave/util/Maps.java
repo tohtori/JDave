@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.support;
+package jdave.util;
 
 
 /**
  * @author Joni Freeman
  */
-public class Assert {
-    public static void notNull(Object obj, String message) {
-        if (obj == null) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void isTrue(boolean b, String message) {
-        if (!b) {
-            throw new IllegalArgumentException(message);
-        }
+public class Maps {
+    public static <K, V> FluentMap<K, V> map(K key, V value) {
+        FluentMap<K, V> map = new FluentMap<K, V>();
+        map.put(key, value);
+        return map;
     }
 }

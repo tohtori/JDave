@@ -20,7 +20,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import jdave.containment.MapContainment;
 import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
 import jdave.equality.NotEqualsEqualityCheck;
@@ -443,5 +445,13 @@ public abstract class Specification<T> extends MockSupport {
 
     IStringComparisonFailure stringComparisonFailure() {
         return stringComparisonFailure;
+    }
+
+    public MapContainment maps(Object... keys) {
+        return new MapContainment(keys);
+    }
+    
+    public void specify(Map<?, ?> map, MapContainment containment) {
+        containment.verify(map);
     }
 }
