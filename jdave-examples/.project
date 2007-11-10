@@ -2,28 +2,17 @@
   <name>jdave-examples</name>
   <comment/>
   <projects>
-    <project>jdave-core</project>
     <project>jdave-junit4</project>
     <project>jdave-wicket</project>
     <project>jdave-jemmy</project>
+    <project>jdave-core</project>
   </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
     </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.wst.common.modulecore.ComponentStructuralBuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.wst.validation.validationbuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.eclipse.wst.common.modulecore.ComponentStructuralBuilderDependencyResolver</name>
-    </buildCommand>
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
-    <nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
-    <nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
   </natures>
 </projectDescription>
