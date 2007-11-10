@@ -1,10 +1,11 @@
 package jdave.scala;
 
+import jdave.{Specification => JavaSpecification}
 import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
 import jdave.runner.IntrospectionStrategy;
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
-trait Specification[T] extends jdave.Specification {
+trait Specification[T] extends JavaSpecification {
   def specify(block: () => Unit, e: ExpectedException) {
     super.specify(new Block() {
       def run = block()
@@ -24,7 +25,7 @@ trait Specification[T] extends jdave.Specification {
   def containsInPartialOrder[E](i: Iterable[E]) = super.containsInPartialOrder(toJavaList(i))
   
   def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
-  
+    
   private def toJavaList[E](i: Iterable[E]): java.util.List = {
     val list = new java.util.ArrayList
     i.foreach(item => list.add(item))
