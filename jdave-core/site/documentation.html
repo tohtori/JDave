@@ -294,8 +294,10 @@ interface.
 
 <h2>Using mocks</h2>
 
-JMock 2 is integrated as mocking framework. Please refer to 
-<a href="http://www.jmock.org">JMock documentation</a>.
+JMock 2 is integrated as mocking framework. Please refer to <a href="http://www.jmock.org">JMock documentation</a>.
+<p>
+Mocks are created with <code>mock</code> method and all mocks are automatically verified after the behaviour method
+execution. Dummies can be created with <code>dummy</code> method. Dummy is a mock whose all methods are ignored.
 <p>
 JMock <code>Mockery</code> instance can be accessed using specification field <code>mockery</code>.
 By default, JDave uses imposteriser which allows mocking of concrete classes. This default can
