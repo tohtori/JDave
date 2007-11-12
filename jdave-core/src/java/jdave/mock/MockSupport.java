@@ -17,6 +17,7 @@ package jdave.mock;
 
 import jdave.ContainmentSupport;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.Sequence;
 import org.jmock.States;
@@ -92,6 +93,42 @@ public class MockSupport extends ContainmentSupport {
      */
     public <T> T mock(Class<T> typeToMock) {
         return mockery.mock(typeToMock);
+    }
+    
+    /**
+     * Create a dummy mock object of type T with a name derived from its type.
+     * All method invocations of dummy are ignored.
+     *
+     * @param typeToMock
+     *  The type to be mocked
+     * @param name
+     *  The name of the new mock object that is used to identify the mock object
+     *  in error messages
+     * @return
+     *  A new dummy mock object of type
+     */
+    public <T> T dummy(Class<T> typeToMock, String name) {
+        return ignore(mock(typeToMock, name));
+    }
+    
+    /**
+     * Create a dummy mock object of type T with a name derived from its type.
+     * All method invocations of dummy are ignored.
+     *
+     * @param typeToMock
+     *  The type to be mocked
+     * @return
+     *  A new dummy mock object of type
+     */
+    public <T> T dummy(Class<T> typeToMock) {
+        return ignore(mock(typeToMock));
+    }
+
+    private <T> T ignore(final T dummy) {
+        checking(new Expectations() {{ 
+            ignoring(dummy);
+        }});
+        return dummy;
     }
 
     /**
