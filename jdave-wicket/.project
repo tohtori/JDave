@@ -2,8 +2,8 @@
   <name>jdave-wicket</name>
   <comment/>
   <projects>
-    <project>jdave-core</project>
     <project>jdave-junit4</project>
+    <project>jdave-core</project>
   </projects>
   <buildSpec>
     <buildCommand>
