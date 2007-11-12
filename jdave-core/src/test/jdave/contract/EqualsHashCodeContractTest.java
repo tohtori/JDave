@@ -184,6 +184,7 @@ public class EqualsHashCodeContractTest {
         }        
     }
 
+    @Test
     public void testContractIsNotAcceptedIfEqualsCastFails() throws Exception {
         ClassWithoutTypeCheckInEquals context = new ClassWithoutTypeCheckInEquals(1);
         try {
