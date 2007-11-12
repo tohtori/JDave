@@ -25,6 +25,7 @@ import jdave.Specification;
 import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
+import junit.framework.Assert;
 import net.sf.cglib.asm.Attribute;
 import net.sf.cglib.asm.ClassAdapter;
 import net.sf.cglib.asm.ClassReader;
@@ -34,7 +35,9 @@ import net.sf.cglib.asm.attrs.Attributes;
 import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
 
 import org.jmock.Expectations;
-import org.jmock.integration.junit3.MockObjectTestCase;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -44,15 +47,16 @@ import org.junit.runner.RunWith;
 import org.junit.runner.notification.RunNotifier;
 
 
-public class JDaveGroupRunnerTest extends MockObjectTestCase {
+@RunWith(JMock.class)
+public class JDaveGroupRunnerTest {
+    private Mockery context = new JUnit4Mockery();
     private JDaveGroupRunner runner;
     private RunNotifier notifier;
 
-    @Override
     @Before
     protected void setUp() throws Exception {
-        setImposteriser(ClassImposteriser.INSTANCE);
-        notifier = mock(RunNotifier.class);
+        context.setImposteriser(ClassImposteriser.INSTANCE);
+        notifier = context.mock(RunNotifier.class);
     }
     
     @Test
@@ -75,7 +79,7 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
             }
         };
         runner.getDescription();
-        checking(new Expectations() {{ 
+        context.checking(new Expectations() {{ 
             exactly(2).of(notifier).fireTestStarted(with(any(Description.class)));
             exactly(2).of(notifier).fireTestFinished(with(any(Description.class)));
         }});
@@ -88,7 +92,7 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
         ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$DefaultSpec.class"));
         AnnotationCollector collector = new AnnotationCollector();
         reader.accept(collector, Attributes.getDefaultAttributes(), true);
-        assertTrue(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+        Assert.assertTrue(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
     }
     
     @Test
@@ -97,7 +101,7 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
         ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$SpecWithUnrecognizedAnnotation.class"));
         AnnotationCollector collector = new AnnotationCollector();
         reader.accept(collector, Attributes.getDefaultAttributes(), true);
-        assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+        Assert.assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
     }
     
     public void testUsesDirectoriesSpecifiedBySpecDirsIfAnnotationIsPresent() throws Exception {
@@ -118,7 +122,7 @@ public class JDaveGroupRunnerTest extends MockObjectTestCase {
             }
         };
         runner.getDescription();
-        assertEquals(Arrays.asList("foo", "bar"), dirs);
+        Assert.assertEquals(Arrays.asList("foo", "bar"), dirs);
     }
     
     private static class AnnotationCollector extends ClassAdapter {
