@@ -21,7 +21,6 @@
   
   <modules>
     <module>../jdave-core</module>
-    <module>../jdave-junit3</module>
     <module>../jdave-junit4</module>
     <module>../jdave-jemmy</module>
     <module>../jdave-wicket</module>
