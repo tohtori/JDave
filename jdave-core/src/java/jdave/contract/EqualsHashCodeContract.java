@@ -26,7 +26,7 @@ import jdave.IContract;
  * <blockquote>
  * <pre>
  * public void isConsistentWithEqualsAndHashCode() {
- *     object = new SampleDomainObject(1).setName("John");
+ *     object = new SampleDomainObject(1);
  *     specify(object, satisfies(new EqualsHashCodeContract&lt;SampleDomainObject&gt;() {
  *         protected SampleDomainObject equal() {
  *            return new SampleDomainObject(1);
@@ -43,6 +43,7 @@ import jdave.IContract;
  * </blockquote>
  * 
  * @see java.lang.Object#equals(Object)
+ * @see java.lang.Object#hashCode()
  * 
  * @author Joni Freeman
  */
@@ -86,10 +87,10 @@ public abstract class EqualsHashCodeContract<T> implements IContract {
     protected abstract T nonEqual();
     
     /**
-     * Generally subtypes should not equal with super types. 
+     * Generally sub-types should not equal with super types. 
      * This check can be skipped by returning null.
      * 
-     * @return an Object which is a subtype of the Object whose contract is enforced or null
+     * @return an Object which is a sub-type of the Object whose contract is enforced or null
      */
     protected abstract T subType();
 }
