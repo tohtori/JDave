@@ -16,12 +16,11 @@
 package jdave.containment;
 
 import jdave.IContainment;
-import junit.framework.TestCase;
 
 /**
  * @author Joni Freeman
  */
-public abstract class ContainmentTest extends TestCase {
+public abstract class ContainmentTest {
     protected IContainment containment;
 
     public void testShouldNotThrowNullPointerExceptionIfActualIsNull() throws Exception {

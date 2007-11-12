@@ -15,21 +15,24 @@
  */
 package jdave.contract;
 
+import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.IContract;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class NotContractTest extends TestCase {
+public class NotContractTest {
     private Specification<Void> spec;
     private IContract passingContract;
     private IContract failingContract;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         spec = new Specification<Void>() {};
         passingContract = new IContract() {
             public void isSatisfied(Object obj) throws ExpectationFailedException {
@@ -41,7 +44,8 @@ public class NotContractTest extends TestCase {
             }
         };
     }
-    
+
+    @Test
     public void testIsNegationOfPassingContract() {
         try {
             spec.specify(null, spec.not().satisfy(passingContract));
@@ -50,6 +54,7 @@ public class NotContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testIsNegationOfFailingContract() {
         spec.specify(null, spec.not().satisfy(failingContract));        
     }

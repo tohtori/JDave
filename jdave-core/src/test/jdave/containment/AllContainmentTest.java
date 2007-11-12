@@ -15,15 +15,21 @@
  */
 package jdave.containment;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.Iterator;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
 public class AllContainmentTest extends ContainmentTest {
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         containment = new AllContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
@@ -31,10 +37,12 @@ public class AllContainmentTest extends ContainmentTest {
         });
     }
     
+    @Test
     public void testIsInEqualList() {
         assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
         
+    @Test
     public void testIsNotInPartialList() {
         assertFalse(containment.matches(Arrays.asList(1, 2)));
     }

@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,13 +24,15 @@ import java.util.Map;
 
 import jdave.runner.dummies.Dummy1;
 import jdave.runner.dummies.Dummy2;
-import junit.framework.TestCase;
 import net.sf.cglib.asm.attrs.Annotation;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class AnnotatedSpecScannerTest extends TestCase {
+public class AnnotatedSpecScannerTest {
+    @Test
     public void testFindsClassesWithGroupAnnotation() {
         AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
             @Override
@@ -46,6 +50,7 @@ public class AnnotatedSpecScannerTest extends TestCase {
         assertEquals(Arrays.asList("group1", "group2"), Arrays.asList(annotatedSpecs.get(Dummy1.class.getName())));
     }
     
+    @Test
     public void testHandlesSpecsWhichAreInDefaultGroup() throws Exception {
         AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
             @Override

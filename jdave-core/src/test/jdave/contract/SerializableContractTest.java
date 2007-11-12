@@ -15,25 +15,24 @@
  */
 package jdave.contract;
 
+import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class SerializableContractTest extends TestCase {
-    private Specification<Object> spec;
+public class SerializableContractTest {
+    private Specification<Object> spec = new Specification<Object>() {};
 
-    @Override
-    protected void setUp() throws Exception {
-        spec = new Specification<Object>() {};
-    }
-
+    @Test
     public void testSerializableIsAccepted() {
         spec.specify(5, spec.satisfies(new SerializableContract()));
     }
     
+    @Test
     public void testNonSerializableIsNotAccepted() {
         try {
             spec.specify(new NonSerializable(), spec.satisfies(new SerializableContract()));

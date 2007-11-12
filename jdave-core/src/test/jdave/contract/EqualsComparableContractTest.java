@@ -15,23 +15,23 @@
  */
 package jdave.contract;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Comparator;
 
 import jdave.ExpectationFailedException;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class EqualsComparableContractTest extends TestCase {
-    private Specification<Object> spec;
+public class EqualsComparableContractTest {
+    private Specification<Object> spec = new Specification<Object>() {};
 
-    @Override
-    protected void setUp() throws Exception {
-        spec = new Specification<Object>() {};
-    }
-
+    @Test
     public void testContractIsSatisfiedForInteger() {
         Comparable<Integer> comparable = 2;
         spec.specify(comparable, spec.satisfies(new EqualsComparableContract<Integer>() {
@@ -50,6 +50,7 @@ public class EqualsComparableContractTest extends TestCase {
         }));
     }
     
+    @Test
     public void testContractIsSatisfiedForIntegerUsingRevereseComparator() {
         Comparable<Integer> comparable = 2;
         spec.specify(comparable, spec.satisfies(new EqualsComparableContract<Integer>(revereseComparator()) {
@@ -76,6 +77,7 @@ public class EqualsComparableContractTest extends TestCase {
         };
     }
 
+    @Test
     public void testContractIsSatisfiedForClassWhoseCompareToIsConsistentWithEquals() {
         Comparable<?> comparable = new ComparableWhoseCompareToIsConsistentWithEquals(1, "b");
         spec.specify(comparable, spec.satisfies(new EqualsComparableContract<ComparableWhoseCompareToIsConsistentWithEquals>() {
@@ -94,6 +96,7 @@ public class EqualsComparableContractTest extends TestCase {
         }));
     }
     
+    @Test
     public void testContractIsNotSatisfiedForClassWhoseCompareToIsInconsistentWithEquals() {        
         Comparable<?> comparable = new ComparableWhoseCompareToIsNotConsistentWithEquals(1, "b");
         try {
@@ -116,6 +119,7 @@ public class EqualsComparableContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testContractIsNotSatisfiedForClassWhichPrecedesItsPrecidingObject() {        
         Comparable<Integer> comparable = 2;
         try {
@@ -138,6 +142,7 @@ public class EqualsComparableContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testContractIsNotSatisfiedForClassWhichIsAfterItsSubsequentObject() {        
         Comparable<Integer> comparable = 2;
         try {
@@ -160,6 +165,7 @@ public class EqualsComparableContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testContractIsNotSatisfiedForClassWhichDoesNotThrowNullpointerException() {        
         try {
             spec.specify(new ComparableWhoseCompareToDoesNotThrowNullpointerException(), new AnyContract());

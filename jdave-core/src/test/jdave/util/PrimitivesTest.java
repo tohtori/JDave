@@ -15,14 +15,17 @@
  */
 package jdave.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class PrimitivesTest extends TestCase {
+public class PrimitivesTest {
+    @Test
     public void testShouldConvertPrimitiveArrayToList() {
         int[] array = new int[] { 1, 2, 3 };
         assertEquals(Arrays.asList(1, 2, 3), Primitives.asList(array));

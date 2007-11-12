@@ -15,20 +15,19 @@
  */
 package jdave;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * @author Lasse Koskela
  * @author Pekka Enberg
  */
-public class SpecificationWithExpectingToThrowTest extends TestCase {
-    private Specification<Void> specification;
+public class SpecificationWithExpectingToThrowTest {
+    private Specification<Void> specification = new Specification<Void>() { };
 
-    @Override
-    protected void setUp() throws Exception {
-        specification = new Specification<Void>() { };
-    }
-
+    @Test
     public void testShouldPassWhenExpectedExceptionRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -37,6 +36,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raise(IllegalArgumentException.class));
     }
 
+    @Test
     public void testShouldPassWhenExpectedExceptionRaisedWithSpecifiedMessage() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -45,6 +45,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raise(IllegalArgumentException.class, "argument is null"));
     }
 
+    @Test
     public void testShouldPassWhenExpectedExceptionRaisedExpectingNullMessage() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -53,6 +54,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raise(IllegalArgumentException.class, null));
     }
 
+    @Test
     public void testShouldPassWhenExpectedThrowableRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -61,6 +63,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raise(Throwable.class));
     }
     
+    @Test
     public void testShouldPassWhenSubclassOfExpectedThrowableRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -69,6 +72,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raise(Throwable.class));
     }
     
+    @Test
     public void testShouldPassWhenExactExpectedThrowableRaised() {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -77,6 +81,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }, specification.raiseExactly(Throwable.class));
     }
     
+    @Test
     public void testShouldFailWhenExpectingAnExactExceptionButNoneIsRaised() {
         try {
             specification.specify(new Block() {
@@ -89,6 +94,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenExpectingAnExactExceptionButSubclassIsRaised() {
         try {
             specification.specify(new Block() {
@@ -102,6 +108,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenExpectingAnExactExceptionButWrongMessageIsGiven() {
         try {
             specification.specify(new Block() {
@@ -115,6 +122,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenExpectingAnExactExceptionWithMessageButSubclassIsGiven() {
         try {
             specification.specify(new Block() {
@@ -128,6 +136,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenExpectedExceptionNotRaised() {
         try {
             specification.specify(new Block() {
@@ -140,6 +149,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenDifferentExceptionAsExpectedWasRaised() {
         try {
             specification.specify(new Block() {
@@ -153,6 +163,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailWhenExpectedExceptionRaisedWithWrongMessage() {
         try {
             specification.specify(new Block() {
@@ -166,6 +177,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailWhenExpectedExceptionRaisedButMessageIsNonNullWhenExpectingNull() {
         try {
             specification.specify(new Block() {
@@ -179,6 +191,7 @@ public class SpecificationWithExpectingToThrowTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailWhenExpectedExceptionRaisedWithNullMessageWhenExpectingNonNull() {
         try {
             specification.specify(new Block() {

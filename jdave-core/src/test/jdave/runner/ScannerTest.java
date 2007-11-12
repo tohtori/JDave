@@ -16,18 +16,20 @@
 package jdave.runner;
 
 import static java.util.Collections.sort;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class ScannerTest extends TestCase {
+public class ScannerTest {
+    @Test
     public void testFindsRecursivelyClasses() throws Exception {
         Scanner scanner = new Scanner(getClass().getProtectionDomain().getCodeSource().getLocation().getPath() +
                 "/jdave/runner/dummies");

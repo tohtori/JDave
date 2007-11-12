@@ -15,15 +15,20 @@
  */
 package jdave.containment;
 
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 import java.util.Iterator;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Pekka Enberg
  */
 public class DuplicatesValuesInExpectedCollectionExactContainmentTest extends ContainmentTest {
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         containment = new ExactContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 2).iterator();
@@ -31,10 +36,12 @@ public class DuplicatesValuesInExpectedCollectionExactContainmentTest extends Co
         });
     }
 
+    @Test
     public void testIsInListWhichMatchesTotally() {
         assertTrue(containment.matches(Arrays.asList(1, 2, 2)));
     }
 
+    @Test
     public void testIsNotInListWhichMatchesPartially() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3)));
     }

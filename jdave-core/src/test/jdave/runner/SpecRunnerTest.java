@@ -15,30 +15,29 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import jdave.SpecVisitorAdapter;
 import jdave.ResultsAdapter;
+import jdave.SpecVisitorAdapter;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Pekka Enberg
  */
-public class SpecRunnerTest extends TestCase {
-    private List<String> methods;
-    private SpecRunner runner;
+public class SpecRunnerTest {
+    private List<String> methods = new ArrayList<String>();
+    private SpecRunner runner = new SpecRunner();
 
-    @Override
-    protected void setUp() throws Exception {
-        methods = new ArrayList<String>();
-        runner = new SpecRunner();
-    }
-
+    @Test
     public void testShouldNotifyResultsOfAllPublicMethods() throws Exception {
         assertTrue(methods.isEmpty());
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
@@ -54,6 +53,7 @@ public class SpecRunnerTest extends TestCase {
         assertEquals("shouldNotBeEqualToTrue", methods.get(2));
     }
     
+    @Test
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
@@ -61,36 +61,42 @@ public class SpecRunnerTest extends TestCase {
         assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
+    @Test
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
         assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
+    @Test
     public void testShouldNotifyCallbackWhenContextHasFinished() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
         assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getFinishedContextNames());
     }
     
+    @Test
     public void testShouldCallDestroyForEachMethod() throws Exception {
         BooleanSpec.destroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(3, BooleanSpec.destroyCalled);        
     }
     
+    @Test
     public void testShouldCallSpecCreateForEachMethod() throws Exception {
         BooleanSpec.specCreateCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(3, BooleanSpec.specCreateCalled);        
     }
     
+    @Test
     public void testShouldCallSpecDestroyForEachMethod() throws Exception {
         BooleanSpec.specDestroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(3, BooleanSpec.specDestroyCalled);        
     }
     
+    @Test
     public void testReportsErrorIfSpecificationConstructionFails() {
         final List<Method> errors = new ArrayList<Method>();
         runner.run(FailingSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
@@ -103,12 +109,14 @@ public class SpecRunnerTest extends TestCase {
         assertEquals("someBehavior", errors.get(0).getName());
     }
     
+    @Test
     public void testAllowsContextHavingCreateMethodWithVoidReturnValue() throws Exception {
         SpecForOtherCreations.whenCreateIsVoid = 0;
         runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(1, SpecForOtherCreations.whenCreateIsVoid);                
     }
     
+    @Test
     public void testAllowsContextWithoutCreateMethod() throws Exception {
         SpecForOtherCreations.whenCreateDoesNotExist = 0;
         runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));

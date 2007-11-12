@@ -15,14 +15,17 @@
  */
 package jdave.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class CollectionsTest extends TestCase {
+public class CollectionsTest {
+    @Test
     public void testConvertsIteratorToList() {
         assertEquals(Arrays.asList(1, 2, 3), Collections.list(Arrays.asList(1, 2, 3).iterator()));
     }

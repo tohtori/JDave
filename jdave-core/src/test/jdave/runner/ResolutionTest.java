@@ -15,29 +15,36 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class ResolutionTest extends TestCase {
+public class ResolutionTest {
+    @Test
     public void testIncludesGroupIfItIsIncluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreIncluded.class.getAnnotation(Groups.class));
         assertTrue(resolution.includes(Arrays.asList("g1", "g2")));
     }
     
+    @Test
     public void testExcludesGroupIfItIsNotIncluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreIncluded.class.getAnnotation(Groups.class));
         assertFalse(resolution.includes(Arrays.asList("g3")));
     }
     
+    @Test
     public void testExcludesGroupIfItIsIncludedButAlsoExcluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
         assertFalse(resolution.includes(Arrays.asList("g1")));
     }
     
+    @Test
     public void testIncludesGroupIfItIsIncludedAndNotExcluded() throws Exception {
         Resolution resolution = new Resolution(WhenGroupsAreExcluded.class.getAnnotation(Groups.class));
         assertTrue(resolution.includes(Arrays.asList("g2", "g3")));

@@ -15,24 +15,23 @@
  */
 package jdave;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Method;
 
 import jdave.runner.SpecRunner;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Pekka Enberg
  */
-public class ErroneousSpecificationTest extends TestCase {
+public class ErroneousSpecificationTest {
     private Throwable actualException;
     private Method actualMethod;
-    private SpecRunner runner;
-    
-    @Override
-    protected void setUp() throws Exception {
-        runner = new SpecRunner();
-    }
-    
+    private SpecRunner runner = new SpecRunner();
+
+    @Test
     public void testShouldPassError() throws Exception {
         runner.run(ErroneousSpecification.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override

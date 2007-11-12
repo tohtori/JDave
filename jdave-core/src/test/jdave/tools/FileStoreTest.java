@@ -15,6 +15,9 @@
  */
 package jdave.tools;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,17 +25,18 @@ import java.io.IOException;
 
 import jdave.support.IO;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class FileStoreTest extends TestCase {
+public class FileStoreTest {
     private IDoxStore store;
     private File file;
     
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         store = new FileStore("target/jdave") {
             @Override
             protected File newFile(File dir, String name) throws IOException {
@@ -42,6 +46,7 @@ public class FileStoreTest extends TestCase {
         };
     }
     
+    @Test
     public void testCreatesFileBySpecName() throws FileNotFoundException, IOException {
         store.store("Test", "txt", "content");
         assertTrue(file.exists());

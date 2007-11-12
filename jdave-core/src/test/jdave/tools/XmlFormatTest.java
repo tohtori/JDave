@@ -16,20 +16,22 @@
 package jdave.tools;
 
 import org.jmock.Expectations;
-import org.jmock.integration.junit3.MockObjectTestCase;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
  */
-public class XmlFormatTest extends MockObjectTestCase {
-    private IDoxStore doxStore = mock(IDoxStore.class);
-    private Specdox dox;
+@RunWith(JMock.class)
+public class XmlFormatTest {
+    private Mockery context = new JUnit4Mockery();
+    private IDoxStore doxStore = context.mock(IDoxStore.class);
+    private Specdox dox = new Specdox(doxStore);
     
-    @Override
-    protected void setUp() throws Exception {
-        dox = new Specdox(doxStore);
-    }
-    
+    @Test
     public void testFormatsSpecInXml() {
         final String expectedOutput = 
             "<specification name=\"StackSpec\" fqn=\"jdave.tools.StackSpec\">\n" +
@@ -41,7 +43,7 @@ public class XmlFormatTest extends MockObjectTestCase {
             "    </context>\n" +
             "  </contexts>\n" +
             "</specification>\n";
-        checking(new Expectations() {{ 
+        context.checking(new Expectations() {{ 
             one(doxStore).store("StackSpec", "xml", expectedOutput);
         }});
         dox.generate(StackSpec.class, new XmlFormat());

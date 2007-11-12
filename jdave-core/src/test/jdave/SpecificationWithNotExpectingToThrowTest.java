@@ -15,19 +15,18 @@
  */
 package jdave;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * @author Pekka Enberg
  */
-public class SpecificationWithNotExpectingToThrowTest extends TestCase {
-    private Specification<Void> specification;
+public class SpecificationWithNotExpectingToThrowTest{
+    private Specification<Void> specification = new Specification<Void>() { };
 
-    @Override
-    protected void setUp() throws Exception {
-        specification = new Specification<Void>() { };
-    }
-
+    @Test
     public void testShouldPassWhenNoExceptionRaised() throws Throwable {
         specification.specify(new Block() {
             public void run() throws Throwable {
@@ -36,6 +35,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }, specification.not().raise(IllegalArgumentException.class));
     }
 
+    @Test
     public void testShouldFailIfThrowsExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
@@ -49,6 +49,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
     
+    @Test
     public void testFailsIfAnyExceptionIsThrownFromBlockWhichDoesNotExpectAnyException() throws Throwable {
         try {
             specification.specify(new Block() {
@@ -62,6 +63,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }        
     }
 
+    @Test
     public void testShouldFailIfThrowsSubclassOfExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
@@ -75,6 +77,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailIfThrowsExactlyExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {
@@ -88,6 +91,7 @@ public class SpecificationWithNotExpectingToThrowTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldRethrowIfThrowsSubclassOfExactlyExpectedException() throws Throwable {
         try {
             specification.specify(new Block() {

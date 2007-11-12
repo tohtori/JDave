@@ -18,21 +18,28 @@ package jdave.tools;
 import jdave.Specification;
 
 import org.jmock.Expectations;
-import org.jmock.integration.junit3.MockObjectTestCase;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
  */
-public class SpecdoxRunnerTest extends MockObjectTestCase {
+@RunWith(JMock.class)
+public class SpecdoxRunnerTest {
+    private Mockery context = new JUnit4Mockery();
     private SpecdoxRunner runner;
-    private IDoxFormat format = mock(IDoxFormat.class);
+    private IDoxFormat format = context.mock(IDoxFormat.class);
     private Formats formats;
 
-    @Override
-    protected void setUp() throws Exception {
-        setImposteriser(ClassImposteriser.INSTANCE);
-        formats = mock(Formats.class);
+    @Before
+    public void setUp() throws Exception {
+        context.setImposteriser(ClassImposteriser.INSTANCE);
+        formats = context.mock(Formats.class);
         System.setProperty(SpecdoxRunner.DIRNAME, "target");
         runner = new SpecdoxRunner(new Formats() {
             @Override
@@ -42,9 +49,10 @@ public class SpecdoxRunnerTest extends MockObjectTestCase {
         });
     }
     
+    @Test
     public void testGeneratesDoxIfSystemPropertyPresent() {
         System.setProperty(SpecdoxRunner.FORMAT, "txt");
-        checking(new Expectations() {{ 
+        context.checking(new Expectations() {{ 
             one(format).newSpec("TestSpec", TestSpec.class.getName());
             one(format).endSpec("TestSpec");
             one(format).newContext("Context");
@@ -55,10 +63,11 @@ public class SpecdoxRunnerTest extends MockObjectTestCase {
         runner.generate(TestSpec.class);
     }
     
+    @Test
     public void testParsesFormatsFromSpaceLimitedList() throws Exception {
         runner = new SpecdoxRunner(formats);
         System.setProperty(SpecdoxRunner.FORMAT, "txt xml");
-        checking(new Expectations() {{ 
+        context.checking(new Expectations() {{ 
             one(formats).formatFor("txt");
             one(formats).formatFor("xml");
         }});

@@ -15,23 +15,27 @@
  */
 package jdave.injection;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class InjectionSupportTest extends TestCase {
+public class InjectionSupportTest {
     private Set<Field> collectedFields = new HashSet<Field>();
-    
+
+    @Test
     public void testVisitsAllFieldsInHierarchy() {
         new InjectionSupport().inject(new TestClass(), new CollectingInjector());
         assertEquals(6, collectedFields.size());
     }
     
+    @Test
     public void testVisitsFieldsByVisibilityInHierarchy() {
         new InjectionSupport(Modifier.PRIVATE | Modifier.PROTECTED).inject(new TestClass(), new CollectingInjector());
         assertEquals(4, collectedFields.size());

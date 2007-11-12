@@ -17,19 +17,15 @@ package jdave;
 
 import java.util.Arrays;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class SpecificationContainmentTest extends TestCase {
-    private Specification<Object> spec;
+public class SpecificationContainmentTest {
+    private Specification<Object> spec = new Specification<Object>() {};
 
-    @Override
-    protected void setUp() throws Exception {
-        spec = new Specification<Object>() {};
-    }
-    
+    @Test
     public void testContainmentsForVariousLeftHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3).iterator(), spec.containsAll(Arrays.asList(1, 2)));
@@ -37,6 +33,7 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(new Integer[] { 1, 2, 3 }, spec.containsAll(Arrays.asList(1, 2)));
     }
     
+    @Test
     public void testAllContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2).iterator()));
@@ -44,6 +41,7 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(1, 2));
     }
     
+    @Test
     public void testExactContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3).iterator()));
@@ -51,6 +49,7 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(1, 2, 3));
     }
     
+    @Test
     public void testAnyContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(Arrays.asList(1, 2).iterator()));
@@ -58,6 +57,7 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(1, 2));
     }
     
+    @Test
     public void testInOrderContainments() {
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2).iterator()));
@@ -65,6 +65,7 @@ public class SpecificationContainmentTest extends TestCase {
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(1, 2));
     }
     
+    @Test
     public void testInPartialOrderContainments() {
         spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(Arrays.asList(1, 2).iterator()));

@@ -16,23 +16,21 @@
 package jdave.mock;
 
 import jdave.Specification;
-import junit.framework.TestCase;
 
 import org.jmock.Expectations;
+import org.junit.Test;
 
 /**
  * @author Pekka Enberg
  */
-public class ConcreteClassMockingTest extends TestCase {
+public class ConcreteClassMockingTest {
+    @Test
     public void testMockReturningInstanceOfFinalClass() {
         Specification<Void> specification = new Specification<Void>() { };
         final PurchaseOrder mock = specification.mock(PurchaseOrder.class, "mock");
-        specification.checking(new Expectations() {
-            {
-                one(mock).getTimestamp();
-                will(returnValue(new DateTime()));
-            }
-        });
+        specification.checking(new Expectations() {{
+            one(mock).getTimestamp(); will(returnValue(new DateTime()));
+        }});
         mock.getTimestamp();
     }
 

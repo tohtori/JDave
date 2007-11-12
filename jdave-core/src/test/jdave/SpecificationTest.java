@@ -15,43 +15,56 @@
  */
 package jdave;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.List;
 
 import jdave.util.Diff;
-import junit.framework.TestCase;
+
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import static org.hamcrest.Matchers.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class SpecificationTest extends TestCase {
+public class SpecificationTest {
     private Specification<EmptyStack> specification;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         specification = new Specification<EmptyStack>() { };
         specification.be = new EmptyStack();
     }
 
+    @Test
     public void testAliasesToSpecification() {
         assertSame(specification.should, specification);
         assertSame(specification.does, specification);
         assertSame(specification.must, specification);
     }
 
+    @Test
     public void testPassesWhenActualAndExpectedAreBothNull() {
         Object actual = null;
         Object expected = null;
         specification.specify(actual, expected);        
     }
     
+    @Test
     public void testShouldPassWhenExpectationMet() {
         specification.specify(1, 1);
     }
     
+    @Test
     public void testShouldFailWithDiffMessageWhenTwoStringsDoNotEqual() {
         String actual = "some long string which will get chopped for readability";
         String expected = "some long different string which will get chopped for readability";
@@ -64,10 +77,12 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldPassWhenInvertedExpectationMet() {
         specification.specify(1, specification.should.not().equal(2));
     }
     
+    @Test
     public void testShouldFailWhenInvertedExpectationNotMet() {
         try {
             specification.specify(1, specification.should.not().equal(1));
@@ -77,6 +92,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenActualIsNullAndExpectedIsNot() {
         try {
             specification.specify(null, specification.should.equal("Hello"));
@@ -86,6 +102,7 @@ public class SpecificationTest extends TestCase {
         }
     }
 
+    @Test
     public void testChecksNotNull() {
         specification.specify(1, specification.isNotNull());
         assertExpectationFails("Expected a non-null value", new Block() {
@@ -105,13 +122,13 @@ public class SpecificationTest extends TestCase {
             throw new RuntimeException(throwable);
         }
     }
-
-
     
+    @Test
     public void testShouldPassWhenExpectationWithinDelta() {
         specification.specify(1.0, specification.should.equal(1.001, 0.01));
     }
     
+    @Test
     public void testShouldFailWhenExpectationNotWithinDelta() {
         try {
             specification.specify(1.0, specification.should.equal(1.01, 0.001));
@@ -121,14 +138,17 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldPassWhenExpectationWithinDeltaForWrapper() {
         specification.specify(1.0, specification.should.equal(1.001, 0.01));
     }
     
+    @Test
     public void testShouldPassWhenInvertedExpectationWithinDeltaMet() {
         specification.specify(1.01, specification.should.not().equal(1, 0.001));
     }
     
+    @Test
     public void testShouldFailWhenInvertedExpectationWithinDeltaNotMet() {
         try {
             specification.specify(1.001, specification.should.not().equal(1, 0.01));
@@ -138,6 +158,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenBooleanExpectationNotMet() {
         try {
             specification.specify(null, false);
@@ -147,6 +168,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldFailWhenBooleanExpectationWithWrapperNotMet() {
         try {
             specification.specify(null, Boolean.FALSE);
@@ -156,6 +178,7 @@ public class SpecificationTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailWhenInvertedBooleanExpectationNotMet() {
         try {
             specification.specify(null, specification.not().be.empty());
@@ -165,6 +188,7 @@ public class SpecificationTest extends TestCase {
         }
     }
 
+    @Test
     public void testShouldFailWhenExpectationNotMet() {
         try {
             specification.specify(1, 2);
@@ -174,55 +198,66 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpected() {
         specification.specify(Arrays.asList(1, 2, 3), specification.contains(2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForObjectArray() {
         Integer[] actual = new Integer[] { 1, 2, 3 };
         specification.specify(actual, specification.contains(2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForBooleanArray() {
         boolean[] actual = new boolean[] { true, false };
         specification.specify(actual, specification.contains(true));
     }
 
+    @Test
     public void testShouldPassWhenContainmentExpectedForByteArray() {
         byte[] actual = new byte[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((byte) 2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForCharArray() {
         char[] actual = new char[] { '1', '2', '3' };
         specification.specify(actual, specification.contains('2'));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForDoubleArray() {
         double[] actual = new double[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((double) 2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForFloatArray() {
         float[] actual = new float[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((float) 2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForIntArray() {
         int[] actual = new int[] { 1, 2, 3 };
         specification.specify(actual, specification.contains(2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForLongArray() {
         long[] actual = new long[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((long) 2));
     }
 
+    @Test
     public void testShouldPassWhenContainmentExpectedForShortArray() {
         short[] actual = new short[] { 1, 2, 3 };
         specification.specify(actual, specification.contains((short) 2));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveByteArrayInput() {
         byte[] actual = new byte[]{ 0, 1, 2 };
         specification.specify(actual, specification.containsInOrder(new byte[]{ 0, 1, 2 }));
@@ -235,6 +270,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new byte[]{ -1, 1, 3 }));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveShortArrayInput() {
         short[] actual = new short[]{ 0, 1, 2 };
         specification.specify(actual, specification.containsInOrder(new short[]{ 0, 1, 2 }));
@@ -247,6 +283,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new short[]{ -1, 1, 3 }));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveIntArrayInput() {
         int[] actual = new int[]{ 0, 1, 2 };
         specification.specify(actual, specification.containsInOrder(new int[]{ 0, 1, 2 }));
@@ -259,6 +296,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new int[]{ -1, 1, 3 }));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveLongArrayInput() {
         long[] actual = new long[]{ 0, 1, 2 };
         specification.specify(actual, specification.containsInOrder(new long[]{ 0, 1, 2 }));
@@ -271,6 +309,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new long[]{ -1, 1, 3 }));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveFloatArrayInput() {
         float[] actual = new float[]{ .0f, .1f, .2f };
         specification.specify(actual, specification.containsInOrder(new float[]{ .0f, .1f, .2f }));
@@ -283,6 +322,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new float[]{ -.1f, .1f, .3f }));
     }
     
+    @Test
     public void testShouldPassWhenContainmentExpectedForPrimitiveDoubleArrayInput() {
         double[] actual = new double[]{ .0d, .1d, .2d };
         specification.specify(actual, specification.containsInOrder(new double[]{ .0d, .1d, .2d }));
@@ -295,6 +335,7 @@ public class SpecificationTest extends TestCase {
         specification.specify(actual, specification.containAny(new double[]{ -.1d, .1d, .3d }));
     }
     
+    @Test
     public void testShouldFailWhenContainmentNotExpected() {
         try {
             specification.specify(Arrays.asList(1, 2, 3), specification.contains(0));
@@ -304,10 +345,12 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldPassWhenNonContainmentExpected() {
         specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
     }
     
+    @Test
     public void testShouldFailWhenNonContainmentNotExpected() {
         try {
             specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contains(1));
@@ -317,10 +360,12 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testShouldPassWhenContainmentForAllExpected() {
         specification.specify(Arrays.asList(1, 2, 3), specification.containsAll(Arrays.asList(2, 3)));
     }
     
+    @Test
     public void testShouldFailWhenContainmentForAllNotExpected() {
         try {
             specification.specify(Arrays.asList(1, 2, 3), specification.containsAll(0, 1));
@@ -330,11 +375,13 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testNotDoesNotAffectNextSpecifyStatement() {
         specification.specify(Arrays.asList(1, 2, 3), specification.does.not().contain(0));
         specification.specify(null, true);
     }
     
+    @Test
     public void testPassesWhenHamcrestMatcherPasses() {
         specification.specify(null, new BaseMatcher<Object>() {
             public boolean matches(Object item) {
@@ -345,6 +392,7 @@ public class SpecificationTest extends TestCase {
         });
     }
     
+    @Test
     public void testFailsWhenHamcrestMatcherFails() {
         try {
             specification.specify(null, new BaseMatcher<Object>() {
@@ -359,6 +407,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testPassesWhenHamcrestMatcherPassesAllElementsWithPrimitiveGetter() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -366,6 +415,7 @@ public class SpecificationTest extends TestCase {
                 specification.where(new Each<Money>() {{ matches(item.value(), is(greaterThan(3))); }}));
     }
     
+    @Test
     public void testPassesWhenHamcrestMatcherPassesAllElementsWithObjectGetter() {
         final Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -373,6 +423,7 @@ public class SpecificationTest extends TestCase {
                 specification.where(new Each<Money>() {{ matches(item.currency(), is(equalTo(EUR))); }}));
     }
     
+    @Test
     public void testPassesWhenHamcrestMatcherPassesAllElementsWithoutCallingAnyMethodFromItem() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -380,6 +431,7 @@ public class SpecificationTest extends TestCase {
                 specification.where(new Each<Money>() {{ matches(item, instanceOf(Money.class)); }}));
     }
     
+    @Test
     public void testFailsWhenHamcrestMatcherFailsAnyElements() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -391,14 +443,15 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testPassesIfAllElementsPassTheirIndividualHamcrestMatcher() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
         specification.specify(m, 
                 specification.where(new Each<Money>() {{ matches(item.value(), is(4), is(5), is(6)); }}));
     }
-    
-    
+        
+    @Test
     public void testFailsIfAnyElementFailItsIndividualHamcrestMatcher() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -410,6 +463,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testFailsIfNumberOfHamcrestMatchersIsBiggerThatNumberOfElements() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));
@@ -421,6 +475,7 @@ public class SpecificationTest extends TestCase {
         }
     }
     
+    @Test
     public void testFailsIfNumberOfHamcrestMatchersIsSmallerThatNumberOfElements() {
         Currency EUR = new Currency("EUR");
         List<Money> m = Arrays.asList(new Money(4, EUR), new Money(5, EUR), new Money(6, EUR));

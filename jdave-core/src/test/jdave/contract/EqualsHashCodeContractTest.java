@@ -15,21 +15,20 @@
  */
 package jdave.contract;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class EqualsHashCodeContractTest extends TestCase {
-    private Specification<Object> spec;
+public class EqualsHashCodeContractTest {
+    private Specification<Object> spec = new Specification<Object>() {};
 
-    @Override
-    protected void setUp() throws Exception {
-        spec = new Specification<Object>() {};
-    }
-    
+    @Test
     public void testCorrectlyImplementedClassIsAccepted() {
         ClassWithCorrectEqualsAndHashCode context = new ClassWithCorrectEqualsAndHashCode(1);
         spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithCorrectEqualsAndHashCode>() {
@@ -48,6 +47,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }));
     }
     
+    @Test
     public void testCorrectlyImplementedClassIsAcceptedWhenSubTypeIsNotChecked() {
         ClassWithCorrectEqualsAndHashCode context = new ClassWithCorrectEqualsAndHashCode(1);
         spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithCorrectEqualsAndHashCode>() {
@@ -66,6 +66,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }));
     }
     
+    @Test
     public void testClassWithIncorrectlyImplementedHashCodeIsNotAccepted() {
         ClassWithIncorrectlyImplementedHashCode context = new ClassWithIncorrectlyImplementedHashCode(1);
         try {
@@ -89,6 +90,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testClassWithIncorrectlyImplementedEqualsIsNotAccepted() {
         ClassWithIncorrectlyImplementedEquals context = new ClassWithIncorrectlyImplementedEquals();
         try {
@@ -112,6 +114,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testContractIsNotAcceptedIfNonEqualObjectEquals() {
         ClassWithCorrectEqualsAndHashCode context = new ClassWithCorrectEqualsAndHashCode(1);
         try {
@@ -134,6 +137,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }        
     }
     
+    @Test
     public void testContractIsNotAcceptedIfSubtypeObjectEquals() {
         ClassWithCorrectEqualsAndHashCode context = new ClassWithCorrectEqualsAndHashCode(1);
         try {
@@ -156,6 +160,7 @@ public class EqualsHashCodeContractTest extends TestCase {
         }        
     }
     
+    @Test
     public void testContractIsNotAcceptedIfObjectEqualsWithNull() {
         ClassWhichEqualsWithNull context = new ClassWhichEqualsWithNull();
         try {

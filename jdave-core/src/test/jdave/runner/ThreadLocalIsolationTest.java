@@ -15,6 +15,8 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +24,16 @@ import java.util.List;
 import jdave.ResultsAdapter;
 import jdave.SpecVisitorAdapter;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class ThreadLocalIsolationTest extends TestCase {
+public class ThreadLocalIsolationTest {
     private List<String> methods = new ArrayList<String>();
-    
+
+    @Test
     public void testThreadLocalsAreIsolatedBetweenBehaviorMethods() throws Exception {
         new SpecRunner().run(TestSpec.class, new SpecVisitorAdapter(new ResultsAdapter() {
             @Override

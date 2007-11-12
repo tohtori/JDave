@@ -15,14 +15,18 @@
  */
 package jdave.util;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class DiffTest extends TestCase {
+public class DiffTest {
     private static final String NEW_LINE = System.getProperty("line.separator");
 
+    @Test
     public void testFailsToPrintVerboseMessageWithEqualStrings() {
         Diff diff = Diff.diff("foo", "foo");
         try {
@@ -32,6 +36,7 @@ public class DiffTest extends TestCase {
         }
     }
 
+    @Test
     public void testPrintsVerboseMessageWithEllipsisIfStringGetChopped() {
         Diff diff = Diff.diff(
                 "this is a pretty long string which will get chopped",
@@ -42,6 +47,7 @@ public class DiffTest extends TestCase {
                 diff.verbose());
     }
 
+    @Test
     public void testPrintsVerboseMessageWithoutEllipsisIfStringDoesNotGetChopped() {
         Diff diff = Diff.diff(
                 "this is a string",
@@ -52,6 +58,7 @@ public class DiffTest extends TestCase {
                 diff.verbose());
     }
 
+    @Test
     public void testPrintsVerboseMessageIfStringIsEmpty() {
         Diff diff = Diff.diff("", "this is another string");
         assertEquals(
@@ -60,6 +67,7 @@ public class DiffTest extends TestCase {
                 diff.verbose());
     }
 
+    @Test
     public void testPrintsVerboseMessageIfActualIsNull() {
         Diff diff = Diff.diff(null, "this is another string");
         assertEquals(
@@ -68,6 +76,7 @@ public class DiffTest extends TestCase {
                 diff.verbose());
     }
     
+    @Test
     public void testPrintsVerboseMessageIfExpectedIsNull() {
         Diff diff = Diff.diff("this is a string", null);
         assertEquals(
@@ -77,6 +86,7 @@ public class DiffTest extends TestCase {
     }
     
     // see https://www.laughingpanda.org/jira/browse/JDAVE-19
+    @Test
     public void testJDave19() {
         Diff diff = Diff.diff("foo1", "foo");
         assertEquals(

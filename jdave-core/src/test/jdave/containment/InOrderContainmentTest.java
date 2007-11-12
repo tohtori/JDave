@@ -15,15 +15,20 @@
  */
 package jdave.containment;
 
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 import java.util.Iterator;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
 public class InOrderContainmentTest extends ContainmentTest {
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         containment = new InOrderContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
@@ -31,18 +36,22 @@ public class InOrderContainmentTest extends ContainmentTest {
         });
     }
     
+    @Test
     public void testIsInOrder() {
         assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
         
+    @Test
     public void testIsNotInOrder() {
         assertFalse(containment.matches(Arrays.asList(1, 3, 2)));
     }
     
+    @Test
     public void testIsNotInOrderWhenActualHasMoreElements() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
     
+    @Test
     public void testIsNotInOrderWhenActualHasLessElements() {
         assertFalse(containment.matches(Arrays.asList(1, 2)));
     }

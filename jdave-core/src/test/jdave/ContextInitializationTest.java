@@ -15,29 +15,34 @@
  */
 package jdave;
 
+import static org.junit.Assert.assertSame;
 import jdave.runner.SpecRunner;
-import junit.framework.TestCase;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class ContextInitializationTest extends TestCase {
+public class ContextInitializationTest {
     private SpecRunner runner;
     private static Object contextObject;
     private static Object actualBe;
     private static Object actualContext;
     
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         runner = new SpecRunner();
         contextObject = new Object();
     }
     
+    @Test
     public void testShouldSetContextAsBe() throws Exception {
         runner.run(TestSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertSame(contextObject, actualBe);
     }
     
+    @Test
     public void testVariableContextReferencesBe() throws Exception {
         runner.run(TestSpecification.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertSame(contextObject, actualContext);

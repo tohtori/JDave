@@ -17,26 +17,28 @@ package jdave.tools;
 
 
 import org.jmock.Expectations;
-import org.jmock.integration.junit3.MockObjectTestCase;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
  */
-public class SpecdoxTest extends MockObjectTestCase {
-    private IDoxStore doxStore = mock(IDoxStore.class);
-    private Specdox dox;
-    
-    @Override
-    protected void setUp() throws Exception {
-        dox = new Specdox(doxStore);
-    }
-    
+@RunWith(JMock.class)
+public class SpecdoxTest {
+    private Mockery context = new JUnit4Mockery();
+    private IDoxStore doxStore = context.mock(IDoxStore.class);
+    private Specdox dox = new Specdox(doxStore);
+
+    @Test
     public void testSavesPlainTextVersionToDoxStore() {
         final String expectedOutput = 
             "StackSpec:\n\n" + 
             "Full stack\n" +
             "  - complains on push\n";
-        checking(new Expectations() {{ 
+        context.checking(new Expectations() {{ 
             one(doxStore).store("StackSpec", "txt", expectedOutput);
         }});
         dox.generate(StackSpec.class, new PlainTextFormat());

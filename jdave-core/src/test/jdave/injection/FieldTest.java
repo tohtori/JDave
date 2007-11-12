@@ -15,12 +15,15 @@
  */
 package jdave.injection;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class FieldTest extends TestCase {
+public class FieldTest {
+    @Test
     public void testSetsValueOfField() {
         TestClass object = new TestClass();
         Field field = field(object);

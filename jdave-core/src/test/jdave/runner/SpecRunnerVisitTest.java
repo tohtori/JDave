@@ -15,21 +15,19 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertEquals;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class SpecRunnerVisitTest extends TestCase {
-    private SpecRunner runner;
+public class SpecRunnerVisitTest {
+    private SpecRunner runner = new SpecRunner();
     private Behavior visitedMethod;
 
-    @Override
-    protected void setUp() throws Exception {
-        runner = new SpecRunner();
-    }
-    
+    @Test
     public void testUsesVisitingSpecMethod() throws Exception {
         runner.visit(TestSpec.class, new ISpecVisitor() {
             public void onContext(Context context) {

@@ -15,25 +15,25 @@
  */
 package jdave.contract;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
-import junit.framework.TestCase;
+
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class CloneableContractTest extends TestCase {
-    private Specification<Object> spec;
+public class CloneableContractTest {
+    private Specification<Object> spec = new Specification<Object>() {};
 
-    @Override
-    protected void setUp() throws Exception {
-        spec = new Specification<Object>() {};
-    }
-    
+    @Test
     public void testCloneableIsAccepted() {
         spec.specify(new TestCloneable(), spec.satisfies(new CloneableContract()));
     }
     
+    @Test
     public void testNonCloneableIsNotAccepted() {
         try {
             spec.specify(new NonCloneable(), spec.satisfies(new CloneableContract()));
@@ -43,6 +43,7 @@ public class CloneableContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testCloneableWithoutPublicCloneMethodNotAccepted() {
         try {
             spec.specify(new CloneableWithoutClone(), spec.satisfies(new CloneableContract()));
@@ -52,6 +53,7 @@ public class CloneableContractTest extends TestCase {
         }
     }
     
+    @Test
     public void testCloneableWhichDoesNotSupportCloningNotAccepted() {
         try {
             spec.specify(new CloneableWhichDoesNotSupportClone(), spec.satisfies(new CloneableContract()));
