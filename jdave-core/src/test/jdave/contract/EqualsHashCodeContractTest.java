@@ -183,7 +183,31 @@ public class EqualsHashCodeContractTest {
             assertTrue(e.getMessage().endsWith("equals null"));
         }        
     }
-    
+
+    public void testContractIsNotAcceptedIfEqualsCastFails() throws Exception {
+        ClassWithoutTypeCheckInEquals context = new ClassWithoutTypeCheckInEquals(1);
+        try {
+            spec.specify(context, spec.satisfies(new EqualsHashCodeContract<ClassWithoutTypeCheckInEquals>() {
+                @Override
+                protected ClassWithoutTypeCheckInEquals equal() {
+                    return new ClassWithoutTypeCheckInEquals(1);
+                }
+                @Override
+                protected ClassWithoutTypeCheckInEquals nonEqual() {
+                    return new ClassWithoutTypeCheckInEquals(2);
+                }
+                @Override
+                protected ClassWithoutTypeCheckInEquals subType() {
+                    return new ClassWithoutTypeCheckInEquals(1) {};
+                }
+            }));
+            fail("ExpectationFailedException expected");
+        } catch (ExpectationFailedException expected) {
+            String msg = ".equals(Object) does not check for ClassCastException";
+            assertTrue(expected.getMessage().endsWith(msg));
+        }
+    }
+
     private static class ClassWithCorrectEqualsAndHashCode {
         private final int id;
 
@@ -243,6 +267,28 @@ public class EqualsHashCodeContractTest {
                 return true;
             }
             return false;
+        }
+    }
+ 
+    private static class ClassWithoutTypeCheckInEquals {
+        private final int id;
+
+        public ClassWithoutTypeCheckInEquals(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            ClassWithoutTypeCheckInEquals rhs = (ClassWithoutTypeCheckInEquals) obj;
+            return id == rhs.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id;
         }
     }
 }

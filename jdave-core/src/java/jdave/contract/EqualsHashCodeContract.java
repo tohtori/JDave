@@ -51,6 +51,11 @@ public abstract class EqualsHashCodeContract<T> implements IContract {
         if (obj.equals(null)) {
             throw new ExpectationFailedException(obj + " equals null");            
         }
+        try {
+            obj.equals("");
+        } catch (ClassCastException e) {
+            throw new ExpectationFailedException(obj.getClass().getSimpleName() + ".equals(Object) does not check for ClassCastException");
+        }
         if (!obj.equals(equal())) {
             throw new ExpectationFailedException(obj + " does not equal " + equal());
         }
