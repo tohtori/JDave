@@ -54,7 +54,7 @@ public class JDaveGroupRunnerTest {
     private RunNotifier notifier;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         context.setImposteriser(ClassImposteriser.INSTANCE);
         notifier = context.mock(RunNotifier.class);
     }
