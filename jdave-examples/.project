@@ -2,8 +2,8 @@
   <name>jdave-examples</name>
   <comment/>
   <projects>
-    <project>jdave-jemmy</project>
     <project>jdave-core</project>
+    <project>jdave-jemmy</project>
     <project>jdave-junit4</project>
     <project>jdave-wicket</project>
   </projects>
