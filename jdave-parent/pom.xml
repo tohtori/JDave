@@ -28,6 +28,7 @@
     <module>../jdave-examples</module>
     <module>../jdave-report-plugin</module>
     <module>../jdave-scala</module>
+    <module>../jdave-unfinalizer</module>
   </modules>
   
   <developers>
