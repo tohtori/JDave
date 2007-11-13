@@ -47,7 +47,7 @@ class StackSpec extends Specification[Stack[Any]] {
       //§(stack, must be full)
     }
 
-    def complainsOnPush = §({() => stack.push(100) }, must raise classOf[StackOverflowException])
+    def complainsOnPush = §({ stack.push(100) }, must raise classOf[StackOverflowException])
     
     def containsAllItems = 0.to(9).foreach(i => §(stack, contains(i)))
     
@@ -72,7 +72,7 @@ class StackSpec extends Specification[Stack[Any]] {
 
     def addsToTheTopWhenSentPush {
       stack.push(100)
-      §(stack.peek(), must equal 100)
+      §(stack.peek, must equal 100)
     }
   }
 }

@@ -6,19 +6,19 @@ import jdave.runner.IntrospectionStrategy;
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
 trait Specification[T] extends JavaSpecification {
-  def specify(block: () => Unit, e: ExpectedException) {
+  def specify(block: => Unit, e: ExpectedException) {
     super.specify(new Block() {
-      def run = block()
+      def run = block
     }, e)
   }
-  def §(block: () => Unit, e: ExpectedException) = specify(block, e)
+  def §(block: => Unit, e: ExpectedException) = specify(block, e)
   
-  def specify(block: () => Unit, e: ExpectedNoThrow) {
+  def specify(block: => Unit, e: ExpectedNoThrow) {
     super.specify(new Block() {
-      def run = block()
+      def run = block
     }, e)
   }
-  def §(block: () => Unit, e: ExpectedNoThrow) = specify(block, e)
+  def §(block: => Unit, e: ExpectedNoThrow) = specify(block, e)
   
   def containsExactly[E](i: Iterable[E]) = super.containsExactly(toJavaList(i))
   def containsInOrder[E](i: Iterable[E]) = super.containsInOrder(toJavaList(i))
