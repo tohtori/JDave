@@ -28,6 +28,7 @@
     <module>../jdave-examples</module>
     <module>../jdave-report-plugin</module>
     <module>../jdave-scala</module>
+    <module>../jdave-scala-suites</module>
     <module>../jdave-unfinalizer</module>
   </modules>
   
@@ -60,6 +61,9 @@
     </contributor>
     <contributor>
       <name>Tuomas Kärkkäinen</name>
+    </contributor>
+    <contributor>
+      <name>Kare Nuorteva</name>
     </contributor>
   </contributors>
   
