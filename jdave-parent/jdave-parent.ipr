@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/*
- * Copyright 2001-2005 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
--->
 <project relativePaths="false" version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
@@ -23,7 +6,6 @@
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
   </component>
-  <component name="ClearCase" />
   <component name="CodeStyleManager">
     <option name="USE_DEFAULT_CODE_STYLE_SCHEME" value="true" />
     <option name="CODE_STYLE_SCHEME" value="" />
@@ -44,12 +26,12 @@
       <entry name="!?*.java" />
     </wildcardResourcePatterns>
   </component>
-  <component name="DataSourceManager" />
-  <component name="DataSourceManagerImpl" />
   <component name="DependenciesAnalyzeManager">
     <option name="myForwardDirection" value="false" />
   </component>
-  <component name="DependencyValidationManager" />
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
   <component name="EclipseCompilerSettings">
     <option name="DEBUGGING_INFO" value="true" />
     <option name="GENERATE_NO_WARNINGS" value="true" />
@@ -72,7 +54,7 @@
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="OUTPUT_DIRECTORY" />
   </component>
-  <component name="IdProvider" IDEtalkID="3FD1E13D72C39BC59428F248AAFAB694" />
+  <component name="IdProvider" IDEtalkID="79E1785036BD4608D98A1C420D4035B3" />
   <component name="ImportConfiguration">
     <option name="VENDOR" />
     <option name="RELEASE_TAG" />
@@ -87,27 +69,52 @@
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
         <option name="myLocal" value="false" />
-        <used_levels>
-          <error>
-            <option name="myName" value="ERROR" />
-            <option name="myVal" value="400" />
-          </error>
-          <warning>
-            <option name="myName" value="WARNING" />
-            <option name="myVal" value="300" />
-          </warning>
-          <information>
-            <option name="myName" value="INFO" />
-            <option name="myVal" value="200" />
-          </information>
-          <server>
-            <option name="myName" value="SERVER PROBLEM" />
-            <option name="myVal" value="100" />
-          </server>
-        </used_levels>
         <inspection_tool class="SystemOutErr" level="ERROR" enabled="true" />
+        <inspection_tool class="HtmlUnknownAttribute" level="WARNING" enabled="true">
+          <option name="myValues">
+            <value>
+              <list size="6">
+                <item index="0" class="java.lang.String" itemvalue="type" />
+                <item index="1" class="java.lang.String" itemvalue="wmode" />
+                <item index="2" class="java.lang.String" itemvalue="src" />
+                <item index="3" class="java.lang.String" itemvalue="width" />
+                <item index="4" class="java.lang.String" itemvalue="height" />
+                <item index="5" class="java.lang.String" itemvalue="wicket:id" />
+              </list>
+            </value>
+          </option>
+          <option name="myCustomValuesEnabled" value="true" />
+        </inspection_tool>
+        <inspection_tool class="JpaDataSourceORMInspection" level="ERROR" enabled="false" />
+        <inspection_tool class="JpaModelErrorInspection" level="ERROR" enabled="false" />
+        <inspection_tool class="WicketIdHtmlInspection" level="WARNING" enabled="false" />
+        <inspection_tool class="WicketIdJavaInspection" level="WARNING" enabled="false" />
+        <inspection_tool class="UNUSED_SYMBOL" level="WARNING" enabled="true">
+          <option name="LOCAL_VARIABLE" value="true" />
+          <option name="FIELD" value="true" />
+          <option name="METHOD" value="true" />
+          <option name="CLASS" value="true" />
+          <option name="PARAMETER" value="true" />
+          <option name="REPORT_PARAMETER_FOR_PUBLIC_METHODS" value="true" />
+          <option name="INJECTION_ANNOS">
+            <value>
+              <list size="3">
+                <item index="0" class="java.lang.String" itemvalue="com.google.inject.Inject" />
+                <item index="1" class="java.lang.String" itemvalue="org.apache.wicket.spring.injection.annot.SpringBean" />
+                <item index="2" class="java.lang.String" itemvalue="salve.depend.Dependency" />
+              </list>
+            </value>
+          </option>
+        </inspection_tool>
+        <inspection_tool class="MissingOverrideAnnotation" level="ERROR" enabled="true">
+          <option name="useJdk6Rules" value="false" />
+        </inspection_tool>
+        <inspection_tool class="CloneableImplementsClone" level="WARNING" enabled="true">
+          <option name="m_ignoreCloneableDueToInheritance" value="false" />
+        </inspection_tool>
       </profile>
     </profiles>
+    <list size="0" />
   </component>
   <component name="JUnitProjectSettings">
     <option name="TEST_RUNNER" value="UI" />
@@ -265,21 +272,23 @@
       </item>
     </group>
   </component>
+  <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///home/work/jdave/jdave-core/jdave-core.iml" filepath="/home/work/jdave/jdave-core/jdave-core.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-examples/jdave-examples.iml" filepath="/home/work/jdave/jdave-examples/jdave-examples.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-jemmy/jdave-jemmy.iml" filepath="/home/work/jdave/jdave-jemmy/jdave-jemmy.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-junit3/jdave-junit3.iml" filepath="/home/work/jdave/jdave-junit3/jdave-junit3.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-junit4/jdave-junit4.iml" filepath="/home/work/jdave/jdave-junit4/jdave-junit4.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-core/jdave-core.iml" filepath="/home/thrantal/work/jdave/jdave-core/jdave-core.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-examples/jdave-examples.iml" filepath="/home/thrantal/work/jdave/jdave-examples/jdave-examples.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-jemmy/jdave-jemmy.iml" filepath="/home/thrantal/work/jdave/jdave-jemmy/jdave-jemmy.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-junit4/jdave-junit4.iml" filepath="/home/thrantal/work/jdave/jdave-junit4/jdave-junit4.iml" />
       <module fileurl="file://$PROJECT_DIR$/jdave-parent.iml" filepath="$PROJECT_DIR$/jdave-parent.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" filepath="/home/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-wicket/jdave-wicket.iml" filepath="/home/work/jdave/jdave-wicket/jdave-wicket.iml" />
-      <module fileurl="file:///home/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" filepath="/home/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" filepath="/home/thrantal/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-scala/jdave-scala.iml" filepath="/home/thrantal/work/jdave/jdave-scala/jdave-scala.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-scala-suites/jdave-scala-suites.iml" filepath="/home/thrantal/work/jdave/jdave-scala-suites/jdave-scala-suites.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-unfinalizer/jdave-unfinalizer.iml" filepath="/home/thrantal/work/jdave/jdave-unfinalizer/jdave-unfinalizer.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-wicket/jdave-wicket.iml" filepath="/home/thrantal/work/jdave/jdave-wicket/jdave-wicket.iml" />
+      <module fileurl="file:///home/thrantal/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" filepath="/home/thrantal/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
-  <component name="ProjectRunConfigurationManager" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" />
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
       <value>
@@ -294,20 +303,12 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
-  <component name="StarteamVcsAdapter" />
-  <component name="SvnBranchConfigurationManager" />
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
-  <component name="VssVcs" />
-  <component name="com.intellij.jsf.UserDefinedFacesConfigs">
-    <option name="USER_DEFINED_CONFIGS">
-      <value>
-        <list size="0" />
-      </value>
-    </option>
-  </component>
-  <component name="libraryTable" />
-  <component name="uidesigner-configuration" />
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <UsedPathMacros>
+    <macro name="M2_REPO" />
+  </UsedPathMacros>
 </project>
 
