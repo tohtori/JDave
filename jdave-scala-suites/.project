@@ -1,7 +1,11 @@
 <projectDescription>
   <name>jdave-scala-suites</name>
   <comment/>
-  <projects/>
+  <projects>
+    <project>jdave-scala</project>
+    <project>jdave-junit4</project>
+    <project>jdave-core</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
