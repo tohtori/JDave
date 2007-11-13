@@ -26,12 +26,12 @@ class StackSpec extends Specification[Stack[Any]] {
     def create = stack
 
     def isEmpty {
-      //specify(stack, should be empty)
+      //§(stack, should be empty)
     }
 
     def isNoLongerEmptyAfterPush {
       stack.push("anything")
-//      specify(stack, should not() be empty)
+//      §(stack, should not() be empty)
     }
   }
   
@@ -44,25 +44,25 @@ class StackSpec extends Specification[Stack[Any]] {
     }
 
     def isFull {
-      //specify(stack, should be full)
+      //§(stack, should be full)
     }
 
     def complainsOnPush {
-      specify({ stack.push(100) }, must raise classOf[StackOverflowException])
+      §({() => stack.push(100) }, must raise classOf[StackOverflowException])
     }
     
     def containsAllItems {
-      0.to(9).foreach(i => specify(stack, contains(i)))
+      0.to(9).foreach(i => §(stack, contains(i)))
     }
     
     def doesNotContainRemovedItem {
       stack.pop()
-      specify(stack, does not() contain 9)
+      §(stack, does not() contain 9)
     }
     
     def containsAllButRemovedItem {
       stack.pop()
-      specify(stack, containsExactly(List(0, 1, 2, 3, 4, 5, 6, 7, 8)))
+      §(stack, containsExactly(List(0, 1, 2, 3, 4, 5, 6, 7, 8)))
     }
   }
 
@@ -76,7 +76,7 @@ class StackSpec extends Specification[Stack[Any]] {
 
     def addsToTheTopWhenSentPush {
       stack.push(100)
-      specify(stack.peek(), must equal 100)
+      §(stack.peek(), must equal 100)
     }
   }
 }

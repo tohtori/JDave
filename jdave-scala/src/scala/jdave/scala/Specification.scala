@@ -11,12 +11,14 @@ trait Specification[T] extends JavaSpecification {
       def run = block()
     }, e)
   }
+  def §(block: () => Unit, e: ExpectedException) = specify(block, e)
   
   def specify(block: () => Unit, e: ExpectedNoThrow) {
     super.specify(new Block() {
       def run = block()
     }, e)
   }
+  def §(block: () => Unit, e: ExpectedNoThrow) = specify(block, e)
   
   def containsExactly[E](i: Iterable[E]) = super.containsExactly(toJavaList(i))
   def containsInOrder[E](i: Iterable[E]) = super.containsInOrder(toJavaList(i))
@@ -25,10 +27,15 @@ trait Specification[T] extends JavaSpecification {
   def containsInPartialOrder[E](i: Iterable[E]) = super.containsInPartialOrder(toJavaList(i))
   
   def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
+  def §[E](i: Iterable[E], c: IContainment) = specify(i, c)
     
   private def toJavaList[E](i: Iterable[E]): java.util.List = {
     val list = new java.util.ArrayList
     i.foreach(item => list.add(item))
     list
   }
+  
+  def §(b: boolean) = specify(b)
+  def §(obj: Object, e: IEqualityCheck) = specify(obj, e)
+  def §(obj: int, e: IEqualityCheck) = specify(obj, e)
 }
