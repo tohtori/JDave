@@ -19,18 +19,15 @@ import org.junit.runner.RunWith;
 import jdave.junit4.JDaveRunner;
 
 @RunWith(classOf[JDaveRunner])
-class StackSpec extends Specification[Stack[Any]] {
+class StackSpec extends Specification[Stack[Int]] {
   class EmptyStack {
-    val stack = new Stack[String]
-
+    val stack = new Stack[Int]
     def create = stack
-
-    def isEmpty {
-      //§(stack, must be empty)
-    }
+    
+    def isEmpty = §(stack, is empty)
 
     def isNoLongerEmptyAfterPush {
-      stack.push("anything")
+      stack.push(1234)
 //      §(stack, must not() be empty)
     }
   }
@@ -38,17 +35,13 @@ class StackSpec extends Specification[Stack[Any]] {
   class FullStack {
     val stack = new Stack[Int](10)
 
-    def create {
+    def create = {
       0.to(9).foreach(stack.push)
       stack
     }
 
-    def isFull {
-      //§(stack, must be full)
-    }
-
+    def isFull = §(stack, is full)
     def complainsOnPush = §({ stack.push(100) }, must raise classOf[StackOverflowException])
-    
     def containsAllItems = 0.to(9).foreach(i => §(stack, contains(i)))
     
     def doesNotContainRemovedItem {
@@ -65,7 +58,7 @@ class StackSpec extends Specification[Stack[Any]] {
   class StackWhichIsNeitherEmptyNorFull {
     val stack = new Stack[Int]
 
-    def create {
+    def create = {
       0.to(9).foreach(stack.push)
       stack
     }

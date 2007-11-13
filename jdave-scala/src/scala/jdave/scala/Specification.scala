@@ -36,6 +36,9 @@ trait Specification[T] extends JavaSpecification {
   }
   
   def §(b: boolean) = specify(b)
+  def §(obj: T, b: boolean) = specify(b)
   def §(obj: Object, e: IEqualityCheck) = specify(obj, e)
   def §(obj: int, e: IEqualityCheck) = specify(obj, e)
+  
+  def is: T = be.asInstanceOf[T]
 }

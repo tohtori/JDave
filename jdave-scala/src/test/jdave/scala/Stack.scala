@@ -8,14 +8,12 @@ class Stack[T](maxSize: Int) extends Iterable[T] {
   
   def empty() = stack.isEmpty
 
-  def full() = maxSize != UNLIMITED && stack.size == maxSize
+  def full() = maxSize != UNLIMITED && stack.size >= maxSize
 
   def peek() = stack.top
 
   def push(element: T) {
-    if (full()) {
-      throw new StackOverflowException
-    }
+    if (full()) throw new StackOverflowException    
     stack.push(element)
   }
 
