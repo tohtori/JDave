@@ -44,7 +44,7 @@ public class DummyTest {
         }
     }
     
-    static class Observer {
+    public static class Observer {
         public void changed() {
             throw new RuntimeException();
         }
