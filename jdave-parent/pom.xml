@@ -200,6 +200,10 @@
       <id>laughingpanda-maven2</id>
       <url>http://www.laughingpanda.org/maven2/</url>
     </repository>
+    <repository>
+      <id>openqa-selenium-maven2</id>
+      <url>http://maven.openqa.org/</url>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
