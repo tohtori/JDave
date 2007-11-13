@@ -15,27 +15,35 @@
  */
 package jdave.wicket;
 
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
+
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
 
 /**
  * @author Joni Freeman
+ * @author Mikko Peltonen
  */
 public class Selection<S> {
     private final Class<S> componentType;
-    private MarkupContainer root;
+    private Matcher<?> matcher;
     
     Selection(Class<S> componentType) {
-        this.componentType = componentType;                
+        this.componentType = componentType;
+        this.matcher = is(anything());
     }
 
-    public Selection<S> from(MarkupContainer root) {
-        this.root = root;
+    public S from(MarkupContainer root) {
+        return newSelector().first(root, componentType, matcher);
+    }
+
+    public Selection<S> which(Matcher<?> matcher) {
+        this.matcher = matcher;
         return this;
     }
-
-    public S which(Matcher<?> matcher) {
-        Selector selector = new Selector();
-        return selector.first(root, componentType, matcher);
-    }            
+    
+    protected Selector newSelector() {
+        return new Selector();
+    }
 }

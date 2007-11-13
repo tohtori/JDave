@@ -70,7 +70,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         }
         
         public void theFirstItemCanBePickedUsingHamcrestMatcher() {
-            Item item = selectFirst(Item.class).from(context).which(is(0));
+            Item item = selectFirst(Item.class).which(is(0)).from(context);
             specify(item.get("item").getModelObject(), does.equal("0"));
         }
         
