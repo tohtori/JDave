@@ -225,7 +225,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * Select first component whose model object matches given Hamcrest matcher:
      * <pre><blockquote><code>
      *
-     * Item item = selectFirst(Item.class).from(context).which(is(0));
+     * Item item = selectFirst(Item.class).which(is(0)).from(context);
      *
      * </code></blockquote></pre>
      */
@@ -237,7 +237,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * Select all components whose model objects match given Hamcrest matcher:
      * <pre><blockquote><code>
      *
-     * List<Label> labels = selectAll(Label.class).from(context).which(is(Person.class));
+     * List<Label> labels = selectAll(Label.class).which(is(Person.class)).from(context);
      *
      * </code></blockquote></pre>
      */
@@ -261,7 +261,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * Select all components whose ids are given Wicket id:
      * <pre><blockquote><code>
      *
-     * List<Label> labels = selectAll(Label.class, "price").from(context);
+     * List<Label> prices = selectAll(Label.class, "price").from(context);
      *
      * </code></blockquote></pre>
      */
@@ -271,7 +271,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
 
     /**
      * Create a new instance of a Wicket component to be specified.
-     * <p>
+     * <p
      * The component must get given id. If the component is a <code>Page</code>,
      * the id is null.
      *

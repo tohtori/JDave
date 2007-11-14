@@ -75,7 +75,6 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
             specify(item.get("item").getModelObject(), does.equal("0"));
         }
         
-        @SuppressWarnings("unchecked")
         public void allItemsCanBePickedUsingHamcrestMatcher() {
             List<Item> items = selectAll(Item.class).which(is(anyOf(is(0), is(1)))).from(context);
             specify(modelObjects(items.iterator()), containsInOrder(0, 1));
@@ -86,7 +85,6 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
             specify(item.getModelObjectAsString(), is("0"));
         }
 
-        @SuppressWarnings("unchecked")
         public void allItemsWithSameIdCanBePickedUsingTheirId() {
             List<Label> items = selectAll(Label.class, "item").from(context);
             List<String> modelObjects = new ArrayList<String>();
