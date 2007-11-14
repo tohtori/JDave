@@ -74,7 +74,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      */
     public T startComponent(final IModel model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
-        Class<?> type = null;
+        Class<?> type;
         if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
             type = (Class<?>) superclass.getActualTypeArguments()[0];            
         } else {
