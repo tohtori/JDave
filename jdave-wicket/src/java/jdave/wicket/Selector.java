@@ -29,17 +29,14 @@ import org.hamcrest.Matcher;
  */
 public class Selector {
     public <T> T first(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
-        List<T> firstMatch = select(root, componentType, matcher, IVisitor.STOP_TRAVERSAL);
-        return getFirstOrNull(firstMatch);
+        final List<T> matches = new ArrayList<T>();
+        root.visitChildren(componentType, new SelectingComponentsByMatchingModelObject<T>(matcher, matches, IVisitor.STOP_TRAVERSAL));
+        return getFirstOrNull(matches);
     }
 
     public <T> List<T> all(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
-        return select(root, componentType, matcher, IVisitor.CONTINUE_TRAVERSAL);
-    }
-
-    private <T> List<T> select(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher, final Object actionOnMatch) {
         final List<T> matches = new ArrayList<T>();
-        root.visitChildren(componentType, new SelectingComponentsByMatchingModelObject<T>(matcher, matches, actionOnMatch));
+        root.visitChildren(componentType, new SelectingComponentsByMatchingModelObject<T>(matcher, matches, IVisitor.CONTINUE_TRAVERSAL));
         return matches;
     }
 
