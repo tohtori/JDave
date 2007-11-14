@@ -28,6 +28,7 @@ import jdave.junit4.JDaveRunner;
 
 /**
  * @author Joni Freeman
+ * @author Timo Rantalaiho
  */
 @RunWith(JDaveRunner.class)
 public class SelectorSpec extends Specification<Matcher<?>> {
@@ -60,6 +61,16 @@ public class SelectorSpec extends Specification<Matcher<?>> {
         
         public void returnsEmptyCollectionWhenAllItemsAsked() {
             specify(selector.all(root, WebMarkupContainer.class, context), containsExactly());
+        }
+    }
+
+    public class SelectingById {
+        public void returnsFirstElementWithGivenId() {
+            specify(selector.first(root, WebMarkupContainer.class, "child2"), does.equal(child2));
+        }
+
+        public void returnsAllElementsWithGivenId() {
+            specify(selector.all(root, WebMarkupContainer.class, "child2"), containsExactly(child2));
         }
     }
     
