@@ -24,17 +24,27 @@ import org.hamcrest.Matcher;
 /**
  * @author Joni Freeman
  * @author Mikko Peltonen
+ * @author Timo Rantalaiho
  */
 public class Selection<S> {
     private final Class<S> componentType;
+    private final String wicketId;
     private Matcher<?> matcher;
-    
+
     Selection(Class<S> componentType) {
+        this(componentType, null);
+    }
+
+    Selection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
         this.matcher = is(anything());
+        this.wicketId = wicketId;
     }
 
     public S from(MarkupContainer root) {
+        if (wicketId != null) {
+            return newSelector().first(root, componentType, wicketId);
+        }
         return newSelector().first(root, componentType, matcher);
     }
 

@@ -15,25 +15,26 @@
  */
 package jdave.wicket;
 
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.is;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 import jdave.junit4.JDaveRunner;
-
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.is;
 import org.junit.runner.RunWith;
 
 /**
  * @author Joni Freeman
+ * @author Timo Rantalaiho
  */
 @RunWith(JDaveRunner.class)
 public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
@@ -76,8 +77,23 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         
         @SuppressWarnings("unchecked")
         public void allItemsCanBePickedUsingHamcrestMatcher() {
-            List<Item> items = selectAll(Item.class).from(context).which(is(anyOf(is(0), is(1))));
+            List<Item> items = selectAll(Item.class).which(is(anyOf(is(0), is(1)))).from(context);
             specify(modelObjects(items.iterator()), containsInOrder(0, 1));
+        }
+
+        public void theFirstItemCanBePickedUsingItsId() {
+            Label item = selectFirst(Label.class, "item").from(context);
+            specify(item.getModelObjectAsString(), is("0"));
+        }
+
+        @SuppressWarnings("unchecked")
+        public void allItemsWithSameIdCanBePickedUsingTheirId() {
+            List<Label> items = selectAll(Label.class, "item").from(context);
+            List<String> modelObjects = new ArrayList<String>();
+            for (Label item : items) {
+                modelObjects.add(item.getModelObjectAsString());
+            }
+            specify(modelObjects, containsInOrder("0", "1", "2", "0", "1", "2"));
         }
     }
     

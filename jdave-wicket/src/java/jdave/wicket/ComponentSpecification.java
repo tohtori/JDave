@@ -43,6 +43,7 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
  * A base class for Wicket's <code>Component</code> specifications.
  *
  * @author Joni Freeman
+ * @author Timo Rantalaiho
  */
 public abstract class ComponentSpecification<T extends Component> extends Specification<T> {
     protected BaseWicketTester wicket;
@@ -242,6 +243,30 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      */
     public <S extends Component> MultiSelection<S> selectAll(Class<S> type) {
         return new MultiSelection<S>(type);
+    }
+
+    /**
+     * Select first component whose Wicket id is given String:
+     * <pre><blockquote><code>
+     *
+     * Label itemName = selectFirst(Label.class, "name").from(context);
+     *
+     * </code></blockquote></pre>
+     */
+    public <S extends Component> Selection<S> selectFirst(Class<S> type, String wicketId) {
+        return new Selection<S>(type, wicketId);
+    }
+
+    /**
+     * Select all components whose ids are given Wicket id:
+     * <pre><blockquote><code>
+     *
+     * List<Label> labels = selectAll(Label.class, "price").from(context);
+     *
+     * </code></blockquote></pre>
+     */
+    public <S extends Component> MultiSelection<S> selectAll(Class<S> type, String wicketId) {
+        return new MultiSelection<S>(type, wicketId);
     }
 
     /**

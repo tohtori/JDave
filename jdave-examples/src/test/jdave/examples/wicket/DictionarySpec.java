@@ -18,15 +18,14 @@ package jdave.examples.wicket;
 import java.util.Arrays;
 import java.util.Collections;
 
-import jdave.examples.wicket.DictionaryPanel;
-import jdave.examples.wicket.IDictionaryService;
 import jdave.junit4.JDaveRunner;
 import jdave.wicket.ComponentSpecification;
-
 import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.tester.FormTester;
+import static org.hamcrest.Matchers.is;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
@@ -50,6 +49,8 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
             query("hello");
             RefreshingView words = (RefreshingView) dictionary.get("words");
             specify(words, containsInOrder("hei", "moi"));
+            specify(selectFirst(Label.class, "word").from(dictionary).getModelObjectAsString(), is("hei"));
+            specify(selectAll(Label.class, "word").from(dictionary).size(), does.equal(2));
         }
     }
     

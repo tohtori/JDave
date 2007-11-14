@@ -19,25 +19,37 @@ import java.util.List;
 
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 /**
  * @author Joni Freeman
+ * @author Timo Rantalaiho
  */
 public class MultiSelection<S> {
     private final Class<S> componentType;
-    private MarkupContainer root;
-    
+    private final String wicketId;
+    private Matcher<?> matcher;
+
     MultiSelection(Class<S> componentType) {
-        this.componentType = componentType;                
+        this(componentType, null);
     }
 
-    public MultiSelection<S> from(MarkupContainer root) {
-        this.root = root;
-        return this;
+    MultiSelection(Class<S> componentType, String wicketId) {
+        this.componentType = componentType;
+        this.wicketId = wicketId;
+        this.matcher = Matchers.anything();
     }
 
-    public List<S> which(Matcher<?> matcher) {
+    public List<S> from(MarkupContainer root) {
         Selector selector = new Selector();
+        if (wicketId != null) {
+            return selector.all(root, componentType, wicketId);
+        }
         return selector.all(root, componentType, matcher);
+    }
+
+    public MultiSelection<S>  which(Matcher<?> matcher) {
+        this.matcher = matcher;
+        return this;
     }
 }
