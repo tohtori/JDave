@@ -21,8 +21,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.MarkupContainer;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
 /**
@@ -85,50 +83,6 @@ public class Selector {
             this.actionOnMatch = actionOnMatch;
             root.visitChildren(componentType, this);
             return matches;
-        }
-    }
-
-    private static class ComponentsModelMatchesTo<T extends Component> extends BaseMatcher<T> {
-        private final Matcher<?> matcher;
-
-        public ComponentsModelMatchesTo(Matcher<?> matcher) {
-            this.matcher = matcher;
-        }
-
-        @SuppressWarnings({"unchecked"})
-        public final boolean matches(Object o) {
-            T component = (T) o;
-            return matches(component);
-        }
-
-        public boolean matches(T component) {
-            return (matcher.matches(component.getModelObject()));
-        }
-
-        public void describeTo(Description description) {
-            matcher.describeTo(description);
-        }
-    }
-
-    private static class WicketIdEqualsTo<T extends Component> extends BaseMatcher<T> {
-        private final String wicketId;
-
-        public WicketIdEqualsTo(String wicketId) {
-            this.wicketId = wicketId;
-        }
-
-        @SuppressWarnings({"unchecked"})
-        public final boolean matches(Object o) {
-            T component = (T) o;
-            return matches(component);
-        }
-
-        public boolean matches(T component) {
-            return (wicketId.equals(component.getId()));
-        }
-
-        public void describeTo(Description description) {
-            description.appendText(wicketId);
         }
     }
 }
