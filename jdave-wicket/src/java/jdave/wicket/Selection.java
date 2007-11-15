@@ -15,18 +15,18 @@
  */
 package jdave.wicket;
 
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
-
+import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
 /**
  * @author Joni Freeman
  * @author Mikko Peltonen
  * @author Timo Rantalaiho
  */
-public class Selection<S> {
+public class Selection<S extends Component> {
     private final Class<S> componentType;
     private final String wicketId;
     private Matcher<?> matcher;

@@ -21,6 +21,8 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.MarkupContainer;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
 /**
@@ -28,76 +30,105 @@ import org.hamcrest.Matcher;
  * @author Timo Rantalaiho
  */
 public class Selector {
-    public <T> T first(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
-        final List<T> matches = new ArrayList<T>();
-        root.visitChildren(componentType, new SelectingComponentsByMatchingModelObject<T>(matcher, matches, IVisitor.STOP_TRAVERSAL));
-        return getFirstOrNull(matches);
+    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+        return selectFirst(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
     }
 
-    public <T> List<T> all(MarkupContainer root, Class<T> componentType, Matcher<?> matcher) {
-        final List<T> matches = new ArrayList<T>();
-        root.visitChildren(componentType, new SelectingComponentsByMatchingModelObject<T>(matcher, matches, IVisitor.CONTINUE_TRAVERSAL));
-        return matches;
+    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+        return selectAll(root, componentType, new ComponentsModelMatchesTo(matcher));
     }
 
-    public <T> T first(MarkupContainer root, Class<T> componentType, String wicketId) {
-        final List<T> firstMatch = new ArrayList<T>();
-        root.visitChildren(componentType, new SelectingComponentsById<T>(wicketId, firstMatch, IVisitor.STOP_TRAVERSAL));
-        return getFirstOrNull(firstMatch);
+    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, String wicketId) {
+        return selectFirst(root, componentType, new WicketIdEqualsTo(wicketId));
     }
 
-    public <T> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId) {
-        final List<T> matches = new ArrayList<T>();
-        root.visitChildren(componentType, new SelectingComponentsById<T>(wicketId, matches, IVisitor.CONTINUE_TRAVERSAL));
-        return matches;
+    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId) {
+        return selectAll(root, componentType, new WicketIdEqualsTo(wicketId));
     }
 
-    private <T> T getFirstOrNull(List<T> firstMatch) {
+    private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
+        SelectingVisitor<T> visitor = new SelectingVisitor<T>(componentMatcher);
+        return visitor.selectFrom(root, componentType, IVisitor.CONTINUE_TRAVERSAL);
+    }
+
+    private <T> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
+        SelectingVisitor<T> visitor = new SelectingVisitor<T>(componentMatcher);
+        List<T> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
         if (firstMatch.isEmpty()) {
             return null;
         }
         return firstMatch.get(0);
     }
 
-    private class SelectingComponentsByMatchingModelObject<T> implements IVisitor {
-        private final Matcher<?> matcher;
-        private final List<T> matches;
-        private final Object actionOnMatch;
-
-        public SelectingComponentsByMatchingModelObject(Matcher<?> matcher, List<T> matches, Object actionOnMatch) {
-            this.matcher = matcher;
-            this.matches = matches;
-            this.actionOnMatch = actionOnMatch;
-        }
-
-        @SuppressWarnings("unchecked")
-            public Object component(Component component) {
-            if (matcher.matches(component.getModelObject())) {
-                matches.add((T) component);
-                return actionOnMatch;
-            }
-            return IVisitor.CONTINUE_TRAVERSAL;
-        }
-    }
-
-    private class SelectingComponentsById<T> implements IVisitor {
-        private final String wicketId;
-        private final List<T> matches;
+    /**
+     * Not thread safe.
+     */
+    private class SelectingVisitor<T> implements IVisitor {
+        private final Matcher componentMatcher;
+        private List<T> matches = new ArrayList<T>();
         private Object actionOnMatch;
 
-        public SelectingComponentsById(String wicketId, List<T> matches, Object actionOnMatch) {
-            this.wicketId = wicketId;
-            this.matches = matches;
-            this.actionOnMatch = actionOnMatch;
+        public SelectingVisitor(Matcher componentMatcher) {
+            this.componentMatcher = componentMatcher;
         }
 
-        @SuppressWarnings("unchecked")
-            public Object component(Component component) {
-            if (wicketId.equals(component.getId())) {
+        @SuppressWarnings({"unchecked"})
+        public Object component(Component component) {
+            if (componentMatcher.matches(component)) {
                 matches.add((T) component);
                 return actionOnMatch;
             }
             return CONTINUE_TRAVERSAL;
+        }
+
+        public List<T> selectFrom(MarkupContainer root, Class<T> componentType, Object actionOnMatch) {
+            this.actionOnMatch = actionOnMatch;
+            root.visitChildren(componentType, this);
+            return matches;
+        }
+    }
+
+    private static class ComponentsModelMatchesTo<T extends Component> extends BaseMatcher<T> {
+        private final Matcher<?> matcher;
+
+        public ComponentsModelMatchesTo(Matcher<?> matcher) {
+            this.matcher = matcher;
+        }
+
+        @SuppressWarnings({"unchecked"})
+        public final boolean matches(Object o) {
+            T component = (T) o;
+            return matches(component);
+        }
+
+        public boolean matches(T component) {
+            return (matcher.matches(component.getModelObject()));
+        }
+
+        public void describeTo(Description description) {
+            matcher.describeTo(description);
+        }
+    }
+
+    private static class WicketIdEqualsTo<T extends Component> extends BaseMatcher<T> {
+        private final String wicketId;
+
+        public WicketIdEqualsTo(String wicketId) {
+            this.wicketId = wicketId;
+        }
+
+        @SuppressWarnings({"unchecked"})
+        public final boolean matches(Object o) {
+            T component = (T) o;
+            return matches(component);
+        }
+
+        public boolean matches(T component) {
+            return (wicketId.equals(component.getId()));
+        }
+
+        public void describeTo(Description description) {
+            description.appendText(wicketId);
         }
     }
 }
