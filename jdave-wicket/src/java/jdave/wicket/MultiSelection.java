@@ -17,6 +17,7 @@ package jdave.wicket;
 
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -25,7 +26,7 @@ import org.hamcrest.Matchers;
  * @author Joni Freeman
  * @author Timo Rantalaiho
  */
-public class MultiSelection<S> {
+public class MultiSelection<S extends Component> {
     private final Class<S> componentType;
     private final String wicketId;
     private Matcher<?> matcher;
