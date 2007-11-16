@@ -20,7 +20,7 @@ public class WicketIdEqualsTo<T extends Component> extends BaseMatcher<T> {
         return matches(component);
     }
 
-    public boolean matches(T component) {
+    protected boolean matches(T component) {
         return (wicketId.equals(component.getId()));
     }
 

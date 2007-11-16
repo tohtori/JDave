@@ -21,7 +21,7 @@ public class ComponentsModelMatchesTo<T extends Component> extends BaseMatcher<T
         return matches(component);
     }
 
-    public boolean matches(T component) {
+    protected boolean matches(T component) {
         return (matcher.matches(component.getModelObject()));
     }
 
