@@ -45,12 +45,12 @@ public class Selector {
     }
 
     private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
-        SelectingVisitor<T> visitor = new SelectingVisitor<T>(componentMatcher);
+        CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         return visitor.selectFrom(root, componentType, IVisitor.CONTINUE_TRAVERSAL);
     }
 
     private <T> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
-        SelectingVisitor<T> visitor = new SelectingVisitor<T>(componentMatcher);
+        CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         List<T> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
         if (firstMatch.isEmpty()) {
             return null;
@@ -61,12 +61,12 @@ public class Selector {
     /**
      * Not thread safe.
      */
-    private class SelectingVisitor<T> implements IVisitor {
+    private class CollectingVisitor<T> implements IVisitor {
         private final Matcher componentMatcher;
         private List<T> matches = new ArrayList<T>();
         private Object actionOnMatch;
 
-        public SelectingVisitor(Matcher componentMatcher) {
+        public CollectingVisitor(Matcher componentMatcher) {
             this.componentMatcher = componentMatcher;
         }
 
