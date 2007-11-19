@@ -16,6 +16,10 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import jdave.Specification;
 
@@ -56,13 +60,29 @@ public abstract class Context {
     
     private ISpecIntrospection newIntrospection() {
         try {
-            IntrospectionStrategy strategy = specType.getAnnotation(IntrospectionStrategy.class);
-            if (strategy != null) {
-                return strategy.value().newInstance();
-            }
+            Class<?> clazz = specType;
+            do {
+                Collection<Class<?>> types = typesOf(clazz);
+                for (Class<?> type : types) {
+                    if (hasStrategy(type)) {
+                        return type.getAnnotation(IntrospectionStrategy.class).value().newInstance();
+                    }                
+                }
+            } while ((clazz = clazz.getSuperclass()) != null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return new DefaultSpecIntrospection();
+    }
+    
+    private Collection<Class<?>> typesOf(Class<?> clazz) {
+        List<Class<?>> types = new ArrayList<Class<?>>();
+        types.add(clazz);
+        types.addAll(Arrays.asList(clazz.getInterfaces()));
+        return types;
+    }
+
+    boolean hasStrategy(Class<?> type) {
+        return type.isAnnotationPresent(IntrospectionStrategy.class);
     }
 }
