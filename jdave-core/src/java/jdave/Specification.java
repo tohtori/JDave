@@ -25,6 +25,7 @@ import java.util.Map;
 import jdave.containment.MapContainment;
 import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
+import jdave.equality.LongEqualsEqualityCheck;
 import jdave.equality.NotEqualsEqualityCheck;
 import jdave.mock.MockSupport;
 import jdave.util.Collections;
@@ -307,6 +308,10 @@ public abstract class Specification<T> extends MockSupport {
 
     public void specify(Object obj, IContract contract) {
         contract.isSatisfied(obj);
+    }
+    
+    public IEqualityCheck equal(long expected) {
+        return new LongEqualsEqualityCheck(expected);
     }
 
     public IEqualityCheck equal(String obj) {
