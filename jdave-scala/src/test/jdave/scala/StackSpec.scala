@@ -17,10 +17,8 @@ package jdave.scala;
 
 import org.junit.runner.RunWith;
 import jdave.junit4.JDaveRunner;
-import jdave.runner.IntrospectionStrategy;
 
 @RunWith(classOf[JDaveRunner])
-@IntrospectionStrategy(classOf[ScalaIntrospection])
 class StackSpec extends Specification[Stack[Int]] {
   class EmptyStack {
     val stack = new Stack[Int]
