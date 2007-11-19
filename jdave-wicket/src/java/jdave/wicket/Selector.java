@@ -33,23 +33,23 @@ public class Selector {
     }
 
     public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
-        return selectAll(root, componentType, new ComponentsModelMatchesTo(matcher));
+        return selectAll(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
     }
 
     public <T extends Component> T first(MarkupContainer root, Class<T> componentType, String wicketId) {
-        return selectFirst(root, componentType, new WicketIdEqualsTo(wicketId));
+        return selectFirst(root, componentType, new WicketIdEqualsTo<T>(wicketId));
     }
 
     public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId) {
-        return selectAll(root, componentType, new WicketIdEqualsTo(wicketId));
+        return selectAll(root, componentType, new WicketIdEqualsTo<T>(wicketId));
     }
 
-    private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
+    private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
         CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         return visitor.selectFrom(root, componentType, IVisitor.CONTINUE_TRAVERSAL);
     }
 
-    private <T> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher componentMatcher) {
+    private <T> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
         CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         List<T> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
         if (firstMatch.isEmpty()) {
@@ -62,11 +62,11 @@ public class Selector {
      * Not thread safe.
      */
     private class CollectingVisitor<T> implements IVisitor {
-        private final Matcher componentMatcher;
+        private final Matcher<T> componentMatcher;
         private List<T> matches = new ArrayList<T>();
         private Object actionOnMatch;
 
-        public CollectingVisitor(Matcher componentMatcher) {
+        public CollectingVisitor(Matcher<T> componentMatcher) {
             this.componentMatcher = componentMatcher;
         }
 
