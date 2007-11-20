@@ -58,11 +58,12 @@ public abstract class Context {
         return newIntrospection().isContextClass(specType, contextType);
     }
     
+    @SuppressWarnings("unchecked")
     private ISpecIntrospection newIntrospection() {
         try {
             Class<?> clazz = specType;
             do {
-                Collection<Class<?>> types = typesOf(clazz);
+                Collection<Class> types = typesOf(clazz);
                 for (Class<?> type : types) {
                     if (hasStrategy(type)) {
                         return type.getAnnotation(IntrospectionStrategy.class).value().newInstance();
@@ -75,8 +76,9 @@ public abstract class Context {
         return new DefaultSpecIntrospection();
     }
     
-    private Collection<Class<?>> typesOf(Class<?> clazz) {
-        List<Class<?>> types = new ArrayList<Class<?>>();
+    @SuppressWarnings("unchecked")
+    private Collection<Class> typesOf(Class clazz) {
+        List<Class> types = new ArrayList<Class>();
         types.add(clazz);
         types.addAll(Arrays.asList(clazz.getInterfaces()));
         return types;
