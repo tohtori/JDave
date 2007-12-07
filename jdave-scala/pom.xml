@@ -43,21 +43,12 @@
 
   <build>
     <sourceDirectory>src/scala</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/scala</directory>
-      </resource>
-    </resources>
-    <testResources>
-      <testResource>
-        <directory>src/test</directory>
-      </testResource>
-    </testResources>
-
+    <testSourceDirectory>src/test</testSourceDirectory>
     <plugins>
       <plugin>
-        <groupId>scala</groupId>
+        <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>
+        <version>2.1</version>
         <executions>
           <execution>
             <goals>
@@ -67,15 +58,21 @@
           </execution>
         </executions>
         <configuration>
-          <sourceDir>src/scala</sourceDir>
+          <displayCmd>false</displayCmd>
           <testSourceDir>src/test</testSourceDir>
+          <scalaVersion>2.6.0</scalaVersion>
+          <args>
+            <arg>-encoding</arg>
+            <arg>utf8</arg>
+            <arg>-target:jvm-1.5</arg>
+          </args>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
-            <include>**/*Spec.scala</include>
+            <include>**/*Spec.class</include>
           </includes>
         </configuration>
       </plugin>
@@ -95,10 +92,19 @@
     </plugins>
   </build>
 
+  <repositories>
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala Maven Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+  </repositories>  
+
   <pluginRepositories>
     <pluginRepository>
-      <id>laughingpanda</id>
-      <url>http://www.laughingpanda.org/maven2</url>
+      <id>scala-tools.org</id>
+      <name>Scala Maven Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
     </pluginRepository>
   </pluginRepositories>
 </project>
