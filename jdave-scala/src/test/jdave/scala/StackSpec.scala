@@ -36,13 +36,13 @@ class StackSpec extends Specification[Stack[Int]] {
     val stack = new Stack[Int](10)
 
     def create = {
-      0.to(9).foreach(stack.push)
+      (0 to 9).foreach(stack.push)
       stack
     }
 
     def isFull = §(stack, is full)
     def complainsOnPush = §({ stack.push(100) }, must raise classOf[StackOverflowException])
-    def containsAllItems = 0.to(9).foreach(i => §(stack, contains(i)))
+    def containsAllItems = (0 to 9).foreach(i => §(stack, contains(i)))
     
     def doesNotContainRemovedItem {
       stack.pop()
@@ -59,7 +59,7 @@ class StackSpec extends Specification[Stack[Int]] {
     val stack = new Stack[Int]
 
     def create = {
-      0.to(9).foreach(stack.push)
+      (0 to 9).foreach(stack.push)
       stack
     }
 
