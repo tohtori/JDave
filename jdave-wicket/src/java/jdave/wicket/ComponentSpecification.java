@@ -99,9 +99,10 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * 
      * @param model The model passed to component that is used for context.
      */
-    public void startComponentWithoutMarkup(final IModel model) {
+    public T startComponentWithoutMarkup(final IModel model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
+        return specifiedComponent;
     }
 
     private void startBorder(final IModel model) {
