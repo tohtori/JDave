@@ -88,11 +88,26 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
 
         public void allItemsWithSameIdCanBePickedUsingTheirId() {
             List<Label> items = selectAll(Label.class, "item").from(context);
+            List<String> modelObjects = collectModelObjects(items);
+            specify(modelObjects, containsInOrder("0", "1", "2", "0", "1", "2"));
+        }
+
+        public void selectingFirstWithIdAlsoHonorsHamcrestMatchers() {
+            Label two = selectFirst(Label.class, "item").which(is("2")).from(context);
+            specify(two.getModelObjectAsString(), does.equal("2"));
+        }
+
+        public void selectingAllWithIdAlsoHonorsHamcrestMatchers() {
+            List<Label> twos = selectAll(Label.class, "item").which(is("2")).from(context);
+            specify(collectModelObjects(twos), containsExactly("2", "2"));
+        }
+
+        private List<String> collectModelObjects(List<Label> items) {
             List<String> modelObjects = new ArrayList<String>();
             for (Label item : items) {
                 modelObjects.add(item.getModelObjectAsString());
             }
-            specify(modelObjects, containsInOrder("0", "1", "2", "0", "1", "2"));
+            return modelObjects;
         }
     }
     

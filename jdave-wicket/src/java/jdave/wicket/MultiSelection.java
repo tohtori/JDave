@@ -38,13 +38,13 @@ public class MultiSelection<S extends Component> {
     MultiSelection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
         this.wicketId = wicketId;
-        this.matcher = Matchers.anything();
+        matcher = Matchers.anything();
     }
 
     public List<S> from(MarkupContainer root) {
         Selector selector = new Selector();
         if (wicketId != null) {
-            return selector.all(root, componentType, wicketId);
+            return selector.all(root, componentType, wicketId, matcher);
         }
         return selector.all(root, componentType, matcher);
     }

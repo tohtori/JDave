@@ -22,6 +22,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 /**
  * @author Joni Freeman
@@ -36,12 +37,14 @@ public class Selector {
         return selectAll(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
     }
 
-    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, String wicketId) {
-        return selectFirst(root, componentType, new WicketIdEqualsTo<T>(wicketId));
+    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, String wicketId, Matcher<?> modelMatcher) {
+        Matcher<T> bothMatcher = combine(modelMatcher, wicketId);
+        return selectFirst(root, componentType, bothMatcher);
     }
 
-    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId) {
-        return selectAll(root, componentType, new WicketIdEqualsTo<T>(wicketId));
+    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId, Matcher<?> modelMatcher) {
+        Matcher<T> bothMatcher = combine(modelMatcher, wicketId);
+        return selectAll(root, componentType, bothMatcher);
     }
 
     private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
@@ -56,6 +59,10 @@ public class Selector {
             return null;
         }
         return firstMatch.get(0);
+    }
+
+    private <T extends Component> Matcher<T> combine(Matcher<?> modelMatcher, String wicketId) {
+        return Matchers.<T>allOf(new ComponentsModelMatchesTo(modelMatcher), new WicketIdEqualsTo<T>(wicketId));
     }
 
     /**

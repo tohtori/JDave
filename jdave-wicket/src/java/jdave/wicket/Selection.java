@@ -37,13 +37,13 @@ public class Selection<S extends Component> {
 
     Selection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
-        this.matcher = is(anything());
+        matcher = is(anything());
         this.wicketId = wicketId;
     }
 
     public S from(MarkupContainer root) {
         if (wicketId != null) {
-            return newSelector().first(root, componentType, wicketId);
+            return newSelector().first(root, componentType, wicketId, matcher);
         }
         return newSelector().first(root, componentType, matcher);
     }

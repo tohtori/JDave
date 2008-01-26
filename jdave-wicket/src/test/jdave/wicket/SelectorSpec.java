@@ -34,8 +34,9 @@ import jdave.junit4.JDaveRunner;
 public class SelectorSpec extends Specification<Matcher<?>> {
     private Selector selector = new Selector();
     private WebMarkupContainer root;
-    private Component child1, child2, child3;
-    
+    private WebMarkupContainer childWithDuplicateId;
+    private Component child1, child2, child3, grandChildWithDuplicateId;
+
     public class WithMatchingMatcher {
         public Matcher<String> create() {
             return Matchers.is("foo");
@@ -65,15 +66,33 @@ public class SelectorSpec extends Specification<Matcher<?>> {
     }
 
     public class SelectingById {
+        public Matcher<String> create() {
+            return Matchers.anything();
+        }
+
         public void returnsFirstElementWithGivenId() {
-            specify(selector.first(root, WebMarkupContainer.class, "child2"), does.equal(child2));
+            specify(selector.first(root, WebMarkupContainer.class, "child2", context), does.equal(child2));
         }
 
         public void returnsAllElementsWithGivenId() {
-            specify(selector.all(root, WebMarkupContainer.class, "child2"), containsExactly(child2));
+            specify(selector.all(root, WebMarkupContainer.class, "child2", context), containsExactly(child2));
         }
     }
-    
+
+    public class SelectingFirstByIdAndMatcher {
+        public Matcher<String> create() {
+            return Matchers.is("child");
+        }
+
+        public void returnsFirstMatchingComponentWithGivenId() {
+            specify(selector.first(root, WebMarkupContainer.class, "nonunique", context), does.equal(childWithDuplicateId));
+        }
+
+        public void returnsAllMatchingComponentsWithGivenId() {
+            specify(selector.all(root, Component.class, "nonunique", context), containsInOrder(childWithDuplicateId, grandChildWithDuplicateId));
+        }
+    }
+
     @Override
     public void create() {
         new WicketTester();
@@ -81,8 +100,15 @@ public class SelectorSpec extends Specification<Matcher<?>> {
         child1 = new WebMarkupContainer("child1").setModel(new Model("foo"));
         child2 = new WebMarkupContainer("child2").setModel(new Model("bar"));
         child3 = new WebMarkupContainer("child3").setModel(new Model("foo"));
+
+        WebMarkupContainer parentWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setModel(new Model("parent"));
+        childWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setModel(new Model("child"));
+        grandChildWithDuplicateId = new WebMarkupContainer("nonunique").setModel(new Model("child"));
         root.add(child1);
         root.add(child2);
+        root.add(parentWithDuplicateId);
+        parentWithDuplicateId.add(childWithDuplicateId);
+        childWithDuplicateId.add(grandChildWithDuplicateId);
         ((WebMarkupContainer) child2).add(child3);
     }
 }
