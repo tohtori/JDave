@@ -15,6 +15,12 @@
  */
 package jdave;
 
+import java.util.Arrays;
+import java.util.List;
+
+import jdave.util.Diff;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
@@ -22,14 +28,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
-
-import java.util.Arrays;
-import java.util.List;
-
-import jdave.util.Diff;
-
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,7 +56,18 @@ public class SpecificationTest {
         Object expected = null;
         specification.specify(actual, expected);        
     }
-    
+
+    @Test
+    public void testFailsWhenActualIsNotNull() {
+        Object object = new Object();
+        try {
+            specification.specify(object, specification.should.equal(null));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("Expected: null, but was: " + object.toString(), e.getMessage());
+        }
+    }
+
     @Test
     public void testShouldPassWhenExpectationMet() {
         specification.specify(1, 1);

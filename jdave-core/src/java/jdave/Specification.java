@@ -315,6 +315,9 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public IEqualityCheck equal(String obj) {
+        if (obj == null) {
+            return new EqualsEqualityCheck(obj);
+        }
         return new StringEqualsEqualityCheck(this, obj);
     }
 
