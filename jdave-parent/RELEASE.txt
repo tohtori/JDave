@@ -1,7 +1,7 @@
 > Update docs (version numbers, examples, documentation, front page news).
 ##### does not work: ./bin/prepare-release.sh (note, this fails for svn: '/home/inhuman/workspace' is not a working copy')
 > update pom version and commit
-mvn clean install
+mvn clean install (export PATH=$PATH:/usr/lib/firefox)
 mvn deploy
 svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpanda.org/svn/jdave/tags/0.5.0 -m "tag release"
 rm jdave-core-0.5.0/jdave-core-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
