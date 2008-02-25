@@ -68,6 +68,7 @@ public abstract class AnnotatedSpecScanner {
             super(new ClassWriter(false)); 
             ClassReader reader = new ClassReader(classAsStream);
             reader.accept(this, Attributes.getDefaultAttributes(), true);
+            classAsStream.close();
         }
         
         public String[] getGroups() {
