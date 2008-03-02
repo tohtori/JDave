@@ -154,6 +154,10 @@ public class SpecRunnerTest {
                 actualCalls.add("packageProtectedMethod");
             }
             
+            public void methodWhichTakesParameters(Object obj) {
+                actualCalls.add("methodWhichTakesParameters");                
+            }
+            
             public void destroy() {
                 destroyCalled++;
             }

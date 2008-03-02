@@ -38,6 +38,9 @@ public class DefaultSpecIntrospection implements ISpecIntrospection {
         if (method.isSynthetic()) {
             return false;
         }
+        if (method.getParameterTypes().length > 0) {
+            return false;
+        }
         return true;
     }
 
