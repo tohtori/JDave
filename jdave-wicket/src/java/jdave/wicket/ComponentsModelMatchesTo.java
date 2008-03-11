@@ -22,6 +22,9 @@ public class ComponentsModelMatchesTo<T extends Component> extends BaseMatcher<T
     }
 
     protected boolean matches(T component) {
+        if (matcher instanceof AnyModelMatcher) {
+            return true;
+        }
         return (matcher.matches(component.getModelObject()));
     }
 

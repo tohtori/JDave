@@ -24,6 +24,7 @@ import jdave.junit4.JDaveRunner;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
@@ -108,6 +109,17 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
                 modelObjects.add(item.getModelObjectAsString());
             }
             return modelObjects;
+        }
+    }
+
+    public class ContainerWithinAContainerWithCompoundPropertyModel {
+        public PageWithItems create() {
+            return startComponent(new Model(new ArrayList<Integer>()));
+        }
+
+        public void canBeSelectedById() {
+            specify(selectAll(WebMarkupContainer.class, "innerContainer").from(context).size(), does.equal(1));
+            specify(selectFirst(WebMarkupContainer.class, "innerContainer").from(context), isNotNull());
         }
     }
     

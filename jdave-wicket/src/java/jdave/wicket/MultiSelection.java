@@ -20,7 +20,6 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 
 /**
  * @author Joni Freeman
@@ -38,7 +37,7 @@ public class MultiSelection<S extends Component> {
     MultiSelection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
         this.wicketId = wicketId;
-        matcher = Matchers.anything();
+        matcher = new AnyModelMatcher();
     }
 
     public List<S> from(MarkupContainer root) {

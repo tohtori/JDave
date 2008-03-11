@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -27,6 +28,7 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.util.ModelIteratorAdapter;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.CompoundPropertyModel;
 
 /**
  * @author Joni Freeman
@@ -55,5 +57,7 @@ public class PageWithItems extends WebPage {
                 item.add(new Label("item", item.getModelObject().toString()));
             }
         });
+        add(new WebMarkupContainer("container", new CompoundPropertyModel(this))
+            .add(new WebMarkupContainer("innerContainer")));
     }
 }

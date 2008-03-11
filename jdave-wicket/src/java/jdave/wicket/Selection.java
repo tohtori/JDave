@@ -18,8 +18,6 @@ package jdave.wicket;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
 
 /**
  * @author Joni Freeman
@@ -37,7 +35,7 @@ public class Selection<S extends Component> {
 
     Selection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
-        matcher = is(anything());
+        matcher = new AnyModelMatcher();
         this.wicketId = wicketId;
     }
 
