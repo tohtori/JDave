@@ -222,4 +222,16 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
+
+  <profiles>
+    <profile>
+      <id>ci</id>
+      <distributionManagement>
+        <repository>
+        <id>panda-snapshots</id>
+        <url>file:///var/www/localhost/htdocs/maven2/snapshots/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+  </profiles>
 </project>
