@@ -5,20 +5,20 @@ import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
 import jdave.runner.IntrospectionStrategy;
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
-trait Specification[T] extends JavaSpecification {
-  def specify(block: => Unit, e: ExpectedException) {
+trait Specification[T] extends JavaSpecification[T] {
+  def specify[A](block: => Unit, e: ExpectedException[A]) {
     super.specify(new Block() {
       def run = block
     }, e)
   }
-  def §(block: => Unit, e: ExpectedException) = specify(block, e)
+  def §[A](block: => Unit, e: ExpectedException[A]) = specify(block, e)
   
-  def specify(block: => Unit, e: ExpectedNoThrow) {
+  def specify[A](block: => Unit, e: ExpectedNoThrow[A]) {
     super.specify(new Block() {
       def run = block
     }, e)
   }
-  def §(block: => Unit, e: ExpectedNoThrow) = specify(block, e)
+  def §[A](block: => Unit, e: ExpectedNoThrow[A]) = specify(block, e)
   
   def containsExactly[E](i: Iterable[E]) = super.containsExactly(toJavaList(i))
   def containsInOrder[E](i: Iterable[E]) = super.containsInOrder(toJavaList(i))
@@ -29,8 +29,8 @@ trait Specification[T] extends JavaSpecification {
   def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
   def §[E](i: Iterable[E], c: IContainment) = specify(i, c)
     
-  private def toJavaList[E](i: Iterable[E]): java.util.List = {
-    val list = new java.util.ArrayList
+  private def toJavaList[E](i: Iterable[E]): java.util.List[E] = {
+    val list = new java.util.ArrayList[E]
     i.foreach(item => list.add(item))
     list
   }
@@ -40,5 +40,5 @@ trait Specification[T] extends JavaSpecification {
   def §(obj: Object, e: IEqualityCheck) = specify(obj, e)
   def §(obj: int, e: IEqualityCheck) = specify(obj, e)
   
-  def is: T = be.asInstanceOf[T]
+  def is: T = be
 }

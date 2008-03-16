@@ -7,11 +7,11 @@
   </projects>
   <buildSpec>
     <buildCommand>
-      <name>scala.plugin.scalabuilder</name>
+      <name>ch.epfl.lamp.sdt.core.scalabuilder</name>
     </buildCommand>
   </buildSpec>
   <natures>
-    <nature>scala.plugin.scalanature</nature>
+    <nature>ch.epfl.lamp.sdt.core.scalanature</nature>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>
