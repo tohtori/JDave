@@ -28,8 +28,8 @@ trait Specification[T] extends JavaSpecification[T] {
   
   def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
   def §[E](i: Iterable[E], c: IContainment) = specify(i, c)
-    
-  private def toJavaList[E](i: Iterable[E]): java.util.List[E] = {
+  
+  private def toJavaList[E](i: Iterable[E]) = {
     val list = new java.util.ArrayList[E]
     i.foreach(item => list.add(item))
     list
