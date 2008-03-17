@@ -25,85 +25,85 @@ import jdave.equality.NotEqualsEqualityCheck;
 /**
  * @author Pekka Enberg
  */
-public class Not<T> extends ContainmentSupport {
-    public T be;
+public class Not<A> extends ContainmentSupport {
+    public A be;
 
-    public Not(Specification<T> specification) {
+    public Not(Specification<A> specification) {
         this.be = specification.be;
     }
 
     @Override
-    protected IContainment newAllContainment(Collection<?> elements) {
+    protected <T> IContainment newAllContainment(Collection<T> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected IContainment newAllContainment(Iterable<?> elements) {
+    protected <T> IContainment newAllContainment(Iterable<T> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected IContainment newAllContainment(Iterator<?> elements) {
+    protected <T> IContainment newAllContainment(Iterator<T> elements) {
         return new NotContainment(super.newAllContainment(elements));
     }
 
     @Override
-    protected IContainment newAnyContainment(Collection<?> elements) {
+    protected <T> IContainment newAnyContainment(Collection<T> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected IContainment newAnyContainment(Iterable<?> elements) {
+    protected <T> IContainment newAnyContainment(Iterable<T> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected IContainment newAnyContainment(Iterator<?> elements) {
+    protected <T> IContainment newAnyContainment(Iterator<T> elements) {
         return new NotContainment(super.newAnyContainment(elements));
     }
 
     @Override
-    protected IContainment newExactContainment(Collection<?> elements) {
+    protected <T> IContainment newExactContainment(Collection<T> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected IContainment newExactContainment(Iterable<?> elements) {
+    protected <T> IContainment newExactContainment(Iterable<T> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected IContainment newExactContainment(Iterator<?> elements) {
+    protected <T> IContainment newExactContainment(Iterator<T> elements) {
         return new NotContainment(super.newExactContainment(elements));
     }
 
     @Override
-    protected IContainment newInOrderContainment(Collection<?> elements) {
+    protected <T> IContainment newInOrderContainment(Collection<T> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newInOrderContainment(Iterable<?> elements) {
+    protected <T> IContainment newInOrderContainment(Iterable<T> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newInOrderContainment(Iterator<?> elements) {
+    protected <T> IContainment newInOrderContainment(Iterator<T> elements) {
         return new NotContainment(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newInPartialOrderContainment(Collection<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Collection<T> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newInPartialOrderContainment(Iterable<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Iterable<T> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newInPartialOrderContainment(Iterator<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Iterator<T> elements) {
         return new NotContainment(super.newInPartialOrderContainment(elements));
     }
 

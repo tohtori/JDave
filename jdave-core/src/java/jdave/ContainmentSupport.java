@@ -91,15 +91,15 @@ public class ContainmentSupport {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(Collection<?> elements) {
+    public <T> IContainment containAll(Collection<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected IContainment newAllContainment(Collection<?> elements) {
+    protected <T> IContainment newAllContainment(Collection<T> elements) {
         return new AllContainment(elements);
     }
 
-    public IContainment containsAll(Collection<?> elements) {
+    public <T> IContainment containsAll(Collection<T> elements) {
         return containAll(elements);
     }
 
@@ -111,27 +111,27 @@ public class ContainmentSupport {
         return containAll(elements);
     }
 
-    public IContainment containAll(Iterator<?> elements) {
+    public <T> IContainment containAll(Iterator<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected IContainment newAllContainment(Iterator<?> elements) {
+    protected <T> IContainment newAllContainment(Iterator<T> elements) {
         return new AllContainment(elements);
     }
 
-    public IContainment containsAll(Iterator<?> elements) {
+    public <T> IContainment containsAll(Iterator<T> elements) {
         return containAll(elements);
     }
 
-    public IContainment containAll(Iterable<?> elements) {
+    public <T> IContainment containAll(Iterable<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected IContainment newAllContainment(Iterable<?> elements) {
+    protected <T> IContainment newAllContainment(Iterable<T> elements) {
         return new AllContainment(elements);
     }
 
-    public IContainment containsAll(Iterable<?> elements) {
+    public <T> IContainment containsAll(Iterable<T> elements) {
         return containAll(elements);
     }
 
@@ -183,15 +183,15 @@ public class ContainmentSupport {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(Collection<?> elements) {
+    public <T> IContainment containAny(Collection<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected IContainment newAnyContainment(Collection<?> elements) {
+    protected <T> IContainment newAnyContainment(Collection<T> elements) {
         return new AnyContainment(elements);
     }
 
-    public IContainment containsAny(Collection<?> elements) {
+    public <T> IContainment containsAny(Collection<T> elements) {
         return containAny(elements);
     }
 
@@ -203,35 +203,35 @@ public class ContainmentSupport {
         return containAny(elements);
     }
 
-    public IContainment containAny(Iterator<?> elements) {
+    public <T> IContainment containAny(Iterator<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected IContainment newAnyContainment(Iterator<?> elements) {
+    protected <T> IContainment newAnyContainment(Iterator<T> elements) {
         return new AnyContainment(elements);
     }
 
-    public IContainment containsAny(Iterator<?> elements) {
+    public <T> IContainment containsAny(Iterator<T> elements) {
         return containAny(elements);
     }
 
-    public IContainment containAny(Iterable<?> elements) {
+    public <T> IContainment containAny(Iterable<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected IContainment newAnyContainment(Iterable<?> elements) {
+    protected <T> IContainment newAnyContainment(Iterable<T> elements) {
         return new AnyContainment(elements);
     }
 
-    public IContainment containsAny(Iterable<?> elements) {
+    public <T> IContainment containsAny(Iterable<T> elements) {
         return containAny(elements);
     }
 
-    public IContainment containExactly(Collection<?> elements) {
+    public <T> IContainment containExactly(Collection<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected IContainment newExactContainment(Collection<?> elements) {
+    protected <T> IContainment newExactContainment(Collection<T> elements) {
         return new ExactContainment(elements);
     }
 
@@ -283,7 +283,7 @@ public class ContainmentSupport {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(Collection<?> elements) {
+    public <T> IContainment containsExactly(Collection<T> elements) {
         return containExactly(elements);
     }
 
@@ -295,39 +295,39 @@ public class ContainmentSupport {
         return containExactly(elements);
     }
 
-    public IContainment containExactly(Iterator<?> elements) {
+    public <T> IContainment containExactly(Iterator<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected IContainment newExactContainment(Iterator<?> elements) {
+    protected <T> IContainment newExactContainment(Iterator<T> elements) {
         return new ExactContainment(elements);
     }
 
-    public IContainment containsExactly(Iterator<?> elements) {
+    public <T> IContainment containsExactly(Iterator<T> elements) {
         return containExactly(elements);
     }
 
-    public IContainment containExactly(Iterable<?> elements) {
+    public <T> IContainment containExactly(Iterable<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected IContainment newExactContainment(Iterable<?> elements) {
+    protected <T> IContainment newExactContainment(Iterable<T> elements) {
         return new ExactContainment(elements);
     }
 
-    public IContainment containsExactly(Iterable<?> elements) {
+    public <T> IContainment containsExactly(Iterable<T> elements) {
         return containExactly(elements);
     }
 
-    public IContainment containInOrder(Collection<?> elements) {
+    public <T> IContainment containInOrder(Collection<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected IContainment newInOrderContainment(Collection<?> elements) {
+    protected <T> IContainment newInOrderContainment(Collection<T> elements) {
         return new InOrderContainment(elements);
     }
 
-    public IContainment containsInOrder(Collection<?> elements) {
+    public <T> IContainment containsInOrder(Collection<T> elements) {
         return containInOrder(elements);
     }
 
@@ -387,39 +387,39 @@ public class ContainmentSupport {
         return containInOrder(elements);
     }
 
-    public IContainment containInOrder(Iterator<?> elements) {
+    public <T> IContainment containInOrder(Iterator<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected IContainment newInOrderContainment(Iterator<?> elements) {
+    protected <T> IContainment newInOrderContainment(Iterator<T> elements) {
         return new InOrderContainment(elements);
     }
 
-    public IContainment containsInOrder(Iterator<?> elements) {
+    public <T> IContainment containsInOrder(Iterator<T> elements) {
         return containInOrder(elements);
     }
 
-    public IContainment containInOrder(Iterable<?> elements) {
+    public <T> IContainment containInOrder(Iterable<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected IContainment newInOrderContainment(Iterable<?> elements) {
+    protected <T> IContainment newInOrderContainment(Iterable<T> elements) {
         return new InOrderContainment(elements);
     }
 
-    public IContainment containsInOrder(Iterable<?> elements) {
+    public <T> IContainment containsInOrder(Iterable<T> elements) {
         return containInOrder(elements);
     }
     
-    public IContainment containInPartialOrder(Collection<?> elements) {
+    public <T> IContainment containInPartialOrder(Collection<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected IContainment newInPartialOrderContainment(Collection<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Collection<T> elements) {
         return new InPartialOrderContainment(elements);
     }
 
-    public IContainment containsInPartialOrder(Collection<?> elements) {
+    public <T> IContainment containsInPartialOrder(Collection<T> elements) {
         return containInPartialOrder(elements);
     }
 
@@ -479,27 +479,27 @@ public class ContainmentSupport {
         return containInPartialOrder(elements);
     }
 
-    public IContainment containInPartialOrder(Iterator<?> elements) {
+    public <T> IContainment containInPartialOrder(Iterator<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected IContainment newInPartialOrderContainment(Iterator<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Iterator<T> elements) {
         return new InPartialOrderContainment(elements);
     }
 
-    public IContainment containsInPartialOrder(Iterator<?> elements) {
+    public <T> IContainment containsInPartialOrder(Iterator<T> elements) {
         return containInPartialOrder(elements);
     }
 
-    public IContainment containInPartialOrder(Iterable<?> elements) {
+    public <T> IContainment containInPartialOrder(Iterable<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected IContainment newInPartialOrderContainment(Iterable<?> elements) {
+    protected <T> IContainment newInPartialOrderContainment(Iterable<T> elements) {
         return new InPartialOrderContainment(elements);
     }
 
-    public IContainment containsInPartialOrder(Iterable<?> elements) {
+    public <T> IContainment containsInPartialOrder(Iterable<T> elements) {
         return containInPartialOrder(elements);
     }
 }

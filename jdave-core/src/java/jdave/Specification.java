@@ -76,15 +76,15 @@ public abstract class Specification<T> extends MockSupport {
         actualState = true;
     }
 
-    public void specify(Iterable<?> actual, IContainment containment) {
+    public <E> void specify(Iterable<E> actual, IContainment containment) {
         specify(actual.iterator(), containment);
     }
 
-    public void specify(Iterator<?> actual, IContainment containment) {
+    public <E> void specify(Iterator<E> actual, IContainment containment) {
         specify(Collections.list(actual), containment);
     }
 
-    public void specify(Collection<?> actual, IContainment containment) {
+    public <E> void specify(Collection<E> actual, IContainment containment) {
         try {
             if (!containment.matches(actual)) {
                 throw new ExpectationFailedException(containment.error(actual));
@@ -199,21 +199,21 @@ public abstract class Specification<T> extends MockSupport {
      * <p>
      * See <a href="http://code.google.com/p/hamcrest/">Hamcrest home page</a>
      */
-    public void specify(Collection<?> actual, Where<?> where) {
+    public <E> void specify(Collection<E> actual, Where<E> where) {
         specify(actual.iterator(), where);
     }
 
     /**
      * @see #specify(Collection, Where)
      */
-    public void specify(Iterable<?> actual, Where<?> where) {
+    public <E> void specify(Iterable<E> actual, Where<E> where) {
         specify(actual.iterator(), where);
     }
 
     /**
      * @see #specify(Collection, Where)
      */
-    public void specify(Object[] actual, Where<?> where) {
+    public <E> void specify(Object[] actual, Where<E> where) {
         specify(Arrays.asList(actual), where);
     }
 
@@ -221,12 +221,11 @@ public abstract class Specification<T> extends MockSupport {
      * @see #specify(Collection, Where)
      */
     @SuppressWarnings("unchecked")
-    public <E> void specify(Iterator<?> actual, Where<?> where) {
-        Where<E> unsafeWhere = (Where<E>) where;
+    public <E> void specify(Iterator<E> actual, Where<E> where) {
         try {
             int index = 0;
             while (actual.hasNext()) {
-                unsafeWhere.match((E) actual.next(), index);
+                where.match(actual.next(), index);
                 index++;
             }
             where.areAllMatchersUsed(index);
