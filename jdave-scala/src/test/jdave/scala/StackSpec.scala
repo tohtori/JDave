@@ -41,7 +41,7 @@ class StackSpec extends Specification[Stack[Int]] {
     }
 
     def isFull = §(stack, is full)
-//    def complainsOnPush = §({ stack.push(100) }, must raise classOf[StackOverflowException])
+    def complainsOnPush = §({ stack.push(100) }, must raise classOf[StackOverflowException])
     def containsAllItems = (0 to 9).foreach(i => §(stack, contains(i)))
     
     def doesNotContainRemovedItem {
