@@ -36,7 +36,7 @@ import jdave.IContract;
  *     }
  *     public Integer equivalentByComparisonButNotByEqual() {
  *         // There's no Integer which would be non equal with 5 and still be equal
- *         // by comparison (comparaTo() == 0). So return null.
+ *         // by comparison (compareTo() == 0). So return null.
  *         return null; 
  *     }
  * });
