@@ -26,6 +26,8 @@ import jdave.Specification;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.IMarkupResourceStreamProvider;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -34,6 +36,8 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.BaseWicketTester;
 import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.TestPanelSource;
@@ -91,6 +95,38 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         }
         return specifiedComponent;
     }
+    
+    /**
+     * Start component for context, using page with given markup.
+     * 
+     * @param model The model passed to component that is used for context.
+     * @param pageMarkup Markup (as <code>java.lang.CharSequence</code>) of the page created 
+     * to host the specified component.
+     * @param rootComponentId Wicket id of the root component in the component markup hierarchy 
+     * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
+     * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
+     */
+    public T startComponent(final IModel model, final CharSequence pageMarkup, final String rootComponentId) {
+        return startComponent(model, new StringResourceStream(pageMarkup), rootComponentId);
+    }
+   
+    /**
+     * Start component for context, using page with given markup.
+     * 
+     * @param model The model passed to component that is used for context.
+     * @param pageMarkup Markup (as <code>org.apache.wicket.util.resource.IResourceStream</code>) 
+     * of the page created to host the specified component.
+     * @param rootComponentId Wicket id of the root component in the component markup hierarchy 
+     * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
+     * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
+     */
+    public T startComponent(final IModel model, final IResourceStream pageMarkup, final String rootComponentId) {
+        WebPage page = new TestPage(pageMarkup);
+        specifiedComponent = newComponent(rootComponentId, model);
+        page.add(specifiedComponent);
+        wicket.startPage(page);
+        return specifiedComponent;
+    }
 
     /**
      * Start component for context.
@@ -141,6 +177,19 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         public Page getTestPage() {
             return page;
         }              
+    }
+    
+    private static class TestPage extends WebPage implements IMarkupResourceStreamProvider {
+        private final IResourceStream markup;
+        
+        public TestPage(final IResourceStream markup) {
+            this.markup = markup;
+        }
+        
+        @SuppressWarnings("unchecked")
+        public IResourceStream getMarkupResourceStream(MarkupContainer container, Class containerClass) {
+            return markup;
+        }
     }
     
     /**
