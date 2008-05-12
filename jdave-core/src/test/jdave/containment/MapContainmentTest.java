@@ -46,4 +46,13 @@ public class MapContainmentTest extends TestCase {
             assertEquals("no mapping 2 -> 3", e.getMessage());
         }
     }
+    
+    public void testFailsIfMapDoesNotContainKey() {
+        try {
+            spec.specify(map, spec.maps(3, 2).to("1", "2"));
+            fail();
+        } catch (ExpectationFailedException e) {
+            assertEquals("no mapping 3 -> 1", e.getMessage());
+        }
+    }
 }

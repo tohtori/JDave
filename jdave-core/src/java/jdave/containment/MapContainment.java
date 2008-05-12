@@ -39,7 +39,8 @@ public class MapContainment {
 
     public void verify(Map<?, ?> map) {
         for (int i = 0; i < keys.length; i++) {
-            if (!map.get(keys[i]).equals(values[i])) {
+            Object key = map.get(keys[i]);
+            if (key == null || !key.equals(values[i])) {
                throw new ExpectationFailedException("no mapping " + keys[i] + " -> " + values[i]);
             }
         }
