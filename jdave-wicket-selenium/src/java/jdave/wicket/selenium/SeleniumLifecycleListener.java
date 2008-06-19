@@ -31,24 +31,26 @@ import com.thoughtworks.selenium.Selenium;
 /**
  * @author Janne Hietam&auml;ki
  */
-final class SeleniumLifecycleListener<T extends MarkupContainer> extends DefaultLifecycleListener {
-    private final SeleniumSpecification<T> specification;
-    SeleniumServer server;
+final class SeleniumLifecycleListener<T extends MarkupContainer> extends
+		DefaultLifecycleListener {
+	public static final int DEFAULT_PORT = 4444;
+	private final SeleniumSpecification<T> specification;
+	SeleniumServer server;
 
-    SeleniumLifecycleListener(SeleniumSpecification<T> specification) {
-        this.specification = specification;
-    }
+	SeleniumLifecycleListener(SeleniumSpecification<T> specification) {
+		this.specification = specification;
+	}
 
-    @Override
-    public void afterContextDestroy(Object contextInstance) {
-        server.stop();
-    }
+	@Override
+	public void afterContextDestroy(Object contextInstance) {
+		server.stop();
+	}
 
-    protected String getDefaultURL() {
-        return "http://localhost:" + SeleniumServer.getDefaultPort();
-    }
+	protected String getDefaultURL() {
+		return "http://localhost:" + DEFAULT_PORT;
+	}
 
-    @Override
+	@Override
     public void afterContextInstantiation(Object contextInstance) {
         try {
 
@@ -77,20 +79,20 @@ final class SeleniumLifecycleListener<T extends MarkupContainer> extends Default
             throw new RuntimeException(e);
         }
 
-        setSelenium(new DefaultSelenium("localhost", SeleniumServer.getDefaultPort(), "*firefox", getDefaultURL()));
+        setSelenium(new DefaultSelenium("localhost", DEFAULT_PORT, "*firefox", getDefaultURL()));
         getSelenium().start();
     }
 
-    public T createContext() {
-        getSelenium().open(getDefaultURL() + "/wicket");
-        return specification.context;
-    }
+	public T createContext() {
+		getSelenium().open(getDefaultURL() + "/wicket");
+		return specification.context;
+	}
 
-    protected void setSelenium(Selenium selenium) {
-        specification.selenium = selenium;
-    }
+	protected void setSelenium(Selenium selenium) {
+		specification.selenium = selenium;
+	}
 
-    protected Selenium getSelenium() {
-        return specification.selenium;
-    }
+	protected Selenium getSelenium() {
+		return specification.selenium;
+	}
 }

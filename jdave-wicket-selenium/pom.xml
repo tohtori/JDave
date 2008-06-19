@@ -44,12 +44,12 @@
     <dependency>
       <groupId>org.openqa.selenium.client-drivers</groupId>
       <artifactId>selenium-java-client-driver</artifactId>
-      <version>0.9.3-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.openqa.selenium.server</groupId>
       <artifactId>selenium-server</artifactId>
-      <version>0.9.3-SNAPSHOT</version>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -83,5 +83,12 @@
       </plugin>
     </plugins>
   </build>
+
+    <repositories>
+     <repository>
+       <id>openqa</id>
+       <url>http://archiva.openqa.org/repository/snapshots/</url>
+     </repository>
+    </repositories>
 
 </project>
