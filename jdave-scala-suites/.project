@@ -2,9 +2,9 @@
   <name>jdave-scala-suites</name>
   <comment/>
   <projects>
-    <project>jdave-scala</project>
-    <project>jdave-junit4</project>
     <project>jdave-core</project>
+    <project>jdave-junit4</project>
+    <project>jdave-scala</project>
   </projects>
   <buildSpec>
     <buildCommand>

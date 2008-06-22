@@ -2,8 +2,8 @@
   <name>jdave-report-plugin</name>
   <comment/>
   <projects>
-    <project>jdave-junit4</project>
     <project>jdave-core</project>
+    <project>jdave-junit4</project>
   </projects>
   <buildSpec>
     <buildCommand>
