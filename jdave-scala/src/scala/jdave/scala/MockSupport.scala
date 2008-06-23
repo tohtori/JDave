@@ -33,7 +33,10 @@ trait MockSupport[T] extends JavaSpecification[T] {
   def never[V](mockObject: V) = expectations.exactly(0).of(mockObject)
   def one[V](mockObject: V) = expectations.exactly(1).of(mockObject)
   def exactly(n: Int) = expectations.exactly(n)
- 
+  def ignoring[V](mockObject: V) = expectations.ignoring(mockObject)
+  def allowing[V](mockObject: V) = ignoring(mockObject)
+  def allowing[V](mockObjectMatcher: Matcher[V]) = expectations.allowing(mockObjectMatcher)
+  
   def will(action: Action) = expectations.will(action)
   def returnValue(value: Any) = new ReturnValueAction(value)
   def willReturnValue(value: Any) = will(returnValue(value))
