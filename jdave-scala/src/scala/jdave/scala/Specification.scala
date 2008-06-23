@@ -21,19 +21,19 @@ import jdave.runner.IntrospectionStrategy;
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
 trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
-  def specify[A <: Throwable](block: => Unit, e: ExpectedException[A]) {
+  def specify[A <: Throwable](block: => Any, e: ExpectedException[A]) {
     super.specify(new Block() {
       def run = block
     }, e)
   }
-  def §[A <: Throwable](block: => Unit, e: ExpectedException[A]) = specify(block, e)
+  def §[A <: Throwable](block: => Any, e: ExpectedException[A]) = specify(block, e)
   
-  def specify[A <: Throwable](block: => Unit, e: ExpectedNoThrow[A]) {
+  def specify[A <: Throwable](block: => Any, e: ExpectedNoThrow[A]) {
     super.specify(new Block() {
       def run = block
     }, e)
   }
-  def §[A <: Throwable](block: => Unit, e: ExpectedNoThrow[A]) = specify(block, e)
+  def §[A <: Throwable](block: => Any, e: ExpectedNoThrow[A]) = specify(block, e)
   
   def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
   def §[E](i: Iterable[E], c: IContainment) = specify(i, c)
