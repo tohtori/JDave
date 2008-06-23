@@ -5,7 +5,7 @@ import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
 import jdave.runner.IntrospectionStrategy;
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
-trait Specification[T] extends JavaSpecification[T] {
+trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
   def specify[A <: Throwable](block: => Unit, e: ExpectedException[A]) {
     super.specify(new Block() {
       def run = block

@@ -1,0 +1,47 @@
+package jdave.scala
+
+import jdave.{Specification => JavaSpecification}
+import org.hamcrest.{Matcher, Matchers}
+import org.jmock.{Expectations, Sequence}
+import org.jmock.api.{Action, Invocation}
+import org.jmock.lib.action.{ReturnValueAction, ThrowAction, CustomAction}
+
+trait MockSupport[T] extends JavaSpecification[T] {
+  private var expectations: Expectations = _
+ 
+  def expect(block: => Unit) {
+    expectations = new Expectations
+    block
+    mockery.checking(expectations)
+  }
+
+  def never[V](mockObject: V) = expectations.exactly(0).of(mockObject)
+  def one[V](mockObject: V) = expectations.exactly(1).of(mockObject)
+  def exactly(n: Int) = expectations.exactly(n)
+ 
+  def will(action: Action) = expectations.will(action)
+  def returnValue(value: Any) = new ReturnValueAction(value)
+  def willReturnValue(value: Any) = will(returnValue(value))
+  def throwException[V <: Throwable](throwable: V) = new ThrowAction(throwable)
+  def willThrowException[V <: Throwable](throwable: V) = will(throwException(throwable))
+  def runAction(block: => Object) = new RunAction(block)
+  def willRunAction(block: => Object) = will(runAction(block))
+ 
+  def `with`[V](matcher: Matcher[V]) = expectations.`with`(matcher)
+  def withAny[V](clazz: Class[V]) = expectations.`with`(any(clazz))
+  def withProperty[V](propertyName: String, matcher: Matcher[_]) = `with`(hasProperty[V](propertyName, matcher))
+  def inSequence(sequence: Sequence) = expectations.inSequence(sequence)
+  
+  def any[V](clazz: Class[V]) = Matchers.any[V](clazz)
+  def equalTo[V](value: V) = Matchers.equalTo(value)
+  def hasProperty[V](propertyName: String, matcher: Matcher[_]) = Matchers.hasProperty[V](propertyName, matcher)
+  def allOf[V](matchers: Matcher[V]*) = {
+    val iterableMatchers = new java.util.ArrayList[Matcher[_ <: V]]
+    for (matcher <- matchers) iterableMatchers.add(matcher)
+    Matchers.allOf[V](iterableMatchers)
+  }
+}
+
+class RunAction(block: => Unit) extends CustomAction(classOf[RunAction].getName) {
+  override def invoke(invocation: Invocation) = {block; null}
+}
