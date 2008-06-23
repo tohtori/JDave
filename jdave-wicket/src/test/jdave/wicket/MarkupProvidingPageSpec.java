@@ -47,6 +47,24 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form> {
             return markup.append("</body></html>");
         }
     }
+    
+    public class FormWithProvidedMarkup {
+        public Form create() {
+            return startForm(new Model("field text"), formMarkup());
+        }
+
+        public void containsComponentsSpecifiedInMarkup() {
+            Form form = selectFirst(Form.class).from(context.getPage());
+            TextField textField = selectFirst(TextField.class, "textField").from(context);
+            specify(form, isNotNull());
+            specify(textField, isNotNull());
+            specify(textField.getModelObject(), does.equal("field text"));
+        }
+
+        private CharSequence formMarkup() {
+            return "<input type='text' wicket:id='textField'/>";
+        }
+    }
 
     @Override
     protected Form newComponent(String id, IModel model) {

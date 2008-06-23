@@ -29,6 +29,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.IMarkupResourceStreamProvider;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.border.Border;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -128,6 +129,17 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         return specifiedComponent;
     }
 
+    /**
+     * Start form for context, using given markup as form markup.
+     * 
+     * @param model The model passed to <code>newComponent</code> method.
+     * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) 
+     * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
+     */
+    public Form startForm(final IModel model, final CharSequence formMarkup) {
+        return (Form) startComponent(model, "<html><body><form wicket:id='form'>" + formMarkup + "</form></body></html>", "form");
+    }
+    
     /**
      * Start component for context.
      * <p>
