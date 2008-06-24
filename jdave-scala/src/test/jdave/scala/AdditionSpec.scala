@@ -21,9 +21,13 @@ import org.scalacheck.Prop._
 
 @RunWith(classOf[JDaveRunner])
 class AdditionSpec extends Specification[Unit] {
-  def add(x: Int, y: Int) = x + y
+  import Adder._
   
   class Props {
     def commutativity = specify(property((x: Int, y: Int) => add(x, y) == add(y, x)))
   }
+}
+
+object Adder {
+  def add(x: Int, y: Int) = x + y  
 }
