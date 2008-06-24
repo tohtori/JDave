@@ -56,7 +56,8 @@ trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
   
   def is: T = be
   
-  def specify(p: Prop) = Test.check(Test.defaultParams, p).result match {
+  def specify(p: Prop): Unit = specify(Test.defaultParams, p)
+  def specify(params: Params, p: Prop) = Test.check(params, p).result match {
     case f: Failed => throw new jdave.ExpectationFailedException("failed with args " + f.args)
     case Exhausted => throw new jdave.ExpectationFailedException("exhausted")
     case _         => 
