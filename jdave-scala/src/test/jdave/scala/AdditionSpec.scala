@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 the original author or authors.
+ * Copyright 2006 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  */
 package jdave.scala
 
-import jdave.runner.{IntrospectionStrategy, DefaultSpecIntrospection}
-import java.lang.reflect.Method
+import org.junit.runner.RunWith
+import jdave.junit4.JDaveRunner
+import org.scalacheck.Prop._
 
-class ScalaIntrospection extends DefaultSpecIntrospection {
-  override def isBehavior(method: Method) = if (method.getName.contains('$')) false else super.isBehavior(method)
+@RunWith(classOf[JDaveRunner])
+class AdditionSpec extends Specification[Unit] {
+  def add(x: Int, y: Int) = x + y
+  
+  class Props {
+    def commutativity = specify(property((x: Int, y: Int) => add(x, y) == add(y, x)))
+  }
 }
-

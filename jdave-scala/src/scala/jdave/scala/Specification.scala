@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.scala;
+package jdave.scala
 
 import jdave.{Specification => JavaSpecification}
 import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
-import jdave.runner.IntrospectionStrategy;
+import jdave.runner.IntrospectionStrategy
+import org.scalacheck.Prop
+import org.scalacheck.Test
+import org.scalacheck.Test._
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
 trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
@@ -52,4 +55,10 @@ trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
   def §(obj: int, e: IEqualityCheck) = specify(obj, e)
   
   def is: T = be
+  
+  def specify(p: Prop) = Test.check(p).result match {
+    case f: Failed => throw new jdave.ExpectationFailedException("property " + p + " failed with args " + f.args)
+    case Exhausted => throw new jdave.ExpectationFailedException("exhausted")
+    case _         => 
+  }
 }
