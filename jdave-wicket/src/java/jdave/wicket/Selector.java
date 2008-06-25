@@ -61,6 +61,7 @@ public class Selector {
         return firstMatch.get(0);
     }
 
+    @SuppressWarnings("unchecked")
     private <T extends Component> Matcher<T> combine(Matcher<?> modelMatcher, String wicketId) {
         return Matchers.<T>allOf(new ComponentsModelMatchesTo(modelMatcher), new WicketIdEqualsTo<T>(wicketId));
     }
