@@ -17,16 +17,15 @@ package jdave.scala
 
 import org.junit.runner.RunWith
 import jdave.junit4.JDaveRunner
-import org.scalacheck.Prop._
 
 @RunWith(classOf[JDaveRunner])
 class AdditionSpec extends Specification[Unit] {
   import Adder._
   
   class Props {
-    def commutativity = specify(property((x: Int, y: Int) => add(x, y) == add(y, x)))
-    def additiveIdentity = specify(property((x: Int) => add(x, 0) == x))
-    def distributivity = specify(property((x: Int, y: Int, z: Int) => x * (add(y, z)) == add(x * y, x * z)))
+    def commutativity = prop((x: Int, y: Int) => add(x, y) == add(y, x))
+    def additiveIdentity = prop((x: Int) => add(x, 0) == x)
+    def distributivity = prop((x: Int, y: Int, z: Int) => x * (add(y, z)) == add(x * y, x * z))
   }
 }
 

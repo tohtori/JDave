@@ -18,12 +18,9 @@ package jdave.scala
 import jdave.{Specification => JavaSpecification}
 import jdave.{ExpectedException, ExpectedNoThrow, IContainment}
 import jdave.runner.IntrospectionStrategy
-import org.scalacheck.Prop
-import org.scalacheck.Test
-import org.scalacheck.Test._
 
 @IntrospectionStrategy(classOf[ScalaIntrospection])
-trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
+trait Specification[T] extends JavaSpecification[T] with MockSupport[T] with ScalaCheckSupport {
   def specify[A <: Throwable](block: => Any, e: ExpectedException[A]) {
     super.specify(new Block() {
       def run = block
@@ -55,11 +52,4 @@ trait Specification[T] extends JavaSpecification[T] with MockSupport[T] {
   def §(obj: int, e: IEqualityCheck) = specify(obj, e)
   
   def is: T = be
-  
-  def specify(p: Prop): Unit = specify(Test.defaultParams, p)
-  def specify(params: Params, p: Prop) = Test.check(params, p).result match {
-    case f: Failed => throw new jdave.ExpectationFailedException("failed with args " + f.args)
-    case Exhausted => throw new jdave.ExpectationFailedException("exhausted")
-    case _         => 
-  }
 }
