@@ -89,7 +89,7 @@ public class JDaveCallbackTest extends TestCase {
         
     private Behavior createSpecMethodByName(final Class<?> target, String name)
             throws NoSuchMethodException {
-        Behavior method = new ExecutingBehavior(target.getDeclaredMethod(name), null, null) {
+        Behavior method = new ExecutingBehavior(target.getDeclaredMethod(name), null, Object.class) {
             @Override
             protected void destroyContext() {
             }
@@ -113,7 +113,7 @@ public class JDaveCallbackTest extends TestCase {
     
     private class StubBehavior extends Behavior {
         public StubBehavior() throws SecurityException, NoSuchMethodException {
-            super(JDaveCallbackTest.class.getDeclaredMethod("setUp"));
+            super(JDaveCallbackTest.class, JDaveCallbackTest.class.getDeclaredMethod("setUp"));
         }
         
         @Override

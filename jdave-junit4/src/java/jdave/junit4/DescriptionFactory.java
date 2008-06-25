@@ -62,7 +62,7 @@ public class DescriptionFactory implements ISpecVisitor {
     }
 
     static Description newDescription(Behavior behavior) {
-        return Description.createTestDescription(behavior.getMethod().getDeclaringClass(), behavior.getName());
+        return Description.createTestDescription(behavior.getContextType(), behavior.getName());
     }
     
     public void afterContext(Context context) {
