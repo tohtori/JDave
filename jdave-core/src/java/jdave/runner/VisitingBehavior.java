@@ -21,8 +21,8 @@ import java.lang.reflect.Method;
  * @author Joni Freeman
  */
 final class VisitingBehavior extends Behavior {
-    VisitingBehavior(Method method) {
-        super(method);
+    VisitingBehavior(Method method, Class<?> contextType) {
+        super(contextType, method);
     }
 
     @Override

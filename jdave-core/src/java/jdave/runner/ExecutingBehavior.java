@@ -38,7 +38,7 @@ public class ExecutingBehavior extends Behavior {
     private Object context;
 
     public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-        super(method);
+        super(contextType, method);
         this.specType = specType;
         this.contextType = contextType;
     }

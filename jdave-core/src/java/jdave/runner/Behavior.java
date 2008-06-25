@@ -22,9 +22,11 @@ import java.lang.reflect.Method;
  * @author Pekka Enberg
  */
 public abstract class Behavior {
+    private final Class<?> contextType;
     protected final Method method;
 
-    public Behavior(Method method) {
+    public Behavior(Class<?> contextType, Method method) {
+        this.contextType = contextType;
         this.method = method;
     }
 
@@ -34,6 +36,10 @@ public abstract class Behavior {
     
     public Method getMethod() {
         return method;
+    }
+    
+    public Class<?> getContextType() {
+        return contextType;
     }
     
     public abstract void run(final IBehaviorResults results);

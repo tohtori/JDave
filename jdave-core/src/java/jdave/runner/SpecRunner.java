@@ -29,7 +29,7 @@ public class SpecRunner {
             Context context = new Context(specType, contextType) {
                 @Override
                 protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
-                    return new VisitingBehavior(method);
+                    return new VisitingBehavior(method, contextType);
                 }
             };
             run(callback, context);
