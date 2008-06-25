@@ -55,9 +55,14 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public void specify(boolean expected) {
+        specify0(null, expected);
+    }
+    
+    private void specify0(T actual, boolean expected) {
         try {
             if (expected != actualState) {
-                throw new ExpectationFailedException("Expected: " + "true" + ", but was: " + "false");
+                throw new ExpectationFailedException("Expected: " + "true" + ", but was: " + "false" +
+                        (actual != null ? " (actual was '" + actual + "')" : ""));
             }
         } finally {
             resetActualState();
@@ -65,11 +70,11 @@ public abstract class Specification<T> extends MockSupport {
     }
 
     public void specify(T actual, boolean expected) {
-        specify(expected);
+        specify0(actual, expected);
     }
 
     public void specify(T actual, Boolean expected) {
-        specify(expected);
+        specify0(actual, expected);
     }
 
     private void resetActualState() {

@@ -41,7 +41,7 @@ public class FailingSpecificationTest {
             }
         }));
         assertEquals("isNegative", actualMethod.getName());
-        assertEquals("Expected: true, but was: false", actualException.getMessage());
+        assertEquals("Expected: true, but was: false (actual was '0')", actualException.getMessage());
     }
     
     public static class FailingIntegerSpecification extends Specification<Integer> {
