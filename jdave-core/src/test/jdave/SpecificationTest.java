@@ -15,6 +15,7 @@
  */
 package jdave;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -135,6 +136,10 @@ public class SpecificationTest {
     @Test
     public void testShouldPassWhenExpectationWithinDelta() {
         specification.specify(1.0, specification.should.equal(1.001, 0.01));
+    }
+    @Test
+    public void testShouldPassWhenBigDecimalExpectationWithinDelta() {
+        specification.specify(new BigDecimal(1.0), specification.should.equal(new BigDecimal(1.001), 0.01));
     }
     
     @Test
