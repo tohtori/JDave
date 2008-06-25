@@ -82,6 +82,7 @@ public class ExecutingBehavior extends Behavior {
     }
 
     private void runSpec(IBehaviorResults results, Specification<?> spec) {
+        boolean error = false;
         try {
             spec.create();
             context = newContext(spec);
@@ -89,22 +90,28 @@ public class ExecutingBehavior extends Behavior {
             spec.verifyMocks();
             results.expected(method);
         } catch (InvocationTargetException e) {
+            error = true;
             if (e.getCause().getClass().equals(ExpectationFailedException.class)) {
                 results.unexpected(method, (ExpectationFailedException) e.getCause());
             } else {
                 results.error(method, e.getCause());
             }
         } catch (ExpectationFailedException e) {
+            error = true;
             results.unexpected(method, e);
         } catch (Throwable t) {
+            error = true;
             results.error(method, t);
         } finally {
-            destroyContext();
-            spec.fireAfterContextDestroy(context);
             try {
+                destroyContext();
+                spec.fireAfterContextDestroy(context);
                 spec.destroy();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                // Do not mask the first error.
+                if (!error) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -127,7 +134,7 @@ public class ExecutingBehavior extends Behavior {
         return context;
     }
 
-    protected void destroyContext() {
+    protected void destroyContext() throws Exception {
         if (context != null) {
             invokeDisposer(context);
         }
@@ -142,13 +149,13 @@ public class ExecutingBehavior extends Behavior {
         }
     }
 
-    private void invokeDisposer(Object context) {
+    private void invokeDisposer(Object context) throws Exception {
+        Method method;
         try {
-            Method method = context.getClass().getMethod(DefaultSpecIntrospection.DISPOSER_NAME);
+            method = context.getClass().getMethod(DefaultSpecIntrospection.DISPOSER_NAME);
             method.invoke(context);
-        } catch (Exception e) {
-            /* Disposer is optional so ignore the exception.  */
-            return;
+        } catch (NoSuchMethodException e) {
+            // destroy method is not required
         }
     }
 }
