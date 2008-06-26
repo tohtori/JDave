@@ -32,6 +32,10 @@ public class PageWithLinkSpec extends SeleniumSpecification<PageWithLink> {
             return startComponent();
         }
 
+        public void wicketapplicationIsAvailable() {
+            specify(context.getApplication().getClass(), does.equal(SeleniumWebApplication.class));
+        }
+
         public void linkCanBeClicked() {
             selenium.click("link");
             selenium.waitForPageToLoad("500");

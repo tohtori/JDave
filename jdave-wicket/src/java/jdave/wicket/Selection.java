@@ -29,11 +29,11 @@ public class Selection<S extends Component> {
     private final String wicketId;
     private Matcher<?> matcher;
 
-    Selection(Class<S> componentType) {
+    public Selection(Class<S> componentType) {
         this(componentType, null);
     }
 
-    Selection(Class<S> componentType, String wicketId) {
+    public Selection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
         matcher = new AnyModelMatcher();
         this.wicketId = wicketId;

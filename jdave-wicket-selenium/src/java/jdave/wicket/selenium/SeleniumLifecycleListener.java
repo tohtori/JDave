@@ -17,6 +17,7 @@ package jdave.wicket.selenium;
 
 import jdave.DefaultLifecycleListener;
 
+import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.mortbay.jetty.servlet.Dispatcher;
@@ -31,44 +32,41 @@ import com.thoughtworks.selenium.Selenium;
 /**
  * @author Janne Hietam&auml;ki
  */
-final class SeleniumLifecycleListener<T extends MarkupContainer> extends
-		DefaultLifecycleListener {
-	public static final int DEFAULT_PORT = 4444;
-	private final SeleniumSpecification<T> specification;
-	SeleniumServer server;
+final class SeleniumLifecycleListener<T extends MarkupContainer> extends DefaultLifecycleListener {
+    public static final int DEFAULT_PORT = 4444;
+    private final SeleniumSpecification<T> specification;
+    SeleniumServer server;
 
-	SeleniumLifecycleListener(SeleniumSpecification<T> specification) {
-		this.specification = specification;
-	}
+    SeleniumLifecycleListener(SeleniumSpecification<T> specification) {
+        this.specification = specification;
+    }
 
-	@Override
-	public void afterContextDestroy(Object contextInstance) {
-		server.stop();
-	}
+    @Override
+    public void afterContextDestroy(Object contextInstance) {
+        server.stop();
+    }
 
-	protected String getDefaultURL() {
-		return "http://localhost:" + DEFAULT_PORT;
-	}
+    protected String getDefaultURL() {
+        return "http://localhost:" + DEFAULT_PORT;
+    }
 
-	@Override
+    @Override
     public void afterContextInstantiation(Object contextInstance) {
         try {
 
-            // Kludge to disable Jetty XML validating which causes class loading issues
+            // Kludge to disable Jetty XML validating which causes class loading
+            // issues
             System.setProperty("org.mortbay.xml.XmlParser.NotValidating", "true");
 
             WebApplicationContext web = new WebApplicationContext();
 
             WebApplicationHandler handler = new WebApplicationHandler();
 
-            FilterHolder holder = handler
-                    .defineFilter("wicketFilter", WicketFilter.class.getName());
-            holder.setInitParameter(WicketFilter.APP_FACT_PARAM,
-                    SeleniumTestApplicationFactory.class.getName().toString());
+            FilterHolder holder = handler.defineFilter("wicketFilter", WicketFilter.class.getName());
+            holder.setInitParameter(WicketFilter.APP_FACT_PARAM, SeleniumTestApplicationFactory.class.getName().toString());
             handler.addFilterPathMapping("/*", "wicketFilter", Dispatcher.__ALL);
 
-            web.setAttribute(SeleniumSpecification.COMPONENTFACTORY, specification
-                    .getComponentFactory());
+            web.setAttribute(SeleniumSpecification.COMPONENTFACTORY, specification.getMarkupContainerFactory());
             web.setContextPath("wicket");
             web.addHandler(handler);
 
@@ -83,16 +81,17 @@ final class SeleniumLifecycleListener<T extends MarkupContainer> extends
         getSelenium().start();
     }
 
-	public T createContext() {
-		getSelenium().open(getDefaultURL() + "/wicket");
-		return specification.context;
-	}
+    public T createContext() {
+        getSelenium().open(getDefaultURL() + "/wicket");
+        Application.set(specification.getMarkupContainerFactory().getApplication());
+        return specification.context;
+    }
 
-	protected void setSelenium(Selenium selenium) {
-		specification.selenium = selenium;
-	}
+    protected void setSelenium(Selenium selenium) {
+        specification.selenium = selenium;
+    }
 
-	protected Selenium getSelenium() {
-		return specification.selenium;
-	}
+    protected Selenium getSelenium() {
+        return specification.selenium;
+    }
 }

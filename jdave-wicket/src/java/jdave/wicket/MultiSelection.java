@@ -30,11 +30,11 @@ public class MultiSelection<S extends Component> {
     private final String wicketId;
     private Matcher<?> matcher;
 
-    MultiSelection(Class<S> componentType) {
+    public MultiSelection(Class<S> componentType) {
         this(componentType, null);
     }
 
-    MultiSelection(Class<S> componentType, String wicketId) {
+    public MultiSelection(Class<S> componentType, String wicketId) {
         this.componentType = componentType;
         this.wicketId = wicketId;
         matcher = new AnyModelMatcher();

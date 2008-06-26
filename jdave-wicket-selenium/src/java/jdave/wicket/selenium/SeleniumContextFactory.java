@@ -31,7 +31,7 @@ public class SeleniumContextFactory<T extends MarkupContainer> extends DefaultCo
     }
 
     @Override
-	public T newContextObject(Object context) throws Exception {
+    public T newContextObject(Object context) throws Exception {
         this.context = context;
         return specification.lifeCycleListener.createContext();
     }
