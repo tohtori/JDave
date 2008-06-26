@@ -228,6 +228,7 @@
       <id>ci</id>
       <distributionManagement>
         <repository>
+        <uniqueVersion>false</uniqueVersion>
         <id>panda-snapshots</id>
         <url>file:///var/www/localhost/htdocs/maven2/snapshots/</url>
         </repository>
