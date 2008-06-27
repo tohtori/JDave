@@ -15,9 +15,6 @@
  */
 package jdave.runner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +24,8 @@ import java.util.List;
 import jdave.ResultsAdapter;
 import jdave.SpecVisitorAdapter;
 import jdave.Specification;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -96,6 +94,14 @@ public class SpecRunnerTest {
         assertEquals(3, BooleanSpec.specDestroyCalled);        
     }
     
+
+    @Test
+    public void testShouldCallSpecDestroyEvenIfContextDestroyCrashes() {
+        SpecWithCrashingContextDestroy.specDestroyCalled = 0;
+        runner.run(SpecWithCrashingContextDestroy.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(1, SpecWithCrashingContextDestroy.specDestroyCalled);        
+    }
+
     @Test
     public void testReportsErrorIfSpecificationConstructionFails() {
         final List<Method> errors = new ArrayList<Method>();
@@ -237,6 +243,24 @@ public class SpecRunnerTest {
             
             public void someBehavior() {
             }
+        }
+    }
+
+    public static class SpecWithCrashingContextDestroy extends Specification<Void> {
+        private static int specDestroyCalled;
+
+        public class Context {
+            public void destroy() {
+                throw new RuntimeException("Exception from context destroy");
+            }
+
+            public void someBehavior() {
+            }
+        }
+
+        @Override
+        public void destroy() throws Exception {
+            specDestroyCalled++;
         }
     }
 }
