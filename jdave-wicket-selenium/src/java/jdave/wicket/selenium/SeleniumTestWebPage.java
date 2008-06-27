@@ -15,9 +15,6 @@
  */
 package jdave.wicket.selenium;
 
-import jdave.wicket.selenium.SeleniumSpecification.SeleniumSpecificationMarkupContainerFactory;
-
-import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.WebPage;
@@ -34,10 +31,8 @@ public class SeleniumTestWebPage extends WebPage {
 
     @SuppressWarnings("unchecked")
     public SeleniumTestWebPage() {
-        WebApplication application = (WebApplication) Application.get();
-        SeleniumSpecificationMarkupContainerFactory factory = (SeleniumSpecificationMarkupContainerFactory) application.getServletContext().getAttribute(SeleniumSpecification.COMPONENTFACTORY);
-        MarkupContainer container = factory.getMarkupContainer();
-        factory.setApplication(application);
+        SeleniumManager manager = (SeleniumManager) ((WebApplication) getApplication()).getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
+        MarkupContainer container = manager.createContext();
         if (container instanceof Page) {
             setResponsePage((Page) container);
         } else {

@@ -27,8 +27,14 @@ import org.junit.runner.RunWith;
 @RunWith(JDaveRunner.class)
 public class PageWithLinkSpec extends SeleniumSpecification<PageWithLink> {
 
+    @Override
+    public void onCreate() throws Exception {
+        specify(wicket.getApplication().getClass(), does.equal(SeleniumWebApplication.class));
+    }
+
     public class WhenNewPageIsCreated {
         public PageWithLink create() {
+            specify(wicket.getApplication().getClass(), does.equal(SeleniumWebApplication.class));
             return startComponent();
         }
 

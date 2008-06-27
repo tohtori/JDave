@@ -25,4 +25,11 @@ public class SeleniumWebApplication extends WebApplication {
     public Class<?> getHomePage() {
         return SeleniumTestWebPage.class;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void init() {
+        SeleniumManager manager = (SeleniumManager) getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
+        manager.init(this);
+    }
 }

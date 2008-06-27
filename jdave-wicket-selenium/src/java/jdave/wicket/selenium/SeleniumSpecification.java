@@ -15,11 +15,11 @@
  */
 package jdave.wicket.selenium;
 
+import jdave.IContextObjectFactory;
 import jdave.Specification;
 import jdave.wicket.MultiSelection;
 import jdave.wicket.Selection;
 
-import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
@@ -30,11 +30,10 @@ import com.thoughtworks.selenium.Selenium;
  * @author Janne Hietam&auml;ki
  */
 public abstract class SeleniumSpecification<T extends MarkupContainer> extends Specification<T> {
+    SeleniumManager<T> lifecycleListener = new SeleniumManager<T>(this);
 
     protected Selenium selenium;
-    SeleniumLifecycleListener<T> lifeCycleListener;
-
-    public final static String COMPONENTFACTORY = "SeleniumSpecification_ComponentFactory";
+    public WicketState wicket = new WicketState();
 
     @Override
     public boolean needsThreadLocalIsolation() {
@@ -42,38 +41,21 @@ public abstract class SeleniumSpecification<T extends MarkupContainer> extends S
     }
 
     public SeleniumSpecification() {
-        lifeCycleListener = new SeleniumLifecycleListener<T>(this);
-        setContextObjectFactory(new SeleniumContextFactory<T>(this));
-        addListener(lifeCycleListener);
+        addListener(lifecycleListener);
     }
 
-    private SeleniumSpecificationMarkupContainerFactory markupContainerFactory = new SeleniumSpecificationMarkupContainerFactory();
-
-    SeleniumSpecificationMarkupContainerFactory getMarkupContainerFactory() {
-        return markupContainerFactory;
+    @Override
+    public IContextObjectFactory<T> getContextObjectFactory() {
+        return lifecycleListener;
     }
 
-    class SeleniumSpecificationMarkupContainerFactory implements IMarkupContainerFactory {
-        private Application application;
+    @Override
+    public final void create() {
+        lifecycleListener.start();
+    }
 
-        public MarkupContainer getMarkupContainer() {
-            try {
-                SeleniumContextFactory<T> seleniumContextFactory = (SeleniumContextFactory<T>) getContextObjectFactory();
-                context = seleniumContextFactory.createNewContextObject();
-                return context;
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        }
+    public void onCreate() throws Exception {
 
-        public void setApplication(Application application) {
-            this.application = application;
-        }
-
-        public Application getApplication() {
-            return application;
-        }
     }
 
     /**

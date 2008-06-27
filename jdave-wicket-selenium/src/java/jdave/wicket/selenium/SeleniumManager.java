@@ -15,10 +15,13 @@
  */
 package jdave.wicket.selenium;
 
+import jdave.DefaultContextObjectFactory;
 import jdave.DefaultLifecycleListener;
+import jdave.IContextObjectFactory;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.mortbay.jetty.servlet.Dispatcher;
 import org.mortbay.jetty.servlet.FilterHolder;
@@ -32,12 +35,17 @@ import com.thoughtworks.selenium.Selenium;
 /**
  * @author Janne Hietam&auml;ki
  */
-final class SeleniumLifecycleListener<T extends MarkupContainer> extends DefaultLifecycleListener {
+final class SeleniumManager<T extends MarkupContainer> extends DefaultLifecycleListener implements IContextObjectFactory<T> {
     public static final int DEFAULT_PORT = 4444;
-    private final SeleniumSpecification<T> specification;
-    SeleniumServer server;
+    public final static String MANAGER_KEY = "SeleniumSpecification";
 
-    SeleniumLifecycleListener(SeleniumSpecification<T> specification) {
+    final SeleniumSpecification<T> specification;
+    SeleniumServer server;
+    private WebApplicationContext web;
+    private Object contextClass;
+    private WebApplication application;
+
+    SeleniumManager(SeleniumSpecification<T> specification) {
         this.specification = specification;
     }
 
@@ -50,15 +58,12 @@ final class SeleniumLifecycleListener<T extends MarkupContainer> extends Default
         return "http://localhost:" + DEFAULT_PORT;
     }
 
-    @Override
-    public void afterContextInstantiation(Object contextInstance) {
+    public void start() {
         try {
-
             // Kludge to disable Jetty XML validating which causes class loading
             // issues
             System.setProperty("org.mortbay.xml.XmlParser.NotValidating", "true");
-
-            WebApplicationContext web = new WebApplicationContext();
+            web = new WebApplicationContext();
 
             WebApplicationHandler handler = new WebApplicationHandler();
 
@@ -66,7 +71,7 @@ final class SeleniumLifecycleListener<T extends MarkupContainer> extends Default
             holder.setInitParameter(WicketFilter.APP_FACT_PARAM, SeleniumTestApplicationFactory.class.getName().toString());
             handler.addFilterPathMapping("/*", "wicketFilter", Dispatcher.__ALL);
 
-            web.setAttribute(SeleniumSpecification.COMPONENTFACTORY, specification.getMarkupContainerFactory());
+            web.setAttribute(MANAGER_KEY, this);
             web.setContextPath("wicket");
             web.addHandler(handler);
 
@@ -74,24 +79,44 @@ final class SeleniumLifecycleListener<T extends MarkupContainer> extends Default
             server.getServer().addContext(web);
             server.start();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
-        setSelenium(new DefaultSelenium("localhost", DEFAULT_PORT, "*firefox", getDefaultURL()));
-        getSelenium().start();
-    }
-
-    public T createContext() {
-        getSelenium().open(getDefaultURL() + "/wicket");
-        Application.set(specification.getMarkupContainerFactory().getApplication());
-        return specification.context;
-    }
-
-    protected void setSelenium(Selenium selenium) {
+        Selenium selenium = new DefaultSelenium("localhost", DEFAULT_PORT, "*firefox", getDefaultURL());
+        selenium.start();
         specification.selenium = selenium;
     }
 
-    protected Selenium getSelenium() {
-        return specification.selenium;
+    public T newContextObject(Object context) throws Exception {
+        contextClass = context;
+        specification.selenium.open(getDefaultURL() + "/wicket");
+        specification.selenium.waitForPageToLoad("500");
+        return specification.context;
+    }
+
+    public void afterContextInstantiation(Object contextInstance) {
+        Application.set(application);
+    }
+
+    public T createContext() {
+        try {
+            specification.context = specification.be = new DefaultContextObjectFactory<T>().newContextObject(contextClass);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return specification.context;
+    }
+
+    public void init(SeleniumWebApplication application) {
+        this.application = application;
+        specification.wicket.setApplication(application);
+
+        try {
+            specification.onCreate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
