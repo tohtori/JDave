@@ -153,7 +153,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         return specifiedComponent;
     }
 
-    private void startBorder(final IModel model) {
+    protected void startBorder(final IModel model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 Panel panel = new Container(panelId);
@@ -164,7 +164,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         });
     }
 
-    private void startPanel(final IModel model) {
+    protected void startPanel(final IModel model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 specifiedComponent = newComponent(panelId, model);
@@ -173,7 +173,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         });
     }
 
-    private void startPage(final IModel model) {
+    protected void startPage(final IModel model) {
         specifiedComponent = newComponent(null, model);
         TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
         wicket.startPage(testPageSource);
