@@ -52,7 +52,7 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
  */
 public abstract class ComponentSpecification<T extends Component> extends Specification<T> {
     protected BaseWicketTester wicket;
-    private T specifiedComponent;
+    protected T specifiedComponent;
     
     @Override
     public final void create() {
