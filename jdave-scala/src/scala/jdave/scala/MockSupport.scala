@@ -54,6 +54,7 @@ trait MockSupport[T] extends JavaSpecification[T] {
     
   def `with`[V](matcher: Matcher[V]) = expectations.`with`(matcher)
   def withAny[V](clazz: Class[V]) = expectations.`with`(any(clazz))
+  def withEqualTo[V](other: Any) = expectations.`with`(equalTo(other))
   def withProperty[V](propertyName: String, matcher: Matcher[_]) = `with`(hasProperty[V](propertyName, matcher))
   def inSequence(sequence: Sequence) = expectations.inSequence(sequence)
   
