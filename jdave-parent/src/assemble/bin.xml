@@ -20,7 +20,12 @@
         <include>org.jdave:jdave-junit4</include>
         <include>org.jdave:jdave-jemmy</include>
         <include>org.jdave:jdave-wicket</include>
+        <include>org.jdave:jdave-wicket-selenium</include>
         <include>org.jdave:jdave-examples</include>
+        <include>org.jdave:jdave-scala</include>
+        <include>org.jdave:jdave-scala-suites</include>
+        <include>org.jdave:jdave-unfinalizer</include>
+        <include>org.jdave:jdave-report-plugin</include>
       </includes>
       <binaries>
         <outputDirectory>lib/</outputDirectory>

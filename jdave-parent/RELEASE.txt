@@ -6,11 +6,10 @@ mvn deploy
 svn copy https://svn.laughingpanda.org/svn/jdave/trunk/  https://svn.laughingpanda.org/svn/jdave/tags/0.5.0 -m "tag release"
 rm jdave-core-0.5.0/jdave-core-0.5.0/src/jdave-core/site/bin/jdave-parent-0.*
 mvn-no-tests clean package assembly:assembly   (in jdave-parent)
-cp target/jdave-parent-0.5.0.zip ~/workspace/jdave-core/site/bin/
 scp ~/workspace/jdave-core/site/*[.html,.xml,.css] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
 scp ~/workspace/jdave-core/site/specdox-sample/*.html inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/specdox-sample/
 scp ~/workspace/jdave-core/site/images/*[.jpg,.gif,.png] inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/images/
-scp ~/workspace/jdave-core/site/bin/jdave-parent-0.5.0-bin.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
+scp target/jdave-parent-0.5.0.zip inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/bin/
 cd jdave-core; mvn javadoc:javadoc
 mv target/site/apidocs target/site/api
 scp -r target/site/api inhuman@www.laughingpanda.org:/var/www/localhost/htdocs/projects/jdave/
