@@ -9,9 +9,12 @@ trait ScalaCheckSupport {
   def specify(p: Prop): Unit = specify(Test.defaultParams, p)
   
   def specify(params: Params, p: Prop) = Test.check(params, p).result match {
-    case f: Failed => throw new jdave.ExpectationFailedException("failed with args " + f.args)
-    case Exhausted => throw new jdave.ExpectationFailedException("exhausted")
-    case _         => 
+    case Proved(args)           =>
+    case Passed                 =>
+    case Failed(args)           => throw new jdave.ExpectationFailedException("failed with args " + args)
+    case Exhausted              => throw new jdave.ExpectationFailedException("exhausted")
+    case PropException(args, e) => throw new jdave.ExpectationFailedException("failed: " + e.getMessage)
+    case GenException(e)        => throw new jdave.ExpectationFailedException("generation failed: " + e.getMessage)
   }
 
   def prop(p: => Prop) = specify(p)
