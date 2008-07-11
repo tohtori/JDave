@@ -54,13 +54,15 @@ trait MockSupport[T] extends JavaSpecification[T] {
     
   def `with`[V](matcher: Matcher[V]) = expectations.`with`(matcher)
   def withAny[V](clazz: Class[V]) = expectations.`with`(any(clazz))
-  def withEqualTo[V](other: Any) = expectations.`with`(equalTo(other))
+  def withAllOf[V](matchers: Matcher[V]*) = expectations.`with`(allOf(matchers: _*))
+  def withEqualTo[V](other: V) = expectations.`with`(equalTo(other))
   def withProperty[V](propertyName: String, matcher: Matcher[_]) = `with`(hasProperty[V](propertyName, matcher))
   def inSequence(sequence: Sequence) = expectations.inSequence(sequence)
   
   def any[V](clazz: Class[V]) = Matchers.any[V](clazz)
   def equalTo[V](value: V) = Matchers.equalTo(value)
   def hasProperty[V](propertyName: String, matcher: Matcher[_]) = Matchers.hasProperty[V](propertyName, matcher)
+  def containsString(string: String) = Matchers.containsString(string)
   def allOf[V](matchers: Matcher[V]*) = {
     val iterableMatchers = new java.util.ArrayList[Matcher[_ <: V]]
     for (matcher <- matchers) iterableMatchers.add(matcher)
