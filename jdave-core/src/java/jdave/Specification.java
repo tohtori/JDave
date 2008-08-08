@@ -225,7 +225,6 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * @see #specify(Collection, Where)
      */
-    @SuppressWarnings("unchecked")
     public <E> void specify(Iterator<E> actual, Where<E> where) {
         try {
             int index = 0;
@@ -465,5 +464,14 @@ public abstract class Specification<T> extends MockSupport {
     
     public void specify(Map<?, ?> actual, MapContainment containment) {
         containment.verify(actual);
+    }
+
+    /**
+     * Fail with a message.
+     * 
+     * @param message a message printed to the console
+     */
+    public void fail(String message) {
+        throw new ExpectationFailedException(message);
     }
 }

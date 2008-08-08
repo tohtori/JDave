@@ -501,6 +501,15 @@ public class SpecificationTest {
         }
     }
     
+    @Test
+    public void testFailWithMessage() {
+        try {
+            specification.fail("msg");
+        } catch (ExpectationFailedException e) {
+            assertEquals("msg", e.getMessage());
+        }
+    }
+    
     public static class Money {
         private final int value;
         private final Currency currency;
