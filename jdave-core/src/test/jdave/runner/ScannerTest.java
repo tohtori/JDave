@@ -44,4 +44,17 @@ public class ScannerTest {
         sort(expected);
         assertEquals(expected, files);
     }
+    
+    @Test
+    /*
+     * See http://www.laughingpanda.org/jira/browse/JDAVE-35
+     */
+    public void testFindsFromDirectoryContainingSpaces() throws Exception {
+        Scanner scanner = new Scanner(getClass().getProtectionDomain().getCodeSource().getLocation().getPath() +
+                "/jdave/runner/dir with spaces");
+        scanner.forEach("class", new IFileHandler() {
+            public void handle(File file) {
+            }            
+        });
+    }
 }

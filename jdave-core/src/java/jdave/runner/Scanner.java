@@ -16,16 +16,22 @@
 package jdave.runner;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Stack;
 
 /**
  * @author Joni Freeman
  */
 class Scanner {
-    private final String path;
+    private final URI path;
 
     Scanner(String path) {
-        this.path = path;
+        try {
+            this.path = new URI("file://" + path.replace(" ", "%20"));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     void forEach(String extension, IFileHandler fileHandler) {
