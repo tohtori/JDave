@@ -27,8 +27,13 @@ class Scanner {
     private final URI path;
 
     Scanner(String path) {
+        System.out.println(path);
         try {
-            this.path = new URI("file://" + path.replace(" ", "%20"));
+            if (path.startsWith("/")) {
+                this.path = new URI("file://" + path.replace(" ", "%20"));                
+            } else {
+                this.path = new URI(path.replace(" ", "%20"));
+            }
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +41,7 @@ class Scanner {
 
     void forEach(String extension, IFileHandler fileHandler) {
         Stack<File> dirs = new Stack<File>();
-        dirs.push(new File(path));
+        dirs.push(new File(path.getPath()));
         forEach(extension, fileHandler, dirs);
     }
     
