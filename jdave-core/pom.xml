@@ -21,6 +21,14 @@
         </includes>
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test</directory>
+        <includes>
+          <include>**/hack-to-get-maven-copy-this-dir</include>
+        </includes>
+      </testResource>
+    </testResources>
   </build>
     
 </project>
