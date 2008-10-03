@@ -60,6 +60,34 @@ public class JDaveGroupRunnerTest {
     }
     
     @Test
+    public void runsAfterOperationsEvenIfBeforeOperationsFail() {
+        final SuiteGroupRunner suiteGroupRunner = new SuiteGroupRunner();
+        try {
+            suiteGroupRunner.run(notifier);
+            Assert.fail("Should have thrown RuntimeException.");
+        } catch (RuntimeException e) {}
+        Assert.assertTrue(suiteGroupRunner.onAfterRunCalled);
+    }
+    
+    private class SuiteGroupRunner extends JDaveGroupRunner {
+        private boolean onAfterRunCalled = false;
+        
+        public SuiteGroupRunner() {
+            super(Suite.class);
+        }
+        
+        @Override
+        public void onBeforeRun() {
+            throw new RuntimeException();
+        }
+        
+        @Override
+        public void onAfterRun() {
+            onAfterRunCalled = true;
+        }
+    }
+    
+    @Test
     public void testRunsBehaviorsFromEachMatchingSpec() throws Exception {
         runner = new JDaveGroupRunner(Suite.class) {
             @Override

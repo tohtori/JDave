@@ -105,8 +105,20 @@ public class JDaveGroupRunner extends Runner {
 
     @Override
     public void run(RunNotifier notifier) {
+        try {
+            onBeforeRun();
+            runSpecs(notifier);
+        } finally {
+            onAfterRun();
+        }
+    }
+
+    private void runSpecs(RunNotifier notifier) {
         for (Class<? extends Specification<?>> spec : specs) {
             new JDaveRunner(spec).run(notifier);
         }
     }
+    
+    protected void onBeforeRun() {}
+    protected void onAfterRun() {}
 }
