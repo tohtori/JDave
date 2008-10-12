@@ -25,7 +25,7 @@ import jdave.Specification;
  */
 public class SpecRunner {
     public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
-        for (Class<?> contextType : ClassMemberSorter.getDeclaredClasses(specType)) {
+        for (Class<?> contextType : ClassMemberSorter.getClasses(specType)) {
             Context context = new Context(specType, contextType) {
                 @Override
                 protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
@@ -37,7 +37,7 @@ public class SpecRunner {
     }
     
     public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) {
-        for (Class<?> contextType : ClassMemberSorter.getDeclaredClasses(specType)) {
+        for (Class<?> contextType : ClassMemberSorter.getClasses(specType)) {
             Context context = new Context(specType, contextType) {
                 @Override
                 protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {

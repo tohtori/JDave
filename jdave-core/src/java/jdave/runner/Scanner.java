@@ -27,7 +27,6 @@ class Scanner {
     private final URI path;
 
     Scanner(String path) {
-        System.out.println(path);
         try {
             if (path.startsWith("/")) {
                 this.path = new URI("file://" + path.replace(" ", "%20"));                

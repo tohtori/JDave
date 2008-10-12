@@ -45,17 +45,20 @@ public class SpecRunnerTest {
             }
         }));
         Collections.sort(methods);
-        assertEquals(3, methods.size());
-        assertEquals("shouldBeEqualToTrue", methods.get(0));
-        assertEquals("shouldEqualToFalse", methods.get(1));
-        assertEquals("shouldNotBeEqualToTrue", methods.get(2));
+        assertEquals(4, methods.size());
+        assertEquals("anyBehavior", methods.get(0));
+        assertEquals("shouldBeEqualToTrue", methods.get(1));
+        assertEquals("shouldEqualToFalse", methods.get(2));
+        assertEquals("shouldNotBeEqualToTrue", methods.get(3));
     }
     
     @Test
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
+        BaseSpec.actualCalls.clear();
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         Collections.sort(BooleanSpec.actualCalls);
+        assertEquals(Arrays.asList("anyBehavior"), BaseSpec.actualCalls);
         assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
@@ -63,14 +66,14 @@ public class SpecRunnerTest {
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getContextNames());
+        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter.getContextNames());
     }
     
     @Test
     public void testShouldNotifyCallbackWhenContextHasFinished() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals(Arrays.asList("FalseBoolean", "TrueBoolean"), adapter.getFinishedContextNames());
+        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter.getFinishedContextNames());
     }
     
     @Test
@@ -84,14 +87,14 @@ public class SpecRunnerTest {
     public void testShouldCallSpecCreateForEachMethod() throws Exception {
         BooleanSpec.specCreateCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(3, BooleanSpec.specCreateCalled);        
+        assertEquals(4, BooleanSpec.specCreateCalled);        
     }
     
     @Test
     public void testShouldCallSpecDestroyForEachMethod() throws Exception {
         BooleanSpec.specDestroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(3, BooleanSpec.specDestroyCalled);        
+        assertEquals(4, BooleanSpec.specDestroyCalled);        
     }
     
 
@@ -128,8 +131,18 @@ public class SpecRunnerTest {
         runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
         assertEquals(1, SpecForOtherCreations.whenCreateDoesNotExist);                        
     }
+    
+    public static class BaseSpec extends Specification<Boolean> {
+        public static List<String> actualCalls = new ArrayList<String>();
+        
+        public class CommonContext {
+            public void anyBehavior() {
+                actualCalls.add("anyBehavior");
+            }
+        }
+    }
 
-    public static class BooleanSpec extends Specification<Boolean> {
+    public static class BooleanSpec extends BaseSpec {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
         public static int specCreateCalled;

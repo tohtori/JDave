@@ -148,7 +148,7 @@ public class ExecutingBehavior extends Behavior {
 
     private Object newContextInstance(Specification<?> spec) {
         try {
-            Constructor<?> constructor = contextType.getDeclaredConstructor(spec.getClass());
+            Constructor<?> constructor = contextType.getDeclaredConstructor(contextType.getEnclosingClass());
             return constructor.newInstance(spec);
         } catch (Exception e) {
             throw new RuntimeException(e);

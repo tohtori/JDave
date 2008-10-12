@@ -32,21 +32,12 @@ public final class ClassMemberSorter {
     }
 
     /**
-     * @return the same as {@link Class#getDeclaredClasses()} but in the same order as declared in the source code.
+     * @return the same as {@link Class#getClasses()} but in the same order as declared in the source code.
      */
-    public static Class<?>[] getDeclaredClasses(Class<?> declaringClass) {
-        Class<?>[] classes = declaringClass.getDeclaredClasses();
+    public static Class<?>[] getClasses(Class<?> declaringClass) {
+        Class<?>[] classes = declaringClass.getClasses();
         Arrays.sort(classes, new ClassLineNumberComparator());
         return classes;
-    }
-
-    /**
-     * @return the same as {@link Class#getDeclaredMethods()} but in the same order as declared in the source code.
-     */
-    public static Method[] getDeclaredMethods(Class<?> declaringClass) {
-        Method[] methods = declaringClass.getDeclaredMethods();
-        Arrays.sort(methods, new MethodLineNumberComparator());
-        return methods;
     }
 
     /**
