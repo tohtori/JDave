@@ -104,20 +104,24 @@ public class ExecutingBehavior extends Behavior {
             results.error(method, t);
         } finally {
             try {
-                try {
-                    destroyContext();
-                } finally {
-                    try {
-                        spec.fireAfterContextDestroy(context);
-                    } finally {
-                        spec.destroy();
-                    }
-                }
-            } catch (Exception e) {
+                destroy(spec);
+            } catch (Throwable e) {
                 // Do not mask the first error.
                 if (!error) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
+    }
+
+    private void destroy(Specification<?> spec) throws Exception {
+        try {
+            destroyContext();
+        } finally {
+            try {
+                spec.fireAfterContextDestroy(context);
+            } finally {
+                spec.destroy();
             }
         }
     }
