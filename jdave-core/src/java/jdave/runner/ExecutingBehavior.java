@@ -75,9 +75,9 @@ public class ExecutingBehavior extends Behavior {
         });
         executor.shutdown();
         try {
-            executor.awaitTermination(60, TimeUnit.SECONDS);
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            // do not mind
+            throw new RuntimeException(e);
         }
     }
 
