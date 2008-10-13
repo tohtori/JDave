@@ -202,7 +202,9 @@ public class SpecRunnerTest {
         public abstract class SomeAbstractClass {            
         }
         
-        public static class SomeHelperClass {            
+        public static class SomeHelperClass {   
+            public void thisIsNotBehavior() {                
+            }
         }
         
         private class SomePrivateClass {            

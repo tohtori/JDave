@@ -69,6 +69,6 @@ public class DefaultSpecIntrospection implements ISpecIntrospection {
     }
 
     private boolean isInnerClass(Class<?> specType, Class<?> possibleContext) {
-        return possibleContext.getEnclosingClass() != null;
+        return (possibleContext.getModifiers() & Modifier.STATIC) == 0 && possibleContext.getEnclosingClass() != null;
     }
 }
