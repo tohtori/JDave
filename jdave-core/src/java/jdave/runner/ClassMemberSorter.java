@@ -16,7 +16,10 @@
 package jdave.runner;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides lists of class members (methods and inner classes) in the same order
@@ -35,9 +38,25 @@ public final class ClassMemberSorter {
      * @return the same as {@link Class#getClasses()} but in the same order as declared in the source code.
      */
     public static Class<?>[] getClasses(Class<?> declaringClass) {
-        Class<?>[] classes = declaringClass.getClasses();
-        Arrays.sort(classes, new ClassLineNumberComparator());
-        return classes;
+        List<Class<?>> hierarchy = hierarchy(declaringClass);
+        List<Class<?>> allDeclaredClasses = new ArrayList<Class<?>>();
+        for (Class<?> clazz : hierarchy) {
+            Class<?>[] classes = clazz.getDeclaredClasses();
+            Arrays.sort(classes, new ClassLineNumberComparator());
+            allDeclaredClasses.addAll(Arrays.asList(classes));
+        }
+        return allDeclaredClasses.toArray(new Class[allDeclaredClasses.size()]);
+    }
+
+    private static List<Class<?>> hierarchy(Class<?> declaringClass) {
+        List<Class<?>> hierarchy = new ArrayList<Class<?>>();
+        Class<?> root = declaringClass;
+        do {
+            hierarchy.add(root);
+            root = root.getSuperclass();
+        } while (root != null && !root.equals(Object.class));
+        Collections.reverse(hierarchy);
+        return hierarchy;
     }
 
     /**
