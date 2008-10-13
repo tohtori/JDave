@@ -20,5 +20,7 @@ import java.lang.reflect.Method
 
 class ScalaIntrospection extends DefaultSpecIntrospection {
   override def isBehavior(method: Method) = if (method.getName.contains('$')) false else super.isBehavior(method)
+  override def isContextClass(specType: Class[_] , possibleContext: Class[_]) =
+    if (possibleContext.getName.contains("$$anon")) false else super.isContextClass(specType, possibleContext)
 }
 
