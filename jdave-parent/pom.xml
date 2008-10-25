@@ -25,6 +25,7 @@
     <module>../jdave-jemmy</module>
     <module>../jdave-wicket</module>
     <module>../jdave-wicket-selenium</module>
+    <module>../jdave-wicket-webdriver</module>
     <module>../jdave-examples</module>
     <module>../jdave-report-plugin</module>
     <module>../jdave-scala</module>
@@ -67,6 +68,12 @@
     </contributor>
     <contributor>
       <name>Miki Leskinen</name>
+    </contributor>
+    <contributor>
+      <name>Marko Sibakov</name>
+    </contributor>
+    <contributor>
+      <name>Juha Karemo</name>
     </contributor>
   </contributors>
   
