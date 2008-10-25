@@ -1,6 +1,20 @@
 <classpath>
   <classpathentry kind="src" path="src/java"/>
-  <classpathentry kind="src" path="src/test" output="target/test-classes" excluding="**/*.java"/>
+  <classpathentry kind="src" path="src/test" output="target/test-classes"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-library/1.1/hamcrest-library-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jdave/jdave-core/1.1-rc3/jdave-core-1.1-rc3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jdave/jdave-junit4/1.1-rc3/jdave-junit4-1.1-rc3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock/2.4.0/jmock-2.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit4/2.4.0/jmock-junit4-2.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-legacy/2.4.0/jmock-legacy-2.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/json/json/20080701/json-20080701.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.4/junit-4.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit-dep/4.4/junit-dep-4.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/openqa/selenium/webdriver/webdriver-common/1.0-SNAPSHOT/webdriver-common-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/openqa/selenium/webdriver/webdriver-firefox/1.0-SNAPSHOT/webdriver-firefox-1.0-SNAPSHOT.jar"/>
 </classpath>
