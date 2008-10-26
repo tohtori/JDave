@@ -20,15 +20,30 @@ import java.io.IOException;
 import jdave.Specification;
 import jdave.webdriver.WebDriverHolder;
 
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxLauncher;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 /**
  * @author Marko Sibakov
  */
 public abstract class WebDriverSpecification<T> extends Specification<T> {
+    private static final String FIREFOX_PROFILE_NAME = "WebDriver";
+
     @Override
     public void create() throws IOException {
-        WebDriverHolder.set(new FirefoxDriver());
+        FirefoxBinary binary = new FirefoxBinary();  
+        FirefoxLauncher launcher = new FirefoxLauncher(binary);
+        ProfilesIni profiles = new ProfilesIni();
+
+        if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
+            launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
+        }
+        
+        if (WebDriverHolder.get() == null) {
+            WebDriverHolder.set(new FirefoxDriver());
+        }
         onCreate();
     }
 
