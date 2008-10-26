@@ -17,9 +17,6 @@ package jdave.webdriver;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.Channel;
-import jdave.webdriver.WebDriverHolder;
-import jdave.webdriver.WicketWebDriver;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -28,37 +25,38 @@ import org.junit.runner.RunWith;
  * @author Juha Karemo
  */
 @RunWith(JDaveRunner.class)
-public class ChannelSpec extends Specification<Void> {
+public class ChannelSpec extends Specification<Channel> {
     public class AnyChannel {
         private WicketWebDriver webDriver = mock(WicketWebDriver.class);
 
-        public void create() {
+        public Channel create() {
             WebDriverHolder.set(webDriver);
+            return new Channel();
         }
 
-		public void assumesBrowserHasProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsNull() {
-			checking(new Expectations() {{
-				one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(null));
-			}});
-			Channel.waitForAjax();
-		}
+        public void assumesBrowserHasProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsNull() {
+            checking(new Expectations() {{
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(null));
+            }});
+            context.waitForAjax();
+        }
 
-		public void assumesBrowserHasNotYetProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsTrue() {
-			checking(new Expectations() {{
-				one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(true));
-				one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
-			}});
-			Channel.waitForAjax();
-		}
-		
-		public void assumesBrowserHasProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsFalse() {
-			checking(new Expectations() {{
-				one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
-			}});
-			Channel.waitForAjax();
-		}
+        public void assumesBrowserHasNotYetProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsTrue() {
+            checking(new Expectations() {{
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(true));
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
+            }});
+            context.waitForAjax();
+        }
+        
+        public void assumesBrowserHasProcessedAjaxResponseIfChannelStatusListeningJavascriptReturnsFalse() {
+            checking(new Expectations() {{
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
+            }});
+            context.waitForAjax();
+        }
 
-	    public void destroy() {
+        public void destroy() {
             WebDriverHolder.clear();
         }
     }

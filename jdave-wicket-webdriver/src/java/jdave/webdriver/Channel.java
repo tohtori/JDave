@@ -19,15 +19,16 @@ import org.openqa.selenium.JavascriptExecutor;
 
 /**
  * @author Marko Sibakov
+ * @author Juha Karemo
  */
 public class Channel {
-    public static void waitForAjax() {
+    public void waitForAjax() {
         while (isChannelBusy()) {
         }
     }
 
-    private static boolean isChannelBusy() {
-        JavascriptExecutor webDriver = (JavascriptExecutor) WebDriverHolder.get();
+    private boolean isChannelBusy() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) WebDriverHolder.get();
         StringBuffer javaScript = new StringBuffer();
         javaScript.append("for (var c in Wicket.channelManager.channels) {");
         javaScript.append("  if (Wicket.channelManager.channels[c].busy) {");
@@ -35,7 +36,7 @@ public class Channel {
         javaScript.append("  }");
         javaScript.append("}");
         javaScript.append("return false;");
-        Boolean result = (Boolean) webDriver.executeScript(javaScript.toString());
+        Boolean result = (Boolean) javascriptExecutor.executeScript(javaScript.toString());
         if (result == null) {
             return false;
         }
