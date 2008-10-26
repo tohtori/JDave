@@ -15,17 +15,19 @@
  */
 package jdave.webdriver;
 
+import org.openqa.selenium.WebDriver;
+
 /**
  * @author Juha Karemo
  */
 public class WebDriverHolder {
-    private static ThreadLocal<WicketWebDriver> currentWebDriver = new ThreadLocal<WicketWebDriver>();
+    private static ThreadLocal<WebDriver> currentWebDriver = new ThreadLocal<WebDriver>();
 
-    public static WicketWebDriver get() {
+    public static WebDriver get() {
         return currentWebDriver.get();
     }
 
-    public static void set(WicketWebDriver webDriver) {
+    public static void set(WebDriver webDriver) {
         currentWebDriver.set(webDriver);
     }
 

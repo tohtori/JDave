@@ -15,6 +15,8 @@
  */
 package jdave.webdriver;
 
+import org.openqa.selenium.JavascriptExecutor;
+
 /**
  * @author Marko Sibakov
  */
@@ -25,7 +27,7 @@ public class Channel {
     }
 
     private static boolean isChannelBusy() {
-        WicketWebDriver webDriver = WebDriverHolder.get();
+        JavascriptExecutor webDriver = (JavascriptExecutor) WebDriverHolder.get();
         StringBuffer javaScript = new StringBuffer();
         javaScript.append("for (var c in Wicket.channelManager.channels) {");
         javaScript.append("  if (Wicket.channelManager.channels[c].busy) {");
