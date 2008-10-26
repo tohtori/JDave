@@ -16,9 +16,11 @@
 package jdave.webdriver.testapplication;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
 /**
@@ -36,6 +38,14 @@ public class WebDriverTestPage extends WebPage {
                 target.addComponent(label);
             }
         });
-        
+        TextField textField = new TextField("testTextField", new Model());
+        add(textField);
+        textField.add(new OnChangeAjaxBehavior() {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                label.setModelObject(getModelObject());
+                target.addComponent(label);
+            }
+        });
     }
 }

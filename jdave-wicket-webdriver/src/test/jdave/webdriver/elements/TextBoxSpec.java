@@ -17,47 +17,49 @@ package jdave.webdriver.elements;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.Fields;
-import jdave.webdriver.WebDriverHolder;
+import jdave.webdriver.Channel;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.laughingpanda.beaninject.Inject;
 import org.openqa.selenium.WebElement;
 
 /**
  * @author Juha Karemo
  */
 @RunWith(JDaveRunner.class)
-public class FindSpec extends Specification<Void> {
-    public class AnyFind {
-        private WebDriver  webDriver = mock(WebDriver.class);
-        private WebElement foundElement = mock(WebElement.class);
-        private By by = mock(By.class);
-        
-        public void create() {
-            WebDriverHolder.set(webDriver);
-        }
-        
-        public void returnsLink() {
-            checking(new Expectations() {{
-                one(webDriver).findElement(by); will(returnValue(foundElement));
-            }});
-            Link link = Find.link(by);
-            specify(Fields.getValue(link, "webElement"), does.equal(foundElement));
+public class TextBoxSpec extends Specification<TextBox> {
+    public class AnyTextBox {
+        private WebElement webElement = mock(WebElement.class);
+        private Channel channel = mock(Channel.class);
+
+        public TextBox create() {
+            TextBox textBox = new TextBox(webElement);
+            Inject.field("channel").of(textBox).with(channel);
+            return textBox;
         }
 
-        public void returnsTextBox() {
+        public void canBeCleared() {
             checking(new Expectations() {{
-                one(webDriver).findElement(by); will(returnValue(foundElement));
+               one(webElement).clear();
+               one(channel).waitForAjax();
             }});
-            TextBox textBox = Find.textBox(by);
-            specify(Fields.getValue(textBox, "webElement"), does.equal(foundElement));
+            context.clear();
         }
-
-        public void destroy() {
-            WebDriverHolder.clear();
+        
+        public void canBeTyped() {
+            checking(new Expectations() {{
+               one(webElement).sendKeys("text");
+               one(channel).waitForAjax();
+            }});
+            context.type("text");
+        }
+        
+        public void returnsText() {
+            checking(new Expectations() {{
+                one(webElement).getValue(); will(returnValue("value"));
+             }});
+             specify(context.getText(), does.equal("value"));
         }
     }
 }

@@ -18,6 +18,7 @@ package jdave.webdriver.testapplication;
 import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
 import jdave.webdriver.elements.Find;
+import jdave.webdriver.elements.TextBox;
 import jdave.webdriver.specification.WebDriverSpecification;
 
 import org.junit.runner.RunWith;
@@ -26,6 +27,7 @@ import org.openqa.selenium.WebDriver;
 
 /**
  * @author Marko Sibakov
+ * @author Juha Karemo
  */
 @RunWith(JDaveRunner.class)
 public class WebDrivertTestApplicationSpecification extends WebDriverSpecification<Void> {
@@ -51,6 +53,14 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
         public void containsLinkThatCanBeClicked() {
             Find.link(By.linkText("testLink")).click();
             specify(webDriver.getPageSource().contains("link clicked"));
+        }
+        
+        public void containsTextBox() {
+            TextBox textBox = Find.textBox(By.name("testTextField"));
+            textBox.type("some value");
+            specify(textBox.getText(), does.equal("some value"));
+            textBox.clear();
+            specify(textBox.getText(), does.equal(""));
         }
     }
 
