@@ -18,7 +18,6 @@ package jdave.webdriver.testapplication;
 import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
 import jdave.webdriver.specification.WebDriverSpecification;
-import jdave.webdriver.testapplication.TestAppStarter;
 
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +26,7 @@ import org.openqa.selenium.WebDriver;
  * @author Marko Sibakov
  */
 @RunWith(JDaveRunner.class)
-public class WebDrivertTestApplicationSpecification extends WebDriverSpecification<Void> {
+public class WebDrivertTestApplicationSpec extends WebDriverSpecification<Void> {
     private TestAppStarter testAppStarter;
 
     @Override
@@ -43,9 +42,9 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
             specify(webDriver.getPageSource().contains("foo"));
         }
     }
-
+    
     @Override
-    public void destroy() throws Exception {
+    public void onDestroy() {
         testAppStarter.stop();
     }
 }
