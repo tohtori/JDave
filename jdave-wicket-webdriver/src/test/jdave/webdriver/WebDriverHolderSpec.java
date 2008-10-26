@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.webdriver.jdave.webdriver;
+package jdave.webdriver;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
