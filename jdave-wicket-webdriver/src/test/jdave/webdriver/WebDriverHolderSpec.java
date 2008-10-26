@@ -17,8 +17,6 @@ package jdave.webdriver;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.WebDriverHolder;
-import jdave.webdriver.WicketWebDriver;
 
 import org.junit.runner.RunWith;
 
@@ -49,7 +47,7 @@ public class WebDriverHolderSpec extends Specification<Void> {
             specify(WebDriverHolder.get(), does.equal(newWebDriver));
         }
 
-        public void desroy() {
+        public void destroy() {
             WebDriverHolder.clear();
         }
     }
