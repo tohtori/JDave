@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jdave.webdriver.jdave.webdriver;
+package jdave.webdriver.testapplication;
 
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.TestAppStarter;
 import jdave.webdriver.WebDriverHolder;
 import jdave.webdriver.specification.WebDriverSpecification;
+import jdave.webdriver.testapplication.TestAppStarter;
 
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
