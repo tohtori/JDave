@@ -26,7 +26,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author Marko Sibakov
  */
 public abstract class WebDriverSpecification<T> extends Specification<T> {
-    
     @Override
     public void create() throws IOException {
         WebDriverHolder.set(new FirefoxDriver());
@@ -35,13 +34,13 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     public void onCreate() {
     }
-    
+
     @Override
     public void destroy() throws Exception {
         WebDriverHolder.get().close();
         onDestroy();
     }
-    
+
     public void onDestroy() {
     }
 }
