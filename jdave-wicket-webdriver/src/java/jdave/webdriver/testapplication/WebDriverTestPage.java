@@ -15,11 +15,27 @@
  */
 package jdave.webdriver.testapplication;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.Model;
 
 /**
  * @author Marko Sibakov
  */
 public class WebDriverTestPage extends WebPage {
-
+    public WebDriverTestPage() {
+        final Label label = new Label("testLabel", new Model("test label"));
+        label.setOutputMarkupId(true);
+        add(label);
+        add(new AjaxFallbackLink("testLink") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                label.setModelObject("link clicked");
+                target.addComponent(label);
+            }
+        });
+        
+    }
 }

@@ -17,9 +17,11 @@ package jdave.webdriver.testapplication;
 
 import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
+import jdave.webdriver.elements.Find;
 import jdave.webdriver.specification.WebDriverSpecification;
 
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -36,13 +38,22 @@ public class WebDrivertTestApplicationSpec extends WebDriverSpecification<Void> 
     }
 
     public class TestPage {
-        public void containsBodyText() {
-            WebDriver webDriver = WebDriverHolder.get();
+        private WebDriver webDriver = WebDriverHolder.get();
+
+        public void create() {
             webDriver.navigate().to("http://localhost:8080");
+        }
+
+        public void containsBodyText() {
             specify(webDriver.getPageSource().contains("foo"));
         }
+
+        public void containsLinkThatCanBeClicked() {
+            Find.link(By.linkText("testLink")).click();
+            specify(webDriver.getPageSource().contains("link clicked"));
+        }
     }
-    
+
     @Override
     public void onDestroy() {
         testAppStarter.stop();
