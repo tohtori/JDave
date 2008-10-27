@@ -43,7 +43,6 @@ public class FileStore implements IDoxStore {
         }
     }
     
-    @SuppressWarnings("unused")
     protected File newFile(File dir, String name) throws IOException {
         return new File(dir, name);
     }
