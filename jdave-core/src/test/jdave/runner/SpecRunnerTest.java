@@ -45,11 +45,12 @@ public class SpecRunnerTest {
             }
         }));
         Collections.sort(methods);
-        assertEquals(4, methods.size());
+        assertEquals(5, methods.size());
         assertEquals("anyBehavior", methods.get(0));
-        assertEquals("shouldBeEqualToTrue", methods.get(1));
-        assertEquals("shouldEqualToFalse", methods.get(2));
-        assertEquals("shouldNotBeEqualToTrue", methods.get(3));
+        assertEquals("inheritedBehavior", methods.get(1));
+        assertEquals("shouldBeEqualToTrue", methods.get(2));
+        assertEquals("shouldEqualToFalse", methods.get(3));
+        assertEquals("shouldNotBeEqualToTrue", methods.get(4));
     }
     
     @Test
@@ -58,7 +59,7 @@ public class SpecRunnerTest {
         BaseSpec.actualCalls.clear();
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         Collections.sort(BooleanSpec.actualCalls);
-        assertEquals(Arrays.asList("anyBehavior"), BaseSpec.actualCalls);
+        assertEquals(Arrays.asList("anyBehavior", "inheritedBehavior"), BaseSpec.actualCalls);
         assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
     
@@ -80,21 +81,21 @@ public class SpecRunnerTest {
     public void testShouldCallDestroyForEachMethod() throws Exception {
         BooleanSpec.destroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(3, BooleanSpec.destroyCalled);        
+        assertEquals(4, BooleanSpec.destroyCalled);        
     }
     
     @Test
     public void testShouldCallSpecCreateForEachMethod() throws Exception {
         BooleanSpec.specCreateCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(4, BooleanSpec.specCreateCalled);        
+        assertEquals(5, BooleanSpec.specCreateCalled);        
     }
     
     @Test
     public void testShouldCallSpecDestroyForEachMethod() throws Exception {
         BooleanSpec.specDestroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(4, BooleanSpec.specDestroyCalled);        
+        assertEquals(5, BooleanSpec.specDestroyCalled);        
     }
     
 
@@ -140,6 +141,12 @@ public class SpecRunnerTest {
                 actualCalls.add("anyBehavior");
             }
         }
+        
+        public abstract class BaseContext {
+            public void inheritedBehavior() {
+                actualCalls.add("inheritedBehavior");
+            }
+        }
     }
 
     public static class BooleanSpec extends BaseSpec {
@@ -148,7 +155,7 @@ public class SpecRunnerTest {
         public static int specCreateCalled;
         public static int specDestroyCalled;
         
-        public class FalseBoolean {
+        public class FalseBoolean extends BaseContext {
             public Boolean create() {
                 return false;
             }
