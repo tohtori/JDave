@@ -31,14 +31,14 @@ public class CheckBox {
     }
 
     public void select() {
-        if (!webElement.isSelected()) {
+        if (!isSelected()) {
             webElement.click();
             channel.waitForAjax();
         }
     }
 
     public void unselect() {
-        if (webElement.isSelected()) {
+        if (isSelected()) {
             webElement.click();
             channel.waitForAjax();
         }
