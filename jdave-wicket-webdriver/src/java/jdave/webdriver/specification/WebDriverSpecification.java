@@ -41,10 +41,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
         if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
             launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
         }
-        
-        if (WebDriverHolder.get() == null) {
-            WebDriverHolder.set(new FirefoxDriver());
-        }
+        WebDriverHolder.set(new FirefoxDriver());
         onCreate();
     }
 
