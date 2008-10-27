@@ -23,7 +23,6 @@ import jdave.Specification;
 import jdave.runner.Behavior;
 import jdave.runner.Context;
 import jdave.runner.ExecutingBehavior;
-import jdave.runner.IBehaviorResults;
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -40,7 +39,6 @@ import org.junit.runner.notification.StoppedByUserException;
 public class JDaveCallbackTest extends TestCase {
     private List<String> events = new ArrayList<String>();
     private JDaveCallback callback;
-    private boolean specVerifyCalled;
     
     @Override
     @Before
@@ -71,7 +69,6 @@ public class JDaveCallbackTest extends TestCase {
             }
         };
         callback = new JDaveCallback(notifier);
-        specVerifyCalled = false;
     }
 
     @Test
@@ -109,20 +106,5 @@ public class JDaveCallbackTest extends TestCase {
             }
         };
         return method;
-    }
-    
-    private class StubBehavior extends Behavior {
-        public StubBehavior() throws SecurityException, NoSuchMethodException {
-            super(JDaveCallbackTest.class, JDaveCallbackTest.class.getDeclaredMethod("setUp"));
-        }
-        
-        @Override
-        public String getName() {
-            return "";
-        }
-        
-        @Override
-        public void run(IBehaviorResults results) {
-        }
     }
 }
