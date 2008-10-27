@@ -20,6 +20,7 @@ import java.io.IOException;
 import jdave.Specification;
 import jdave.webdriver.WebDriverHolder;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxLauncher;
@@ -40,7 +41,10 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
         if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
             launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
         }
-        WebDriverHolder.set(new FirefoxDriver());
+        
+        if (WebDriverHolder.get() == null) {
+            WebDriverHolder.set(new FirefoxDriver());
+        }
         onCreate();
     }
 
@@ -49,7 +53,9 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     @Override
     public void destroy() throws Exception {
-        WebDriverHolder.get().close();
+        WebDriver webDriver = WebDriverHolder.get();
+        webDriver.manage().deleteAllCookies();
+        webDriver.close();
         WebDriverHolder.clear();
         onDestroy();
     }
