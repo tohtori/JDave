@@ -15,8 +15,11 @@
  */
 package jdave.webdriver.testapplication;
 
+import javax.swing.text.html.HTML.Tag;
+
 import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
+import jdave.webdriver.elements.Count;
 import jdave.webdriver.elements.Find;
 import jdave.webdriver.elements.TextBox;
 import jdave.webdriver.specification.WebDriverSpecification;
@@ -48,6 +51,10 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
 
         public void containsBodyText() {
             specify(webDriver.getPageSource().contains("foo"));
+        }
+        
+        public void containsTwoTableRows() {
+            specify(Count.of(Tag.TR).fromParent(By.id("testTable")), does.equal(2));
         }
 
         public void containsLinkThatCanBeClicked() {
