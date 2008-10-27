@@ -40,6 +40,7 @@ public class FieldTest {
     }
 
     class TestClass {
+        @SuppressWarnings("unused")
         private String field;
     }
 }
