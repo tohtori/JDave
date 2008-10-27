@@ -18,6 +18,7 @@ package jdave.webdriver.testapplication;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
@@ -25,6 +26,7 @@ import org.apache.wicket.model.Model;
 
 /**
  * @author Marko Sibakov
+ * @author Juha Karemo
  */
 public class WebDriverTestPage extends WebPage {
     public WebDriverTestPage() {
@@ -35,7 +37,7 @@ public class WebDriverTestPage extends WebPage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 label.setModelObject("link clicked");
-                target.addComponent(label);
+                target.addComponent(label); 
             }
         });
         TextField textField = new TextField("testTextField", new Model());
@@ -44,6 +46,13 @@ public class WebDriverTestPage extends WebPage {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 label.setModelObject(getModelObject());
+                target.addComponent(label);
+            }
+        });
+        add(new AjaxCheckBox("testCheckBox", new Model(false)) {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                label.setModelObject("checkbox clicked");
                 target.addComponent(label);
             }
         });

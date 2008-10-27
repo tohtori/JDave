@@ -19,6 +19,7 @@ import javax.swing.text.html.HTML.Tag;
 
 import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
+import jdave.webdriver.elements.CheckBox;
 import jdave.webdriver.elements.Count;
 import jdave.webdriver.elements.Find;
 import jdave.webdriver.elements.TextBox;
@@ -49,8 +50,18 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
             webDriver.navigate().to("http://localhost:8080");
         }
 
-        public void containsBodyText() {
+        private void containsBodyText() {
             specify(webDriver.getPageSource().contains("foo"));
+        }
+
+        public void containsCheckBox() {
+            CheckBox checkbox = Find.checkBox(By.className("testClass"));
+            specify(checkbox.isSelected(), does.equal(false));
+            checkbox.select();
+            specify(webDriver.getPageSource().contains("checkbox clicked"));
+            specify(checkbox.isSelected());
+            checkbox.unselect();
+            specify(checkbox.isSelected(), does.equal(false));
         }
         
         public void containsTwoTableRows() {

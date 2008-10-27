@@ -15,4 +15,8 @@ public class Find {
     public static TextBox textBox(By by) {
         return new TextBox(WebDriverHolder.get().findElement(by));
     }
+
+    public static CheckBox checkBox(By by) {
+        return new CheckBox(WebDriverHolder.get().findElement(by));
+    }
 }
