@@ -15,12 +15,16 @@
  */
 package jdave.webdriver.testapplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
@@ -56,5 +60,25 @@ public class WebDriverTestPage extends WebPage {
                 target.addComponent(label);
             }
         });
+        
+        add(TestDropDownChoice.getDropDownChoice());
+    }
+    
+    static class TestDropDownChoice {
+        public static DropDownChoice getDropDownChoice() {
+            List<String> choices = new ArrayList<String> ();
+            choices.add("and");
+            choices.add("not");
+            final String or = "or";
+            choices.add(or);
+            Model model = new Model() {
+                @Override
+                public Object getObject() {
+                    return or;
+                }
+            };
+            DropDownChoice dropDownChoice = new DropDownChoice("connective", model , choices);
+            return dropDownChoice;
+        }
     }
 }

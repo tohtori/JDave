@@ -21,6 +21,7 @@ import jdave.junit4.JDaveRunner;
 import jdave.webdriver.WebDriverHolder;
 import jdave.webdriver.elements.CheckBox;
 import jdave.webdriver.elements.Count;
+import jdave.webdriver.elements.DropDownChoice;
 import jdave.webdriver.elements.Find;
 import jdave.webdriver.elements.TextBox;
 import jdave.webdriver.specification.WebDriverSpecification;
@@ -50,7 +51,7 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
             webDriver.navigate().to("http://localhost:8080");
         }
 
-        private void containsBodyText() {
+        public void containsBodyText() {
             specify(webDriver.getPageSource().contains("foo"));
         }
 
@@ -79,6 +80,11 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
             specify(textBox.getText(), does.equal("some value"));
             textBox.clear();
             specify(textBox.getText(), does.equal(""));
+        }
+        
+        public void containsDropDownChoice() {
+            DropDownChoice dropDownChoice = Find.dropDownChoice(By.name("connective"));
+            dropDownChoice.select("and");
         }
     }
 

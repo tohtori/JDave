@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 
 /**
  * @author Juha Karemo
+ * @author Marko Sibakov
  */
 public class Find {
     public static Link link(By by) {
@@ -18,5 +19,9 @@ public class Find {
 
     public static CheckBox checkBox(By by) {
         return new CheckBox(WebDriverHolder.get().findElement(by));
+    }
+
+    public static DropDownChoice dropDownChoice(By by) {
+        return new DropDownChoice(WebDriverHolder.get().findElement(by));
     }
 }

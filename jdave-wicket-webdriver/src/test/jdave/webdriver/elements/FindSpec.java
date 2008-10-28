@@ -28,6 +28,7 @@ import org.openqa.selenium.WebElement;
 
 /**
  * @author Juha Karemo
+ * @author Marko Sibakov
  */
 @RunWith(JDaveRunner.class)
 public class FindSpec extends Specification<Void> {
@@ -54,6 +55,14 @@ public class FindSpec extends Specification<Void> {
             }});
             TextBox textBox = Find.textBox(by);
             specify(Fields.getValue(textBox, "webElement"), does.equal(foundElement));
+        }
+        
+        public void returnsDropDownChoice() {
+            checking(new Expectations() {{
+                one(webDriver).findElement(by); will(returnValue(foundElement));
+            }});
+            DropDownChoice dropDownChoice = Find.dropDownChoice(by);
+            specify(Fields.getValue(dropDownChoice, "webElement"), does.equal(foundElement));
         }
 
         public void destroy() {

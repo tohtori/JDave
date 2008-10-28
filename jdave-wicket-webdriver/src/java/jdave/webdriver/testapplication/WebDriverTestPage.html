@@ -5,11 +5,17 @@
     <a wicket:id="testLink">testLink</a>
     <input name="testTextField" type="text" wicket:id="testTextField">
     <table id="testTable">
-    <tr><td>foo</td></tr>
-    <tr><td>foo</td></tr>
+      <tr><td>foo</td></tr>
+      <tr><td>foo</td></tr>
     </table>
+
     <form>
       <input class="testClass" type="checkbox" wicket:id="testCheckBox">
   	</form>
+
+    <select wicket:id="connective" name="dropDown">
+  	  <option value="&">AND</option>
+      <option value="|">OR</option>
+    </select>
   </body>
 </html>
