@@ -19,7 +19,6 @@ import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
-import org.apache.commons.lang.StringUtils;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.NoSuchElementException;
@@ -30,9 +29,10 @@ import org.openqa.selenium.WebElement;
  */
 @RunWith(JDaveRunner.class)
 public class DropDownChoiceSpec extends Specification<DropDownChoice> {
-	public class DropDownChoiceThatContainsOptions {
-		private static final String OPTIONS = " foo \n lol \n";
-		private static final String OPTION_NAME = "foo";
+	public class AnyDropDownChoice {
+        private static final String OPTIONS = " foo \n lol \n";
+		private static final String OPTION_NAME_TO_BE_SELECTED = "foo";
+		private static final String INVALID_OPTION = "bar";
 		private WebElement webElement = mock(WebElement.class);
 
 		public DropDownChoice create() {
@@ -40,25 +40,32 @@ public class DropDownChoiceSpec extends Specification<DropDownChoice> {
 			return textBox;
 		}
 
-		public void optionCanBeSelected() {
+		public void validOptionCanBeSelected() {
 			checking(new Expectations() {{
-                one(webElement).sendKeys(OPTION_NAME);
+                one(webElement).sendKeys(OPTION_NAME_TO_BE_SELECTED);
                 one(webElement).getText(); will(returnValue(OPTIONS));
 		    }});
-			context.select(OPTION_NAME);
+			context.select(OPTION_NAME_TO_BE_SELECTED);
 		}
 
-		public void raisesExceptionIfOptionIsNotFound() {
+		public void raisesExceptionIfInvalidOptionIsSelected() {
 			checking(new Expectations() {{
-		            never(webElement).sendKeys(OPTION_NAME);
-		            one(webElement).getText(); will(returnValue(StringUtils.EMPTY));
+		            never(webElement).sendKeys(OPTION_NAME_TO_BE_SELECTED);
+		            one(webElement).getText(); will(returnValue(OPTIONS));
 		    }});
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.select("fooooo");
+                    context.select(INVALID_OPTION);
                 }
             }, does.raiseExactly(NoSuchElementException.class));
+		}
+		
+		public void returnsValue() {
+		    checking(new Expectations() {{
+		        one(webElement).getValue(); will(returnValue("1"));
+		    }});
+            specify(context.getValue(), must.equal("1"));
 		}
 	}
 }

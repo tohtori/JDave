@@ -18,7 +18,6 @@ package jdave.webdriver.elements;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
@@ -26,6 +25,7 @@ import org.openqa.selenium.WebElement;
  * @author Marko Sibakov
  */
 public class DropDownChoice {
+    private static final String NEW_LINE = "\n";
     private WebElement webElement;
 
     public DropDownChoice(WebElement webElement) {
@@ -33,17 +33,21 @@ public class DropDownChoice {
     }
 
     public void select(String option) {
-        String text = webElement.getText();
-        String[] split = text.split("\n");
-        for (int i = 0; i < split.length; i++) {
-        	split[i] = StringUtils.trim(split[i]);
-		}
-        List<String> options = Arrays.asList(split);
+        String validOptions = webElement.getText();
+        String[] optionsArray = validOptions.split(NEW_LINE);
+        trimElements(optionsArray);
+        List<String> options = Arrays.asList(optionsArray);
         if (options.contains(option)) {
             webElement.sendKeys(option);    
         } else {
             throw new NoSuchElementException("Option '" + option + "' not found from DropDownChoice");
         }
+    }
+
+    private void trimElements(String[] optionsArray) {
+        for (int i = 0; i < optionsArray.length; i++) {
+        	optionsArray[i] = optionsArray[i].trim();
+		}
     }
 
 	public String getValue() {
