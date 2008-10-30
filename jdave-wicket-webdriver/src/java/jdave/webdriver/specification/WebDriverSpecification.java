@@ -34,13 +34,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     @Override
     public void create() throws IOException {
-        FirefoxBinary binary = new FirefoxBinary();  
-        FirefoxLauncher launcher = new FirefoxLauncher(binary);
-        ProfilesIni profiles = new ProfilesIni();
-
-        if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
-            launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
-        }
+        initFirefoxProfile();
         WebDriverHolder.set(new FirefoxDriver());
         onCreate();
     }
@@ -58,5 +52,14 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     }
 
     public void onDestroy() {
+    }
+
+    private void initFirefoxProfile() throws IOException {
+        FirefoxBinary binary = new FirefoxBinary();
+        FirefoxLauncher launcher = new FirefoxLauncher(binary);
+        ProfilesIni profiles = new ProfilesIni();
+        if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
+            launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
+        }
     }
 }
