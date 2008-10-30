@@ -1,5 +1,7 @@
 package jdave.webdriver.elements;
 
+import java.util.List;
+
 import jdave.webdriver.WebDriverHolder;
 
 import org.openqa.selenium.By;
@@ -11,6 +13,10 @@ import org.openqa.selenium.By;
 public class Find {
     public static Link link(By by) {
         return new Link(WebDriverHolder.get().findElement(by));
+    }
+
+    public static List<Link> links(By by) {
+        return WebElements.asLinks(WebDriverHolder.get().findElements(by));
     }
 
     public static TextBox textBox(By by) {

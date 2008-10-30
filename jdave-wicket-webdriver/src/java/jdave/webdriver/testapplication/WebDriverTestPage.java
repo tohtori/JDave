@@ -44,6 +44,11 @@ public class WebDriverTestPage extends WebPage {
                 target.addComponent(label); 
             }
         });
+        add(new AjaxFallbackLink("testLink2") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+            }
+        });
         TextField textField = new TextField("testTextField", new Model());
         add(textField);
         textField.add(new OnChangeAjaxBehavior() {

@@ -15,6 +15,8 @@
  */
 package jdave.webdriver.testapplication;
 
+import java.util.List;
+
 import javax.swing.text.html.HTML.Tag;
 
 import jdave.junit4.JDaveRunner;
@@ -23,6 +25,7 @@ import jdave.webdriver.elements.CheckBox;
 import jdave.webdriver.elements.Count;
 import jdave.webdriver.elements.DropDownChoice;
 import jdave.webdriver.elements.Find;
+import jdave.webdriver.elements.Link;
 import jdave.webdriver.elements.TextBox;
 import jdave.webdriver.specification.WebDriverSpecification;
 
@@ -53,6 +56,13 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
 
         public void containsBodyText() {
             specify(webDriver.getPageSource().contains("foo"));
+        }
+        
+        public void containsTwoLinksOfSameClassName() {
+            List<Link> links = Find.links(By.className("test"));
+            specify(links.size(), does.equal(2));
+            links.get(0).click();
+            specify(webDriver.getPageSource().contains("link clicked"));
         }
 
         public void containsCheckBox() {
