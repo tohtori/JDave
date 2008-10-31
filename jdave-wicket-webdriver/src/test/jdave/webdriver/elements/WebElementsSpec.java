@@ -20,7 +20,7 @@ import java.util.List;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.Fields;
+import jdave.util.Fields;
 
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebElement;
@@ -40,8 +40,8 @@ public class WebElementsSpec extends Specification<List<WebElement>> {
 
         public void canBeConvertedToLinks() {
             List<Link> links = WebElements.asLinks(context);
-            specify(Fields.getValue(links.get(0), "webElement"), does.equal(webElement));
-            specify(Fields.getValue(links.get(1), "webElement"), does.equal(webElement2));
+            specify(Fields.get(links.get(0), "webElement"), does.equal(webElement));
+            specify(Fields.get(links.get(1), "webElement"), does.equal(webElement2));
         }
     }
 }
