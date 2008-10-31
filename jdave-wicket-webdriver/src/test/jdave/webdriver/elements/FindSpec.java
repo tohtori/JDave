@@ -17,7 +17,7 @@ package jdave.webdriver.elements;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.webdriver.Fields;
+import jdave.util.Fields;
 import jdave.webdriver.WebDriverHolder;
 
 import org.jmock.Expectations;
@@ -46,7 +46,7 @@ public class FindSpec extends Specification<Void> {
                 one(webDriver).findElement(by); will(returnValue(foundElement));
             }});
             Link link = Find.link(by);
-            specify(Fields.getValue(link, "webElement"), does.equal(foundElement));
+            specify(Fields.get(link, "webElement"), does.equal(foundElement));
         }
 
         public void returnsTextBox() {
@@ -54,7 +54,7 @@ public class FindSpec extends Specification<Void> {
                 one(webDriver).findElement(by); will(returnValue(foundElement));
             }});
             TextBox textBox = Find.textBox(by);
-            specify(Fields.getValue(textBox, "webElement"), does.equal(foundElement));
+            specify(Fields.get(textBox, "webElement"), does.equal(foundElement));
         }
         
         public void returnsDropDownChoice() {
@@ -62,7 +62,7 @@ public class FindSpec extends Specification<Void> {
                 one(webDriver).findElement(by); will(returnValue(foundElement));
             }});
             DropDownChoice dropDownChoice = Find.dropDownChoice(by);
-            specify(Fields.getValue(dropDownChoice, "webElement"), does.equal(foundElement));
+            specify(Fields.get(dropDownChoice, "webElement"), does.equal(foundElement));
         }
 
         public void destroy() {

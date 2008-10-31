@@ -15,6 +15,9 @@
  */
 package jdave.util;
 
+import java.lang.reflect.Field;
+
+
 /**
  * @author Pekka Enberg
  */
@@ -22,6 +25,16 @@ public class Fields {
     public static void set(Object object, String fieldName, Object value) {
         try {
             object.getClass().getField(fieldName).set(object, value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static Object get(Object object, String fieldName) {
+        try {
+            Field field = object.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.get(object);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
