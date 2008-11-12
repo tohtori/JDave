@@ -33,7 +33,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     private static final String FIREFOX_PROFILE_NAME = "WebDriver";
 
     @Override
-    public void create() throws IOException {
+    public final void create() throws IOException {
         initFirefoxProfile();
         WebDriverHolder.set(new FirefoxDriver());
         onCreate();
@@ -43,7 +43,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     }
 
     @Override
-    public void destroy() throws Exception {
+    public final void destroy() throws Exception {
         WebDriver webDriver = WebDriverHolder.get();
         webDriver.manage().deleteAllCookies();
         webDriver.close();
