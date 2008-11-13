@@ -97,6 +97,22 @@ public class WebDrivertTestApplicationSpecification extends WebDriverSpecificati
             dropDownChoice.select("and");
         }
     }
+    
+    public class TestPageWithChildPage {
+        private WebDriver webDriver = WebDriverHolder.get();
+
+        public void create() {
+            webDriver.navigate().to("http://localhost:8080");
+            Link link = Find.link(By.name("openChildPageLink"));
+            link.click();
+            WebDriverHolder.set(webDriver.switchTo().window("childPage"));
+        }
+
+        public void containsCloseLink() {
+            Link closeLink = Find.link(By.name("close-link"));
+            specify(closeLink, isNotNull());
+        }
+    }
 
     @Override
     public void onDestroy() {

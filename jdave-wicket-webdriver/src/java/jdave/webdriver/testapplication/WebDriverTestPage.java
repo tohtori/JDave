@@ -26,6 +26,8 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.model.Model;
 
 /**
@@ -67,6 +69,15 @@ public class WebDriverTestPage extends WebPage {
         });
         
         add(TestDropDownChoice.getDropDownChoice());
+        Link openLink = new Link("openChildPageLink") {
+            @Override
+            public void onClick() {
+                setResponsePage(new ChildPage());
+            }
+        };
+        final PopupSettings popupSettings = new PopupSettings(PopupSettings.SCROLLBARS).setWidth(1045).setHeight(900).setWindowName("childPage");
+        openLink.setPopupSettings(popupSettings);
+        add(openLink);
     }
     
     static class TestDropDownChoice {

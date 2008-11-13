@@ -46,7 +46,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     public final void destroy() throws Exception {
         WebDriver webDriver = WebDriverHolder.get();
         webDriver.manage().deleteAllCookies();
-        webDriver.close();
+        webDriver.quit();
         WebDriverHolder.clear();
         onDestroy();
     }
