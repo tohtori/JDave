@@ -34,9 +34,13 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     @Override
     public final void create() throws IOException {
+        onBeforeCreate();
         initFirefoxProfile();
         WebDriverHolder.set(new FirefoxDriver());
         onCreate();
+    }
+
+    private void onBeforeCreate() {
     }
 
     public void onCreate() {
@@ -44,6 +48,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     @Override
     public final void destroy() throws Exception {
+        onBeforeDestroy();
         WebDriver webDriver = WebDriverHolder.get();
         webDriver.manage().deleteAllCookies();
         webDriver.quit();
@@ -52,6 +57,9 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     }
 
     public void onDestroy() {
+    }
+    
+    public void onBeforeDestroy() {
     }
 
     private void initFirefoxProfile() throws IOException {
