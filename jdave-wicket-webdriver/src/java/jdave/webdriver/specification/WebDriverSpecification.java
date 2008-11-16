@@ -40,7 +40,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
         onCreate();
     }
 
-    private void onBeforeCreate() {
+    public void onBeforeCreate() {
     }
 
     public void onCreate() {
@@ -48,12 +48,17 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     @Override
     public final void destroy() throws Exception {
-        onBeforeDestroy();
-        WebDriver webDriver = WebDriverHolder.get();
-        webDriver.manage().deleteAllCookies();
-        webDriver.quit();
-        WebDriverHolder.clear();
-        onDestroy();
+        try {
+            onBeforeDestroy();
+            WebDriver webDriver = WebDriverHolder.get();
+            webDriver.manage().deleteAllCookies();
+            webDriver.quit();
+            WebDriverHolder.clear();
+        } catch (Exception e) {
+            throw new Exception(e);
+        } finally {
+            onDestroy();
+        }
     }
 
     public void onDestroy() {
