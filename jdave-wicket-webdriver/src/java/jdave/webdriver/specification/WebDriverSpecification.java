@@ -54,8 +54,6 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
             webDriver.manage().deleteAllCookies();
             webDriver.quit();
             WebDriverHolder.clear();
-        } catch (Exception e) {
-            throw new Exception(e);
         } finally {
             onDestroy();
         }
