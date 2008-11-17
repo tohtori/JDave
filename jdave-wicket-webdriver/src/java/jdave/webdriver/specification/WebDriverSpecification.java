@@ -50,10 +50,12 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     public final void destroy() throws Exception {
         try {
             onBeforeDestroy();
-            WebDriver webDriver = WebDriverHolder.get();
-            webDriver.manage().deleteAllCookies();
-            webDriver.quit();
-            WebDriverHolder.clear();
+            if (closeBrowserAfterTest()) {
+                WebDriver webDriver = WebDriverHolder.get();
+                webDriver.manage().deleteAllCookies();
+                webDriver.quit();
+                WebDriverHolder.clear();
+            }
         } finally {
             onDestroy();
         }
@@ -72,5 +74,9 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
         if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
             launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
         }
+    }
+    
+    protected boolean closeBrowserAfterTest() {
+        return true;
     }
 }
