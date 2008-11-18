@@ -38,7 +38,7 @@ import org.openqa.selenium.WebDriver;
  * @author Juha Karemo
  */
 @RunWith(JDaveRunner.class)
-public class WebDrivertTestApplicationSpecification extends WebDriverSpecification<Void> {
+public class WebDriverTestApplicationSpecification extends WebDriverSpecification<Void> {
     private TestAppStarter testAppStarter;
 
     @Override
