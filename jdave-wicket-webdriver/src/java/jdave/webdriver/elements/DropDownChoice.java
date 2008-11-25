@@ -15,7 +15,9 @@
  */
 package jdave.webdriver.elements;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -30,23 +32,25 @@ public class DropDownChoice {
         this.webElement = webElement;
     }
 
-    public void select(String selected) {
-        List<WebElement> options = webElement.getChildrenOfType("option");
-        boolean found = false;        
-        for (WebElement option : options) {
-            String value = option.getText();
-            if (selected.equals(value)) {
-                option.setSelected();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            throw new NoSuchElementException("Option '" + selected + "' not found from DropDownChoice");
+    public void select(String selection) {
+        Map<String, WebElement> optionsMap = optionsMap(webElement.getChildrenOfType("option"));
+        WebElement selectedWebElement = optionsMap.get(selection);
+        if (selectedWebElement != null) {
+            selectedWebElement.setSelected();
+        } else {
+            throw new NoSuchElementException("Option '" + selection + "' not found from DropDownChoice");
         }
     }
-    
-	public String getValue() {
+
+    private Map<String, WebElement> optionsMap(List<WebElement> options) {
+        LinkedHashMap<String, WebElement> optionsMap = new LinkedHashMap<String, WebElement>();
+        for (WebElement webElement : options) {
+            optionsMap.put(webElement.getText(), webElement);
+        }
+        return optionsMap;
+    }
+
+    public String getValue() {
         return webElement.getValue();
     }
 
