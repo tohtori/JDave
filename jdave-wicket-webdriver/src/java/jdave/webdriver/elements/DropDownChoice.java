@@ -15,7 +15,6 @@
  */
 package jdave.webdriver.elements;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.NoSuchElementException;
@@ -25,32 +24,33 @@ import org.openqa.selenium.WebElement;
  * @author Marko Sibakov
  */
 public class DropDownChoice {
-    private static final String NEW_LINE = "\n";
     private WebElement webElement;
 
     public DropDownChoice(WebElement webElement) {
         this.webElement = webElement;
     }
 
-    public void select(String option) {
-        String validOptions = webElement.getText();
-        String[] optionsArray = validOptions.split(NEW_LINE);
-        trimElements(optionsArray);
-        List<String> options = Arrays.asList(optionsArray);
-        if (options.contains(option)) {
-            webElement.sendKeys(option);    
-        } else {
-            throw new NoSuchElementException("Option '" + option + "' not found from DropDownChoice");
+    public void select(String selected) {
+        List<WebElement> options = webElement.getChildrenOfType("option");
+        boolean found = false;        
+        for (WebElement option : options) {
+            String value = option.getText();
+            if (selected.equals(value)) {
+                option.setSelected();
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            throw new NoSuchElementException("Option '" + selected + "' not found from DropDownChoice");
         }
     }
-
-    private void trimElements(String[] optionsArray) {
-        for (int i = 0; i < optionsArray.length; i++) {
-        	optionsArray[i] = optionsArray[i].trim();
-		}
-    }
-
+    
 	public String getValue() {
         return webElement.getValue();
+    }
+
+    public String getText() {
+        return webElement.getText();
     }
 }

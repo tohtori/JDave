@@ -15,6 +15,8 @@
  */
 package jdave.webdriver.elements;
 
+import java.util.Arrays;
+
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
@@ -30,28 +32,32 @@ import org.openqa.selenium.WebElement;
 @RunWith(JDaveRunner.class)
 public class DropDownChoiceSpec extends Specification<DropDownChoice> {
 	public class AnyDropDownChoice {
-        private static final String OPTIONS = " foo \n lol \n";
-		private static final String OPTION_NAME_TO_BE_SELECTED = "foo";
 		private static final String INVALID_OPTION = "bar";
 		private WebElement webElement = mock(WebElement.class);
+        private WebElement option1 = mock(WebElement.class, "option1");
+        private WebElement option2 = mock(WebElement.class, "option2");
 
 		public DropDownChoice create() {
 			DropDownChoice textBox = new DropDownChoice(webElement);
 			return textBox;
 		}
 
-		public void validOptionCanBeSelected() {
-			checking(new Expectations() {{
-                one(webElement).sendKeys(OPTION_NAME_TO_BE_SELECTED);
-                one(webElement).getText(); will(returnValue(OPTIONS));
-		    }});
-			context.select(OPTION_NAME_TO_BE_SELECTED);
-		}
+        public void validOptionCanBeSelected() {
+            final String selection = "lo";
+            checking(new Expectations() {{
+                one(webElement).getChildrenOfType("option"); will(returnValue(Arrays.asList(option1, option2)));
+                one(option1).getText(); will(returnValue("foo"));
+                one(option2).getText(); will(returnValue(selection));
+                one(option2).setSelected();
+            }});
+            context.select("lo");
+        }
 
 		public void raisesExceptionIfInvalidOptionIsSelected() {
 			checking(new Expectations() {{
-		            never(webElement).sendKeys(OPTION_NAME_TO_BE_SELECTED);
-		            one(webElement).getText(); will(returnValue(OPTIONS));
+                one(webElement).getChildrenOfType("option"); will(returnValue(Arrays.asList(option1, option2)));
+                one(option1).getText(); will(returnValue("foo"));
+                one(option2).getText(); will(returnValue("lo"));
 		    }});
 
             specify(new Block() {
@@ -67,5 +73,12 @@ public class DropDownChoiceSpec extends Specification<DropDownChoice> {
 		    }});
             specify(context.getValue(), must.equal("1"));
 		}
+
+        public void returnsText() {
+            checking(new Expectations() {{
+                one(webElement).getText(); will(returnValue("text"));
+            }});
+            specify(context.getText(), must.equal("text"));
+        }
 	}
 }
