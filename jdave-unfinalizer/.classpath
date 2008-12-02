@@ -15,6 +15,6 @@
   <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit4/2.4.0/jmock-junit4-2.4.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-legacy/2.4.0/jmock-legacy-2.4.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.4/junit-4.4.jar" sourcepath="M2_REPO/junit/junit/4.4/junit-4.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit-dep/4.4/junit-dep-4.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit-dep/4.5/junit-dep-4.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar" sourcepath="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0-sources.jar"/>
 </classpath>

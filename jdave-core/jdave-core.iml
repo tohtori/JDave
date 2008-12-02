@@ -86,7 +86,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit-dep/4.4/junit-dep-4.4.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit-dep/4.5/junit-dep-4.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -95,11 +95,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit/4.4/junit-4.4.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/junit/junit/4.4/junit-4.4-sources.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
