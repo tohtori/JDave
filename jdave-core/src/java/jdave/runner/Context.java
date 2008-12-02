@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import jdave.Specification;
 
 /**
@@ -63,7 +62,7 @@ public abstract class Context {
         try {
             Class<?> clazz = specType;
             do {
-                Collection<Class> types = typesOf(clazz);
+                Collection<Class<?>> types = typesOf(clazz);
                 for (Class<?> type : types) {
                     if (hasStrategy(type)) {
                         return type.getAnnotation(IntrospectionStrategy.class).value().newInstance();
@@ -77,8 +76,8 @@ public abstract class Context {
     }
     
     @SuppressWarnings("unchecked")
-    private Collection<Class> typesOf(Class clazz) {
-        List<Class> types = new ArrayList<Class>();
+    private Collection<Class<?>> typesOf(Class<?> clazz) {
+        List<Class<?>> types = new ArrayList<Class<?>>();
         types.add(clazz);
         types.addAll(Arrays.asList(clazz.getInterfaces()));
         return types;

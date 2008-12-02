@@ -31,7 +31,7 @@ public class SeleniumTestWebPage extends WebPage {
 
     @SuppressWarnings("unchecked")
     public SeleniumTestWebPage() {
-        SeleniumManager manager = (SeleniumManager) ((WebApplication) getApplication()).getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
+        SeleniumManager<?> manager = (SeleniumManager<?>) ((WebApplication) getApplication()).getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
         MarkupContainer container = manager.createContext();
         if (container instanceof Page) {
             setResponsePage((Page) container);

@@ -27,12 +27,11 @@ import org.apache.wicket.model.IModel;
 public class PanelWithLink extends Panel {
     int counter = 0;
 
-    public PanelWithLink(String id, IModel model) {
+    public PanelWithLink(String id, IModel<?> model) {
         super(id, model);
-        add(new Label("value", new AbstractReadOnlyModel() {
-
+        add(new Label("value", new AbstractReadOnlyModel<Integer>() {
             @Override
-            public Object getObject() {
+            public Integer getObject() {
                 return counter;
             }
 
