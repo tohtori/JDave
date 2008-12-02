@@ -15,10 +15,9 @@
  */
 package jdave.wicket;
 
-import static org.hamcrest.Matchers.sameInstance;
 import jdave.junit4.JDaveRunner;
-
 import org.apache.wicket.model.IModel;
+import static org.hamcrest.Matchers.sameInstance;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,7 +42,7 @@ public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel> {
     }
 
     @Override
-    protected EmptyPanel newComponent(String id, IModel model) {
+    protected <M> EmptyPanel newComponent(String id, IModel<M> model) {
         return panel = new EmptyPanel(id);
     }
 }

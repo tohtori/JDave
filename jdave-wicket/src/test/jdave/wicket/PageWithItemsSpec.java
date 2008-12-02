@@ -122,7 +122,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
     }
     
     @Override
-    protected PageWithItems newComponent(String id, IModel<?> model) {
+    protected <M> PageWithItems newComponent(String id, IModel<M> model) {
         return new PageWithItems((IModel<List<Integer>>) model);
     }
 }

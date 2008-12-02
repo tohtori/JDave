@@ -16,7 +16,6 @@
 package jdave.wicket;
 
 import jdave.junit4.JDaveRunner;
-
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -27,15 +26,15 @@ import org.junit.runner.RunWith;
  * @author Mikko Peltonen
  */
 @RunWith(JDaveRunner.class)
-public class MarkupProvidingPageSpec extends ComponentSpecification<Form> {
+public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>> {
     public class PageWithProvidedMarkup {
-        public Form create() {
-            return startComponent(new Model("field text"), pageMarkup(), "form");
+        public Form<Void> create() {
+            return startComponent(new Model<String>("field text"), pageMarkup(), "form");
         }
 
         public void containsComponentsSpecifiedInMarkup() {
-            Form form = selectFirst(Form.class, "form").from(context.getPage());
-            TextField textField = selectFirst(TextField.class, "textField").from(context);
+            Form<?> form = selectFirst(Form.class, "form").from(context.getPage());
+            TextField<?> textField = selectFirst(TextField.class, "textField").from(context);
             specify(form, isNotNull());
             specify(textField, isNotNull());
             specify(textField.getModelObject(), does.equal("field text"));
@@ -49,13 +48,13 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form> {
     }
     
     public class FormWithProvidedMarkup {
-        public Form create() {
-            return startForm(new Model("field text"), formMarkup());
+        public Form<Void> create() {
+            return startForm(new Model<String>("field text"), formMarkup());
         }
 
         public void containsComponentsSpecifiedInMarkup() {
-            Form form = selectFirst(Form.class).from(context.getPage());
-            TextField textField = selectFirst(TextField.class, "textField").from(context);
+            Form<?> form = selectFirst(Form.class).from(context.getPage());
+            TextField<?> textField = selectFirst(TextField.class, "textField").from(context);
             specify(form, isNotNull());
             specify(textField, isNotNull());
             specify(textField.getModelObject(), does.equal("field text"));
@@ -67,9 +66,9 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form> {
     }
 
     @Override
-    protected Form newComponent(String id, IModel model) {
-        Form form = new Form(id);
-        form.add(new TextField("textField", model));
+    protected <M> Form<Void> newComponent(String id, IModel<M> model) {
+        Form<Void> form = new Form<Void>(id);
+        form.add(new TextField<M>("textField", model));
         return form;
     }
 }

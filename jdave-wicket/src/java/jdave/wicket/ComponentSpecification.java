@@ -134,8 +134,9 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) 
      * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
      */
-    public <T> Form<T> startForm(final IModel<T> model, final CharSequence formMarkup) {
-        return (Form<T>) startComponent(model, "<html><body><form wicket:id='form'>" + formMarkup + "</form></body></html>", "form");
+    public <F,T> Form<F> startForm(final IModel<T> model, final CharSequence formMarkup) {
+        return (Form<F>) startComponent(model, new StringBuilder().append("<html><body><form wicket:id='form'>")
+                .append(formMarkup).append("</form></body></html>").toString(), "form");
     }
     
     /**
@@ -339,5 +340,5 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param model A model for the component which was passed in <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract T newComponent(String id, IModel<?> model);
+    protected abstract <M> T newComponent(String id, IModel<M> model);
 }

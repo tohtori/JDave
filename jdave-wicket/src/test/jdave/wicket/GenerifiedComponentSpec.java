@@ -16,7 +16,6 @@
 package jdave.wicket;
 
 import jdave.junit4.JDaveRunner;
-
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 import org.junit.runner.RunWith;
@@ -33,7 +32,7 @@ public class GenerifiedComponentSpec extends ComponentSpecification<GenerifiedCo
     }
     
     @Override
-    protected GenerifiedComponent<Void> newComponent(String id, IModel model) {
+    protected <M> GenerifiedComponent<Void> newComponent(String id, IModel<M> model) {
         return new GenerifiedComponent<Void>(id);
     }
 }
