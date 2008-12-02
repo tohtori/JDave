@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project relativePaths="false" version="4">
+<project relativePaths="true" version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
@@ -24,6 +24,9 @@
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
+      <entry name="!?*.html" />
+      <entry name="!?*.xml" />
+      <entry name="!?*.properties" />
     </wildcardResourcePatterns>
   </component>
   <component name="DependenciesAnalyzeManager">
@@ -46,6 +49,7 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -53,6 +57,24 @@
     <option name="PRINT_LINE_NUMBERS" value="false" />
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="OUTPUT_DIRECTORY" />
+  </component>
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="Scala">
+        <modules>
+          <module name="jdave-wicket-selenium" />
+          <module name="jdave-unfinalizer" />
+          <module name="jdave-core" />
+          <module name="jdave-report-plugin" />
+          <module name="jdave-jemmy" />
+          <module name="jdave-wicket-webdriver" />
+          <module name="jdave-wicket" />
+          <module name="jdave-parent" />
+          <module name="jdave-junit4" />
+          <module name="jdave-examples" />
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
   </component>
   <component name="IdProvider" IDEtalkID="79E1785036BD4608D98A1C420D4035B3" />
   <component name="ImportConfiguration">
@@ -87,8 +109,6 @@
         </inspection_tool>
         <inspection_tool class="JpaDataSourceORMInspection" level="ERROR" enabled="false" />
         <inspection_tool class="JpaModelErrorInspection" level="ERROR" enabled="false" />
-        <inspection_tool class="WicketIdHtmlInspection" level="WARNING" enabled="false" />
-        <inspection_tool class="WicketIdJavaInspection" level="WARNING" enabled="false" />
         <inspection_tool class="UNUSED_SYMBOL" level="WARNING" enabled="true">
           <option name="LOCAL_VARIABLE" value="true" />
           <option name="FIELD" value="true" />
@@ -106,9 +126,7 @@
             </value>
           </option>
         </inspection_tool>
-        <inspection_tool class="MissingOverrideAnnotation" level="ERROR" enabled="true">
-          <option name="useJdk6Rules" value="false" />
-        </inspection_tool>
+        <inspection_tool class="MissingOverrideAnnotation" level="ERROR" enabled="true" />
         <inspection_tool class="CloneableImplementsClone" level="WARNING" enabled="true">
           <option name="m_ignoreCloneableDueToInheritance" value="false" />
         </inspection_tool>
@@ -272,23 +290,57 @@
       </item>
     </group>
   </component>
-  <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectDetails">
+    <option name="projectName" value="jdave-parent" />
+  </component>
+  <component name="ProjectFileVersion" converted="true">
+    <converter id="javaee-modules" />
+    <converter id="ror-modules" />
+    <converter id="SelenaRunConfToDiana" />
+  </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-core/jdave-core.iml" filepath="/home/thrantal/work/jdave/jdave-core/jdave-core.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-examples/jdave-examples.iml" filepath="/home/thrantal/work/jdave/jdave-examples/jdave-examples.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-jemmy/jdave-jemmy.iml" filepath="/home/thrantal/work/jdave/jdave-jemmy/jdave-jemmy.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-junit4/jdave-junit4.iml" filepath="/home/thrantal/work/jdave/jdave-junit4/jdave-junit4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-core/jdave-core.iml" filepath="$PROJECT_DIR$/../jdave-core/jdave-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-examples/jdave-examples.iml" filepath="$PROJECT_DIR$/../jdave-examples/jdave-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-jemmy/jdave-jemmy.iml" filepath="$PROJECT_DIR$/../jdave-jemmy/jdave-jemmy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-junit4/jdave-junit4.iml" filepath="$PROJECT_DIR$/../jdave-junit4/jdave-junit4.iml" />
       <module fileurl="file://$PROJECT_DIR$/jdave-parent.iml" filepath="$PROJECT_DIR$/jdave-parent.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" filepath="/home/thrantal/work/jdave/jdave-report-plugin/jdave-report-plugin.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-scala/jdave-scala.iml" filepath="/home/thrantal/work/jdave/jdave-scala/jdave-scala.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-scala-suites/jdave-scala-suites.iml" filepath="/home/thrantal/work/jdave/jdave-scala-suites/jdave-scala-suites.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-unfinalizer/jdave-unfinalizer.iml" filepath="/home/thrantal/work/jdave/jdave-unfinalizer/jdave-unfinalizer.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-wicket/jdave-wicket.iml" filepath="/home/thrantal/work/jdave/jdave-wicket/jdave-wicket.iml" />
-      <module fileurl="file:///home/thrantal/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" filepath="/home/thrantal/work/jdave/jdave-wicket-selenium/jdave-wicket-selenium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-report-plugin/jdave-report-plugin.iml" filepath="$PROJECT_DIR$/../jdave-report-plugin/jdave-report-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-scala/jdave-scala.iml" filepath="$PROJECT_DIR$/../jdave-scala/jdave-scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-scala-suites/jdave-scala-suites.iml" filepath="$PROJECT_DIR$/../jdave-scala-suites/jdave-scala-suites.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-unfinalizer/jdave-unfinalizer.iml" filepath="$PROJECT_DIR$/../jdave-unfinalizer/jdave-unfinalizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-wicket/jdave-wicket.iml" filepath="$PROJECT_DIR$/../jdave-wicket/jdave-wicket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-wicket-selenium/jdave-wicket-selenium.iml" filepath="$PROJECT_DIR$/../jdave-wicket-selenium/jdave-wicket-selenium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jdave-wicket-webdriver/jdave-wicket-webdriver.iml" filepath="$PROJECT_DIR$/../jdave-wicket-webdriver/jdave-wicket-webdriver.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK" />
+  <component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="jdave.webdriver in jdave-wicket-webdriver" type="JUnit" factoryName="JUnit" enabled="false" merge="false" sample_coverage="true" runner="emma">
+      <module name="jdave-wicket-webdriver" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="jdave.webdriver" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
       <value>
@@ -303,10 +355,24 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myVersion" value="124" />
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <component name="libraryTable">
+    <library name="Wicket">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/wicket/wicket/1.4-SNAPSHOT/wicket-1.4-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/wicket/wicket/1.4-SNAPSHOT/wicket-1.4-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+  </component>
   <UsedPathMacros>
     <macro name="M2_REPO" />
   </UsedPathMacros>
