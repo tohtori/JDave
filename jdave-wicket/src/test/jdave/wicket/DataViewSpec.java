@@ -15,37 +15,34 @@
  */
 package jdave.wicket;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
-
 import java.util.Arrays;
-
 import jdave.junit4.JDaveRunner;
-
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.IModel;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 import org.junit.runner.RunWith;
 
 /**
  * @author Janne Hietam&auml;ki
  */
 @RunWith(JDaveRunner.class)
-public class DataViewSpec extends ComponentSpecification<DataView> {
-    DataView dataView;
+public class DataViewSpec extends ComponentSpecification<DataView<String>> {
+    private DataView<String> dataView;
 
     @Override
-    protected DataView newComponent(String id, IModel model) {
-        return dataView = new DataView(id, new ListDataProvider(Arrays.asList("one", "two", "three"))) {
+    protected DataView<String> newComponent(String id, IModel<?> model) {
+        return dataView = new DataView<String>(id, new ListDataProvider<String>(Arrays.asList("one", "two", "three"))) {
             @Override
-            protected void populateItem(Item item) {
+            protected void populateItem(Item<String> item) {
             }
         };
     }
 
     public class WhenContainerIsStarted {
-        public DataView create() {
+        public DataView<String> create() {
             return startComponent(null);
         }
 

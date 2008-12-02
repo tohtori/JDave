@@ -1,7 +1,11 @@
 <projectDescription>
   <name>jdave-wicket-webdriver</name>
   <comment/>
-  <projects/>
+  <projects>
+    <project>jdave-core</project>
+    <project>jdave-junit4</project>
+    <project>jdave-wicket</project>
+  </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>

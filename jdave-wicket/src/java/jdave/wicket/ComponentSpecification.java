@@ -19,10 +19,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import jdave.IContainment;
 import jdave.Specification;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
@@ -40,9 +38,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.BaseWicketTester;
+import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.TestPanelSource;
-import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 
 /**
  * A base class for Wicket's <code>Component</code> specifications.
@@ -77,7 +75,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * Start component for context.
      * @param model The model passed to component that is used for context.
      */
-    public T startComponent(final IModel model) {
+    public T startComponent(final IModel<?> model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> type;
         if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
@@ -107,7 +105,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public T startComponent(final IModel model, final CharSequence pageMarkup, final String rootComponentId) {
+    public T startComponent(final IModel<?> model, final CharSequence pageMarkup, final String rootComponentId) {
         return startComponent(model, new StringResourceStream(pageMarkup), rootComponentId);
     }
    
@@ -121,7 +119,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public T startComponent(final IModel model, final IResourceStream pageMarkup, final String rootComponentId) {
+    public T startComponent(final IModel<?> model, final IResourceStream pageMarkup, final String rootComponentId) {
         WebPage page = new TestPage(pageMarkup);
         specifiedComponent = newComponent(rootComponentId, model);
         page.add(specifiedComponent);
@@ -136,8 +134,8 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) 
      * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
      */
-    public Form startForm(final IModel model, final CharSequence formMarkup) {
-        return (Form) startComponent(model, "<html><body><form wicket:id='form'>" + formMarkup + "</form></body></html>", "form");
+    public <T> Form<T> startForm(final IModel<T> model, final CharSequence formMarkup) {
+        return (Form<T>) startComponent(model, "<html><body><form wicket:id='form'>" + formMarkup + "</form></body></html>", "form");
     }
     
     /**
@@ -147,13 +145,13 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * 
      * @param model The model passed to component that is used for context.
      */
-    public T startComponentWithoutMarkup(final IModel model) {
+    public T startComponentWithoutMarkup(final IModel<?> model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
         return specifiedComponent;
     }
 
-    protected void startBorder(final IModel model) {
+    protected void startBorder(final IModel<?> model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 Panel panel = new Container(panelId);
@@ -164,7 +162,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         });
     }
 
-    protected void startPanel(final IModel model) {
+    protected void startPanel(final IModel<?> model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 specifiedComponent = newComponent(panelId, model);
@@ -173,7 +171,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         });
     }
 
-    protected void startPage(final IModel model) {
+    protected void startPage(final IModel<?> model) {
         specifiedComponent = newComponent(null, model);
         TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
         wicket.startPage(testPageSource);
@@ -199,7 +197,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         }
         
         @SuppressWarnings("unchecked")
-        public IResourceStream getMarkupResourceStream(MarkupContainer container, Class containerClass) {
+        public IResourceStream getMarkupResourceStream(MarkupContainer container, Class<?> containerClass) {
             return markup;
         }
     }
@@ -225,23 +223,23 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     /**
      * Select an item from a <code>RepeatingView</code>.
      */
-    public Item itemAt(RepeatingView view, int index) {
+    public <T> Item<T> itemAt(RepeatingView view, int index) {
         Iterator<?> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
-        return (Item) items.next();
+        return (Item<T>) items.next();
     }
 
     /**
      * Select an item from a <code>ListView</code>.
      */
-    public ListItem itemAt(ListView view, int index) {
+    public <T> ListItem<T> itemAt(ListView<T> view, int index) {
         Iterator<?> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
-        return (ListItem) items.next();
+        return (ListItem<T>) items.next();
     }
 
     /**
@@ -252,7 +250,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         Iterator<? extends Component> unsafe = (Iterator<? extends Component>) components;
         List<Object> objects = new ArrayList<Object>();
         while (unsafe.hasNext()) {
-            objects.add(unsafe.next().getModelObject());
+            objects.add(unsafe.next().getDefaultModelObject());
         }
         return objects;
     }
@@ -341,5 +339,5 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param model A model for the component which was passed in <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract T newComponent(String id, IModel model);
+    protected abstract T newComponent(String id, IModel<?> model);
 }

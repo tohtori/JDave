@@ -35,13 +35,13 @@ import org.apache.wicket.model.Model;
  */
 public class WebDriverTestPage extends WebPage {
     public WebDriverTestPage() {
-        final Label label = new Label("testLabel", new Model("test label"));
+        final Label label = new Label("testLabel", new Model<String>("test label"));
         label.setOutputMarkupId(true);
         add(label);
         add(new AjaxFallbackLink("testLink") {
             @Override
             public void onClick(AjaxRequestTarget target) {
-                label.setModelObject("link clicked");
+                label.setDefaultModelObject("link clicked");
                 target.addComponent(label); 
             }
         });
@@ -50,25 +50,25 @@ public class WebDriverTestPage extends WebPage {
             public void onClick(AjaxRequestTarget target) {
             }
         });
-        TextField textField = new TextField("testTextField", new Model());
+        TextField<String> textField = new TextField<String>("testTextField", new Model<String>());
         add(textField);
         textField.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                label.setModelObject(getModelObject());
+                label.setDefaultModelObject(getDefaultModelObject());
                 target.addComponent(label);
             }
         });
-        add(new AjaxCheckBox("testCheckBox", new Model(false)) {
+        add(new AjaxCheckBox("testCheckBox", new Model<Boolean>(false)) {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                label.setModelObject("checkbox clicked");
+                label.setDefaultModelObject("checkbox clicked");
                 target.addComponent(label);
             }
         });
         
         add(TestDropDownChoice.getDropDownChoice());
-        Link openLink = new Link("openChildPageLink") {
+        Link<Void> openLink = new Link<Void>("openChildPageLink") {
             @Override
             public void onClick() {
                 setResponsePage(new ChildPage());
@@ -80,19 +80,19 @@ public class WebDriverTestPage extends WebPage {
     }
     
     static class TestDropDownChoice {
-        public static DropDownChoice getDropDownChoice() {
+        public static DropDownChoice<String> getDropDownChoice() {
             List<String> choices = new ArrayList<String> ();
             choices.add("and");
             choices.add("not");
             final String or = "or";
             choices.add(or);
-            Model model = new Model() {
+            Model<String> model = new Model<String>() {
                 @Override
-                public Object getObject() {
+                public String getObject() {
                     return or;
                 }
             };
-            return new DropDownChoice("connective", model , choices);
+            return new DropDownChoice<String>("connective", model , choices);
         }
     }
 }

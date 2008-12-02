@@ -15,6 +15,7 @@
  */
 package jdave.webdriver.testapplication;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -22,7 +23,7 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class WebDriverApplication extends WebApplication {
     @Override
-    public Class<?> getHomePage() {
+    public Class<? extends Page> getHomePage() {
         return WebDriverTestPage.class;
     }
 }

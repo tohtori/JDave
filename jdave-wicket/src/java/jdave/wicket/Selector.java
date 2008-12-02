@@ -17,7 +17,6 @@ package jdave.wicket;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.Component.IVisitor;
 import org.apache.wicket.MarkupContainer;
@@ -47,12 +46,12 @@ public class Selector {
         return selectAll(root, componentType, bothMatcher);
     }
 
-    private <T> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
+    private <T extends Component> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
         CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         return visitor.selectFrom(root, componentType, IVisitor.CONTINUE_TRAVERSAL);
     }
 
-    private <T> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
+    private <T extends Component> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
         CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
         List<T> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
         if (firstMatch.isEmpty()) {
@@ -63,13 +62,13 @@ public class Selector {
 
     @SuppressWarnings("unchecked")
     private <T extends Component> Matcher<T> combine(Matcher<?> modelMatcher, String wicketId) {
-        return Matchers.<T>allOf(new ComponentsModelMatchesTo(modelMatcher), new WicketIdEqualsTo<T>(wicketId));
+        return Matchers.allOf(new ComponentsModelMatchesTo<T>(modelMatcher), new WicketIdEqualsTo<T>(wicketId));
     }
 
     /**
      * Not thread safe.
      */
-    private class CollectingVisitor<T> implements IVisitor {
+    private class CollectingVisitor<T extends Component> implements IVisitor<T> {
         private final Matcher<T> componentMatcher;
         private List<T> matches = new ArrayList<T>();
         private Object actionOnMatch;

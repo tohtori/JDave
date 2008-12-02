@@ -15,6 +15,7 @@
  */
 package jdave.wicket.selenium;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
@@ -22,14 +23,13 @@ import org.apache.wicket.protocol.http.WebApplication;
  */
 public class SeleniumWebApplication extends WebApplication {
     @Override
-    public Class<?> getHomePage() {
+    public Class<? extends Page> getHomePage() {
         return SeleniumTestWebPage.class;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void init() {
-        SeleniumManager manager = (SeleniumManager) getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
+        SeleniumManager<?> manager = (SeleniumManager<?>) getServletContext().getAttribute(SeleniumManager.MANAGER_KEY);
         manager.init(this);
     }
 }

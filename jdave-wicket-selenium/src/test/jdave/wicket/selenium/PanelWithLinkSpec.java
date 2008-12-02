@@ -16,8 +16,6 @@
 package jdave.wicket.selenium;
 
 import jdave.junit4.JDaveRunner;
-import jdave.wicket.selenium.SeleniumSpecification;
-
 import org.apache.wicket.model.IModel;
 import org.junit.runner.RunWith;
 
@@ -35,12 +33,12 @@ public class PanelWithLinkSpec extends SeleniumSpecification<PanelWithLink> {
         public void linkCanBeClicked() {
             selenium.click("link");
             selenium.waitForPageToLoad("500");
-            specify(context.get("value").getModelObject(), does.equal(1));
+            specify(context.get("value").getDefaultModelObject(), does.equal(1));
         }
     }
 
     @Override
-    protected PanelWithLink newComponent(String id, IModel model) {
+    protected <M> PanelWithLink newComponent(String id, IModel<M> model) {
         return new PanelWithLink(id, model);
     }
 }

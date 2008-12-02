@@ -15,6 +15,8 @@
  */
 package jdave.wicket;
 
+import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.Model;
@@ -22,9 +24,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.runner.RunWith;
-
-import jdave.Specification;
-import jdave.junit4.JDaveRunner;
 
 /**
  * @author Joni Freeman
@@ -97,13 +96,13 @@ public class SelectorSpec extends Specification<Matcher<?>> {
     public void create() {
         new WicketTester();
         root = new WebMarkupContainer("root");
-        child1 = new WebMarkupContainer("child1").setModel(new Model("foo"));
-        child2 = new WebMarkupContainer("child2").setModel(new Model("bar"));
-        child3 = new WebMarkupContainer("child3").setModel(new Model("foo"));
+        child1 = new WebMarkupContainer("child1").setDefaultModel(new Model<String>("foo"));
+        child2 = new WebMarkupContainer("child2").setDefaultModel(new Model<String>("bar"));
+        child3 = new WebMarkupContainer("child3").setDefaultModel(new Model<String>("foo"));
 
-        WebMarkupContainer parentWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setModel(new Model("parent"));
-        childWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setModel(new Model("child"));
-        grandChildWithDuplicateId = new WebMarkupContainer("nonunique").setModel(new Model("child"));
+        WebMarkupContainer parentWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setDefaultModel(new Model<String>("parent"));
+        childWithDuplicateId = (WebMarkupContainer) new WebMarkupContainer("nonunique").setDefaultModel(new Model<String>("child"));
+        grandChildWithDuplicateId = new WebMarkupContainer("nonunique").setDefaultModel(new Model<String>("child"));
         root.add(child1);
         root.add(child2);
         root.add(parentWithDuplicateId);

@@ -15,16 +15,14 @@
  */
 package jdave.wicket.selenium;
 
+import com.thoughtworks.selenium.Selenium;
 import jdave.IContextObjectFactory;
 import jdave.Specification;
 import jdave.wicket.MultiSelection;
 import jdave.wicket.Selection;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.model.IModel;
-
-import com.thoughtworks.selenium.Selenium;
 
 /**
  * @author Janne Hietam&auml;ki
@@ -72,9 +70,9 @@ public abstract class SeleniumSpecification<T extends MarkupContainer> extends S
      *            <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract T newComponent(String id, IModel model);
+    protected abstract <M> T newComponent(String id, IModel<M> model);
 
-    public T startComponent(final IModel model) {
+    public T startComponent(final IModel<?> model) {
         return newComponent(SeleniumTestWebPage.COMPONENT_ID, model);
     }
 

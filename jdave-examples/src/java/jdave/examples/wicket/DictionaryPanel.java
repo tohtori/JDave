@@ -18,7 +18,6 @@ package jdave.examples.wicket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -43,7 +42,7 @@ public abstract class DictionaryPanel extends Panel {
         add(new FeedbackPanel("feedback"));
         add(new Form("form") {
             {
-                add(new TextField("query", new PropertyModel(DictionaryPanel.this, "query")));
+                add(new TextField<String>("query", new PropertyModel<String>(DictionaryPanel.this, "query")));
             }
             @Override
             protected void onSubmit() {
@@ -53,20 +52,20 @@ public abstract class DictionaryPanel extends Panel {
                 }
             }
         });
-        add(new RefreshingView("words") {
+        add(new RefreshingView<String>("words") {
             @Override
-            protected Iterator<?> getItemModels() {
-                return new ModelIteratorAdapter(hits.iterator()) {
+            protected Iterator<IModel<String>> getItemModels() {
+                return new ModelIteratorAdapter<String>(hits.iterator()) {
                     @Override
-                    protected IModel model(Object object) {
-                        return new Model((String) object);
+                    protected IModel<String> model(String object) {
+                        return new Model<String>(object);
                     }
                 };
             }
 
             @Override
-            protected void populateItem(Item item) {
-                item.add(new Label("word", item.getModelObjectAsString()));
+            protected void populateItem(Item<String> item) {
+                item.add(new Label("word", item.getDefaultModelObjectAsString()));
             }
         });
     }

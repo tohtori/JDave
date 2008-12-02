@@ -15,10 +15,11 @@
  */
 package jdave.wicket.selenium;
 
+import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 import jdave.DefaultContextObjectFactory;
 import jdave.DefaultLifecycleListener;
 import jdave.IContextObjectFactory;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -28,9 +29,6 @@ import org.mortbay.jetty.servlet.FilterHolder;
 import org.mortbay.jetty.servlet.WebApplicationContext;
 import org.mortbay.jetty.servlet.WebApplicationHandler;
 import org.openqa.selenium.server.SeleniumServer;
-
-import com.thoughtworks.selenium.DefaultSelenium;
-import com.thoughtworks.selenium.Selenium;
 
 /**
  * @author Janne Hietam&auml;ki
@@ -68,7 +66,7 @@ final class SeleniumManager<T extends MarkupContainer> extends DefaultLifecycleL
             WebApplicationHandler handler = new WebApplicationHandler();
 
             FilterHolder holder = handler.defineFilter("wicketFilter", WicketFilter.class.getName());
-            holder.setInitParameter(WicketFilter.APP_FACT_PARAM, SeleniumTestApplicationFactory.class.getName().toString());
+            holder.setInitParameter(WicketFilter.APP_FACT_PARAM, SeleniumTestApplicationFactory.class.getName());
             handler.addFilterPathMapping("/*", "wicketFilter", Dispatcher.__ALL);
 
             web.setAttribute(MANAGER_KEY, this);
@@ -95,6 +93,7 @@ final class SeleniumManager<T extends MarkupContainer> extends DefaultLifecycleL
         return specification.context;
     }
 
+    @Override
     public void afterContextInstantiation(Object contextInstance) {
         Application.set(application);
     }

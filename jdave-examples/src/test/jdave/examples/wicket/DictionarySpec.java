@@ -17,7 +17,6 @@ package jdave.examples.wicket;
 
 import java.util.Arrays;
 import java.util.Collections;
-
 import jdave.junit4.JDaveRunner;
 import jdave.wicket.ComponentSpecification;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -47,9 +46,9 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
         
         public void thePanelListsAllWords() {
             query("hello");
-            RefreshingView words = (RefreshingView) dictionary.get("words");
+            RefreshingView<String> words = (RefreshingView<String>) dictionary.get("words");
             specify(words, containsInOrder("hei", "moi"));
-            specify(selectFirst(Label.class, "word").from(dictionary).getModelObjectAsString(), is("hei"));
+            specify(selectFirst(Label.class, "word").from(dictionary).getDefaultModelObjectAsString(), is("hei"));
             specify(selectAll(Label.class, "word").from(dictionary).size(), does.equal(2));
         }
     }
@@ -76,7 +75,7 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
     }
 
     @Override
-    protected DictionaryPanel newComponent(String id, IModel model) {
+    protected DictionaryPanel newComponent(String id, IModel<?> model) {
         return new DictionaryPanel(id) {
             @Override
             protected IDictionaryService getService() {

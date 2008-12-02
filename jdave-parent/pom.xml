@@ -233,6 +233,13 @@
       <id>openqa-selenium-maven2</id>
       <url>http://maven.openqa.org/</url>
     </repository>
+    <repository>
+      <id>Wicket snapshots</id>
+      <url>http://www.wicketstuff.org/maven/repository/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>

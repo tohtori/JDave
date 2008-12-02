@@ -15,20 +15,18 @@
  */
 package jdave.wicket;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-
 import jdave.junit4.JDaveRunner;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import org.junit.runner.RunWith;
@@ -43,37 +41,37 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         private List<Integer> list = Arrays.asList(0, 1, 2);
         
         public PageWithItems create() {
-            return startComponent(new Model((Serializable) list));
+            return startComponent(new ListModel<Integer>(list));
         }
         
         public void theItemsCanBeReferencedEasilyInListView() {
-            ListItem item = itemAt((ListView) context.get("listView"), 1);
-            specify(item.get("item").getModelObject(), does.equal("1"));
+            ListItem<Integer> item = itemAt((ListView<Integer>) context.get("listView"), 1);
+            specify(item.get("item").getDefaultModelObject(), does.equal("1"));
         }
         
         public void theItemsCanBeReferencedEasilyInRefreshingView() {
-            Item item = itemAt((RefreshingView) context.get("refreshingView"), 1);
-            specify(item.get("item").getModelObject(), does.equal("1"));
+            Item<Integer> item = itemAt((RefreshingView<Integer>) context.get("refreshingView"), 1);
+            specify(item.get("item").getDefaultModelObject(), does.equal("1"));
         }
         
         public void theModelObjectsCanBeCollectedFromComponents() {
-            ListView listView = (ListView) context.get("listView");
+            ListView<Integer> listView = (ListView<Integer>) context.get("listView");
             specify(modelObjects(listView.iterator()), containsInOrder(0, 1, 2));
         }
         
         public void theModelObjectsCanBeUsedInContainmentExpectations() {
-            ListView listView = (ListView) context.get("listView");
+            ListView<Integer> listView = (ListView<Integer>) context.get("listView");
             specify(listView, containsInOrder(0, 1, 2));
         }
         
         public void theModelObjectsCanBeUsedInNegativeContainmentExpectations() {
-            ListView listView = (ListView) context.get("listView");
+            ListView<Integer> listView = (ListView<Integer>) context.get("listView");
             specify(listView, does.not().containAll(0, 1, 2, 4));
         }
         
         public void theFirstItemCanBePickedUsingHamcrestMatcher() {
-            Item item = selectFirst(Item.class).which(is(0)).from(context);
-            specify(item.get("item").getModelObject(), does.equal("0"));
+            Item<Integer> item = selectFirst(Item.class).which(is(0)).from(context);
+            specify(item.get("item").getDefaultModelObject(), does.equal("0"));
         }
         
         public void allItemsCanBePickedUsingHamcrestMatcher() {
@@ -84,7 +82,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
 
         public void theFirstItemCanBePickedUsingItsId() {
             Label item = selectFirst(Label.class, "item").from(context);
-            specify(item.getModelObjectAsString(), is("0"));
+            specify(item.getDefaultModelObjectAsString(), is("0"));
         }
 
         public void allItemsWithSameIdCanBePickedUsingTheirId() {
@@ -95,7 +93,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
 
         public void selectingFirstWithIdAlsoHonorsHamcrestMatchers() {
             Label two = selectFirst(Label.class, "item").which(is("2")).from(context);
-            specify(two.getModelObjectAsString(), does.equal("2"));
+            specify(two.getDefaultModelObjectAsString(), does.equal("2"));
         }
 
         public void selectingAllWithIdAlsoHonorsHamcrestMatchers() {
@@ -106,7 +104,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         private List<String> collectModelObjects(List<Label> items) {
             List<String> modelObjects = new ArrayList<String>();
             for (Label item : items) {
-                modelObjects.add(item.getModelObjectAsString());
+                modelObjects.add(item.getDefaultModelObjectAsString());
             }
             return modelObjects;
         }
@@ -114,7 +112,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
 
     public class ContainerWithinAContainerWithCompoundPropertyModel {
         public PageWithItems create() {
-            return startComponent(new Model(new ArrayList<Integer>()));
+            return startComponent(new ListModel<Integer>(new ArrayList<Integer>()));
         }
 
         public void canBeSelectedById() {
@@ -124,7 +122,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
     }
     
     @Override
-    protected PageWithItems newComponent(String id, IModel model) {
-        return new PageWithItems(model);
+    protected PageWithItems newComponent(String id, IModel<?> model) {
+        return new PageWithItems((IModel<List<Integer>>) model);
     }
 }

@@ -2,8 +2,8 @@ package jdave.wicket;
 
 import org.apache.wicket.Component;
 import org.hamcrest.BaseMatcher;
-import org.hamcrest.Matcher;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 
 /**
  * @author Timo Rantalaiho
@@ -25,7 +25,7 @@ public class ComponentsModelMatchesTo<T extends Component> extends BaseMatcher<T
         if (matcher instanceof AnyModelMatcher) {
             return true;
         }
-        return (matcher.matches(component.getModelObject()));
+        return (matcher.matches(component.getDefaultModelObject()));
     }
 
     public void describeTo(Description description) {
