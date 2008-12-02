@@ -16,11 +16,9 @@
 package jdave.webdriver.elements;
 
 import java.util.Arrays;
-
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.NoSuchElementException;
@@ -38,8 +36,7 @@ public class DropDownChoiceSpec extends Specification<DropDownChoice> {
         private WebElement option2 = mock(WebElement.class, "option2");
 
 		public DropDownChoice create() {
-			DropDownChoice textBox = new DropDownChoice(webElement);
-			return textBox;
+            return new DropDownChoice(webElement);
 		}
 
         public void validOptionCanBeSelected() {

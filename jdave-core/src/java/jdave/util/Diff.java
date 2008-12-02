@@ -41,10 +41,10 @@ public class Diff {
         String ellipsisEndExpected = (length(expected) > diffIndex + CHOP_AT ? "..." : "");
         StringBuilder message = new StringBuilder();
         message.append("  Actual: ");
-        message.append(ellipsisStart + substring(actual, diffStart, diffEndActual) + ellipsisEndActual);
+        message.append(ellipsisStart).append(substring(actual, diffStart, diffEndActual)).append(ellipsisEndActual);
         message.append(System.getProperty("line.separator"));
         message.append("Expected: ");
-        message.append(ellipsisStart + substring(expected, diffStart, diffEndExpected) + ellipsisEndExpected);
+        message.append(ellipsisStart).append(substring(expected, diffStart, diffEndExpected)).append(ellipsisEndExpected);
         return message.toString();
     }
     

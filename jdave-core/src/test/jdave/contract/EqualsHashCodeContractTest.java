@@ -15,11 +15,10 @@
  */
 package jdave.contract;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
-
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -264,10 +263,7 @@ public class EqualsHashCodeContractTest {
     private static class ClassWhichEqualsWithNull {
         @Override
         public boolean equals(Object obj) {
-            if (obj == null) {
-                return true;
-            }
-            return false;
+            return obj == null;
         }
     }
  

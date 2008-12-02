@@ -22,7 +22,7 @@ public class XmlFormat implements IDoxFormat {
     private StringBuilder dox = new StringBuilder();
     
     public void newSpec(String specName, String fqn) {
-        dox.append("<specification name=\"" + specName + "\" fqn=\"" + fqn + "\">\n");
+        dox.append("<specification name=\"").append(specName).append("\" fqn=\"").append(fqn).append("\">\n");
         dox.append("  <contexts>\n");
     }
     
@@ -32,7 +32,7 @@ public class XmlFormat implements IDoxFormat {
     }
     
     public void newContext(String contextName) {
-        dox.append("    <context name=\"" + Sentence.fromCamelCase(contextName) + "\">\n");
+        dox.append("    <context name=\"").append(Sentence.fromCamelCase(contextName)).append("\">\n");
         dox.append("      <behaviors>\n");
     }
     
@@ -42,7 +42,7 @@ public class XmlFormat implements IDoxFormat {
     }
 
     public void newBehavior(String behaviorName) {
-        dox.append("        <behavior name=\"" + Sentence.fromCamelCase(behaviorName) + "\" />\n");
+        dox.append("        <behavior name=\"").append(Sentence.fromCamelCase(behaviorName)).append("\" />\n");
     }
     
     public String suffix() {

@@ -19,7 +19,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.jmock.api.Imposteriser;
@@ -41,13 +40,13 @@ public class Each<T> {
     
     private static final Map<Class<?>, Object> BOXED_VALUES = new HashMap<Class<?>, Object>() {{
         put(boolean.class, Boolean.TRUE);
-        put(byte.class, new Byte((byte) 0));
+        put(byte.class, (byte) 0);
         put(char.class, 'a');
-        put(short.class, new Short((short) 0));
-        put(int.class, new Integer(0));
-        put(long.class, new Long(0));
-        put(float.class, new Float(0));
-        put(double.class, new Double(0));
+        put(short.class, (short) 0);
+        put(int.class, 0);
+        put(long.class, (long) 0);
+        put(float.class, (float) 0);
+        put(double.class, (double) 0);
     }};
 
     public Each() {

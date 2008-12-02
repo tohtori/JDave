@@ -18,12 +18,11 @@ package jdave;
 /**
  * A factory which will be used to create new context objects
  *
- *  @see Specification#setContextObjectFactory(IContextFactory)
+ *  @see Specification#setContextObjectFactory(IContextObjectFactory)
  *
  * @author Janne Hietam&auml;ki
  */
 public interface IContextObjectFactory<T> {
-
     public T newContextObject(Object context) throws Exception;
 
 }

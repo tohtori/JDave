@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import jdave.Group;
 import jdave.Specification;
 import jdave.runner.AnnotatedSpecScanner;
@@ -33,7 +32,6 @@ import net.sf.cglib.asm.ClassWriter;
 import net.sf.cglib.asm.attrs.Annotation;
 import net.sf.cglib.asm.attrs.Attributes;
 import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
-
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -95,8 +93,8 @@ public class JDaveGroupRunnerTest {
                 return new AnnotatedSpecScanner("") {
                     @Override
                     public void forEach(IAnnotatedSpecHandler annotatedSpecHandler) {
-                        annotatedSpecHandler.handle(Spec1.class.getName(), new String[] { "any" });
-                        annotatedSpecHandler.handle(Spec2.class.getName(), new String[] { "any" });
+                        annotatedSpecHandler.handle(Spec1.class.getName(), "any");
+                        annotatedSpecHandler.handle(Spec2.class.getName(), "any");
                     }
                     
                     @Override

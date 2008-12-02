@@ -44,6 +44,6 @@ public class DelegatingClassFileTransformer implements ClassFileTransformer {
         if (loader == null) {
             return classfileBuffer;
         }
-        return this.delegator.transform(classfileBuffer);
+        return delegator.transform(classfileBuffer);
     }
 }

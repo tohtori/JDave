@@ -18,7 +18,6 @@ package jdave.contract;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-
 import jdave.ExpectationFailedException;
 import jdave.IContract;
 
@@ -27,7 +26,7 @@ import jdave.IContract;
  */
 public class SerializableContract implements IContract {
     public void isSatisfied(Object obj) throws ExpectationFailedException {
-        ObjectOutputStream stream = null;
+        ObjectOutputStream stream;
         try {
             stream = new ObjectOutputStream(new OutputStream() {
                 @Override

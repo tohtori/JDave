@@ -15,15 +15,12 @@
  */
 package jdave;
 
-import static org.junit.Assert.assertEquals;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import jdave.runner.SpecRunner;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -52,7 +49,7 @@ public class PassingSpecificationTest {
             private Integer integer;
 
             public Integer create() {
-                integer = new Integer(0);
+                integer = 0;
                 return integer;
             }
             

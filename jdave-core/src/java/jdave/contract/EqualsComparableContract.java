@@ -16,7 +16,6 @@
 package jdave.contract;
 
 import java.util.Comparator;
-
 import jdave.ExpectationFailedException;
 import jdave.IContract;
 
@@ -60,7 +59,7 @@ public abstract class EqualsComparableContract<T> implements IContract {
         if (comparator == null) {
             comparator = new ComparableComparator();
             try {
-                ((Comparable) obj).compareTo(null);
+                ((Comparable<?>) obj).compareTo(null);
                 throw new ExpectationFailedException(object.getClass().getName() + 
                     ".compareTo(null) should throw NullpointerException");
             } catch (NullPointerException e) {

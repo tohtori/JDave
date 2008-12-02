@@ -17,7 +17,6 @@ package jdave.webdriver.testapplication;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -93,8 +92,7 @@ public class WebDriverTestPage extends WebPage {
                     return or;
                 }
             };
-            DropDownChoice dropDownChoice = new DropDownChoice("connective", model , choices);
-            return dropDownChoice;
+            return new DropDownChoice("connective", model , choices);
         }
     }
 }

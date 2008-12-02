@@ -17,7 +17,6 @@ package jdave;
 
 import java.util.Collection;
 import java.util.Iterator;
-
 import jdave.containment.NotContainment;
 import jdave.contract.NotContract;
 import jdave.equality.NotEqualsEqualityCheck;
@@ -29,7 +28,7 @@ public class Not<A> extends ContainmentSupport {
     public A be;
 
     public Not(Specification<A> specification) {
-        this.be = specification.be;
+        be = specification.be;
     }
 
     @Override

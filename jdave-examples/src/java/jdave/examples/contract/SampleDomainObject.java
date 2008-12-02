@@ -49,7 +49,7 @@ public class SampleDomainObject implements Serializable, Cloneable, Comparable<S
     
     public int compareTo(SampleDomainObject o) {
         if (name.equals(o.name)) {
-            if (this.equals(o)) {
+            if (equals(o)) {
                 return 0;
             }
             return id - o.id;

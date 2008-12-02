@@ -15,12 +15,9 @@
  */
 package jdave;
 
-import static org.junit.Assert.assertEquals;
-
 import java.lang.reflect.Method;
-
 import jdave.runner.SpecRunner;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -47,7 +44,7 @@ public class FailingSpecificationTest {
     public static class FailingIntegerSpecification extends Specification<Integer> {
         public class Zero {
             public Integer create() {
-                return new Integer(0);
+                return 0;
             }
             
             public void isNegative() {

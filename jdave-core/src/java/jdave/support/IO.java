@@ -32,7 +32,7 @@ public class IO {
         BufferedInputStream in = new BufferedInputStream(stream);
         byte[] buf = new byte[4096];
         ByteArrayOutputStream contents = new ByteArrayOutputStream();
-        int len = 0;
+        int len;
         while ((len = in.read(buf)) != -1) {
             contents.write(buf, 0, len);
         }

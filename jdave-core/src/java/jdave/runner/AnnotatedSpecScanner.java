@@ -21,9 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-
 import net.sf.cglib.asm.Attribute;
 import net.sf.cglib.asm.ClassAdapter;
 import net.sf.cglib.asm.ClassReader;
@@ -116,8 +114,8 @@ public abstract class AnnotatedSpecScanner {
         
         private void visitGroupAnnotation(Annotation annotation) {
             List<?> elementValues = annotation.elementValues;
-            for (Iterator<?> i = elementValues.iterator(); i.hasNext();) {
-                Object[] values = (Object[]) i.next();
+            for (Object elementValue : elementValues) {
+                Object[] values = (Object[]) elementValue;
                 for (Object param : values) {
                     if (param.getClass().isArray()) {
                         Object[] params = (Object[]) param;

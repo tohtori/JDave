@@ -15,10 +15,9 @@
  */
 package jdave.junit4;
 
-import org.junit.runner.RunWith;
-
 import jdave.Block;
 import jdave.Specification;
+import org.junit.runner.RunWith;
 
 @RunWith(JDaveRunner.class)
 public class StackSpec extends Specification<Stack<?>> {
@@ -92,7 +91,7 @@ public class StackSpec extends Specification<Stack<?>> {
         }
 
         public void addsToTheTopWhenSentPush() {
-            stack.push(new Integer(100));
+            stack.push(100);
             specify(stack.peek(), should.equal(new Integer(100)));
         }
     }

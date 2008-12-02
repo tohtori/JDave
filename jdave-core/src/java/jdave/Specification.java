@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import jdave.containment.MapContainment;
 import jdave.equality.DeltaEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
@@ -30,7 +29,6 @@ import jdave.equality.NotEqualsEqualityCheck;
 import jdave.mock.MockSupport;
 import jdave.util.Collections;
 import jdave.util.Primitives;
-
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
@@ -403,8 +401,8 @@ public abstract class Specification<T> extends MockSupport {
         return false;
     }
 
-    protected void setContextObjectFactory(IContextObjectFactory<T> factory) {
-        this.contextObjectFactory = factory;
+    protected void setContextObjectFactory(IContextObjectFactory<T> contextObjectFactory) {
+        this.contextObjectFactory = contextObjectFactory;
     }
 
     public IContextObjectFactory<T> getContextObjectFactory() {
