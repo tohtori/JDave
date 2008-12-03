@@ -28,32 +28,35 @@ import org.hamcrest.Matchers;
  * @author Timo Rantalaiho
  */
 public class Selector {
-    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
-        return selectFirst(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
+    // Note that the redundant type parameters in several methods are needed because of this javac bug:
+    // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6302954
+
+    public <T extends Component,X extends Component> X first(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+        return this.<T,X>selectFirst(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
     }
 
-    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
+    public <T extends Component,X extends Component> List<X> all(MarkupContainer root, Class<T> componentType, final Matcher<?> matcher) {
         return selectAll(root, componentType, new ComponentsModelMatchesTo<T>(matcher));
     }
 
-    public <T extends Component> T first(MarkupContainer root, Class<T> componentType, String wicketId, Matcher<?> modelMatcher) {
+    public <T extends Component, X extends Component> X first(MarkupContainer root, Class<T> componentType, String wicketId, Matcher<?> modelMatcher) {
         Matcher<T> bothMatcher = combine(modelMatcher, wicketId);
-        return selectFirst(root, componentType, bothMatcher);
+        return this.<T,X>selectFirst(root, componentType, bothMatcher);
     }
 
-    public <T extends Component> List<T> all(MarkupContainer root, Class<T> componentType, final String wicketId, Matcher<?> modelMatcher) {
+    public <T extends Component,X extends Component> List<X> all(MarkupContainer root, Class<T> componentType, final String wicketId, Matcher<?> modelMatcher) {
         Matcher<T> bothMatcher = combine(modelMatcher, wicketId);
         return selectAll(root, componentType, bothMatcher);
     }
 
-    private <T extends Component> List<T> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
-        CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
+    private <T extends Component, X extends Component> List<X> selectAll(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
+        CollectingVisitor<T,X> visitor = new CollectingVisitor<T,X>(componentMatcher);
         return visitor.selectFrom(root, componentType, IVisitor.CONTINUE_TRAVERSAL);
     }
 
-    private <T extends Component> T selectFirst(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
-        CollectingVisitor<T> visitor = new CollectingVisitor<T>(componentMatcher);
-        List<T> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
+    private <T extends Component, X extends Component> X selectFirst(MarkupContainer root, Class<T> componentType, Matcher<T> componentMatcher) {
+        CollectingVisitor<T,X> visitor = new CollectingVisitor<T,X>(componentMatcher);
+        List<X> firstMatch = visitor.selectFrom(root, componentType, IVisitor.STOP_TRAVERSAL);
         if (firstMatch.isEmpty()) {
             return null;
         }
@@ -68,9 +71,9 @@ public class Selector {
     /**
      * Not thread safe.
      */
-    private class CollectingVisitor<T extends Component> implements IVisitor<T> {
+    private class CollectingVisitor<T extends Component, X extends Component> implements IVisitor<T> {
         private final Matcher<T> componentMatcher;
-        private List<T> matches = new ArrayList<T>();
+        private List<X> matches = new ArrayList<X>();
         private Object actionOnMatch;
 
         public CollectingVisitor(Matcher<T> componentMatcher) {
@@ -80,13 +83,13 @@ public class Selector {
         @SuppressWarnings({"unchecked"})
         public Object component(Component component) {
             if (componentMatcher.matches(component)) {
-                matches.add((T) component);
+                matches.add((X) component);
                 return actionOnMatch;
             }
             return CONTINUE_TRAVERSAL;
         }
 
-        public List<T> selectFrom(MarkupContainer root, Class<T> componentType, Object actionOnMatch) {
+        public List<X> selectFrom(MarkupContainer root, Class<T> componentType, Object actionOnMatch) {
             this.actionOnMatch = actionOnMatch;
             root.visitChildren(componentType, this);
             return matches;

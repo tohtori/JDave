@@ -39,11 +39,13 @@ public class Selection<S extends Component> {
         this.wicketId = wicketId;
     }
 
-    public S from(MarkupContainer root) {
+    public <X extends Component> X from(MarkupContainer root) {
+        // Note that the redundant type parameters are needed because of this javac bug:
+        // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6302954
         if (wicketId != null) {
-            return newSelector().first(root, componentType, wicketId, matcher);
+            return newSelector().<S,X>first(root, componentType, wicketId, matcher);
         }
-        return newSelector().first(root, componentType, matcher);
+        return newSelector().<S,X>first(root, componentType, matcher);
     }
 
     public Selection<S> which(Matcher<?> matcher) {

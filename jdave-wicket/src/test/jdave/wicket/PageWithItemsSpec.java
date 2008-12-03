@@ -75,8 +75,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
         }
         
         public void allItemsCanBePickedUsingHamcrestMatcher() {
-            @SuppressWarnings("unchecked")
-            List<Item> items = selectAll(Item.class).which(is(anyOf(is(0), is(1)))).from(context);
+            List<Item<Integer>> items = selectAll(Item.class).which(is(anyOf(is(0), is(1)))).from(context);
             specify(modelObjects(items.iterator()), containsInOrder(0, 1));
         }
 
