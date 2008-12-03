@@ -293,11 +293,7 @@
   <component name="ProjectDetails">
     <option name="projectName" value="jdave-parent" />
   </component>
-  <component name="ProjectFileVersion" converted="true">
-    <converter id="javaee-modules" />
-    <converter id="ror-modules" />
-    <converter id="SelenaRunConfToDiana" />
-  </component>
+  <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../jdave-core/jdave-core.iml" filepath="$PROJECT_DIR$/../jdave-core/jdave-core.iml" />
