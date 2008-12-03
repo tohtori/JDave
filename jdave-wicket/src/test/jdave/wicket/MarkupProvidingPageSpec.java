@@ -66,9 +66,9 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>> 
     }
 
     @Override
-    protected <M> Form<Void> newComponent(String id, IModel<M> model) {
+    protected Form<Void> newComponent(String id, IModel<?> model) {
         Form<Void> form = new Form<Void>(id);
-        form.add(new TextField<M>("textField", model));
+        form.add(new TextField<Object>("textField", cast(model)));
         return form;
     }
 }

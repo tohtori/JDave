@@ -32,7 +32,7 @@ public class GenerifiedComponentSpec extends ComponentSpecification<GenerifiedCo
     }
     
     @Override
-    protected <M> GenerifiedComponent<Void> newComponent(String id, IModel<M> model) {
+    protected GenerifiedComponent<Void> newComponent(String id, IModel<?> model) {
         return new GenerifiedComponent<Void>(id);
     }
 }

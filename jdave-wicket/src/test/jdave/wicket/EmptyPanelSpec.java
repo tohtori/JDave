@@ -42,7 +42,7 @@ public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel> {
     }
 
     @Override
-    protected <M> EmptyPanel newComponent(String id, IModel<M> model) {
+    protected EmptyPanel newComponent(String id, IModel<?> model) {
         return panel = new EmptyPanel(id);
     }
 }

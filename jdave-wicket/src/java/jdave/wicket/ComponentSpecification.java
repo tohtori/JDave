@@ -178,6 +178,11 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
         wicket.startPage(testPageSource);
     }
 
+    @SuppressWarnings({"unchecked"})
+    protected <X> IModel<X> cast(IModel<?> model) {
+        return (IModel<X>) model;
+    }
+
     private static class TestPageSource implements ITestPageSource {
         private Page page; 
         
@@ -340,5 +345,5 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param model A model for the component which was passed in <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract <M> T newComponent(String id, IModel<M> model);
+    protected abstract T newComponent(String id, IModel<?> model);
 }

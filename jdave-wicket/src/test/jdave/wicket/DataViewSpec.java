@@ -33,7 +33,7 @@ public class DataViewSpec extends ComponentSpecification<DataView<String>> {
     private DataView<String> dataView;
 
     @Override
-    protected <M> DataView<String> newComponent(String id, IModel<M> model) {
+    protected DataView<String> newComponent(String id, IModel<?> model) {
         return dataView = new DataView<String>(id, new ListDataProvider<String>(Arrays.asList("one", "two", "three"))) {
             @Override
             protected void populateItem(Item<String> item) {

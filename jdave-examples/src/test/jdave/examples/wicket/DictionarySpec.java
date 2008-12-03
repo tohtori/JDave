@@ -75,7 +75,7 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
     }
 
     @Override
-    protected <M> DictionaryPanel newComponent(String id, IModel<M> model) {
+    protected DictionaryPanel newComponent(String id, IModel<?> model) {
         return new DictionaryPanel(id) {
             @Override
             protected IDictionaryService getService() {
