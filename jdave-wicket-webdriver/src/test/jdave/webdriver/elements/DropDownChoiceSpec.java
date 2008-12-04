@@ -16,11 +16,15 @@
 package jdave.webdriver.elements;
 
 import java.util.Arrays;
+
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.webdriver.Channel;
+
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.laughingpanda.beaninject.Inject;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
@@ -29,23 +33,28 @@ import org.openqa.selenium.WebElement;
  */
 @RunWith(JDaveRunner.class)
 public class DropDownChoiceSpec extends Specification<DropDownChoice> {
-	public class AnyDropDownChoice {
+    private WebElement webElement = mock(WebElement.class);
+    private Channel channel = mock(Channel.class);
+    private DropDownChoice dropDownChoice = new DropDownChoice(webElement);
+
+    public class AnyDropDownChoice {
 		private static final String INVALID_OPTION = "bar";
-		private WebElement webElement = mock(WebElement.class);
         private WebElement option1 = mock(WebElement.class, "option1");
         private WebElement option2 = mock(WebElement.class, "option2");
 
 		public DropDownChoice create() {
-            return new DropDownChoice(webElement);
+            return dropDownChoice;
 		}
 
         public void validOptionCanBeSelected() {
+            Inject.field("channel").of(dropDownChoice).with(channel);
             final String selection = "lo";
             checking(new Expectations() {{
                 one(webElement).getChildrenOfType("option"); will(returnValue(Arrays.asList(option1, option2)));
                 one(option1).getText(); will(returnValue("foo"));
                 one(option2).getText(); will(returnValue(selection));
                 one(option2).setSelected();
+                one(channel).waitForAjax();
             }});
             context.select("lo");
         }

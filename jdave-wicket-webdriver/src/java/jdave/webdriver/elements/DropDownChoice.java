@@ -19,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import jdave.webdriver.Channel;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
@@ -27,6 +29,7 @@ import org.openqa.selenium.WebElement;
  */
 public class DropDownChoice {
     private WebElement webElement;
+    private Channel channel = new Channel();
 
     public DropDownChoice(WebElement webElement) {
         this.webElement = webElement;
@@ -40,6 +43,7 @@ public class DropDownChoice {
         } else {
             throw new NoSuchElementException("Option '" + selection + "' not found from DropDownChoice");
         }
+        channel.waitForAjax();
     }
 
     private Map<String, WebElement> optionsMap(List<WebElement> options) {
