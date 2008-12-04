@@ -48,9 +48,9 @@ import org.apache.wicket.util.tester.TestPanelSource;
  * @author Joni Freeman
  * @author Timo Rantalaiho
  */
-public abstract class ComponentSpecification<T extends Component> extends Specification<T> {
+public abstract class ComponentSpecification<C extends Component> extends Specification<C> {
     protected BaseWicketTester wicket;
-    protected T specifiedComponent;
+    protected C specifiedComponent;
     
     @Override
     public final void create() {
@@ -67,7 +67,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
     /**
      * Start component for context.
      */
-    public T startComponent() {
+    public C startComponent() {
         return startComponent(null);
     }
 
@@ -75,7 +75,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * Start component for context.
      * @param model The model passed to component that is used for context.
      */
-    public T startComponent(final IModel<?> model) {
+    public C startComponent(final IModel<?> model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> type;
         if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
@@ -105,7 +105,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public T startComponent(final IModel<?> model, final CharSequence pageMarkup, final String rootComponentId) {
+    public C startComponent(final IModel<?> model, final CharSequence pageMarkup, final String rootComponentId) {
         return startComponent(model, new StringResourceStream(pageMarkup), rootComponentId);
     }
    
@@ -119,7 +119,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public T startComponent(final IModel<?> model, final IResourceStream pageMarkup, final String rootComponentId) {
+    public C startComponent(final IModel<?> model, final IResourceStream pageMarkup, final String rootComponentId) {
         WebPage page = new TestPage(pageMarkup);
         specifiedComponent = newComponent(rootComponentId, model);
         page.add(specifiedComponent);
@@ -146,7 +146,7 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * 
      * @param model The model passed to component that is used for context.
      */
-    public T startComponentWithoutMarkup(final IModel<?> model) {
+    public C startComponentWithoutMarkup(final IModel<?> model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
         return specifiedComponent;
@@ -345,5 +345,5 @@ public abstract class ComponentSpecification<T extends Component> extends Specif
      * @param model A model for the component which was passed in <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract T newComponent(String id, IModel<?> model);
+    protected abstract C newComponent(String id, IModel<?> model);
 }
