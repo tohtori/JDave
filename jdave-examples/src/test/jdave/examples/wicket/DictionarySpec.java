@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
+public class DictionarySpec extends ComponentSpecification<DictionaryPanel,Void> {
     private DictionaryPanel dictionary;
     private IDictionaryService service = mock(IDictionaryService.class);
     
@@ -75,7 +75,7 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel> {
     }
 
     @Override
-    protected DictionaryPanel newComponent(String id, IModel<?> model) {
+    protected DictionaryPanel newComponent(String id, IModel<Void> model) {
         return new DictionaryPanel(id) {
             @Override
             protected IDictionaryService getService() {
