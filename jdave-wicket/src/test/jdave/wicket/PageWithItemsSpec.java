@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
  * @author Timo Rantalaiho
  */
 @RunWith(JDaveRunner.class)
-public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
+public class PageWithItemsSpec extends ComponentSpecification<PageWithItems, List<Integer>> {
     public class WhenListHasItems {
         private List<Integer> list = Arrays.asList(0, 1, 2);
         
@@ -121,7 +121,7 @@ public class PageWithItemsSpec extends ComponentSpecification<PageWithItems> {
     }
     
     @Override
-    protected PageWithItems newComponent(String id, IModel<?> model) {
-        return new PageWithItems(this.<List<Integer>>cast(model));
+    protected PageWithItems newComponent(String id, IModel<List<Integer>> model) {
+        return new PageWithItems(model);
     }
 }

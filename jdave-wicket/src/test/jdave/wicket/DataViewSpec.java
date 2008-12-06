@@ -16,6 +16,7 @@
 package jdave.wicket;
 
 import java.util.Arrays;
+import java.util.List;
 import jdave.junit4.JDaveRunner;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -29,11 +30,11 @@ import org.junit.runner.RunWith;
  * @author Janne Hietam&auml;ki
  */
 @RunWith(JDaveRunner.class)
-public class DataViewSpec extends ComponentSpecification<DataView<String>> {
+public class DataViewSpec extends ComponentSpecification<DataView<String>, List<String>> {
     private DataView<String> dataView;
 
     @Override
-    protected DataView<String> newComponent(String id, IModel<?> model) {
+    protected DataView<String> newComponent(String id, IModel<List<String>> model) {
         return dataView = new DataView<String>(id, new ListDataProvider<String>(Arrays.asList("one", "two", "three"))) {
             @Override
             protected void populateItem(Item<String> item) {

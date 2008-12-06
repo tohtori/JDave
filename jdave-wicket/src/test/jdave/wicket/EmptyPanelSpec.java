@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel> {
+public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel,Object> {
     private EmptyPanel panel;
     
     public class WhenContainerIsStarted {
@@ -42,7 +42,7 @@ public class EmptyPanelSpec extends ComponentSpecification<EmptyPanel> {
     }
 
     @Override
-    protected EmptyPanel newComponent(String id, IModel<?> model) {
+    protected EmptyPanel newComponent(String id, IModel<Object> model) {
         return panel = new EmptyPanel(id);
     }
 }

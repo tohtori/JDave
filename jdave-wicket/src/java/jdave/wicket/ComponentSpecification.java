@@ -48,7 +48,7 @@ import org.apache.wicket.util.tester.TestPanelSource;
  * @author Joni Freeman
  * @author Timo Rantalaiho
  */
-public abstract class ComponentSpecification<C extends Component> extends Specification<C> {
+public abstract class ComponentSpecification<C extends Component, M> extends Specification<C> {
     protected BaseWicketTester wicket;
     protected C specifiedComponent;
     
@@ -75,7 +75,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * Start component for context.
      * @param model The model passed to component that is used for context.
      */
-    public C startComponent(final IModel<?> model) {
+    public C startComponent(final IModel<M> model) {
         ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> type;
         if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
@@ -105,7 +105,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public C startComponent(final IModel<?> model, final CharSequence pageMarkup, final String rootComponentId) {
+    public C startComponent(final IModel<M> model, final CharSequence pageMarkup, final String rootComponentId) {
         return startComponent(model, new StringResourceStream(pageMarkup), rootComponentId);
     }
    
@@ -119,7 +119,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public C startComponent(final IModel<?> model, final IResourceStream pageMarkup, final String rootComponentId) {
+    public C startComponent(final IModel<M> model, final IResourceStream pageMarkup, final String rootComponentId) {
         WebPage page = new TestPage(pageMarkup);
         specifiedComponent = newComponent(rootComponentId, model);
         page.add(specifiedComponent);
@@ -134,7 +134,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) 
      * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
      */
-    public <F,T> Form<F> startForm(final IModel<T> model, final CharSequence formMarkup) {
+    public <F> Form<F> startForm(final IModel<M> model, final CharSequence formMarkup) {
         return (Form<F>) startComponent(model, new StringBuilder().append("<html><body><form wicket:id='form'>")
                 .append(formMarkup).append("</form></body></html>").toString(), "form");
     }
@@ -146,13 +146,13 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * 
      * @param model The model passed to component that is used for context.
      */
-    public C startComponentWithoutMarkup(final IModel<?> model) {
+    public C startComponentWithoutMarkup(final IModel<M> model) {
         specifiedComponent = newComponent("component",model);
         wicket.startComponent(specifiedComponent);
         return specifiedComponent;
     }
 
-    protected void startBorder(final IModel<?> model) {
+    protected void startBorder(final IModel<M> model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 Panel panel = new Container(panelId);
@@ -163,7 +163,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
         });
     }
 
-    protected void startPanel(final IModel<?> model) {
+    protected void startPanel(final IModel<M> model) {
         wicket.startPanel(new TestPanelSource() {
             public Panel getTestPanel(String panelId) {
                 specifiedComponent = newComponent(panelId, model);
@@ -172,7 +172,7 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
         });
     }
 
-    protected void startPage(final IModel<?> model) {
+    protected void startPage(final IModel<M> model) {
         specifiedComponent = newComponent(null, model);
         TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
         wicket.startPage(testPageSource);
@@ -345,5 +345,5 @@ public abstract class ComponentSpecification<C extends Component> extends Specif
      * @param model A model for the component which was passed in <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
-    protected abstract C newComponent(String id, IModel<?> model);
+    protected abstract C newComponent(String id, IModel<M> model);
 }

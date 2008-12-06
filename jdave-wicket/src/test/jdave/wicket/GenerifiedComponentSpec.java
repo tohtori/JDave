@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  * @author Joni Freeman
  */
 @RunWith(JDaveRunner.class)
-public class GenerifiedComponentSpec extends ComponentSpecification<GenerifiedComponent<Void>> {
+public class GenerifiedComponentSpec extends ComponentSpecification<GenerifiedComponent<Void>, Void> {
     public class Any {
         public void startComponentDoesNotThrowExceptionBugFix() {
             startComponent();
@@ -32,7 +32,7 @@ public class GenerifiedComponentSpec extends ComponentSpecification<GenerifiedCo
     }
     
     @Override
-    protected GenerifiedComponent<Void> newComponent(String id, IModel<?> model) {
+    protected GenerifiedComponent<Void> newComponent(String id, IModel<Void> model) {
         return new GenerifiedComponent<Void>(id);
     }
 }

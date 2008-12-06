@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
  * @author Mikko Peltonen
  */
 @RunWith(JDaveRunner.class)
-public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>> {
+public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>, String> {
     public class PageWithProvidedMarkup {
         public Form<Void> create() {
             return startComponent(new Model<String>("field text"), pageMarkup(), "form");
@@ -66,7 +66,7 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>> 
     }
 
     @Override
-    protected Form<Void> newComponent(String id, IModel<?> model) {
+    protected Form<Void> newComponent(String id, IModel<String> model) {
         Form<Void> form = new Form<Void>(id);
         form.add(new TextField<Object>("textField", cast(model)));
         return form;
