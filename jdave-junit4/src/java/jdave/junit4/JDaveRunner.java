@@ -20,9 +20,10 @@ import jdave.Specification;
 import jdave.runner.SpecRunner;
 import jdave.tools.SpecdoxRunner;
 import junit.framework.ComparisonFailure;
-
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
+import org.junit.runner.manipulation.Filter;
+import org.junit.runner.manipulation.Filterable;
 import org.junit.runner.notification.RunNotifier;
 
 /**
@@ -32,14 +33,15 @@ import org.junit.runner.notification.RunNotifier;
  * 
  * @author Lasse Koskela
  */
-public class JDaveRunner extends Runner {
+public class JDaveRunner extends Runner implements Filterable {
     private final Class<? extends Specification<?>> spec;
     private final Description description;
+    private Filter filter;
 
-    public JDaveRunner(Class<? extends Specification<?>> spec) {
+    public JDaveRunner(final Class<? extends Specification<?>> spec) {
         this.spec = spec;
         Specification.setStringComparisonFailure(new IStringComparisonFailure() {
-            public void fail(String message, String expected, String actual) {
+            public void fail(final String message, final String expected, final String actual) {
                 throw new ComparisonFailure(message, expected, actual);
             }
         });
@@ -52,8 +54,12 @@ public class JDaveRunner extends Runner {
     }
 
     @Override
-    public void run(RunNotifier notifier) {
-        new SpecRunner().run(spec, new JDaveCallback(notifier));
+    public void run(final RunNotifier notifier) {
+        new SpecRunner().run(spec, new JDaveCallback(notifier, filter));
         new SpecdoxRunner().generate(spec);
+    }
+
+    public void filter(final Filter filter) {
+        this.filter = filter;
     }
 }

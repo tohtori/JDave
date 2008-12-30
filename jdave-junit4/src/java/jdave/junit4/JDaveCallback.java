@@ -18,40 +18,58 @@ package jdave.junit4;
 import jdave.runner.Behavior;
 import jdave.runner.Context;
 import jdave.runner.ISpecVisitor;
-
 import org.junit.runner.Description;
+import org.junit.runner.manipulation.Filter;
 import org.junit.runner.notification.RunNotifier;
 
 /**
  * The JDaveCallback object is responsible for keeping track of test execution
- * through the hierarchy of JDave specifications, contexts, and spec methods. It
- * fires the appropriate events for the given JUnit4 RunNotifier, effectively
- * implementing the core of the JUnit4 integration.
+ * through the hierarchy of JDave specifications, contexts, and spec methods.
+ * It fires the appropriate events for the given JUnit4 RunNotifier,
+ * effectively implementing the core of the JUnit4 integration.
  * 
  * @author Lasse Koskela
  * @author Joni Freeman
  */
 public class JDaveCallback implements ISpecVisitor {
-    private RunNotifier notifier;
-    
-    public JDaveCallback(RunNotifier notifier) {
+    private final RunNotifier notifier;
+    private Filter filter;
+
+    public JDaveCallback(final RunNotifier notifier) {
         this.notifier = notifier;
     }
 
-    public void onContext(Context context) {
-    }
-    
-    public void afterContext(Context context) {
+    public JDaveCallback(final RunNotifier notifier, final Filter filter) {
+        this.notifier = notifier;
+        this.filter = filter;
     }
 
-    public void onBehavior(Behavior behavior) {
-        Description desc = DescriptionFactory.newDescription(behavior);
-        notifier.fireTestStarted(desc);
-        try {
-            ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
-            behavior.run(resultsAdapter);
-        } finally {
-            notifier.fireTestFinished(desc);
+    public void onContext(final Context context) {
+    }
+
+    public void afterContext(final Context context) {
+    }
+
+    public void onBehavior(final Behavior behavior) {
+        final Description desc = DescriptionFactory.newDescription(behavior);
+        final boolean shouldRun = shouldRun(desc);
+        if (shouldRun) {
+            notifier.fireTestStarted(desc);
+
+            try {
+                final ResultsAdapter resultsAdapter = new ResultsAdapter(notifier, desc);
+                behavior.run(resultsAdapter);
+            } finally {
+                notifier.fireTestFinished(desc);
+            }
         }
+    }
+
+    private boolean shouldRun(final Description desc) {
+        if (filter != null) {
+            final boolean shouldRun = filter.shouldRun(desc);
+            return shouldRun;
+        }
+        return true;
     }
 }
