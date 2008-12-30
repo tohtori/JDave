@@ -35,14 +35,14 @@ public class JDaveContextRunner extends Runner implements Filterable {
             delegate = new JDaveRunner(spec);
         } else {
             throw new IllegalArgumentException(
-                    "you must run only JDave Contexts with JDaveContextRunner");
+                    "you can use JDaveContextRunner only to run JDave contexts");
         }
 
     }
 
     private boolean thisIsAContext(final Class<?> contextClass) {
         final boolean isMemberClass = contextClass.isMemberClass();
-        if (isMemberClass == false) {
+        if (!isMemberClass) {
             return false;
         }
         final boolean isStatic = Modifier.isStatic(contextClass.getModifiers());
