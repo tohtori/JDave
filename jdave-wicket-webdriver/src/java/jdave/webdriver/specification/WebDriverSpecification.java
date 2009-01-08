@@ -15,28 +15,23 @@
  */
 package jdave.webdriver.specification;
 
-import java.io.IOException;
-
 import jdave.Specification;
+import jdave.webdriver.Browser;
 import jdave.webdriver.WebDriverHolder;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxLauncher;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 /**
  * @author Marko Sibakov
  */
 public abstract class WebDriverSpecification<T> extends Specification<T> {
-    private static final String FIREFOX_PROFILE_NAME = "WebDriver";
+    private Browser browser = new Browser();
 
     @Override
-    public final void create() throws IOException {
+    public final void create() {
         onBeforeCreate();
-        initFirefoxProfile();
         WebDriverHolder.set(new FirefoxDriver());
+        browser.open();
         onCreate();
     }
 
@@ -51,9 +46,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
         try {
             onBeforeDestroy();
             if (closeBrowserAfterTest()) {
-                WebDriver webDriver = WebDriverHolder.get();
-                webDriver.manage().deleteAllCookies();
-                webDriver.quit();
+                browser.close();
                 WebDriverHolder.clear();
             }
         } finally {
@@ -63,19 +56,10 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
 
     public void onDestroy() {
     }
-    
+
     public void onBeforeDestroy() {
     }
 
-    private void initFirefoxProfile() throws IOException {
-        FirefoxBinary binary = new FirefoxBinary();
-        FirefoxLauncher launcher = new FirefoxLauncher(binary);
-        ProfilesIni profiles = new ProfilesIni();
-        if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
-            launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
-        }
-    }
-    
     protected boolean closeBrowserAfterTest() {
         return true;
     }
