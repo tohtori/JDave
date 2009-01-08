@@ -38,14 +38,14 @@ public class WebDriverTestPage extends WebPage {
         final Label label = new Label("testLabel", new Model<String>("test label"));
         label.setOutputMarkupId(true);
         add(label);
-        add(new AjaxFallbackLink("testLink") {
+        add(new AjaxFallbackLink<Void>("testLink") {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 label.setDefaultModelObject("link clicked");
                 target.addComponent(label); 
             }
         });
-        add(new AjaxFallbackLink("testLink2") {
+        add(new AjaxFallbackLink<Void>("testLink2") {
             @Override
             public void onClick(AjaxRequestTarget target) {
             }
