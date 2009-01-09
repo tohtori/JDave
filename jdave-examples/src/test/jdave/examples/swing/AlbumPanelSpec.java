@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Pekka Enberg
  */
-@RunWith(JDaveRunner.class)
+//@RunWith(JDaveRunner.class)
 public class AlbumPanelSpec extends JemmyContainerSpecification<AlbumPanel> {
     private AlbumPresentationModel presentationModel;
 

@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Mikko Peltonen
  */
-@RunWith(JDaveRunner.class)
+//@RunWith(JDaveRunner.class)
 public class AlbumApplicationSpec extends JemmyApplicationSpecification<JFrame> {
     public class AnyAlbumApplication {
         public JFrame create() {
