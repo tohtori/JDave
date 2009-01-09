@@ -27,8 +27,16 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
  * @author Juha Karemo
  */
 public class Browser {
-    private static final String FIREFOX_PROFILE_NAME = "WebDriver";
+    private static final String DEFAULT_FIREFOX_PROFILE_NAME = "WebDriver";
+    private String profileName = DEFAULT_FIREFOX_PROFILE_NAME;
+
+    public Browser() {
+    }
     
+    public Browser(String profileName) {
+        this.profileName = profileName;
+    }
+
     public void open() {
         initFirefoxProfile();
     }
@@ -46,9 +54,9 @@ public class Browser {
         FirefoxBinary binary = new FirefoxBinary();
         FirefoxLauncher launcher = new FirefoxLauncher(binary);
         ProfilesIni profiles = new ProfilesIni();
-        if (profiles.getProfile(FIREFOX_PROFILE_NAME) == null) {
+        if (profiles.getProfile(profileName) == null) {
             try {
-                launcher.createBaseWebDriverProfile(FIREFOX_PROFILE_NAME);
+                launcher.createBaseWebDriverProfile(profileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
