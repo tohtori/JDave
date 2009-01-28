@@ -75,6 +75,9 @@
     <contributor>
       <name>Juha Karemo</name>
     </contributor>
+    <contributor>
+      <name>Antti Mattila</name>
+    </contributor>
   </contributors>
   
   <dependencies>
@@ -228,6 +231,10 @@
     <repository>
       <id>laughingpanda-maven2</id>
       <url>http://www.laughingpanda.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>laughingpanda-maven2-snapshots</id>
+      <url>http://www.laughingpanda.org/maven2/snapshots/</url>
     </repository>
     <repository>
       <id>openqa-selenium-maven2</id>
