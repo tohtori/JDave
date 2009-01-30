@@ -29,30 +29,30 @@ public class Selection<S extends Component> {
     private final String wicketId;
     private Matcher<?> matcher;
 
-    public Selection(Class<S> componentType) {
+    public Selection(final Class<S> componentType) {
         this(componentType, null);
     }
 
-    public Selection(Class<S> componentType, String wicketId) {
+    public Selection(final Class<S> componentType, final String wicketId) {
         this.componentType = componentType;
         matcher = new AnyModelMatcher();
         this.wicketId = wicketId;
     }
 
-    public <X extends Component> X from(MarkupContainer root) {
+    public <X extends S> X from(final MarkupContainer root) {
         // Note that the redundant type parameters are needed because of this javac bug:
         // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6302954
         if (wicketId != null) {
-            return newSelector().<S,X>first(root, componentType, wicketId, matcher);
+            return newSelector().<S, X> first(root, componentType, wicketId, matcher);
         }
-        return newSelector().<S,X>first(root, componentType, matcher);
+        return newSelector().<S, X> first(root, componentType, matcher);
     }
 
-    public Selection<S> which(Matcher<?> matcher) {
+    public Selection<S> which(final Matcher<?> matcher) {
         this.matcher = matcher;
         return this;
     }
-    
+
     protected Selector newSelector() {
         return new Selector();
     }
