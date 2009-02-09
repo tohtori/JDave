@@ -16,6 +16,7 @@
 package jdave.wicket;
 
 import java.util.List;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.hamcrest.Matcher;
@@ -29,25 +30,25 @@ public class MultiSelection<S extends Component> {
     private final String wicketId;
     private Matcher<?> matcher;
 
-    public MultiSelection(Class<S> componentType) {
+    public MultiSelection(final Class<S> componentType) {
         this(componentType, null);
     }
 
-    public MultiSelection(Class<S> componentType, String wicketId) {
+    public MultiSelection(final Class<S> componentType, final String wicketId) {
         this.componentType = componentType;
         this.wicketId = wicketId;
         matcher = new AnyModelMatcher();
     }
 
-    public <X extends Component> List<X> from(MarkupContainer root) {
-        Selector selector = new Selector();
+    public <X extends S> List<X> from(final MarkupContainer root) {
+        final Selector selector = new Selector();
         if (wicketId != null) {
             return selector.all(root, componentType, wicketId, matcher);
         }
         return selector.all(root, componentType, matcher);
     }
 
-    public MultiSelection<S>  which(Matcher<?> matcher) {
+    public MultiSelection<S> which(final Matcher<?> matcher) {
         this.matcher = matcher;
         return this;
     }

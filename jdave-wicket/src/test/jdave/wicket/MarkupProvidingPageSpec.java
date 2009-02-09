@@ -71,10 +71,16 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>, 
     public class TypeInference {
         public void allowsCompilation() {
             final Form<Void> component = startComponent();
-            wicket.debugComponentTrees();
             specify(
                     selectFirst(TextField.class).from(component).getConvertEmptyInputStringToNull(),
                     is(true));
+        }
+
+        public void allowsCompilationForMultiSelection() {
+            final Form<Void> component = startComponent();
+            specify(selectAll(TextField.class).from(component).get(0)
+                    .getConvertEmptyInputStringToNull(), is(true));
+
         }
     }
 
