@@ -19,8 +19,10 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import jdave.IContainment;
 import jdave.Specification;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
@@ -38,9 +40,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.tester.BaseWicketTester;
-import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 import org.apache.wicket.util.tester.ITestPageSource;
 import org.apache.wicket.util.tester.TestPanelSource;
+import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 
 /**
  * A base class for Wicket's <code>Component</code> specifications.
@@ -51,7 +53,7 @@ import org.apache.wicket.util.tester.TestPanelSource;
 public abstract class ComponentSpecification<C extends Component, M> extends Specification<C> {
     protected BaseWicketTester wicket;
     protected C specifiedComponent;
-    
+
     @Override
     public final void create() {
         wicket = newWicketTester();
@@ -76,12 +78,13 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * @param model The model passed to component that is used for context.
      */
     public C startComponent(final IModel<M> model) {
-        ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
+        final ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
         Class<?> type;
         if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
-            type = (Class<?>) superclass.getActualTypeArguments()[0];            
+            type = (Class<?>) superclass.getActualTypeArguments()[0];
         } else {
-            type = (Class<?>) ((ParameterizedType) superclass.getActualTypeArguments()[0]).getRawType();
+            type = (Class<?>) ((ParameterizedType) superclass.getActualTypeArguments()[0])
+                    .getRawType();
         }
         if (Page.class.isAssignableFrom(type)) {
             startPage(model);
@@ -94,7 +97,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
         }
         return specifiedComponent;
     }
-    
+
     /**
      * Start component for context, using page with given markup.
      * 
@@ -105,10 +108,11 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public C startComponent(final IModel<M> model, final CharSequence pageMarkup, final String rootComponentId) {
+    public C startComponent(final IModel<M> model, final CharSequence pageMarkup,
+            final String rootComponentId) {
         return startComponent(model, new StringResourceStream(pageMarkup), rootComponentId);
     }
-   
+
     /**
      * Start component for context, using page with given markup.
      * 
@@ -119,8 +123,9 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
      * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
      */
-    public C startComponent(final IModel<M> model, final IResourceStream pageMarkup, final String rootComponentId) {
-        WebPage page = new TestPage(pageMarkup);
+    public C startComponent(final IModel<M> model, final IResourceStream pageMarkup,
+            final String rootComponentId) {
+        final WebPage page = new TestPage(pageMarkup);
         specifiedComponent = newComponent(rootComponentId, model);
         page.add(specifiedComponent);
         wicket.startPage(page);
@@ -135,10 +140,11 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
      */
     public <F> Form<F> startForm(final IModel<M> model, final CharSequence formMarkup) {
-        return (Form<F>) startComponent(model, new StringBuilder().append("<html><body><form wicket:id='form'>")
-                .append(formMarkup).append("</form></body></html>").toString(), "form");
+        return (Form<F>) startComponent(model, new StringBuilder().append(
+                "<html><body><form wicket:id='form'>").append(formMarkup).append(
+                "</form></body></html>").toString(), "form");
     }
-    
+
     /**
      * Start component for context.
      * <p>
@@ -147,15 +153,15 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * @param model The model passed to component that is used for context.
      */
     public C startComponentWithoutMarkup(final IModel<M> model) {
-        specifiedComponent = newComponent("component",model);
+        specifiedComponent = newComponent("component", model);
         wicket.startComponent(specifiedComponent);
         return specifiedComponent;
     }
 
     protected void startBorder(final IModel<M> model) {
         wicket.startPanel(new TestPanelSource() {
-            public Panel getTestPanel(String panelId) {
-                Panel panel = new Container(panelId);
+            public Panel getTestPanel(final String panelId) {
+                final Panel panel = new Container(panelId);
                 specifiedComponent = newComponent("component", model);
                 panel.add(specifiedComponent);
                 return panel;
@@ -165,7 +171,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     protected void startPanel(final IModel<M> model) {
         wicket.startPanel(new TestPanelSource() {
-            public Panel getTestPanel(String panelId) {
+            public Panel getTestPanel(final String panelId) {
                 specifiedComponent = newComponent(panelId, model);
                 return (Panel) specifiedComponent;
             }
@@ -174,40 +180,40 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     protected void startPage(final IModel<M> model) {
         specifiedComponent = newComponent(null, model);
-        TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
+        final TestPageSource testPageSource = new TestPageSource((Page) specifiedComponent);
         wicket.startPage(testPageSource);
     }
 
-    @SuppressWarnings({"unchecked"})
-    protected <X> IModel<X> cast(IModel<?> model) {
+    @SuppressWarnings( { "unchecked" })
+    protected <X> IModel<X> cast(final IModel<?> model) {
         return (IModel<X>) model;
     }
 
     private static class TestPageSource implements ITestPageSource {
-        private Page page; 
-        
-        public TestPageSource(Page page) {
+        private final Page page;
+
+        public TestPageSource(final Page page) {
             this.page = page;
         }
-        
+
         public Page getTestPage() {
             return page;
-        }              
+        }
     }
-    
+
     private static class TestPage extends WebPage implements IMarkupResourceStreamProvider {
         private final IResourceStream markup;
-        
+
         public TestPage(final IResourceStream markup) {
             this.markup = markup;
         }
-        
-        @SuppressWarnings("unchecked")
-        public IResourceStream getMarkupResourceStream(MarkupContainer container, Class<?> containerClass) {
+
+        public IResourceStream getMarkupResourceStream(final MarkupContainer container,
+                final Class<?> containerClass) {
             return markup;
         }
     }
-    
+
     /**
      * Specify that given container contains given model objects.
      * <p>
@@ -222,15 +228,15 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * @param actual the container of Wicket components
      * @param containment any containment, see: http://www.jdave.org/documentation.html#containments
      */
-    public void specify(MarkupContainer actual, IContainment containment) {
+    public void specify(final MarkupContainer actual, final IContainment containment) {
         super.specify(modelObjects(actual.iterator()), containment);
     }
 
     /**
      * Select an item from a <code>RepeatingView</code>.
      */
-    public <T> Item<T> itemAt(RepeatingView view, int index) {
-        Iterator<?> items = view.iterator();
+    public <T> Item<T> itemAt(final RepeatingView view, final int index) {
+        final Iterator<?> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
@@ -240,8 +246,8 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     /**
      * Select an item from a <code>ListView</code>.
      */
-    public <T> ListItem<T> itemAt(ListView<T> view, int index) {
-        Iterator<?> items = view.iterator();
+    public <T> ListItem<T> itemAt(final ListView<T> view, final int index) {
+        final Iterator<?> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
@@ -251,10 +257,10 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     /**
      * Collect model objects from given components.
      */
-    public List<?> modelObjects(Iterator<?> components) {
+    public List<?> modelObjects(final Iterator<?> components) {
         @SuppressWarnings("unchecked")
-        Iterator<? extends Component> unsafe = (Iterator<? extends Component>) components;
-        List<Object> objects = new ArrayList<Object>();
+        final Iterator<? extends Component> unsafe = (Iterator<? extends Component>) components;
+        final List<Object> objects = new ArrayList<Object>();
         while (unsafe.hasNext()) {
             objects.add(unsafe.next().getDefaultModelObject());
         }
@@ -295,10 +301,10 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      *
      * </code></blockquote></pre>
      */
-    public <S extends Component> Selection<S> selectFirst(Class<S> type) {
+    public <S extends Component> Selection<S> selectFirst(final Class<S> type) {
         return new Selection<S>(type);
     }
-        
+
     /**
      * Select all components whose model objects match given Hamcrest matcher:
      * <pre><blockquote><code>
@@ -307,7 +313,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      *
      * </code></blockquote></pre>
      */
-    public <S extends Component> MultiSelection<S> selectAll(Class<S> type) {
+    public <S extends Component> MultiSelection<S> selectAll(final Class<S> type) {
         return new MultiSelection<S>(type);
     }
 
@@ -319,7 +325,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      *
      * </code></blockquote></pre>
      */
-    public <S extends Component> Selection<S> selectFirst(Class<S> type, String wicketId) {
+    public <S extends Component> Selection<S> selectFirst(final Class<S> type, final String wicketId) {
         return new Selection<S>(type, wicketId);
     }
 
@@ -331,7 +337,8 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      *
      * </code></blockquote></pre>
      */
-    public <S extends Component> MultiSelection<S> selectAll(Class<S> type, String wicketId) {
+    public <S extends Component> MultiSelection<S> selectAll(final Class<S> type,
+            final String wicketId) {
         return new MultiSelection<S>(type, wicketId);
     }
 
