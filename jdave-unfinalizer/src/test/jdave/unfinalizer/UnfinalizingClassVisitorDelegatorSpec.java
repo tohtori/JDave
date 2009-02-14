@@ -20,8 +20,8 @@ import java.io.InputStream;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.unfinalizer.other.DifferentClassWithFinalMethod;
-import jdave.unfinalizer.other.DifferentFinalClass;
+import jdave.unfinalizer.fake.ClassWithFinalMethod;
+import jdave.unfinalizer.fake.FinalClass;
 
 import org.junit.runner.RunWith;
 import org.objectweb.asm.ClassAdapter;
@@ -38,7 +38,7 @@ import org.objectweb.asm.Opcodes;
 public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
     public class WhenClassIsFinal {
         public void isMadeNonFinal() throws IOException {
-            final byte[] nonFinalClass = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(DifferentFinalClass.class));
+            final byte[] nonFinalClass = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(FinalClass.class));
             specify(classIsNotFinal(nonFinalClass));
         }
     }
@@ -46,7 +46,7 @@ public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
     public class WhenAMethodIsFinal {
         public void theMethodIsMadeNonFinal() throws IOException {
             final byte[] classWithoutFinalMethods = new UnfinalizingClassVisitorDelegator()
-                    .transform(getOriginalClassAsByteArray(DifferentClassWithFinalMethod.class));
+                    .transform(getOriginalClassAsByteArray(ClassWithFinalMethod.class));
             specify(classHasNoFinalMethods(classWithoutFinalMethods));
         }
     }
