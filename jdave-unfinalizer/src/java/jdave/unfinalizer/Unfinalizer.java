@@ -15,6 +15,8 @@
  */
 package jdave.unfinalizer;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,9 +24,9 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
 public class Unfinalizer {
-    public static void unfinalize(final String identifier) {
+    public static void unfinalize() {
         try {
-            final VirtualMachine jvm = VirtualMachine.attach(getJvm(identifier));
+            final VirtualMachine jvm = VirtualMachine.attach(getJvm());
             jvm.loadAgent(getJarPath(jvm.getSystemProperties()), null);
             jvm.detach();
         } catch (final Exception e) {
@@ -32,10 +34,11 @@ public class Unfinalizer {
         }
     }
 
-    private static VirtualMachineDescriptor getJvm(final String identifier) {
+    private static VirtualMachineDescriptor getJvm() {
         final List<VirtualMachineDescriptor> jvms = VirtualMachine.list();
         for (final VirtualMachineDescriptor virtualMachineDescriptor : jvms) {
-            if (virtualMachineDescriptor.displayName().contains(identifier)) {
+            final RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+            if (runtimeMxBean.getName().startsWith(virtualMachineDescriptor.id())) {
                 return virtualMachineDescriptor;
             }
         }

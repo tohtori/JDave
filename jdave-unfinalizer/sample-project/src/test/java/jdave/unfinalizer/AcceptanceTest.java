@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 public class AcceptanceTest extends Specification<Void> {
     @Override
     public void create() throws Exception {
-        Unfinalizer.unfinalize(getClass().getName());
+        Unfinalizer.unfinalize();
     }
 
     public class WhenClassIsFinal {
