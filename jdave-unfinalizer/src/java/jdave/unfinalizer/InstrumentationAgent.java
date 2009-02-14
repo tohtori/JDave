@@ -20,13 +20,10 @@ import java.lang.instrument.Instrumentation;
 /**
  * Adds unfinalizing transformer to instrumentation class loading stack.
  * 
- * premain is called when -javaagent:/path/to/JAR is specified and the manifest
- * includes Premain-Class: jdave.unfinalizer.InstrumentationAgent
- * 
  * @author Tuomas Karkkainen
  */
 public class InstrumentationAgent {
-    public static void premain(@SuppressWarnings("unused")
+    public static void agentmain(@SuppressWarnings("unused")
     final String agentArgs, final Instrumentation instrumentation) {
         instrumentation.addTransformer(new DelegatingClassFileTransformer(new UnfinalizingClassVisitorDelegator()));
     }

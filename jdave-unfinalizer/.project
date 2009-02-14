@@ -8,9 +8,11 @@
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
     </buildCommand>
     <buildCommand>
       <name>org.maven.ide.eclipse.maven2Builder</name>
+      <arguments/>
     </buildCommand>
   </buildSpec>
   <natures>

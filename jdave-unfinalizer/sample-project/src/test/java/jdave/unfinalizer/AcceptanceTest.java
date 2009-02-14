@@ -15,10 +15,11 @@
  */
 package jdave.unfinalizer;
 
-import java.lang.instrument.Instrumentation;
-
+import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.unfinalizer.fake.AnotherClassWithFinalMethod;
+import jdave.unfinalizer.fake.AnotherFinalClass;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -27,16 +28,31 @@ import org.junit.runner.RunWith;
  * @author Tuomas Karkkainen
  */
 @RunWith(JDaveRunner.class)
-public class InstrumentationAgentSpec extends Specification<Void> {
-    public class WhenPremainIsCalled {
-        public void unfinalizingTransformerIsAdded() {
-            final Instrumentation instrumentation = mock(Instrumentation.class);
+public class AcceptanceTest extends Specification<Void> {
+    @Override
+    public void create() throws Exception {
+        Unfinalizer.unfinalize(getClass().getName());
+    }
+
+    public class WhenClassIsFinal {
+        public void itIsMadeNonFinal() throws Throwable {
+            specify(new Block() {
+                public void run() throws Throwable {
+                    mock(AnotherFinalClass.class);
+                }
+            }, should.not().raiseAnyException());
+        }
+    }
+
+    public class WhenAMethodIsFinal {
+        public void theMethodIsMadeNonFinal() {
+            final AnotherClassWithFinalMethod mock = mock(AnotherClassWithFinalMethod.class);
             checking(new Expectations() {
                 {
-                    one(instrumentation).addTransformer(with(any(DelegatingClassFileTransformer.class)));
+                    one(mock).finalMethod();
                 }
             });
-            InstrumentationAgent.agentmain(null, instrumentation);
+            mock.finalMethod();
         }
     }
 }

@@ -1,2 +1,1 @@
-1.  use -javaagent:/path/to/jdave-unfinalizer-1.0-SNAPSHOT.jar as a VM parameter
-2.  the acceptance spec requires this
+FIXME: write this

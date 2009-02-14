@@ -33,16 +33,26 @@
       <groupId>asm</groupId>
       <artifactId>asm-commons</artifactId>
       <version>3.0</version>
-    </dependency>   
-  </dependencies> 
-  <build>
+    </dependency>
+	<dependency>
+	    <groupId>com.sun</groupId>
+	    <artifactId>tools</artifactId>
+	    <version>1.6.0</version>
+	    <scope>system</scope>
+		<systemPath>${java.home}/../lib/tools.jar</systemPath>
+	</dependency>
+       
+  </dependencies>
+   
+  <build>  
+  
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
-            <phase>test-compile</phase>
+            <phase>compile-test</phase>
             <goals>
               <goal>jar</goal>
             </goals>
@@ -51,19 +61,18 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Premain-Class>jdave.unfinalizer.InstrumentationAgent</Premain-Class>
+              <Agent-Class>jdave.unfinalizer.InstrumentationAgent</Agent-Class>
             </manifestEntries>
           </archive>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.4</version>        
         <configuration>
           <includes>
-            <include>**/*Spec.java</include>
-          </includes>          
-          <argLine>-javaagent:${project.build.directory}/${project.build.finalName}.jar</argLine>
-          <useSystemClassLoader>true</useSystemClassLoader>
+            <include>**/*Spec.java</include>           
+          </includes>                   
         </configuration>
       </plugin>
     </plugins>

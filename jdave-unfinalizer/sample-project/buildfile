@@ -1,0 +1,24 @@
+ENV["JAVA_OPTIONS"] = "-Xms512m -Xmx1024m  -XX:+UseParallelGC -XX:PermSize=128M " + (ENV["JAVA_OPTIONS"] or "")
+
+basedir = File.dirname(__FILE__)
+require "buildr"
+
+define "sample-project" do
+  compile.options.other = ["-encoding", "utf-8", "-target", "1.5"]
+  test.using :java_args => Array(ENV["JAVA_OPTIONS"].split(' '))
+  
+  test.with("#{ENV["JAVA_HOME"]}/lib/tools.jar")  
+  test.with("junit:junit:jar:4.5")
+  test.with("org.jdave:jdave-core:jar:1.2-SNAPSHOT")
+  test.with("org.jdave:jdave-junit4:jar:1.2-SNAPSHOT")
+  test.with("org.jdave:jdave-wicket:jar:1.2-SNAPSHOT")
+  test.with("org.jdave:jdave-unfinalizer:jar:1.2-SNAPSHOT")
+  test.with("org.jmock:jmock-legacy:jar:2.4.0")
+  test.with("org.jmock:jmock:jar:2.4.0")
+  test.with("org.objenesis:objenesis:jar:1.1")
+  test.with("org.hamcrest:hamcrest-core:jar:1.1")
+  test.with("org.hamcrest:hamcrest-library:jar:1.1")
+  test.with("cglib:cglib-nodep:jar:2.1_3")
+  test.with("asm:asm:jar:3.0")
+  test.with("asm:asm-commons:jar:3.0")
+end	
