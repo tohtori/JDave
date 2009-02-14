@@ -18,8 +18,8 @@ package jdave.unfinalizer;
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
-import jdave.unfinalizer.fake.AnotherClassWithFinalMethod;
-import jdave.unfinalizer.fake.AnotherFinalClass;
+import jdave.unfinalizer.other.ClassWithFinalMethod;
+import jdave.unfinalizer.other.FinalClass;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ public class AcceptanceTest extends Specification<Void> {
         public void itIsMadeNonFinal() throws Throwable {
             specify(new Block() {
                 public void run() throws Throwable {
-                    mock(AnotherFinalClass.class);
+                    mock(FinalClass.class);
                 }
             }, should.not().raiseAnyException());
         }
@@ -46,7 +46,7 @@ public class AcceptanceTest extends Specification<Void> {
 
     public class WhenAMethodIsFinal {
         public void theMethodIsMadeNonFinal() {
-            final AnotherClassWithFinalMethod mock = mock(AnotherClassWithFinalMethod.class);
+            final ClassWithFinalMethod mock = mock(ClassWithFinalMethod.class);
             checking(new Expectations() {
                 {
                     one(mock).finalMethod();
