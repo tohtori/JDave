@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test"/>
 	<classpathentry kind="src" path="sample-project/src/test/java"/>
+	<classpathentry kind="src" path="sample-project/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/asm/asm/3.0/asm-3.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/asm/asm-commons/3.0/asm-commons-3.0.jar"/>
