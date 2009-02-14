@@ -21,5 +21,5 @@ package jdave.unfinalizer.fake;
  * 
  * @author Tuomas Karkkainen
  */
-public final class AnotherFinalClass {
+public final class FinalClass {
 }

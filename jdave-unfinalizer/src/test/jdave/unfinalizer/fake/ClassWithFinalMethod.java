@@ -18,7 +18,7 @@ package jdave.unfinalizer.fake;
 /**
  * @author Tuomas Karkkainen
  */
-public class AnotherClassWithFinalMethod {
+public class ClassWithFinalMethod {
     /**
      * I'm final. I can't be mocked.
      */
