@@ -15,9 +15,6 @@
  */
 package org.example;
 
-/**
- * @author m1racle
- */
 public class AClassWithAMethod {
     /**
      * I'm final. I can't be mocked.
