@@ -25,7 +25,7 @@ public class DefaultSpecIntrospection implements ISpecIntrospection {
     public static final String INITIALIZER_NAME = "create";
     static final String DISPOSER_NAME = "destroy";
 
-    public boolean isBehavior(Method method) {
+    public boolean isBehavior(final Method method) {
         if (method.getDeclaringClass().equals(Object.class)) {
             return false;
         }
@@ -44,18 +44,18 @@ public class DefaultSpecIntrospection implements ISpecIntrospection {
         return true;
     }
 
-    public boolean isContextClass(Class<?> specType, Class<?> possibleContext) {
+    public boolean isContextClass(final Class<?> specType, final Class<?> possibleContext) {
         if (!isConcreteAndPublic(possibleContext)) {
             return false;
         }
         if (!hasBehaviors(possibleContext)) {
             return false;
         }
-        return isInnerClass(specType, possibleContext);
+        return isInnerClass(possibleContext);
     }
-    
-    private boolean hasBehaviors(Class<?> possibleContext) {
-        for (Method method : possibleContext.getMethods()) {
+
+    private boolean hasBehaviors(final Class<?> possibleContext) {
+        for (final Method method : possibleContext.getMethods()) {
             if (isBehavior(method)) {
                 return true;
             }
@@ -63,12 +63,13 @@ public class DefaultSpecIntrospection implements ISpecIntrospection {
         return false;
     }
 
-    private boolean isConcreteAndPublic(Class<?> possibleContext) {
-        int mod = possibleContext.getModifiers();
-        return (Modifier.isPublic(mod) && !Modifier.isAbstract(mod));
+    private boolean isConcreteAndPublic(final Class<?> possibleContext) {
+        final int mod = possibleContext.getModifiers();
+        return Modifier.isPublic(mod) && !Modifier.isAbstract(mod);
     }
 
-    private boolean isInnerClass(Class<?> specType, Class<?> possibleContext) {
-        return (possibleContext.getModifiers() & Modifier.STATIC) == 0 && possibleContext.getEnclosingClass() != null;
+    private boolean isInnerClass(final Class<?> possibleContext) {
+        return !Modifier.isStatic(possibleContext.getModifiers())
+                && possibleContext.isMemberClass();
     }
 }
