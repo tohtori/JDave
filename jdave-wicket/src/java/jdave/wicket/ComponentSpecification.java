@@ -19,10 +19,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import jdave.IContainment;
 import jdave.Specification;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
@@ -46,7 +44,7 @@ import org.apache.wicket.util.tester.BaseWicketTester.DummyWebApplication;
 
 /**
  * A base class for Wicket's <code>Component</code> specifications.
- *
+ * 
  * @author Joni Freeman
  * @author Timo Rantalaiho
  */
@@ -75,6 +73,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     /**
      * Start component for context.
+     * 
      * @param model The model passed to component that is used for context.
      */
     public C startComponent(final IModel<M> model) {
@@ -102,11 +101,13 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * Start component for context, using page with given markup.
      * 
      * @param model The model passed to component that is used for context.
-     * @param pageMarkup Markup (as <code>java.lang.CharSequence</code>) of the page created 
-     * to host the specified component.
-     * @param rootComponentId Wicket id of the root component in the component markup hierarchy 
-     * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
-     * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
+     * @param pageMarkup Markup (as <code>java.lang.CharSequence</code>) of
+     *            the page created to host the specified component.
+     * @param rootComponentId Wicket id of the root component in the component
+     *            markup hierarchy given by the <code>pageMarkup</code>
+     *            parameter. This is the id of the component returned from
+     *            <code>newComponent</code> method and used as context, often
+     *            a MarkupContainer or Form.
      */
     public C startComponent(final IModel<M> model, final CharSequence pageMarkup,
             final String rootComponentId) {
@@ -117,11 +118,14 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * Start component for context, using page with given markup.
      * 
      * @param model The model passed to component that is used for context.
-     * @param pageMarkup Markup (as <code>org.apache.wicket.util.resource.IResourceStream</code>) 
-     * of the page created to host the specified component.
-     * @param rootComponentId Wicket id of the root component in the component markup hierarchy 
-     * given by the <code>pageMarkup</code> parameter. This is the id of the component returned from
-     * <code>newComponent</code> method and used as context, often a MarkupContainer or Form.
+     * @param pageMarkup Markup (as
+     *            <code>org.apache.wicket.util.resource.IResourceStream</code>
+     *            ) of the page created to host the specified component.
+     * @param rootComponentId Wicket id of the root component in the component
+     *            markup hierarchy given by the <code>pageMarkup</code>
+     *            parameter. This is the id of the component returned from
+     *            <code>newComponent</code> method and used as context, often
+     *            a MarkupContainer or Form.
      */
     public C startComponent(final IModel<M> model, final IResourceStream pageMarkup,
             final String rootComponentId) {
@@ -136,8 +140,9 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * Start form for context, using given markup as form markup.
      * 
      * @param model The model passed to <code>newComponent</code> method.
-     * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) 
-     * of the form returned from <code>newComponent</code> method, excluding the &lt;form&gt; tag.
+     * @param formMarkup Markup (as <code>java.lang.CharSequence</code>) of
+     *            the form returned from <code>newComponent</code> method,
+     *            excluding the &lt;form&gt; tag.
      */
     public <F> Form<F> startForm(final IModel<M> model, final CharSequence formMarkup) {
         return (Form<F>) startComponent(model, new StringBuilder().append(
@@ -217,16 +222,19 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     /**
      * Specify that given container contains given model objects.
      * <p>
-     * This is most often used with <code>RefreshingViews</code> and <code>ListViews</code>.
-     * <pre><blockquote><code>
-     *
-     * ListView list = new ListView("stooges", Arrays.asList("Larry", "Moe", "Curly")) { ... };
-     * specify(list, containsInOrder("Larry", "Moe", "Curly");
-     *
-     * <code></blockquote></pre>
+     * This is most often used with <code>RefreshingViews</code> and
+     * <code>ListViews</code>.
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
+     * ListView list = new ListView(&quot;stooges&quot;, Arrays.asList(&quot;Larry&quot;, &quot;Moe&quot;, &quot;Curly&quot;)) { ... };
+     * specify(list, containsInOrder(&quot;Larry&quot;, &quot;Moe&quot;, &quot;Curly&quot;);
+     * &lt;code&gt;&lt;/blockquote&gt;
+     * </pre>
      * 
      * @param actual the container of Wicket components
-     * @param containment any containment, see: http://www.jdave.org/documentation.html#containments
+     * @param containment any containment, see:
+     *            http://www.jdave.org/documentation.html#containments
      */
     public void specify(final MarkupContainer actual, final IContainment containment) {
         super.specify(modelObjects(actual.iterator()), containment);
@@ -247,11 +255,11 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * Select an item from a <code>ListView</code>.
      */
     public <T> ListItem<T> itemAt(final ListView<T> view, final int index) {
-        final Iterator<?> items = view.iterator();
+        final Iterator<? extends ListItem<T>> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
-        return (ListItem<T>) items.next();
+        return items.next();
     }
 
     /**
@@ -271,15 +279,16 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * Create a <code>WicketTester</code> for the specification.
      * <p>
      * By default, <code>WicketTester</code> is created as:
-     * <pre><blockquote><code>
-     *
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
      * return new BaseWicketTester(newApplication());
-     *
-     * </code></blockquote></pre>
-     *
-     * So, it is possible to overwrite <code>newApplication</code> if you just need
-     * a different <code>Application</code> for a specification.
-     *
+     * &lt;/code&gt;&lt;/blockquote&gt;
+     * </pre>
+     * 
+     * So, it is possible to overwrite <code>newApplication</code> if you just
+     * need a different <code>Application</code> for a specification.
+     * 
      * @see #newApplication()
      */
     protected BaseWicketTester newWicketTester() {
@@ -294,12 +303,14 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     }
 
     /**
-     * Select first component whose model object matches given Hamcrest matcher:
-     * <pre><blockquote><code>
-     *
+     * Select first component whose model object matches given Hamcrest
+     * matcher:
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
      * Item item = selectFirst(Item.class).which(is(0)).from(context);
-     *
-     * </code></blockquote></pre>
+     * &lt;/code&gt;&lt;/blockquote&gt;
+     * </pre>
      */
     public <S extends Component> Selection<S> selectFirst(final Class<S> type) {
         return new Selection<S>(type);
@@ -307,11 +318,12 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     /**
      * Select all components whose model objects match given Hamcrest matcher:
-     * <pre><blockquote><code>
-     *
-     * List<Label> labels = selectAll(Label.class).which(is(Person.class)).from(context);
-     *
-     * </code></blockquote></pre>
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
+     * List&lt;Label&gt; labels = selectAll(Label.class).which(is(Person.class)).from(context);
+     * &lt;/code&gt;&lt;/blockquote&gt;
+     * </pre>
      */
     public <S extends Component> MultiSelection<S> selectAll(final Class<S> type) {
         return new MultiSelection<S>(type);
@@ -319,11 +331,12 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     /**
      * Select first component whose Wicket id is given String:
-     * <pre><blockquote><code>
-     *
-     * Label itemName = selectFirst(Label.class, "name").from(context);
-     *
-     * </code></blockquote></pre>
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
+     * Label itemName = selectFirst(Label.class, &quot;name&quot;).from(context);
+     * &lt;/code&gt;&lt;/blockquote&gt;
+     * </pre>
      */
     public <S extends Component> Selection<S> selectFirst(final Class<S> type, final String wicketId) {
         return new Selection<S>(type, wicketId);
@@ -331,11 +344,12 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
 
     /**
      * Select all components whose ids are given Wicket id:
-     * <pre><blockquote><code>
-     *
-     * List<Label> prices = selectAll(Label.class, "price").from(context);
-     *
-     * </code></blockquote></pre>
+     * 
+     * <pre>
+     * &lt;blockquote&gt;&lt;code&gt;
+     * List&lt;Label&gt; prices = selectAll(Label.class, &quot;price&quot;).from(context);
+     * &lt;/code&gt;&lt;/blockquote&gt;
+     * </pre>
      */
     public <S extends Component> MultiSelection<S> selectAll(final Class<S> type,
             final String wicketId) {
@@ -343,13 +357,14 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     }
 
     /**
-     * Create a new instance of a Wicket component to be specified.
-     * <p
-     * The component must get given id. If the component is a <code>Page</code>,
+     * Create a new instance of a Wicket component to be specified. <p The
+     * component must get given id. If the component is a <code>Page</code>,
      * the id is null.
-     *
-     * @param id The id of a component, null if the component is a <code>Page</code>,
-     * @param model A model for the component which was passed in <code>startComponent</code> method.
+     * 
+     * @param id The id of a component, null if the component is a
+     *            <code>Page</code>,
+     * @param model A model for the component which was passed in
+     *            <code>startComponent</code> method.
      * @see #startComponent(IModel)
      */
     protected abstract C newComponent(String id, IModel<M> model);
