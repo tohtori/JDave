@@ -13,15 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package jdave.unfinalizer;
+package jdave.unfinalizer.agent;
+
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
 
 import java.lang.instrument.Instrumentation;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.unfinalizer.agent.InstrumentationAgent;
+import jdave.unfinalizer.internal.DelegatingClassFileTransformer;
 
-import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 /**
  * @author Tuomas Karkkainen
@@ -30,13 +35,9 @@ import org.junit.runner.RunWith;
 public class InstrumentationAgentSpec extends Specification<Void> {
     public class WhenPremainIsCalled {
         public void unfinalizingTransformerIsAdded() {
-            final Instrumentation instrumentation = mock(Instrumentation.class);
-            checking(new Expectations() {
-                {
-                    one(instrumentation).addTransformer(with(any(DelegatingClassFileTransformer.class)));
-                }
-            });
+            final Instrumentation instrumentation = Mockito.mock(Instrumentation.class);
             InstrumentationAgent.agentmain(null, instrumentation);
+            verify(instrumentation).addTransformer(isA(DelegatingClassFileTransformer.class));
         }
     }
 }

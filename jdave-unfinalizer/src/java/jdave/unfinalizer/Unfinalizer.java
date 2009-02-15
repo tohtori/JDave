@@ -15,44 +15,36 @@
  */
 package jdave.unfinalizer;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.util.List;
-import java.util.Properties;
+import jdave.unfinalizer.internal.Filter;
+import jdave.unfinalizer.internal.JVMHelper;
 
 import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 
 public class Unfinalizer {
-    public static void unfinalize() {
-        try {
-            final VirtualMachine jvm = VirtualMachine.attach(getJvm());
-            jvm.loadAgent(getJarPath(jvm.getSystemProperties()), null);
-            jvm.detach();
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static boolean initialized;
 
-    private static VirtualMachineDescriptor getJvm() {
-        final List<VirtualMachineDescriptor> jvms = VirtualMachine.list();
-        for (final VirtualMachineDescriptor virtualMachineDescriptor : jvms) {
-            final RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-            if (runtimeMxBean.getName().startsWith(virtualMachineDescriptor.id())) {
-                return virtualMachineDescriptor;
+    /**
+     * Removes final from classes and methods loaded <strong>after</strong> this
+     * is called.
+     * <p>
+     * Removing finals after a class has been loaded is not supported by the
+     * JVM. In a serial environment, such as running within your build tool, you
+     * currently have to use something silly like what I did in sample project
+     * if another test uses the classes you want to unfinalize before
+     * unfinalizer first runs.
+     * 
+     */
+    public synchronized static void unfinalize() {
+        if (!initialized) {
+            try {
+                final Filter filter = new Filter();
+                final VirtualMachine jvm = VirtualMachine.attach(filter.getCurrentJvm(new JVMHelper()));
+                jvm.loadAgent(filter.getUnfinalizerJarPath(jvm.getSystemProperties()));
+                jvm.detach();
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
             }
         }
-        throw new RuntimeException("could not find current virtual machine.");
-    }
-
-    private static String getJarPath(final Properties properties) {
-        final String classPath = properties.getProperty("java.class.path");
-        final String[] classPathItems = classPath.split(System.getProperty("path.separator"));
-        for (final String classPathItem : classPathItems) {
-            if (classPathItem.matches("(.*)jdave-unfinalizer(.*).jar")) {
-                return classPathItem;
-            }
-        }
-        throw new RuntimeException("cannot find jdave unfinalizer in class path");
+        initialized = true;
     }
 }

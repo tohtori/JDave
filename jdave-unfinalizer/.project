@@ -1,18 +1,13 @@
 <projectDescription>
   <name>jdave-unfinalizer</name>
   <comment/>
-  <projects>
-    <project>jdave-core</project>
-    <project>jdave-junit4</project>
-  </projects>
+  <projects/>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
-      <arguments/>
     </buildCommand>
     <buildCommand>
       <name>org.maven.ide.eclipse.maven2Builder</name>
-      <arguments/>
     </buildCommand>
   </buildSpec>
   <natures>

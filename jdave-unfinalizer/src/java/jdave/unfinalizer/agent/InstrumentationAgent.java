@@ -13,9 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package jdave.unfinalizer;
+package jdave.unfinalizer.agent;
 
 import java.lang.instrument.Instrumentation;
+
+import jdave.unfinalizer.internal.DelegatingClassFileTransformer;
+import jdave.unfinalizer.internal.UnfinalizingClassVisitorDelegator;
 
 /**
  * Adds unfinalizing transformer to instrumentation class loading stack.

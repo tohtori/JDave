@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package jdave.unfinalizer;
+package jdave.unfinalizer.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +23,9 @@ import jdave.junit4.JDaveRunner;
 import jdave.unfinalizer.fake.ClassWithFinalMethod;
 import jdave.unfinalizer.fake.FinalClass;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.runner.RunWith;
 import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassReader;
@@ -39,7 +42,7 @@ public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
     public class WhenClassIsFinal {
         public void isMadeNonFinal() throws IOException {
             final byte[] nonFinalClass = new UnfinalizingClassVisitorDelegator().transform(getOriginalClassAsByteArray(FinalClass.class));
-            specify(classIsNotFinal(nonFinalClass));
+            specify(nonFinalClass, isNotFinal());
         }
     }
 
@@ -47,7 +50,7 @@ public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
         public void theMethodIsMadeNonFinal() throws IOException {
             final byte[] classWithoutFinalMethods = new UnfinalizingClassVisitorDelegator()
                     .transform(getOriginalClassAsByteArray(ClassWithFinalMethod.class));
-            specify(classHasNoFinalMethods(classWithoutFinalMethods));
+            specify(classWithoutFinalMethods, hasNoFinalMethods());
         }
     }
 
@@ -60,23 +63,39 @@ public class UnfinalizingClassVisitorDelegatorSpec extends Specification<Void> {
         return originalClassBytes;
     }
 
-    boolean classIsNotFinal(final byte[] nonFinalClass) {
-        final ClassReader classReader = new ClassReader(nonFinalClass);
-        return (classReader.getAccess() & Opcodes.ACC_FINAL) == 0;
+    private Matcher<byte[]> isNotFinal() {
+        return new BaseMatcher<byte[]>() {
+            public void describeTo(final Description description) {
+            }
+
+            public boolean matches(final Object item) {
+                final byte[] classBytes = (byte[]) item;
+                final ClassReader classReader = new ClassReader(classBytes);
+                return (classReader.getAccess() & Opcodes.ACC_FINAL) == 0;
+            }
+        };
     }
 
-    boolean classHasNoFinalMethods(final byte[] classWithoutFinalMethods) {
-        final ClassReader classReader = new ClassReader(classWithoutFinalMethods);
-        final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        final FinalMethodFindingClassAdapter classAdapter = new FinalMethodFindingClassAdapter(writer);
-        classReader.accept(classAdapter, ClassReader.SKIP_FRAMES);
-        return !classAdapter.hasFinalMethod;
+    private Matcher<byte[]> hasNoFinalMethods() {
+        return new BaseMatcher<byte[]>() {
+            public boolean matches(final Object item) {
+                final byte[] classWithoutFinalMethods = (byte[]) item;
+                final ClassReader classReader = new ClassReader(classWithoutFinalMethods);
+                final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+                final FinalMethodFindingClassAdapter classAdapter = new FinalMethodFindingClassAdapter(writer);
+                classReader.accept(classAdapter, ClassReader.SKIP_FRAMES);
+                return !classAdapter.hasFinalMethod;
+            }
+
+            public void describeTo(final Description description) {
+            }
+        };
     }
 
-    private final class FinalMethodFindingClassAdapter extends ClassAdapter {
-        protected boolean hasFinalMethod;
+    private static final class FinalMethodFindingClassAdapter extends ClassAdapter {
+        private boolean hasFinalMethod;
 
-        FinalMethodFindingClassAdapter(final ClassVisitor classVisitor) {
+        private FinalMethodFindingClassAdapter(final ClassVisitor classVisitor) {
             super(classVisitor);
         }
 

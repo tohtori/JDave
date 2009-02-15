@@ -13,13 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package jdave.unfinalizer;
+package jdave.unfinalizer.internal;
 
+import static org.mockito.Mockito.when;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
-import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 /**
  * @author Tuomas Karkkainen
@@ -30,19 +31,14 @@ public class DelegatingClassFileTransformerSpec extends Specification<Delegating
         ClassVisitorDelegator delegator;
 
         public DelegatingClassFileTransformer create() {
-            delegator = mock(ClassVisitorDelegator.class);
+            delegator = Mockito.mock(ClassVisitorDelegator.class);
             return new DelegatingClassFileTransformer(delegator);
         }
 
         public void unfinalizesClass() throws Exception {
             final byte[] originalBytes = new byte[] { 1, 2, 3 };
             final byte[] transformedBytes = new byte[] { 4, 5, 6 };
-            checking(new Expectations() {
-                {
-                    one(delegator).transform(originalBytes);
-                    will(returnValue(transformedBytes));
-                }
-            });
+            when(delegator.transform(originalBytes)).thenReturn(transformedBytes);
             final byte[] resultBytes = context.transform(ClassLoader.getSystemClassLoader(), "lol", String.class, String.class
                     .getProtectionDomain(), originalBytes);
             specify(transformedBytes, equal(resultBytes));
