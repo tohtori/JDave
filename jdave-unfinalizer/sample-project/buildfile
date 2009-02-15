@@ -4,7 +4,7 @@ basedir = File.dirname(__FILE__)
 require "buildr"
 
 define "sample-project" do
-  compile.options.other = ["-encoding", "utf-8", "-target", "1.5"]
+  compile.options.other = ["-encoding", "utf-8", "-target", "1.6"]
   test.using :java_args => Array(ENV["JAVA_OPTIONS"].split(' '))
   
   test.with("#{ENV["JAVA_HOME"]}/lib/tools.jar")  

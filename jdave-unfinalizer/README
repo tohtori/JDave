@@ -1,1 +1,38 @@
-FIXME: write this
+So you want to mock finals?
+Now you can.
+
+Step 1.  Call Unfinalizer.unfinalize(); in your tests before any of the classes containing finals are loaded.
+--
+
+Contacting me: Please send any comments to tuomas dot karkkainen at ri dot fi.
+I would love to know if anyone is able to use this.
+--
+
+Step 2.  When running in your build tool, and the forking mode is such that several test classes
+are run in the same jvm one after another, you must take care to run unfinalize() before anyone uses
+the classes with finals in them.
+
+Step 2b.  The sample project demonstrates the problem and a naive fix.  
+AardvarkTest is run before AcceptanceTest and uses AClass which is final.  
+AcceptanceTest can no longer unfinalize it.  The silly fix is a test class that starts with a lot of A's,
+and simply calls Unfinalizer.unfinalize().  
+
+Step 2c.  Maybe it would make more sense to have buildr automatically do something about this, 
+like redefine the "tests" method to add a secret run of unfinalizer at the head of the list.  
+--
+
+Ramblings.
+
+The previous version, with Java 5, required some -javaagent: stuff and in general was not very usable.  
+You had to make sure your build tool did the same thing as your IDE, 
+you had to include tools.jar from the jdk's lib dir,
+you had to make sure everyone's IDE did the same as yours.
+  
+In your ide, you maybe needed to add the -javaagent stuff to every single test class.
+
+Blah.
+
+Java 6 attach to the rescue.  
+In short, VirtualMachine.attach() allows you to add agents programmatically after the JVM has been started.
+
+If you like that, you may want to try the netbeans 6.5 profiler with dynamic attach.
