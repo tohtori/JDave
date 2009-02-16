@@ -16,7 +16,6 @@
 package jdave.unfinalizer.internal;
 
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 /**
@@ -40,7 +39,7 @@ public class DelegatingClassFileTransformer implements ClassFileTransformer {
     }
 
     public byte[] transform(final ClassLoader loader, final String className, final Class<?> classBeingRedefined,
-            final ProtectionDomain protectionDomain, final byte[] classfileBuffer) throws IllegalClassFormatException {
+            final ProtectionDomain protectionDomain, final byte[] classfileBuffer) {
         if (loader == null) {
             return classfileBuffer;
         }

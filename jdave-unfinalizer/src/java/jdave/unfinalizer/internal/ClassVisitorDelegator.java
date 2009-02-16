@@ -15,9 +15,9 @@
  */
 package jdave.unfinalizer.internal;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
+import jdave.org.objectweb.asm.ClassReader;
+import jdave.org.objectweb.asm.ClassVisitor;
+import jdave.org.objectweb.asm.ClassWriter;
 
 /**
  * Delegate class file in byte array to an ASM ClassVisitor and returns

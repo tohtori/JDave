@@ -15,10 +15,10 @@
  */
 package jdave.unfinalizer.internal;
 
-import org.objectweb.asm.ClassAdapter;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import jdave.org.objectweb.asm.ClassAdapter;
+import jdave.org.objectweb.asm.ClassVisitor;
+import jdave.org.objectweb.asm.MethodVisitor;
+import jdave.org.objectweb.asm.Opcodes;
 
 /**
  * Removes final from both class level and methods. Otherwise delegates to

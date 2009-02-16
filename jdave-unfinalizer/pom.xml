@@ -25,16 +25,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>asm</groupId>
-      <artifactId>asm</artifactId>
-      <version>3.0</version>
-    </dependency>
-    <dependency>
-      <groupId>asm</groupId>
-      <artifactId>asm-commons</artifactId>
-      <version>3.0</version>
-    </dependency>
-    <dependency>
      <groupId>org.mockito</groupId>
   <artifactId>mockito-all</artifactId>
   <version>1.7</version>

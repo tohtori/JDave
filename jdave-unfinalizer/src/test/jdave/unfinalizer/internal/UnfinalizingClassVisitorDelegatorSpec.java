@@ -20,6 +20,12 @@ import java.io.InputStream;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.org.objectweb.asm.ClassAdapter;
+import jdave.org.objectweb.asm.ClassReader;
+import jdave.org.objectweb.asm.ClassVisitor;
+import jdave.org.objectweb.asm.ClassWriter;
+import jdave.org.objectweb.asm.MethodVisitor;
+import jdave.org.objectweb.asm.Opcodes;
 import jdave.unfinalizer.fake.ClassWithFinalMethod;
 import jdave.unfinalizer.fake.FinalClass;
 
@@ -27,12 +33,6 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.runner.RunWith;
-import org.objectweb.asm.ClassAdapter;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 /**
  * @author Tuomas Karkkainen

@@ -28,7 +28,7 @@ import org.mockito.Mockito;
 @RunWith(JDaveRunner.class)
 public class DelegatingClassFileTransformerSpec extends Specification<DelegatingClassFileTransformer> {
     public class WhenLoaderIsNotNull {
-        ClassVisitorDelegator delegator;
+        private ClassVisitorDelegator delegator;
 
         public DelegatingClassFileTransformer create() {
             delegator = Mockito.mock(ClassVisitorDelegator.class);
@@ -46,7 +46,7 @@ public class DelegatingClassFileTransformerSpec extends Specification<Delegating
     }
 
     public class WhenLoaderIsNull {
-        ClassVisitorDelegator delegator;
+        private ClassVisitorDelegator delegator;
 
         public DelegatingClassFileTransformer create() {
             delegator = mock(ClassVisitorDelegator.class);

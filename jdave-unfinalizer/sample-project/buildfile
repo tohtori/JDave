@@ -18,6 +18,4 @@ define "sample-project" do
   test.with("org.hamcrest:hamcrest-core:jar:1.1")
   test.with("org.hamcrest:hamcrest-library:jar:1.1")
   test.with("cglib:cglib-nodep:jar:2.1_3")
-  test.with("asm:asm:jar:3.0")
-  test.with("asm:asm-commons:jar:3.0")
 end	
