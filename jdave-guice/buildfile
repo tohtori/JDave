@@ -15,7 +15,6 @@ define "jdave-guice", :version=>jdave_version, :group=>"org.jdave" do
   compile.options.other = ["-encoding", "utf-8", "-target", "1.6"]
   test.with("org.jdave:jdave-core:jar:#{jdave_version}")
   test.with("org.jdave:jdave-junit4:jar:#{jdave_version}")  
-  test.with("org.jdave:jdave-unfinalizer:jar:#{jdave_version}")
   test.with("junit:junit:jar:4.5")
   test.with("org.jmock:jmock-legacy:jar:2.4.0")
   test.with("org.jmock:jmock:jar:2.4.0")
