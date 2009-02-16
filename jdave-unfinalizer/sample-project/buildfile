@@ -3,19 +3,25 @@ ENV["JAVA_OPTIONS"] = "-Xms512m -Xmx1024m  -XX:+UseParallelGC -XX:PermSize=128M 
 basedir = File.dirname(__FILE__)
 require "buildr"
 
+repositories.remote << "http://repo1.maven.org/maven2"  
+repositories.remote << "http://www.laughingpanda.org/maven2"
+repositories.remote << "http://www.laughingpanda.org/maven2/snapshots"
+
 define "sample-project" do
-  compile.options.other = ["-encoding", "utf-8", "-target", "1.6"]
-  test.using :java_args => Array(ENV["JAVA_OPTIONS"].split(' '))
   
+  compile.options.other = ["-encoding", "utf-8", "-target", "1.6"]
+  jdave_version="1.2-SNAPSHOT"  
   test.with("#{ENV["JAVA_HOME"]}/lib/tools.jar")  
   test.with("junit:junit:jar:4.5")
-  test.with("org.jdave:jdave-core:jar:1.2-SNAPSHOT")
-  test.with("org.jdave:jdave-junit4:jar:1.2-SNAPSHOT")  
-  test.with("org.jdave:jdave-unfinalizer:jar:1.2-SNAPSHOT")
+  test.with("org.jdave:jdave-core:jar:#{jdave_version}")
+  test.with("org.jdave:jdave-junit4:jar:#{jdave_version}")  
+  test.with("org.jdave:jdave-unfinalizer:jar:#{jdave_version}")
   test.with("org.jmock:jmock-legacy:jar:2.4.0")
   test.with("org.jmock:jmock:jar:2.4.0")
   test.with("org.objenesis:objenesis:jar:1.1")
   test.with("org.hamcrest:hamcrest-core:jar:1.1")
   test.with("org.hamcrest:hamcrest-library:jar:1.1")
-  test.with("cglib:cglib-nodep:jar:2.1_3")
+  test.with("cglib:cglib-nodep:jar:2.1_3")    
+  ENV["JAVA_OPTIONS"] += "-javaagent:\"#{Artifact::lookup("org.jdave:jdave-unfinalizer:jar:#{jdave_version}").to_s}\" "
+  test.using :java_args => Array(ENV["JAVA_OPTIONS"].split(' '))  
 end	

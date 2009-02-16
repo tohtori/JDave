@@ -12,13 +12,32 @@ Step 2.  When running in your build tool, and the forking mode is such that seve
 are run in the same jvm one after another, you must take care to run unfinalize() before anyone uses
 the classes with finals in them.
 
-Step 2b.  The sample project demonstrates the problem and a naive fix.  
+The sample project demonstrates the problem and a fix.  
 AardvarkTest is run before AcceptanceTest and uses AClass which is final.  
-AcceptanceTest can no longer unfinalize it.  The silly fix is a test class that starts with a lot of A's,
-and simply calls Unfinalizer.unfinalize().  
+AcceptanceTest can no longer unfinalize it.  
 
-Step 2c.  Maybe it would make more sense to have buildr automatically do something about this, 
-like redefine the "tests" method to add a secret run of unfinalizer at the head of the list.  
+To fix this, load unfinalizer in the build tool as an old fashioned agent:
+
+ENV["JAVA_OPTIONS"] += "-javaagent:\"#{Artifact::lookup("org.jdave:jdave-unfinalizer:jar:#{jdave_version}").to_s}\""
+--
+
+Dependencies.
+
+The only runtime dependency is tools.jar from your jdk.
+
+that is:
+test.with("#{ENV["JAVA_HOME"]}/lib/tools.jar")
+or 
+	<dependency>
+	    <groupId>com.sun</groupId>
+	    <artifactId>tools</artifactId>
+	    <version>1.6.0</version>
+	    <scope>system</scope>
+		<systemPath>${java.home}/../lib/tools.jar</systemPath>
+	</dependency>
+
+I couldn't get the maven thing to work so well with surefire.  You may want to read:
+http://maven.apache.org/plugins/maven-surefire-plugin/examples/class-loading.html
 --
 
 Ramblings.

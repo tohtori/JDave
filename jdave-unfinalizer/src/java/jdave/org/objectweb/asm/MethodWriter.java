@@ -919,7 +919,7 @@ class MethodWriter implements MethodVisitor {
                 code.putShort(8); // jump offset
                 code.putByte(200); // GOTO_W
             }
-            label.put(this, code, code.length - 1, true);
+            label.put(code, code.length - 1, true);
         } else {
             /*
              * case of a backward jump with an offset >= -32768, or of a forward
@@ -928,7 +928,7 @@ class MethodWriter implements MethodVisitor {
              * resizeInstructions, if needed).
              */
             code.putByte(opcode);
-            label.put(this, code, code.length - 1, false);
+            label.put(code, code.length - 1, false);
         }
         if (currentBlock != null) {
             if (nextInsn != null) {
@@ -946,7 +946,7 @@ class MethodWriter implements MethodVisitor {
 
     public void visitLabel(final Label label) {
         // resolves previous forward references to label, if any
-        resize |= label.resolve(this, code.length, code.data);
+        resize |= label.resolve(code.length, code.data);
         // updates currentBlock
         if ((label.status & Label.DEBUG) != 0) {
             return;
@@ -1064,10 +1064,10 @@ class MethodWriter implements MethodVisitor {
         int source = code.length;
         code.putByte(Opcodes.TABLESWITCH);
         code.length += (4 - code.length % 4) % 4;
-        dflt.put(this, code, source, true);
+        dflt.put(code, source, true);
         code.putInt(min).putInt(max);
         for (int i = 0; i < labels.length; ++i) {
-            labels[i].put(this, code, source, true);
+            labels[i].put(code, source, true);
         }
         // updates currentBlock
         visitSwitchInsn(dflt, labels);
@@ -1082,11 +1082,11 @@ class MethodWriter implements MethodVisitor {
         int source = code.length;
         code.putByte(Opcodes.LOOKUPSWITCH);
         code.length += (4 - code.length % 4) % 4;
-        dflt.put(this, code, source, true);
+        dflt.put(code, source, true);
         code.putInt(labels.length);
         for (int i = 0; i < labels.length; ++i) {
             code.putInt(keys[i]);
-            labels[i].put(this, code, source, true);
+            labels[i].put(code, source, true);
         }
         // updates currentBlock
         visitSwitchInsn(dflt, labels);
@@ -1500,7 +1500,7 @@ class MethodWriter implements MethodVisitor {
             Label l = new Label();
             l.frame = new Frame();
             l.frame.owner = l;
-            l.resolve(this, code.length, code.data);
+            l.resolve(code.length, code.data);
             previousBlock.successor = l;
             previousBlock = l;
         } else {
@@ -1815,11 +1815,7 @@ class MethodWriter implements MethodVisitor {
                 size += 8 + stackMap.length;
             }
             if (cattrs != null) {
-                size += cattrs.getSize(cw,
-                        code.data,
-                        code.length,
-                        maxStack,
-                        maxLocals);
+                size += cattrs.getSize(cw);
             }
         }
         if (exceptionCount > 0) {
@@ -1868,7 +1864,7 @@ class MethodWriter implements MethodVisitor {
             }
         }
         if (attrs != null) {
-            size += attrs.getSize(cw, null, 0, -1, -1);
+            size += attrs.getSize(cw);
         }
         return size;
     }
@@ -1937,11 +1933,7 @@ class MethodWriter implements MethodVisitor {
                 size += 8 + stackMap.length;
             }
             if (cattrs != null) {
-                size += cattrs.getSize(cw,
-                        code.data,
-                        code.length,
-                        maxStack,
-                        maxLocals);
+                size += cattrs.getSize(cw);
             }
             out.putShort(cw.newUTF8("Code")).putInt(size);
             out.putShort(maxStack).putShort(maxLocals);
@@ -1996,7 +1988,7 @@ class MethodWriter implements MethodVisitor {
                 out.putByteArray(stackMap.data, 0, stackMap.length);
             }
             if (cattrs != null) {
-                cattrs.put(cw, code.data, code.length, maxLocals, maxStack, out);
+                cattrs.put(cw, out);
             }
         }
         if (exceptionCount > 0) {
@@ -2042,7 +2034,7 @@ class MethodWriter implements MethodVisitor {
             AnnotationWriter.put(ipanns, synthetics, out);
         }
         if (attrs != null) {
-            attrs.put(cw, null, 0, -1, -1, out);
+            attrs.put(cw, out);
         }
     }
 

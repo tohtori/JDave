@@ -146,7 +146,7 @@ public class ClassReader {
      *            the bytecode of the class to be read.
      */
     public ClassReader(final byte[] b) {
-        this(b, 0, b.length);
+        this(b, 0);
     }
 
     /**
@@ -156,10 +156,8 @@ public class ClassReader {
      *            the bytecode of the class to be read.
      * @param off
      *            the start offset of the class data.
-     * @param len
-     *            the length of the class data.
      */
-    public ClassReader(final byte[] b, final int off, final int len) {
+    public ClassReader(final byte[] b, final int off) {
         this.b = b;
         // parses the constant pool
         items = new int[readUnsignedShort(off + 8)];
@@ -519,7 +517,7 @@ public class ClassReader {
             } else if (ANNOTATIONS && "RuntimeInvisibleAnnotations".equals(attrName)) {
                 ianns = v + 6;
             } else {
-                attr = readAttribute(attrs, attrName, v + 6, readInt(v + 2), c, -1, null);
+                attr = readAttribute(attrs, attrName, v + 6, readInt(v + 2));
                 if (attr != null) {
                     attr.next = cattrs;
                     cattrs = attr;
@@ -600,7 +598,7 @@ public class ClassReader {
                 } else if (ANNOTATIONS && "RuntimeInvisibleAnnotations".equals(attrName)) {
                     ianns = u + 6;
                 } else {
-                    attr = readAttribute(attrs, attrName, u + 6, readInt(u + 2), c, -1, null);
+                    attr = readAttribute(attrs, attrName, u + 6, readInt(u + 2));
                     if (attr != null) {
                         attr.next = cattrs;
                         cattrs = attr;
@@ -683,7 +681,7 @@ public class ClassReader {
                 } else if (ANNOTATIONS && "RuntimeInvisibleParameterAnnotations".equals(attrName)) {
                     impanns = u;
                 } else {
-                    attr = readAttribute(attrs, attrName, u, attrSize, c, -1, null);
+                    attr = readAttribute(attrs, attrName, u, attrSize);
                     if (attr != null) {
                         attr.next = cattrs;
                         cattrs = attr;
@@ -964,7 +962,7 @@ public class ClassReader {
                     } else {
                         for (k = 0; k < attrs.length; ++k) {
                             if (attrs[k].type.equals(attrName)) {
-                                attr = attrs[k].read(this, v + 6, readInt(v + 2), c, codeStart - 8, labels);
+                                attr = attrs[k].read(this, v + 6, readInt(v + 2));
                                 if (attr != null) {
                                     attr.next = cattrs;
                                     cattrs = attr;
@@ -1610,30 +1608,16 @@ public class ClassReader {
      *            account here (they have already been read).
      * @param len
      *            the length of the attribute's content.
-     * @param buf
-     *            buffer to be used to call {@link #readUTF8 readUTF8},
-     *            {@link #readClass(int,char[]) readClass} or {@link #readConst
-     *            readConst}.
-     * @param codeOff
-     *            index of the first byte of code's attribute content in
-     *            {@link #b b}, or -1 if the attribute to be read is not a code
-     *            attribute. The 6 attribute header bytes, containing the type
-     *            and the length of the attribute, are not taken into account
-     *            here.
-     * @param labels
-     *            the labels of the method's code, or <tt>null</tt> if the
-     *            attribute to be read is not a code attribute.
      * @return the attribute that has been read, or <tt>null</tt> to skip this
      *         attribute.
      */
-    private Attribute readAttribute(final Attribute[] attrs, final String type, final int off, final int len, final char[] buf,
-            final int codeOff, final Label[] labels) {
+    private Attribute readAttribute(final Attribute[] attrs, final String type, final int off, final int len) {
         for (int i = 0; i < attrs.length; ++i) {
             if (attrs[i].type.equals(type)) {
-                return attrs[i].read(this, off, len, buf, codeOff, labels);
+                return attrs[i].read(this, off, len);
             }
         }
-        return new Attribute(type).read(this, off, len, null, -1, null);
+        return new Attribute(type).read(this, off, len);
     }
 
     // ------------------------------------------------------------------------

@@ -201,7 +201,7 @@ final class FieldWriter implements FieldVisitor {
             size += 8 + ianns.getSize();
         }
         if (attrs != null) {
-            size += attrs.getSize(cw, null, 0, -1, -1);
+            size += attrs.getSize(cw);
         }
         return size;
     }
@@ -263,7 +263,7 @@ final class FieldWriter implements FieldVisitor {
             ianns.put(out);
         }
         if (attrs != null) {
-            attrs.put(cw, null, 0, -1, -1, out);
+            attrs.put(cw, out);
         }
     }
 }

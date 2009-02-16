@@ -263,9 +263,6 @@ public class Label {
      * position of the label is known, the offset is computed and written
      * directly. Otherwise, a null offset is written and a new forward reference
      * is declared for this label.
-     * 
-     * @param owner
-     *            the code writer that calls this method.
      * @param out
      *            the bytecode of the method.
      * @param source
@@ -274,10 +271,11 @@ public class Label {
      * @param wideOffset
      *            <tt>true</tt> if the reference must be stored in 4 bytes, or
      *            <tt>false</tt> if it must be stored with 2 bytes.
+     * 
      * @throws IllegalArgumentException
      *             if this label has not been created by the given code writer.
      */
-    void put(final MethodWriter owner, final ByteVector out, final int source, final boolean wideOffset) {
+    void put(final ByteVector out, final int source, final boolean wideOffset) {
         if ((status & RESOLVED) == 0) {
             if (wideOffset) {
                 addReference(-1 - source, out.length);
@@ -326,13 +324,11 @@ public class Label {
      * when this label is added to the bytecode of the method, i.e. when its
      * position becomes known. This method fills in the blanks that where left
      * in the bytecode by each forward reference previously added to this label.
-     * 
-     * @param owner
-     *            the code writer that calls this method.
      * @param position
      *            the position of this label in the bytecode.
      * @param data
      *            the bytecode of the method.
+     * 
      * @return <tt>true</tt> if a blank that was left for this label was to
      *         small to store the offset. In such a case the corresponding jump
      *         instruction is replaced with a pseudo instruction (using unused
@@ -344,7 +340,7 @@ public class Label {
      *             if this label has already been resolved, or if it has not
      *             been created by the given code writer.
      */
-    boolean resolve(final MethodWriter owner, final int position, final byte[] data) {
+    boolean resolve(final int position, final byte[] data) {
         boolean needUpdate = false;
         this.status |= RESOLVED;
         this.position = position;

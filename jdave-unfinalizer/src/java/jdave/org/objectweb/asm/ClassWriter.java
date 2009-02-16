@@ -729,7 +729,7 @@ public class ClassWriter implements ClassVisitor {
         }
         if (attrs != null) {
             attributeCount += attrs.getCount();
-            size += attrs.getSize(this, null, 0, -1, -1);
+            size += attrs.getSize(this);
         }
         size += pool.length;
         // allocates a byte vector of this size, in order to avoid unnecessary
@@ -790,7 +790,7 @@ public class ClassWriter implements ClassVisitor {
             ianns.put(out);
         }
         if (attrs != null) {
-            attrs.put(this, null, 0, -1, -1, out);
+            attrs.put(this, out);
         }
         if (invalidFrames) {
             final ClassWriter cw = new ClassWriter(COMPUTE_FRAMES);
@@ -1141,7 +1141,7 @@ public class ClassWriter implements ClassVisitor {
         key.set(TYPE_NORMAL, type, null, null);
         Item result = get(key);
         if (result == null) {
-            result = addType(key);
+            result = addType();
         }
         return result.index;
     }
@@ -1165,7 +1165,7 @@ public class ClassWriter implements ClassVisitor {
         key.hashCode = 0x7FFFFFFF & TYPE_UNINIT + type.hashCode() + offset;
         Item result = get(key);
         if (result == null) {
-            result = addType(key);
+            result = addType();
         }
         return result.index;
     }
@@ -1173,12 +1173,10 @@ public class ClassWriter implements ClassVisitor {
     /**
      * Adds the given Item to {@link #typeTable}.
      * 
-     * @param item
-     *            the value to be added to the type table.
      * @return the added Item, which a new Item instance with the same value as
      *         the given Item.
      */
-    private Item addType(final Item item) {
+    private Item addType() {
         ++typeCount;
         final Item result = new Item(typeCount, key);
         put(result);

@@ -28,6 +28,15 @@ import jdave.unfinalizer.internal.UnfinalizingClassVisitorDelegator;
 public class InstrumentationAgent {
     public static void agentmain(@SuppressWarnings("unused")
     final String agentArgs, final Instrumentation instrumentation) {
+        addTransformer(instrumentation);
+    }
+
+    public static void premain(@SuppressWarnings("unused")
+    final String agentArgs, final Instrumentation instrumentation) {
+        addTransformer(instrumentation);
+    }
+
+    private static void addTransformer(final Instrumentation instrumentation) {
         instrumentation.addTransformer(new DelegatingClassFileTransformer(new UnfinalizingClassVisitorDelegator()));
     }
 }
