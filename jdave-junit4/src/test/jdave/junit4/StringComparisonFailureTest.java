@@ -15,29 +15,28 @@
  */
 package jdave.junit4;
 
+import static org.junit.Assert.assertEquals;
+import jdave.Specification;
+import junit.framework.ComparisonFailure;
 import org.junit.Test;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
-import jdave.Specification;
-import junit.framework.ComparisonFailure;
-import junit.framework.TestCase;
-
-public class StringComparisonFailureTest extends TestCase {
+public class StringComparisonFailureTest {
     private Throwable actualException;
-    
+
     @Test
     public void testThrowsComparisonFailureExceptionWhenComparingNonEqualStrings() {
-        JDaveRunner runner = new JDaveRunner(FailingSpec.class);
+        final JDaveRunner runner = new JDaveRunner(FailingSpec.class);
         runner.run(new RunNotifier() {
             @Override
-            public void fireTestFailure(Failure failure) {
+            public void fireTestFailure(final Failure failure) {
                 actualException = failure.getException();
             }
         });
         assertEquals(ComparisonFailure.class, actualException.getClass());
     }
-    
+
     public static class FailingSpec extends Specification<Void> {
         public class FailingContext {
             public void failingBehavior() {

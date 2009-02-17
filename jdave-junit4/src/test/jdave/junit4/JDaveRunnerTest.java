@@ -15,17 +15,19 @@
  */
 package jdave.junit4;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
-
+import jdave.Specification;
 import jdave.junit4.specs.DiverseSpec;
-import junit.framework.TestCase;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
@@ -33,17 +35,16 @@ import org.junit.runner.notification.StoppedByUserException;
 /**
  * @author Lasse Koskela
  */
-public class JDaveRunnerTest extends TestCase {
+public class JDaveRunnerTest {
     private NarrativeCreatingRunNotifier notifier;
 
-    @Override
     @Before
     public void setUp() {
         notifier = new NarrativeCreatingRunNotifier();
-        JDaveRunner runner = new JDaveRunner(DiverseSpec.class);
+        final JDaveRunner runner = new JDaveRunner(DiverseSpec.class);
         runner.run(notifier);
     }
-    
+
     @Test
     public void testBothContextsAreStartedAndFinished() throws Exception {
         shouldHaveHappened("fireTestStarted:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
@@ -51,7 +52,7 @@ public class JDaveRunnerTest extends TestCase {
         shouldHaveHappened("fireTestStarted:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
         shouldHaveHappened("fireTestFinished:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
     }
-    
+
     @Test
     public void testFailingSpecMethodsAreRecordedWithFailure() throws Exception {
         shouldHaveHappened("fireTestStarted:fails(jdave.junit4.specs.DiverseSpec$FirstContext)");
@@ -69,49 +70,77 @@ public class JDaveRunnerTest extends TestCase {
         shouldNotHaveHappened("fireTestFailure:passes(jdave.junit4.specs.DiverseSpec$FirstContext)");
     }
 
-    private void shouldHaveHappened(String event) {
-        Assert.assertTrue("Expected event '" + event + "' didn't happen!", eventHappened(event));
+    @Test
+    public void testParameterCanBeASpecificationClass() {
+        final Description description = new JDaveRunner(ASpec.class).getDescription();
+        assertThat(description.toString(), is("jdave.junit4.JDaveRunnerTest$ASpec"));
     }
 
-    private boolean eventHappened(String event) {
+    @Test
+    public void parameterCanBeAContextClass() {
+        final Description description = new JDaveRunner(
+                jdave.junit4.JDaveRunnerTest.ASpec.AContext.class).getDescription();
+        assertThat(description.toString(), is("jdave.junit4.JDaveRunnerTest$ASpec"));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void parameterCanNotBeAnythingElse() {
+        new JDaveRunner(Object.class);
+    }
+
+    @RunWith(JDaveRunner.class)
+    private static class ASpec extends Specification<Void> {
+        public class AContext {
+            public void aBehavior() {
+                specify(true);
+            }
+        }
+    }
+
+    private void shouldHaveHappened(final String event) {
+        assertTrue("Expected event '" + event + "' didn't happen!", eventHappened(event));
+    }
+
+    private boolean eventHappened(final String event) {
         return notifier.events.contains(event);
     }
 
-    private void shouldNotHaveHappened(String event) {
-        String msg = "Event '" + event + "' happened against our expectation!";
-        Assert.assertFalse(msg, eventHappened(event));
+    private void shouldNotHaveHappened(final String event) {
+        final String msg = "Event '" + event + "' happened against our expectation!";
+        assertFalse(msg, eventHappened(event));
     }
 
     class NarrativeCreatingRunNotifier extends RunNotifier {
         public List<String> events = new ArrayList<String>();
 
         @Override
-        public void fireTestRunStarted(Description description) {
+        public void fireTestRunStarted(final Description description) {
             events.add("fireTestRunStarted:" + description.getDisplayName());
         }
 
         @Override
-        public void fireTestStarted(Description description) throws StoppedByUserException {
+        public void fireTestStarted(final Description description) throws StoppedByUserException {
             events.add("fireTestStarted:" + description.getDisplayName());
         }
 
         @Override
-        public void fireTestFinished(Description description) {
+        public void fireTestFinished(final Description description) {
             events.add("fireTestFinished:" + description.getDisplayName());
         }
 
         @Override
-        public void fireTestFailure(Failure failure) {
+        public void fireTestFailure(final Failure failure) {
             events.add("fireTestFailure:" + failure.getDescription().getDisplayName());
         }
 
         @Override
-        public void fireTestIgnored(Description description) {
+        public void fireTestIgnored(final Description description) {
             throw new RuntimeException("fireTestIgnored shouldn't be used!");
         }
 
         @Override
-        public void fireTestRunFinished(Result result) {
+        public void fireTestRunFinished(final Result result) {
             events.add("fireTestRunFinished");
         }
     }

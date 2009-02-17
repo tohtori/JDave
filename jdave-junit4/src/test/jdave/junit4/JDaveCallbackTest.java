@@ -23,7 +23,6 @@ import jdave.runner.Behavior;
 import jdave.runner.Context;
 import jdave.runner.ExecutingBehavior;
 import jdave.runner.IBehaviorResults;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -36,7 +35,7 @@ import org.junit.runner.notification.StoppedByUserException;
 /**
  * @author Lasse Koskela
  */
-public class JDaveCallbackTest extends TestCase {
+public class JDaveCallbackTest {
     private final class FakeBehavior extends ExecutingBehavior {
         private final Class<?> target;
         public boolean allowedToRun = true;
@@ -98,7 +97,6 @@ public class JDaveCallbackTest extends TestCase {
     private JDaveCallback callback;
     private RunNotifier notifier;
 
-    @Override
     @Before
     public void setUp() throws Exception {
         notifier = new RunNotifier() {
@@ -129,6 +127,7 @@ public class JDaveCallbackTest extends TestCase {
         callback = new JDaveCallback(notifier);
     }
 
+    @Test
     public void testIfFilterIsSetAndItSaysRunThenRun() throws NoSuchMethodException {
         final Behavior method = createSpecMethodByName(getClass(), "testEventOrder");
         callback = new JDaveCallback(notifier, new AlwaysFilter(true));
@@ -136,6 +135,7 @@ public class JDaveCallbackTest extends TestCase {
 
     }
 
+    @Test
     public void testIfFilterIsSetAndItSaysDontRunThenDontRun() throws NoSuchMethodException {
         final FakeBehavior method = createSpecMethodByName(getClass(), "testEventOrder");
         method.allowedToRun = false;

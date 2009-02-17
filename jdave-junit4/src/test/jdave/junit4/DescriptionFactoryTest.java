@@ -1,17 +1,16 @@
 package jdave.junit4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
 import jdave.Specification;
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.Description;
 
-public class DescriptionFactoryTest extends TestCase {
+public class DescriptionFactoryTest {
     private Description desc;
 
     public static class ExampleSpec extends Specification<Stack<String>> {
@@ -50,39 +49,43 @@ public class DescriptionFactoryTest extends TestCase {
     }
 
     @Before
-    @Override
     public void setUp() throws Exception {
         desc = DescriptionFactory.create(ExampleSpec.class);
     }
 
     @Test
-    public void testTopLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName() throws Exception {
+    public void testTopLevelDescriptionShouldBeTheSpecificationsFullyQualifiedClassName()
+            throws Exception {
         assertEquals(ExampleSpec.class.getName(), desc.getDisplayName());
     }
 
     @Test
     public void testTopLevelDescriptionShouldHaveOneChildPerEachContextClass() throws Exception {
-        List<Description> children = desc.getChildren();
+        final List<Description> children = desc.getChildren();
         assertEquals(2, children.size());
         assertContainsDescription(children, "FirstContext");
         assertContainsDescription(children, "SecondContext");
     }
 
-    private void assertContainsDescription(List<Description> children, String displayName) {
-        List<String> names = new ArrayList<String>();
-        for (Description candidate : children) {
+    private void assertContainsDescription(final List<Description> children,
+            final String displayName) {
+        final List<String> names = new ArrayList<String>();
+        for (final Description candidate : children) {
             names.add(candidate.getDisplayName());
         }
-        assertTrue("Description '" + displayName + "' not among " + names, names.contains(displayName));
+        assertTrue("Description '" + displayName + "' not among " + names, names
+                .contains(displayName));
     }
 
     @Test
     public void contextDescriptionsShouldHaveOneChildPerEachSpecMethod() throws Exception {
-        List<Description> allSpecDescriptions = new ArrayList<Description>();
-        for (Description context : desc.getChildren()) {
+        final List<Description> allSpecDescriptions = new ArrayList<Description>();
+        for (final Description context : desc.getChildren()) {
             allSpecDescriptions.addAll(context.getChildren());
         }
-        assertContainsDescription(allSpecDescriptions, "firstSpecForFirstContext");
-        assertContainsDescription(allSpecDescriptions, "secondSpecForFirstContext");
+        assertContainsDescription(allSpecDescriptions,
+                "firstSpecForFirstContext(jdave.junit4.DescriptionFactoryTest$ExampleSpec$FirstContext)");
+        assertContainsDescription(allSpecDescriptions,
+                "firstSpecForSecondContext(jdave.junit4.DescriptionFactoryTest$ExampleSpec$SecondContext)");
     }
 }

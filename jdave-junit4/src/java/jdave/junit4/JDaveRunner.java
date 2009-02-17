@@ -15,6 +15,7 @@
  */
 package jdave.junit4;
 
+import java.lang.reflect.Modifier;
 import jdave.IStringComparisonFailure;
 import jdave.Specification;
 import jdave.runner.SpecRunner;
@@ -38,14 +39,37 @@ public class JDaveRunner extends Runner implements Filterable {
     private final Description description;
     private Filter filter;
 
-    public JDaveRunner(final Class<? extends Specification<?>> spec) {
-        this.spec = spec;
+    @SuppressWarnings("unchecked")
+    public JDaveRunner(final Class<?> testClass) {
+        if (Specification.class.isAssignableFrom(testClass)) {
+            spec = (Class<? extends Specification<?>>) testClass;
+        } else if (isAContext(testClass)) {
+            spec = (Class<? extends Specification<?>>) testClass.getDeclaringClass();
+        } else {
+            throw new IllegalArgumentException("Testclass is not a Specification or a Context: "
+                    + testClass);
+        }
         Specification.setStringComparisonFailure(new IStringComparisonFailure() {
             public void fail(final String message, final String expected, final String actual) {
                 throw new ComparisonFailure(message, expected, actual);
             }
         });
-        description = DescriptionFactory.create(spec);
+        description = DescriptionFactory.create(this.spec);
+    }
+
+    private boolean isAContext(final Class<?> contextClass) {
+        final boolean isMemberClass = contextClass.isMemberClass();
+        if (!isMemberClass) {
+            return false;
+        }
+        final boolean isStatic = Modifier.isStatic(contextClass.getModifiers());
+        if (isStatic) {
+            return false;
+        }
+        final Class<?> declaringClass = contextClass.getDeclaringClass();
+        final boolean declaringClassIsASpecification = Specification.class
+                .isAssignableFrom(declaringClass);
+        return declaringClassIsASpecification;
     }
 
     @Override
