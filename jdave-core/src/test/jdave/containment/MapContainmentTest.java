@@ -15,43 +15,49 @@
  */
 package jdave.containment;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import jdave.ExpectationFailedException;
 import jdave.Specification;
 import jdave.util.FluentMap;
 import jdave.util.Maps;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
-public class MapContainmentTest extends TestCase {
+public class MapContainmentTest {
     private Specification<Void> spec;
     private FluentMap<Integer, String> map;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         map = Maps.map(1, "1").map(2, "2");
-        spec = new Specification<Void>() {};
+        spec = new Specification<Void>() {
+        };
     }
-    
+
     public void testProvidesWayToCheckIfMapContainsKeyValuePairs() {
         spec.specify(map, spec.maps(1, 2).to("1", "2"));
     }
-    
+
+    @Test
     public void testFailsIfMapDoesNotContainKeyValuePair() {
         try {
             spec.specify(map, spec.maps(1, 2).to("1", "3"));
             fail();
-        } catch (ExpectationFailedException e) {
+        } catch (final ExpectationFailedException e) {
             assertEquals("no mapping 2 -> 3", e.getMessage());
         }
     }
-    
+
+    @Test
     public void testFailsIfMapDoesNotContainKey() {
         try {
             spec.specify(map, spec.maps(3, 2).to("1", "2"));
             fail();
-        } catch (ExpectationFailedException e) {
+        } catch (final ExpectationFailedException e) {
             assertEquals("no mapping 3 -> 1", e.getMessage());
         }
     }

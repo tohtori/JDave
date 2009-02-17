@@ -30,7 +30,7 @@ public abstract class Context {
     private final Class<? extends Specification<?>> specType;
     private final Class<?> contextType;
 
-    public Context(Class<? extends Specification<?>> specType, Class<?> contextType) {
+    public Context(final Class<? extends Specification<?>> specType, final Class<?> contextType) {
         this.specType = specType;
         this.contextType = contextType;
     }
@@ -39,51 +39,51 @@ public abstract class Context {
         return contextType.getSimpleName();
     }
 
-    protected abstract Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType);
+    protected abstract Behavior newBehavior(Method method,
+            Class<? extends Specification<?>> specType, Class<?> contextType);
 
-    void run(ISpecVisitor callback) {
-        for (Method method : ClassMemberSorter.getMethods(contextType)) {
+    void run(final ISpecVisitor callback) {
+        for (final Method method : ClassMemberSorter.getMethods(contextType)) {
             if (isBehavior(method)) {
                 callback.onBehavior(newBehavior(method, specType, contextType));
             }
         }
     }
 
-    private boolean isBehavior(Method method) {
+    private boolean isBehavior(final Method method) {
         return newIntrospection().isBehavior(method);
     }
 
     public boolean isContextClass() {
         return newIntrospection().isContextClass(specType, contextType);
     }
-    
-    @SuppressWarnings("unchecked")
+
     private ISpecIntrospection newIntrospection() {
         try {
             Class<?> clazz = specType;
             do {
-                Collection<Class<?>> types = typesOf(clazz);
-                for (Class<?> type : types) {
+                final Collection<Class<?>> types = typesOf(clazz);
+                for (final Class<?> type : types) {
                     if (hasStrategy(type)) {
-                        return type.getAnnotation(IntrospectionStrategy.class).value().newInstance();
-                    }                
+                        return type.getAnnotation(IntrospectionStrategy.class).value()
+                                .newInstance();
+                    }
                 }
             } while ((clazz = clazz.getSuperclass()) != null);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
         return new DefaultSpecIntrospection();
     }
-    
-    @SuppressWarnings("unchecked")
-    private Collection<Class<?>> typesOf(Class<?> clazz) {
-        List<Class<?>> types = new ArrayList<Class<?>>();
+
+    private Collection<Class<?>> typesOf(final Class<?> clazz) {
+        final List<Class<?>> types = new ArrayList<Class<?>>();
         types.add(clazz);
         types.addAll(Arrays.asList(clazz.getInterfaces()));
         return types;
     }
 
-    boolean hasStrategy(Class<?> type) {
+    boolean hasStrategy(final Class<?> type) {
         return type.isAnnotationPresent(IntrospectionStrategy.class);
     }
 }
