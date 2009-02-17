@@ -1,9 +1,12 @@
 package org.mockito.configuration;
 
-import jdave.guice.GuiceAnnotationEngine;
+import jdave.guice.internal.GuiceAnnotationEngine;
 import org.mockito.ReturnValues;
 import org.mockito.internal.returnvalues.SmartNullReturnValues;
 
+/**
+ * This is how Mockito is configured.
+ */
 public class MockitoConfiguration implements IMockitoConfiguration {
     public AnnotationEngine getAnnotationEngine() {
         return new GuiceAnnotationEngine();

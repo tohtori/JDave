@@ -1,8 +1,9 @@
-package jdave.guice;
+package jdave.guice.internal;
 
 import static org.hamcrest.Matchers.is;
 import java.util.List;
 import jdave.Specification;
+import jdave.guice.GuiceMock;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;

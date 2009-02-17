@@ -1,9 +1,10 @@
-package jdave.guice;
+package jdave.guice.internal;
 
 import static java.util.Arrays.asList;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.List;
+import jdave.guice.GuiceMock;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.configuration.AnnotationEngine;
@@ -11,6 +12,9 @@ import com.google.inject.Binder;
 import com.google.inject.BindingAnnotation;
 import com.google.inject.Key;
 
+/**
+ * Don't worry about me.
+ */
 public class GuiceAnnotationEngine implements AnnotationEngine {
     public static ThreadLocal<Binder> binder = new ThreadLocal<Binder>();
 
@@ -24,6 +28,9 @@ public class GuiceAnnotationEngine implements AnnotationEngine {
         return null;
     }
 
+    /**
+     * FIXME Does Guice do this same thing internally and could it be reused?
+     */
     private <T> T bindMock(final Class<T> type, final Field field) {
         final T mock = Mockito.mock(type, field.getName());
         binder.get().bind(getKey(field)).toInstance(mock);

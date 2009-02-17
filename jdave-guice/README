@@ -1,0 +1,24 @@
+JDave Guice
+-----------
+Mockito allows you to inject mocks into your test class when you annotate them with @Mock and then call
+MockitoAnnotations.initMocks(testClassInstance);
+
+JDave Guice expands on this by binding those same mocks into a Guice injector.
+
+Here's an example with jdave-wicket and wicket, wicket-ioc, wicket-guice:
+
+public abstract class GuiceInterestedComponentSpecification<C extends Component, M extends Serializable> extends ComponentSpecification<C, M> implements InterestedInGuice {
+    @Override
+    protected final void onCreate() {
+        final Injector injector = new InjectorCreator().createInjector(this);
+        wicket.getApplication().setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
+        final GuiceComponentInjector guiceComponentInjector = new GuiceComponentInjector(wicket.getApplication());
+        wicket.getApplication().addComponentInstantiationListener(guiceComponentInjector);
+    }
+
+    public void addBindings(final Binder binder) {
+    }
+}
+
+Also have a look at:
+http://code.google.com/p/mycila/wiki/PluginGuice1

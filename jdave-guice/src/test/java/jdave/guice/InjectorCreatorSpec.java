@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import jdave.Specification;
+import jdave.guice.internal.GuiceAnnotationEngine;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -41,6 +42,9 @@ public class InjectorCreatorSpec extends Specification<InjectorCreator> {
         private Object object;
 
         public void addBindings(final Binder binder) {
+            if (object == null) {
+                throw new IllegalStateException("mocks have not yet been injected");
+            }
         }
     }
 }
