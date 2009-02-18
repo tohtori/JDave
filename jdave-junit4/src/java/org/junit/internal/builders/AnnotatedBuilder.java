@@ -16,10 +16,12 @@
 package org.junit.internal.builders;
 
 import static java.util.Arrays.asList;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.runner.RunWith;
 import org.junit.runner.Runner;
 import org.junit.runners.model.InitializationError;
@@ -33,6 +35,10 @@ import org.junit.runners.model.RunnerBuilder;
  * <p>
  * If jdave-junit4 is in your classpath before junit4 then this will be loaded
  * first.
+ * </p>
+ * <p>
+ * When running in your buildtool etc.  you won't care about running a single behavior. 
+ * This class should be equivalent to the default JUnit4 one, so in that case it won't matter which one is loaded first.
  * </p>
  * 
  * @author Tuomas Karkkainen
