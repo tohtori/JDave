@@ -16,23 +16,23 @@
 package jdave;
 
 import java.util.Arrays;
-
 import org.junit.Test;
 
 /**
  * @author Joni Freeman
  */
 public class SpecificationContainmentTest {
-    private Specification<Object> spec = new Specification<Object>() {};
+    private final Specification<Object> spec = new Specification<Object>() {
+    };
 
     @Test
     public void testContainmentsForVariousLeftHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2, 3).iterator(), spec.containsAll(Arrays.asList(1, 2)));
-        spec.specify((Iterable<?>) Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
+        spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
         spec.specify(new Integer[] { 1, 2, 3 }, spec.containsAll(Arrays.asList(1, 2)));
     }
-    
+
     @Test
     public void testAllContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(Arrays.asList(1, 2)));
@@ -40,15 +40,17 @@ public class SpecificationContainmentTest {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(((Iterable<?>) Arrays.asList(1, 2))));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAll(1, 2));
     }
-    
+
     @Test
     public void testExactContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3)));
-        spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(Arrays.asList(1, 2, 3).iterator()));
-        spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(((Iterable<?>) Arrays.asList(1, 2, 3))));
+        spec.specify(Arrays.asList(1, 2, 3), spec
+                .containsExactly(Arrays.asList(1, 2, 3).iterator()));
+        spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(((Iterable<?>) Arrays.asList(1,
+                2, 3))));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsExactly(1, 2, 3));
     }
-    
+
     @Test
     public void testAnyContainmentsForVariousRightHandSides() {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(Arrays.asList(1, 2)));
@@ -56,20 +58,24 @@ public class SpecificationContainmentTest {
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(((Iterable<?>) Arrays.asList(1, 2))));
         spec.specify(Arrays.asList(1, 2, 3), spec.containsAny(1, 2));
     }
-    
+
     @Test
     public void testInOrderContainments() {
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2)));
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(Arrays.asList(1, 2).iterator()));
-        spec.specify(Arrays.asList(1, 2), spec.containsInOrder(((Iterable<?>) Arrays.asList(1, 2))));
+        spec
+                .specify(Arrays.asList(1, 2), spec.containsInOrder(((Iterable<?>) Arrays.asList(1,
+                        2))));
         spec.specify(Arrays.asList(1, 2), spec.containsInOrder(1, 2));
     }
-    
+
     @Test
     public void testInPartialOrderContainments() {
         spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(Arrays.asList(1, 2)));
-        spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(Arrays.asList(1, 2).iterator()));
-        spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(((Iterable<?>) Arrays.asList(1, 2))));
+        spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(Arrays.asList(1, 2)
+                .iterator()));
+        spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(((Iterable<?>) Arrays.asList(
+                1, 2))));
         spec.specify(Arrays.asList(1, 2), spec.containsInPartialOrder(1, 2));
     }
 }

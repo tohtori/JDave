@@ -17,10 +17,8 @@ package jdave.containment;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,14 +34,15 @@ public class AllContainmentTest extends ContainmentTest {
             }
         });
     }
-    
+
     @Test
     public void testIsInEqualList() {
         assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
-        
+
     @Test
     public void testIsNotInPartialList() {
         assertFalse(containment.matches(Arrays.asList(1, 2)));
     }
+
 }

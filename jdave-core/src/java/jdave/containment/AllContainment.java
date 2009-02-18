@@ -22,20 +22,21 @@ import java.util.Iterator;
  * @author Joni Freeman
  */
 public class AllContainment extends CollectionContainment {
-    public AllContainment(Collection<?> elements) {
+    public AllContainment(final Collection<?> elements) {
         super(elements);
     }
-    
-    public AllContainment(Iterator<?> elements) {
+
+    public AllContainment(final Iterator<?> elements) {
         super(elements);
     }
-    
-    public AllContainment(Iterable<?> elements) {
+
+    public AllContainment(final Iterable<?> elements) {
         super(elements);
     }
 
     @Override
-    public boolean nullSafeMatches(Collection<?> actual) {
+    public boolean nullSafeMatches(final Collection<?> actual) {
         return actual.containsAll(elements);
     }
+
 }

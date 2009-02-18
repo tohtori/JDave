@@ -43,7 +43,7 @@ public abstract class Specification<T> extends MockSupport {
     private boolean actualState = true;
     public T be;
     public T context;
-    private List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
+    private final List<ILifecycleListener> listeners = new ArrayList<ILifecycleListener>();
     private IContextObjectFactory<T> contextObjectFactory = new DefaultContextObjectFactory<T>();
     private static IStringComparisonFailure stringComparisonFailure = new ExpectationFailedStringComparisonFailure();
 
@@ -52,26 +52,26 @@ public abstract class Specification<T> extends MockSupport {
         return new Not<T>(this);
     }
 
-    public void specify(boolean expected) {
+    public void specify(final boolean expected) {
         specify0(null, expected);
     }
-    
-    private void specify0(T actual, boolean expected) {
+
+    private void specify0(final T actual, final boolean expected) {
         try {
             if (expected != actualState) {
-                throw new ExpectationFailedException("Expected: " + "true" + ", but was: " + "false" +
-                        (actual != null ? " (actual was '" + actual + "')" : ""));
+                throw new ExpectationFailedException("Expected: " + "true" + ", but was: "
+                        + "false" + (actual != null ? " (actual was '" + actual + "')" : ""));
             }
         } finally {
             resetActualState();
         }
     }
 
-    public void specify(T actual, boolean expected) {
+    public void specify(final T actual, final boolean expected) {
         specify0(actual, expected);
     }
 
-    public void specify(T actual, Boolean expected) {
+    public void specify(final T actual, final Boolean expected) {
         specify0(actual, expected);
     }
 
@@ -79,15 +79,11 @@ public abstract class Specification<T> extends MockSupport {
         actualState = true;
     }
 
-    public <E> void specify(Iterable<E> actual, IContainment containment) {
-        specify(actual.iterator(), containment);
-    }
-
-    public <E> void specify(Iterator<E> actual, IContainment containment) {
+    public <E> void specify(final Iterator<E> actual, final IContainment containment) {
         specify(Collections.list(actual), containment);
     }
 
-    public <E> void specify(Collection<E> actual, IContainment containment) {
+    public <E> void specify(final Collection<E> actual, final IContainment containment) {
         try {
             if (!containment.matches(actual)) {
                 throw new ExpectationFailedException(containment.error(actual));
@@ -97,44 +93,44 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Object[] actual, IContainment containment) {
+    public void specify(final Object[] actual, final IContainment containment) {
         specify(Arrays.asList(actual), containment);
     }
 
-    public void specify(boolean[] actual, IContainment containment) {
+    public void specify(final boolean[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(byte[] actual, IContainment containment) {
+    public void specify(final byte[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(char[] actual, IContainment containment) {
+    public void specify(final char[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(double[] actual, IContainment containment) {
+    public void specify(final double[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(float[] actual, IContainment containment) {
+    public void specify(final float[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(int[] actual, IContainment containment) {
+    public void specify(final int[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(long[] actual, IContainment containment) {
+    public void specify(final long[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(short[] actual, IContainment containment) {
+    public void specify(final short[] actual, final IContainment containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(Object actual, Object expected) {
-        IEqualityCheck equalityCheck = new EqualsEqualityCheck(expected);
+    public void specify(final Object actual, final Object expected) {
+        final IEqualityCheck equalityCheck = new EqualsEqualityCheck(expected);
         try {
             if (!equalityCheck.matches(actual)) {
                 throw new ExpectationFailedException(equalityCheck.error(actual));
@@ -144,7 +140,7 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Object actual, IEqualityCheck equalityCheck) {
+    public void specify(final Object actual, final IEqualityCheck equalityCheck) {
         try {
             equalityCheck.verify(actual);
         } finally {
@@ -155,11 +151,12 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Matches the actual object using Hamcrest Matcher.
      * <p>
-     * Hamcrest provides a library of matcher objects allowing 'match' rules to be defined declaratively.
-     * <blockquote>
-     * <pre><code>
+     * Hamcrest provides a library of matcher objects allowing 'match' rules
+     * to be defined declaratively. <blockquote>
+     * 
+     * <pre>
+     * &lt;code&gt;
      * import static org.hamcrest.Matchers.*;
-     *
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
      *     public class SampleContext {
      *         public void sample() {
@@ -167,15 +164,18 @@ public abstract class Specification<T> extends MockSupport {
      *         }
      *     }
      * }
-     * </code></pre>
+     * &lt;/code&gt;
+     * </pre>
+     * 
      * </blockquote>
      * <p>
      * See <a href="http://code.google.com/p/hamcrest/">Hamcrest home page</a>
      */
-    public void specify(Object actual, Matcher<?> matcher) {
+    public void specify(final Object actual, final Matcher<?> matcher) {
         try {
             if (!matcher.matches(actual)) {
-                throw new ExpectationFailedException(actual + " " + StringDescription.toString(matcher));
+                throw new ExpectationFailedException(actual + " "
+                        + StringDescription.toString(matcher));
             }
         } finally {
             resetActualState();
@@ -185,11 +185,12 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Matches all the actual objects using Hamcrest Matcher.
      * <p>
-     * Hamcrest provides a library of matcher objects allowing 'match' rules to be defined declaratively.
-     * <blockquote>
-     * <pre><code>
+     * Hamcrest provides a library of matcher objects allowing 'match' rules
+     * to be defined declaratively. <blockquote>
+     * 
+     * <pre>
+     * &lt;code&gt;
      * import static org.hamcrest.Matchers.*;
-     *
      * public class HamcrestSampleSpec extends Specification&lt;Person&gt; {
      *     public class SampleContext {
      *         public void sample() {
@@ -197,33 +198,35 @@ public abstract class Specification<T> extends MockSupport {
      *         }
      *     }
      * }
-     * </code></pre>
+     * &lt;/code&gt;
+     * </pre>
+     * 
      * </blockquote>
      * <p>
      * See <a href="http://code.google.com/p/hamcrest/">Hamcrest home page</a>
      */
-    public <E> void specify(Collection<E> actual, Where<E> where) {
+    public <E> void specify(final Collection<E> actual, final Where<E> where) {
         specify(actual.iterator(), where);
     }
 
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterable<E> actual, Where<E> where) {
+    public <E> void specify(final Iterable<E> actual, final Where<E> where) {
         specify(actual.iterator(), where);
     }
 
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Object[] actual, Where<E> where) {
+    public <E> void specify(final Object[] actual, final Where<E> where) {
         specify(Arrays.asList(actual), where);
     }
 
     /**
      * @see #specify(Collection, Where)
      */
-    public <E> void specify(Iterator<E> actual, Where<E> where) {
+    public <E> void specify(final Iterator<E> actual, final Where<E> where) {
         try {
             int index = 0;
             while (actual.hasNext()) {
@@ -236,27 +239,38 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public <E> Where<E> where(Each<E> each) {
+    public <E> Where<E> where(final Each<E> each) {
         return new Where<E>(each);
     }
 
     /**
      * The given block is expected to throw an exception.
      * <p>
-     * There's two variants for setting exception expectations.
-     * <blockquote><pre><code>
+     * There's two variants for setting exception expectations. <blockquote>
+     * 
+     * <pre>
+     * &lt;code&gt;
      * specify(new Block() { ... }, should.raise(SomeException.class);
      * specify(new Block() { ... }, should.raiseExactly(SomeException.class);
-     * </code></pre></blockquote>
-     * The first one accepts the given exception or any of its subclasses, the second
-     * one expects an exact exception type. Both can additionally be checked against
-     * expected exception message:
-     * <blockquote><pre><code>
-     * specify(new Block() { ... }, should.raise(SomeException.class, "expected message");
-     * specify(new Block() { ... }, should.raiseExactly(SomeException.class, "expected message");
-     * </code></pre></blockquote>
+     * &lt;/code&gt;
+     * </pre>
+     * 
+     * </blockquote> The first one accepts the given exception or any of its
+     * subclasses, the second one expects an exact exception type. Both can
+     * additionally be checked against expected exception message:
+     * <blockquote>
+     * 
+     * <pre>
+     * &lt;code&gt;
+     * specify(new Block() { ... }, should.raise(SomeException.class, &quot;expected message&quot;);
+     * specify(new Block() { ... }, should.raiseExactly(SomeException.class, &quot;expected message&quot;);
+     * &lt;/code&gt;
+     * </pre>
+     * 
+     * </blockquote>
      */
-    public <V extends Throwable> void specify(Block block, ExpectedException<V> expectation) {
+    public <V extends Throwable> void specify(final Block block,
+            final ExpectedException<V> expectation) {
         try {
             specifyThrow(block, expectation);
         } finally {
@@ -264,10 +278,11 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    private void specifyThrow(Block block, ExpectedException<? extends Throwable> expectation) {
+    private void specifyThrow(final Block block,
+            final ExpectedException<? extends Throwable> expectation) {
         try {
             block.run();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             if (!expectation.matches(t)) {
                 throw new ExpectationFailedException(expectation.error(t), t);
             }
@@ -279,16 +294,21 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * The given block is expected to not throw an exception.
      * <p>
-     * There's two variants for setting exception expectations.
-     * <blockquote><pre><code>
+     * There's two variants for setting exception expectations. <blockquote>
+     * 
+     * <pre>
+     * &lt;code&gt;
      * specify(new Block() { ... }, should.not().raise(SomeException.class);
      * specify(new Block() { ... }, should.not().raiseExactly(SomeException.class);
-     * </code></pre></blockquote>
-     * The first one expects that the given block does not throw the exception or any of
-     * its subclasses, the second one expects that the given block does not throw the given
-     * exact exception type.
+     * &lt;/code&gt;
+     * </pre>
+     * 
+     * </blockquote> The first one expects that the given block does not throw
+     * the exception or any of its subclasses, the second one expects that the
+     * given block does not throw the given exact exception type.
      */
-    public <V extends Throwable> void specify(Block block, ExpectedNoThrow<V> expectation) throws Throwable {
+    public <V extends Throwable> void specify(final Block block,
+            final ExpectedNoThrow<V> expectation) throws Throwable {
         try {
             specifyNoThrow(block, expectation);
         } finally {
@@ -296,10 +316,11 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    private void specifyNoThrow(Block block, ExpectedNoThrow<? extends Throwable> expectation) throws Throwable {
+    private void specifyNoThrow(final Block block,
+            final ExpectedNoThrow<? extends Throwable> expectation) throws Throwable {
         try {
             block.run();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             if (!expectation.matches(t)) {
                 throw new ExpectationFailedException(expectation.error(t), t);
             }
@@ -307,26 +328,26 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(Object obj, IContract contract) {
+    public void specify(final Object obj, final IContract contract) {
         contract.isSatisfied(obj);
     }
-    
-    public IEqualityCheck equal(long expected) {
+
+    public IEqualityCheck equal(final long expected) {
         return new LongEqualsEqualityCheck(expected);
     }
 
-    public IEqualityCheck equal(String obj) {
+    public IEqualityCheck equal(final String obj) {
         if (obj == null) {
             return new EqualsEqualityCheck(obj);
         }
         return new StringEqualsEqualityCheck(this, obj);
     }
 
-    public IEqualityCheck equal(Object obj) {
+    public IEqualityCheck equal(final Object obj) {
         return new EqualsEqualityCheck(obj);
     }
 
-    public IEqualityCheck equal(Number expectedNumber, double delta) {
+    public IEqualityCheck equal(final Number expectedNumber, final double delta) {
         return new DeltaEqualityCheck(expectedNumber, delta);
     }
 
@@ -334,7 +355,7 @@ public abstract class Specification<T> extends MockSupport {
      * @see #specify(Block, ExpectedException)
      * @see #specify(Block, ExpectedNoThrow)
      */
-    public <E extends Throwable> ExpectedException<E> raise(Class<E> expected) {
+    public <E extends Throwable> ExpectedException<E> raise(final Class<E> expected) {
         return new ExpectedException<E>(expected);
     }
 
@@ -342,7 +363,8 @@ public abstract class Specification<T> extends MockSupport {
      * @see #specify(Block, ExpectedException)
      * @see #specify(Block, ExpectedNoThrow)
      */
-    public <E extends Throwable> ExpectedException<E> raise(Class<E> expectedType, String expectedMessage) {
+    public <E extends Throwable> ExpectedException<E> raise(final Class<E> expectedType,
+            final String expectedMessage) {
         return new ExpectedExceptionWithMessage<E>(expectedType, expectedMessage);
     }
 
@@ -350,7 +372,7 @@ public abstract class Specification<T> extends MockSupport {
      * @see #specify(Block, ExpectedException)
      * @see #specify(Block, ExpectedNoThrow)
      */
-    public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected) {
+    public <E extends Throwable> ExpectedException<E> raiseExactly(final Class<E> expected) {
         return new ExactExpectedException<E>(expected);
     }
 
@@ -358,20 +380,21 @@ public abstract class Specification<T> extends MockSupport {
      * @see #specify(Block, ExpectedException)
      * @see #specify(Block, ExpectedNoThrow)
      */
-    public <E extends Throwable> ExpectedException<E> raiseExactly(Class<E> expected, String expectedMessage) {
+    public <E extends Throwable> ExpectedException<E> raiseExactly(final Class<E> expected,
+            final String expectedMessage) {
         return new ExactExpectedExceptionWithMessage<E>(expected, expectedMessage);
     }
 
-    public IContract satisfies(IContract contract) {
+    public IContract satisfies(final IContract contract) {
         return contract;
     }
 
     /**
      * Create this specification.
      * <p>
-     * This method is called before the <code>create</code> method of the executed context has
-     * been called. Override this method to add common initialization code for contexts within
-     * a specification.
+     * This method is called before the <code>create</code> method of the
+     * executed context has been called. Override this method to add common
+     * initialization code for contexts within a specification.
      */
     public void create() throws Exception {
     }
@@ -379,29 +402,32 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Destroy this specification.
      * <p>
-     * This method is called after the optional <code>destroy</code> method of the excuted context
-     * has been called. Override this method to add common destroy code for contexts within a
-     * specification.
+     * This method is called after the optional <code>destroy</code> method of
+     * the excuted context has been called. Override this method to add common
+     * destroy code for contexts within a specification.
      */
     public void destroy() throws Exception {
     }
 
     /**
-     * Returns <code>true</code> if thread local isolation is needed for this specification.
+     * Returns <code>true</code> if thread local isolation is needed for this
+     * specification.
      * <p>
-     * Some contexts set thread local variables. This may cause following behaviors to fail if
-     * they depend on initial thread local state. Thread locals can be isolated for all behavior
-     * methods of current specification by overiding this method and returning <code>true</code>.
-     * Then a new fresh thread is created for all methods in the specification.
-     *
-     * @return  <code>true</code> if thread local isolation is needed for this specification. The
-     *          default is <code>false</code>.
+     * Some contexts set thread local variables. This may cause following
+     * behaviors to fail if they depend on initial thread local state. Thread
+     * locals can be isolated for all behavior methods of current
+     * specification by overiding this method and returning <code>true</code>.
+     * Then a new fresh thread is created for all methods in the
+     * specification.
+     * 
+     * @return <code>true</code> if thread local isolation is needed for this
+     *         specification. The default is <code>false</code>.
      */
     public boolean needsThreadLocalIsolation() {
         return false;
     }
 
-    protected void setContextObjectFactory(IContextObjectFactory<T> contextObjectFactory) {
+    protected void setContextObjectFactory(final IContextObjectFactory<T> contextObjectFactory) {
         this.contextObjectFactory = contextObjectFactory;
     }
 
@@ -412,29 +438,29 @@ public abstract class Specification<T> extends MockSupport {
     /**
      * Add a <code>ILifecycleListener</code> listener to specification.
      * <p>
-     * ILifecycleListener will be notified when contexts are instantiated and context objects
-     * are created and destroyed.
-     *
+     * ILifecycleListener will be notified when contexts are instantiated and
+     * context objects are created and destroyed.
+     * 
      * @param listener a listener to get lifecycle event notifications
      */
-    protected void addListener(ILifecycleListener listener) {
+    protected void addListener(final ILifecycleListener listener) {
         listeners.add(listener);
     }
 
-    public void fireAfterContextInstantiation(Object contextInstance) {
-        for (ILifecycleListener listener : listeners) {
+    public void fireAfterContextInstantiation(final Object contextInstance) {
+        for (final ILifecycleListener listener : listeners) {
             listener.afterContextInstantiation(contextInstance);
         }
     }
 
-    public void fireAfterContextCreation(Object contextInstance, Object createdContext) {
-        for (ILifecycleListener listener : listeners) {
+    public void fireAfterContextCreation(final Object contextInstance, final Object createdContext) {
+        for (final ILifecycleListener listener : listeners) {
             listener.afterContextCreation(contextInstance, createdContext);
         }
     }
 
-    public void fireAfterContextDestroy(Object contextInstance) {
-        for (ILifecycleListener listener : listeners) {
+    public void fireAfterContextDestroy(final Object contextInstance) {
+        for (final ILifecycleListener listener : listeners) {
             listener.afterContextDestroy(contextInstance);
         }
     }
@@ -442,13 +468,13 @@ public abstract class Specification<T> extends MockSupport {
     public IEqualityCheck isNotNull() {
         return new NotEqualsEqualityCheck(null) {
             @Override
-            public String error(Object actual) {
+            public String error(final Object actual) {
                 return "Expected a non-null value";
             }
         };
     }
-    
-    public static void setStringComparisonFailure(IStringComparisonFailure failure) {
+
+    public static void setStringComparisonFailure(final IStringComparisonFailure failure) {
         stringComparisonFailure = failure;
     }
 
@@ -456,11 +482,11 @@ public abstract class Specification<T> extends MockSupport {
         return stringComparisonFailure;
     }
 
-    public MapContainment maps(Object... keys) {
+    public MapContainment maps(final Object... keys) {
         return new MapContainment(keys);
     }
-    
-    public void specify(Map<?, ?> actual, MapContainment containment) {
+
+    public void specify(final Map<?, ?> actual, final MapContainment containment) {
         containment.verify(actual);
     }
 
@@ -469,7 +495,7 @@ public abstract class Specification<T> extends MockSupport {
      * 
      * @param message a message printed to the console
      */
-    public void fail(String message) {
+    public void fail(final String message) {
         throw new ExpectationFailedException(message);
     }
 }

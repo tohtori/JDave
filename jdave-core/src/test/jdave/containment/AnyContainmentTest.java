@@ -15,12 +15,13 @@
  */
 package jdave.containment;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
 import java.util.Iterator;
-
+import org.hamcrest.StringDescription;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,18 +33,32 @@ public class AnyContainmentTest extends ContainmentTest {
     public void setUp() throws Exception {
         containment = new AnyContainment(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
-                return Arrays.asList(1, 2, 3).iterator();
+                return asList(1, 2, 3).iterator();
             }
         });
     }
-    
+
     @Test
     public void testIsInPartialList() {
-        assertTrue(containment.matches(Arrays.asList(2)));
+        assertTrue(containment.matches(asList(2)));
     }
-        
+
     @Test
     public void testIsNotInListWhichDoesNotHaveAnyEqualElements() {
-        assertFalse(containment.matches(Arrays.asList(4)));
+        assertFalse(containment.matches(asList(4)));
+    }
+
+    @Test
+    public void describesWell() {
+        final StringDescription description = new StringDescription();
+        containment.matches(asList(4, 5, 6));
+        containment.describeTo(description);
+        assertThat(description.toString(),
+                is("The specified collection '[4, 5, 6]' does not contain '[1, 2, 3]'"));
+    }
+
+    @Test
+    public void canBeUsedAsAMatcher() {
+        assertThat(asList(1, 2, 3), containment);
     }
 }

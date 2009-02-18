@@ -16,11 +16,13 @@
 package jdave;
 
 import java.util.Collection;
+import org.hamcrest.Matcher;
 
 /**
  * @author Joni Freeman
  */
-public interface IContainment {
+public interface IContainment extends Matcher<Collection<?>> {
     boolean matches(Collection<?> actual);
+
     String error(Collection<?> actual);
 }

@@ -16,6 +16,7 @@
 package jdave.containment;
 
 import jdave.IContainment;
+import org.junit.Test;
 
 /**
  * @author Joni Freeman
@@ -23,6 +24,7 @@ import jdave.IContainment;
 public abstract class ContainmentTest {
     protected IContainment containment;
 
+    @Test
     public void testShouldNotThrowNullPointerExceptionIfActualIsNull() throws Exception {
         containment.matches(null);
     }
