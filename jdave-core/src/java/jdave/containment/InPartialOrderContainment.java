@@ -17,7 +17,6 @@ package jdave.containment;
 
 import java.util.Collection;
 import java.util.Iterator;
-
 import jdave.IEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
 
@@ -25,25 +24,25 @@ import jdave.equality.EqualsEqualityCheck;
  * @author Esko Luontola
  * @author Joni Freeman
  */
-public class InPartialOrderContainment extends CollectionContainment {
-    public InPartialOrderContainment(Collection<?> elements) {
+public class InPartialOrderContainment<T> extends CollectionContainment<T> {
+    public InPartialOrderContainment(final Collection<T> elements) {
         super(elements);
     }
-    
-    public InPartialOrderContainment(Iterator<?> elements) {
+
+    public InPartialOrderContainment(final Iterator<T> elements) {
         super(elements);
     }
-    
-    public InPartialOrderContainment(Iterable<?> elements) {
+
+    public InPartialOrderContainment(final Iterable<T> elements) {
         super(elements);
     }
-    
+
     @Override
-    public boolean nullSafeMatches(Collection<?> actual) {
-        Iterator<?> i1 = elements.iterator();
-        Iterator<?> i2 = actual.iterator();
+    public boolean nullSafeMatches(final Collection<T> actual) {
+        final Iterator<T> i1 = elements.iterator();
+        final Iterator<T> i2 = actual.iterator();
         while (i1.hasNext()) {
-            Object o1 = i1.next();
+            final Object o1 = i1.next();
             Object o2;
             do {
                 if (!i2.hasNext()) {
@@ -54,8 +53,8 @@ public class InPartialOrderContainment extends CollectionContainment {
         }
         return true;
     }
-    
-    protected IEqualityCheck newEqualityCheck(Object expected) {
+
+    protected IEqualityCheck newEqualityCheck(final Object expected) {
         return new EqualsEqualityCheck(expected);
     }
 }

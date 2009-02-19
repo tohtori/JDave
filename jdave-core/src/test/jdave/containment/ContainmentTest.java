@@ -22,7 +22,7 @@ import org.junit.Test;
  * @author Joni Freeman
  */
 public abstract class ContainmentTest {
-    protected IContainment containment;
+    protected IContainment<Integer> containment;
 
     @Test
     public void testShouldNotThrowNullPointerExceptionIfActualIsNull() throws Exception {

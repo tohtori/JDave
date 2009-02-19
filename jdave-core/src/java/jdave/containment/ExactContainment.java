@@ -23,26 +23,26 @@ import java.util.List;
 /**
  * @author Joni Freeman
  */
-public class ExactContainment extends CollectionContainment {
-    public ExactContainment(Collection<?> elements) {
+public class ExactContainment<T> extends CollectionContainment<T> {
+    public ExactContainment(final Collection<T> elements) {
         super(elements);
     }
-    
-    public ExactContainment(Iterator<?> elements) {
+
+    public ExactContainment(final Iterator<T> elements) {
         super(elements);
     }
-    
-    public ExactContainment(Iterable<?> elements) {
+
+    public ExactContainment(final Iterable<T> elements) {
         super(elements);
     }
 
     @Override
-    public boolean nullSafeMatches(Collection<?> actual) {
+    public boolean nullSafeMatches(final Collection<T> actual) {
         if (actual.size() != elements.size()) {
             return false;
         }
-        List<Object> remaining = new ArrayList<Object>(actual);
-        for (Object element : elements) {
+        final List<Object> remaining = new ArrayList<Object>(actual);
+        for (final Object element : elements) {
             remaining.remove(element);
         }
         return remaining.isEmpty();

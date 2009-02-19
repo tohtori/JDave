@@ -21,8 +21,8 @@ import org.hamcrest.Matcher;
 /**
  * @author Joni Freeman
  */
-public interface IContainment extends Matcher<Collection<?>> {
-    boolean matches(Collection<?> actual);
+public interface IContainment<T> extends Matcher<Collection<T>> {
+    boolean matches(Collection<T> actual);
 
-    String error(Collection<?> actual);
+    String error(Collection<T> actual);
 }

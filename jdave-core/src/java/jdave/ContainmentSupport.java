@@ -18,7 +18,6 @@ package jdave;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-
 import jdave.containment.AllContainment;
 import jdave.containment.AnyContainment;
 import jdave.containment.ExactContainment;
@@ -31,475 +30,475 @@ import jdave.util.Primitives;
  * @author Joni Freeman
  */
 public class ContainmentSupport {
-    public IContainment contains(Object object) {
+    public <T> IContainment<T> contains(final T object) {
         return newObjectContainment(object);
     }
 
-    public IContainment contain(Object object) {
+    public <T> IContainment<T> contain(final T object) {
         return newObjectContainment(object);
     }
 
-    protected IContainment newObjectContainment(Object object) {
-        return new ObjectContainment(object);
+    protected <T> IContainment<T> newObjectContainment(final T object) {
+        return new ObjectContainment<T>(object);
     }
 
-    public IContainment containAll(byte[] elements) {
+    public IContainment<?> containAll(final byte[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(byte[] elements) {
+    public IContainment<?> containsAll(final byte[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(short[] elements) {
+    public IContainment<?> containAll(final short[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(short[] elements) {
+    public IContainment<?> containsAll(final short[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(int[] elements) {
+    public IContainment<?> containAll(final int[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(int[] elements) {
+    public IContainment<?> containsAll(final int[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(long[] elements) {
+    public IContainment<?> containAll(final long[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(long[] elements) {
+    public IContainment<?> containsAll(final long[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(float[] elements) {
+    public IContainment<?> containAll(final float[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(float[] elements) {
+    public IContainment<?> containsAll(final float[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containAll(double[] elements) {
+    public IContainment<?> containAll(final double[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public IContainment containsAll(double[] elements) {
+    public IContainment<?> containsAll(final double[] elements) {
         return containAll(Primitives.asList(elements));
     }
 
-    public <T> IContainment containAll(Collection<T> elements) {
+    public <T> IContainment<T> containAll(final Collection<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected <T> IContainment newAllContainment(Collection<T> elements) {
-        return new AllContainment(elements);
+    protected <T> IContainment<T> newAllContainment(final Collection<T> elements) {
+        return new AllContainment<T>(elements);
     }
 
-    public <T> IContainment containsAll(Collection<T> elements) {
+    public <T> IContainment<T> containsAll(final Collection<T> elements) {
         return containAll(elements);
     }
 
-    public IContainment containAll(Object... elements) {
+    public <T> IContainment<T> containAll(final T... elements) {
         return containsAll(Arrays.asList(elements));
     }
 
-    public IContainment containsAll(Object... elements) {
+    public <T> IContainment<T> containsAll(final T... elements) {
         return containAll(elements);
     }
 
-    public <T> IContainment containAll(Iterator<T> elements) {
+    public <T> IContainment<T> containAll(final Iterator<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected <T> IContainment newAllContainment(Iterator<T> elements) {
-        return new AllContainment(elements);
+    protected <T> IContainment<T> newAllContainment(final Iterator<T> elements) {
+        return new AllContainment<T>(elements);
     }
 
-    public <T> IContainment containsAll(Iterator<T> elements) {
+    public <T> IContainment<T> containsAll(final Iterator<T> elements) {
         return containAll(elements);
     }
 
-    public <T> IContainment containAll(Iterable<T> elements) {
+    public <T> IContainment<T> containAll(final Iterable<T> elements) {
         return newAllContainment(elements);
     }
 
-    protected <T> IContainment newAllContainment(Iterable<T> elements) {
-        return new AllContainment(elements);
+    protected <T> IContainment<T> newAllContainment(final Iterable<T> elements) {
+        return new AllContainment<T>(elements);
     }
 
-    public <T> IContainment containsAll(Iterable<T> elements) {
+    public <T> IContainment<T> containsAll(final Iterable<T> elements) {
         return containAll(elements);
     }
 
-    public IContainment containAny(byte[] elements) {
+    public IContainment<?> containAny(final byte[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(byte[] elements) {
+    public IContainment<?> containsAny(final byte[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(short[] elements) {
+    public IContainment<?> containAny(final short[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(short[] elements) {
+    public IContainment<?> containsAny(final short[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(int[] elements) {
+    public IContainment<?> containAny(final int[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(int[] elements) {
+    public IContainment<?> containsAny(final int[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(long[] elements) {
+    public IContainment<?> containAny(final long[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(long[] elements) {
+    public IContainment<?> containsAny(final long[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(float[] elements) {
+    public IContainment<?> containAny(final float[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(float[] elements) {
+    public IContainment<?> containsAny(final float[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containAny(double[] elements) {
+    public IContainment<?> containAny(final double[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public IContainment containsAny(double[] elements) {
+    public IContainment<?> containsAny(final double[] elements) {
         return containAny(Primitives.asList(elements));
     }
 
-    public <T> IContainment containAny(Collection<T> elements) {
+    public <T> IContainment<T> containAny(final Collection<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected <T> IContainment newAnyContainment(Collection<T> elements) {
-        return new AnyContainment(elements);
+    protected <T> IContainment<T> newAnyContainment(final Collection<T> elements) {
+        return new AnyContainment<T>(elements);
     }
 
-    public <T> IContainment containsAny(Collection<T> elements) {
+    public <T> IContainment<T> containsAny(final Collection<T> elements) {
         return containAny(elements);
     }
 
-    public IContainment containAny(Object... elements) {
+    public <T> IContainment<T> containAny(final T... elements) {
         return containsAny(Arrays.asList(elements));
     }
 
-    public IContainment containsAny(Object... elements) {
+    public <T> IContainment<T> containsAny(final T... elements) {
         return containAny(elements);
     }
 
-    public <T> IContainment containAny(Iterator<T> elements) {
+    public <T> IContainment<T> containAny(final Iterator<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected <T> IContainment newAnyContainment(Iterator<T> elements) {
-        return new AnyContainment(elements);
+    protected <T> IContainment<T> newAnyContainment(final Iterator<T> elements) {
+        return new AnyContainment<T>(elements);
     }
 
-    public <T> IContainment containsAny(Iterator<T> elements) {
+    public <T> IContainment<T> containsAny(final Iterator<T> elements) {
         return containAny(elements);
     }
 
-    public <T> IContainment containAny(Iterable<T> elements) {
+    public <T> IContainment<T> containAny(final Iterable<T> elements) {
         return newAnyContainment(elements);
     }
 
-    protected <T> IContainment newAnyContainment(Iterable<T> elements) {
-        return new AnyContainment(elements);
+    protected <T> IContainment<T> newAnyContainment(final Iterable<T> elements) {
+        return new AnyContainment<T>(elements);
     }
 
-    public <T> IContainment containsAny(Iterable<T> elements) {
+    public <T> IContainment<T> containsAny(final Iterable<T> elements) {
         return containAny(elements);
     }
 
-    public <T> IContainment containExactly(Collection<T> elements) {
+    public <T> IContainment<T> containExactly(final Collection<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected <T> IContainment newExactContainment(Collection<T> elements) {
-        return new ExactContainment(elements);
+    protected <T> IContainment<T> newExactContainment(final Collection<T> elements) {
+        return new ExactContainment<T>(elements);
     }
 
-    public IContainment containExactly(byte[] elements) {
+    public IContainment<?> containExactly(final byte[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(byte[] elements) {
+    public IContainment<?> containsExactly(final byte[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containExactly(short[] elements) {
+    public IContainment<?> containExactly(final short[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(short[] elements) {
+    public IContainment<?> containsExactly(final short[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containExactly(int[] elements) {
+    public IContainment<?> containExactly(final int[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(int[] elements) {
+    public IContainment<?> containsExactly(final int[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containExactly(long[] elements) {
+    public IContainment<?> containExactly(final long[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(long[] elements) {
+    public IContainment<?> containsExactly(final long[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containExactly(float[] elements) {
+    public IContainment<?> containExactly(final float[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(float[] elements) {
+    public IContainment<?> containsExactly(final float[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containExactly(double[] elements) {
+    public IContainment<?> containExactly(final double[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public IContainment containsExactly(double[] elements) {
+    public IContainment<?> containsExactly(final double[] elements) {
         return containsExactly(Primitives.asList(elements));
     }
 
-    public <T> IContainment containsExactly(Collection<T> elements) {
+    public <T> IContainment<T> containsExactly(final Collection<T> elements) {
         return containExactly(elements);
     }
 
-    public IContainment containExactly(Object... elements) {
+    public <T> IContainment<T> containExactly(final T... elements) {
         return containsExactly(Arrays.asList(elements));
     }
 
-    public IContainment containsExactly(Object... elements) {
+    public <T> IContainment<T> containsExactly(final T... elements) {
         return containExactly(elements);
     }
 
-    public <T> IContainment containExactly(Iterator<T> elements) {
+    public <T> IContainment<T> containExactly(final Iterator<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected <T> IContainment newExactContainment(Iterator<T> elements) {
-        return new ExactContainment(elements);
+    protected <T> IContainment<T> newExactContainment(final Iterator<T> elements) {
+        return new ExactContainment<T>(elements);
     }
 
-    public <T> IContainment containsExactly(Iterator<T> elements) {
+    public <T> IContainment<T> containsExactly(final Iterator<T> elements) {
         return containExactly(elements);
     }
 
-    public <T> IContainment containExactly(Iterable<T> elements) {
+    public <T> IContainment<T> containExactly(final Iterable<T> elements) {
         return newExactContainment(elements);
     }
 
-    protected <T> IContainment newExactContainment(Iterable<T> elements) {
-        return new ExactContainment(elements);
+    protected <T> IContainment<T> newExactContainment(final Iterable<T> elements) {
+        return new ExactContainment<T>(elements);
     }
 
-    public <T> IContainment containsExactly(Iterable<T> elements) {
+    public <T> IContainment<T> containsExactly(final Iterable<T> elements) {
         return containExactly(elements);
     }
 
-    public <T> IContainment containInOrder(Collection<T> elements) {
+    public <T> IContainment<T> containInOrder(final Collection<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected <T> IContainment newInOrderContainment(Collection<T> elements) {
-        return new InOrderContainment(elements);
+    protected <T> IContainment<T> newInOrderContainment(final Collection<T> elements) {
+        return new InOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInOrder(Collection<T> elements) {
+    public <T> IContainment<T> containsInOrder(final Collection<T> elements) {
         return containInOrder(elements);
     }
 
-    public IContainment containInOrder(Object... elements) {
+    public <T> IContainment<T> containInOrder(final T... elements) {
         return newInOrderContainment(Arrays.asList(elements));
     }
 
-    public IContainment containInOrder(byte[] object) {
+    public IContainment<?> containInOrder(final byte[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(byte[] object) {
+    public IContainment<?> containsInOrder(final byte[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containInOrder(short[] object) {
+    public IContainment<?> containInOrder(final short[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(short[] object) {
+    public IContainment<?> containsInOrder(final short[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containInOrder(int[] object) {
+    public IContainment<?> containInOrder(final int[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(int[] object) {
+    public IContainment<?> containsInOrder(final int[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containInOrder(long[] object) {
+    public IContainment<?> containInOrder(final long[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(long[] object) {
+    public IContainment<?> containsInOrder(final long[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containInOrder(float[] object) {
+    public IContainment<?> containInOrder(final float[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(float[] object) {
+    public IContainment<?> containsInOrder(final float[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containInOrder(double[] object) {
+    public IContainment<?> containInOrder(final double[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(double[] object) {
+    public IContainment<?> containsInOrder(final double[] object) {
         return containInOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInOrder(Object... elements) {
+    public <T> IContainment<T> containsInOrder(final T... elements) {
         return containInOrder(elements);
     }
 
-    public <T> IContainment containInOrder(Iterator<T> elements) {
+    public <T> IContainment<T> containInOrder(final Iterator<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected <T> IContainment newInOrderContainment(Iterator<T> elements) {
-        return new InOrderContainment(elements);
+    protected <T> IContainment<T> newInOrderContainment(final Iterator<T> elements) {
+        return new InOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInOrder(Iterator<T> elements) {
+    public <T> IContainment<T> containsInOrder(final Iterator<T> elements) {
         return containInOrder(elements);
     }
 
-    public <T> IContainment containInOrder(Iterable<T> elements) {
+    public <T> IContainment<T> containInOrder(final Iterable<T> elements) {
         return newInOrderContainment(elements);
     }
 
-    protected <T> IContainment newInOrderContainment(Iterable<T> elements) {
-        return new InOrderContainment(elements);
+    protected <T> IContainment<T> newInOrderContainment(final Iterable<T> elements) {
+        return new InOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInOrder(Iterable<T> elements) {
+    public <T> IContainment<T> containsInOrder(final Iterable<T> elements) {
         return containInOrder(elements);
     }
-    
-    public <T> IContainment containInPartialOrder(Collection<T> elements) {
+
+    public <T> IContainment<T> containInPartialOrder(final Collection<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected <T> IContainment newInPartialOrderContainment(Collection<T> elements) {
-        return new InPartialOrderContainment(elements);
+    protected <T> IContainment<T> newInPartialOrderContainment(final Collection<T> elements) {
+        return new InPartialOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInPartialOrder(Collection<T> elements) {
+    public <T> IContainment<T> containsInPartialOrder(final Collection<T> elements) {
         return containInPartialOrder(elements);
     }
 
-    public IContainment containInPartialOrder(Object... elements) {
+    public <T> IContainment<T> containInPartialOrder(final T... elements) {
         return newInPartialOrderContainment(Arrays.asList(elements));
     }
 
-    public IContainment containInPartialOrder(byte[] object) {
+    public IContainment<?> containInPartialOrder(final byte[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(byte[] object) {
+    public IContainment<?> containsInPartialOrder(final byte[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containInPartialOrder(short[] object) {
+    public IContainment<?> containInPartialOrder(final short[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(short[] object) {
+    public IContainment<?> containsInPartialOrder(final short[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containInPartialOrder(int[] object) {
+    public IContainment<?> containInPartialOrder(final int[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(int[] object) {
+    public IContainment<?> containsInPartialOrder(final int[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containInPartialOrder(long[] object) {
+    public IContainment<?> containInPartialOrder(final long[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(long[] object) {
+    public IContainment<?> containsInPartialOrder(final long[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containInPartialOrder(float[] object) {
+    public IContainment<?> containInPartialOrder(final float[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(float[] object) {
+    public IContainment<?> containsInPartialOrder(final float[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containInPartialOrder(double[] object) {
+    public IContainment<?> containInPartialOrder(final double[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(double[] object) {
+    public IContainment<?> containsInPartialOrder(final double[] object) {
         return containInPartialOrder(Primitives.asList(object));
     }
 
-    public IContainment containsInPartialOrder(Object... elements) {
+    public <T> IContainment<T> containsInPartialOrder(final T... elements) {
         return containInPartialOrder(elements);
     }
 
-    public <T> IContainment containInPartialOrder(Iterator<T> elements) {
+    public <T> IContainment<T> containInPartialOrder(final Iterator<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected <T> IContainment newInPartialOrderContainment(Iterator<T> elements) {
-        return new InPartialOrderContainment(elements);
+    protected <T> IContainment<T> newInPartialOrderContainment(final Iterator<T> elements) {
+        return new InPartialOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInPartialOrder(Iterator<T> elements) {
+    public <T> IContainment<T> containsInPartialOrder(final Iterator<T> elements) {
         return containInPartialOrder(elements);
     }
 
-    public <T> IContainment containInPartialOrder(Iterable<T> elements) {
+    public <T> IContainment<T> containInPartialOrder(final Iterable<T> elements) {
         return newInPartialOrderContainment(elements);
     }
 
-    protected <T> IContainment newInPartialOrderContainment(Iterable<T> elements) {
-        return new InPartialOrderContainment(elements);
+    protected <T> IContainment<T> newInPartialOrderContainment(final Iterable<T> elements) {
+        return new InPartialOrderContainment<T>(elements);
     }
 
-    public <T> IContainment containsInPartialOrder(Iterable<T> elements) {
+    public <T> IContainment<T> containsInPartialOrder(final Iterable<T> elements) {
         return containInPartialOrder(elements);
     }
 }

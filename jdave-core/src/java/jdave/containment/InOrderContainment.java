@@ -17,33 +17,32 @@ package jdave.containment;
 
 import java.util.Collection;
 import java.util.Iterator;
-
 import jdave.IEqualityCheck;
 import jdave.equality.EqualsEqualityCheck;
 
 /**
  * @author Joni Freeman
  */
-public class InOrderContainment extends CollectionContainment {
-    public InOrderContainment(Collection<?> elements) {
+public class InOrderContainment<T> extends CollectionContainment<T> {
+    public InOrderContainment(final Collection<T> elements) {
         super(elements);
     }
-    
-    public InOrderContainment(Iterator<?> elements) {
+
+    public InOrderContainment(final Iterator<T> elements) {
         super(elements);
     }
-    
-    public InOrderContainment(Iterable<?> elements) {
+
+    public InOrderContainment(final Iterable<T> elements) {
         super(elements);
     }
 
     @Override
-    public boolean nullSafeMatches(Collection<?> actual) {
+    public boolean nullSafeMatches(final Collection<T> actual) {
         if (elements.size() != actual.size()) {
             return false;
         }
-        Iterator<?> i1 = elements.iterator();
-        Iterator<?> i2 = actual.iterator();
+        final Iterator<T> i1 = elements.iterator();
+        final Iterator<T> i2 = actual.iterator();
         while (i1.hasNext()) {
             if (!newEqualityCheck(i1.next()).matches(i2.next())) {
                 return false;
@@ -51,8 +50,8 @@ public class InOrderContainment extends CollectionContainment {
         }
         return true;
     }
-    
-    protected IEqualityCheck newEqualityCheck(Object expected) {
+
+    protected IEqualityCheck newEqualityCheck(final Object expected) {
         return new EqualsEqualityCheck(expected);
     }
 }

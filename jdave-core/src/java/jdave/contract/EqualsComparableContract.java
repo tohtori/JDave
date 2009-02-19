@@ -22,11 +22,12 @@ import jdave.IContract;
 /**
  * A contract which enforces the contract between equals method and Comparable
  * interface (or Comparator interface). See the javadoc of those classes for
- * explanation of the contract. Example usage:
+ * explanation of the contract. Example usage: <blockquote>
  * 
- * <blockquote><pre><code>
+ * <pre>
+ * &lt;code&gt;
  * Integer obj = 5;
- * specify(obj, should.satisfy(new EqualsComparableContract<Integer>() {
+ * specify(obj, should.satisfy(new EqualsComparableContract&lt;Integer&gt;() {
  *     public Integer preceding() {
  *         return 4;
  *     }
@@ -39,37 +40,40 @@ import jdave.IContract;
  *         return null; 
  *     }
  * });
- * </code></pre></blockquote>
+ * &lt;/code&gt;
+ * </pre>
+ * 
+ * </blockquote>
  * 
  * @author Joni Freeman
  */
 public abstract class EqualsComparableContract<T> implements IContract {
     private Comparator<T> comparator;
 
-    public EqualsComparableContract() {        
+    public EqualsComparableContract() {
     }
-    
-    public EqualsComparableContract(Comparator<T> comparator) {
+
+    public EqualsComparableContract(final Comparator<T> comparator) {
         this.comparator = comparator;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public void isSatisfied(Object obj) throws ExpectationFailedException {
-        T object = (T) obj;
+    public void isSatisfied(final Object obj) throws ExpectationFailedException {
+        final T object = (T) obj;
         if (comparator == null) {
             comparator = new ComparableComparator();
             try {
                 ((Comparable<?>) obj).compareTo(null);
-                throw new ExpectationFailedException(object.getClass().getName() + 
-                    ".compareTo(null) should throw NullpointerException");
-            } catch (NullPointerException e) {
+                throw new ExpectationFailedException(object.getClass().getName()
+                        + ".compareTo(null) should throw NullpointerException");
+            } catch (final NullPointerException e) {
             }
         }
-        
+
         if (comparator.compare(object, object) != 0) {
             throw new ExpectationFailedException("comparison should be 0, if objects are equal");
         }
-        
+
         if (comparator.compare(object, preceding()) <= 0) {
             throw new ExpectationFailedException(object + " should be after " + preceding());
         }
@@ -78,33 +82,37 @@ public abstract class EqualsComparableContract<T> implements IContract {
         }
         if (equivalentByComparisonButNotByEqual() != null) {
             if (comparator.compare(object, equivalentByComparisonButNotByEqual()) == 0) {
-                throw new ExpectationFailedException("comparison is not consistent with equals, " + 
-                        object + ", " + subsequent());
+                throw new ExpectationFailedException("comparison is not consistent with equals, "
+                        + object + ", " + subsequent());
             }
         }
     }
 
     /**
      * Return an instance which should preceed the given instance.
+     * 
      * @see #isSatisfied(Object)
      */
     protected abstract T preceding();
-    
+
     /**
      * Return an instance which should be after the given instance.
+     * 
      * @see #isSatisfied(Object)
      */
     protected abstract T subsequent();
 
     /**
-     * Return an instance whose compareTo is 0 with given instance, but whose equal
-     * returns false. Return null if no such instance exists.
+     * Return an instance whose compareTo is 0 with given instance, but whose
+     * equal returns false. Return null if no such instance exists.
+     * 
      * @see #isSatisfied(Object)
      */
     protected abstract T equivalentByComparisonButNotByEqual();
-    
-    private static class ComparableComparator<T extends Comparable<Object>> implements Comparator<T> {
-        public int compare(T o1, T o2) {
+
+    private static class ComparableComparator<T extends Comparable<Object>> implements
+            Comparator<T> {
+        public int compare(final T o1, final T o2) {
             return o1.compareTo(o2);
         }
     }

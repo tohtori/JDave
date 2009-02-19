@@ -23,10 +23,10 @@ import java.util.List;
  * @author Joni Freeman
  */
 public class Primitives {
-    public static List<?> asList(Object object) {
-        int size = Array.getLength(object);
-        List<? super Object> list = new ArrayList<Object>();
-        
+    public static List<?> asList(final Object object) {
+        final int size = Array.getLength(object);
+        final List<? super Object> list = new ArrayList<Object>();
+
         for (int i = 0; i < size; i++) {
             list.add(Array.get(object, i));
         }

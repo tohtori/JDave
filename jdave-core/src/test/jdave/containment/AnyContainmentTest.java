@@ -31,7 +31,7 @@ import org.junit.Test;
 public class AnyContainmentTest extends ContainmentTest {
     @Before
     public void setUp() throws Exception {
-        containment = new AnyContainment(new Iterable<Integer>() {
+        containment = new AnyContainment<Integer>(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return asList(1, 2, 3).iterator();
             }

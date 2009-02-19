@@ -23,8 +23,8 @@ import java.util.List;
  * @author Joni Freeman
  */
 public class Collections {
-    public static <T> List<T> list(Iterator<T> iterator) {
-        ArrayList<T> list = new ArrayList<T>();
+    public static <T> List<T> list(final Iterator<T> iterator) {
+        final List<T> list = new ArrayList<T>();
         while (iterator.hasNext()) {
             list.add(iterator.next());
         }

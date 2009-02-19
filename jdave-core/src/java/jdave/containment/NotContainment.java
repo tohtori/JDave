@@ -23,26 +23,26 @@ import org.hamcrest.Description;
 /**
  * @author Pekka Enberg
  */
-public class NotContainment extends BaseMatcher<Collection<?>> implements IContainment {
-    private final IContainment containment;
-    private Collection<?> actual;
+public class NotContainment<T> extends BaseMatcher<Collection<T>> implements IContainment<T> {
+    private final IContainment<T> containment;
+    private Collection<T> actual;
 
-    public NotContainment(final IContainment containment) {
+    public NotContainment(final IContainment<T> containment) {
         this.containment = containment;
     }
 
-    public boolean matches(final Collection<?> actual) {
+    public boolean matches(final Collection<T> actual) {
         this.actual = actual;
         return !containment.matches(actual);
     }
 
-    public String error(final Collection<?> actual) {
+    public String error(final Collection<T> actual) {
         return "The specified collection '" + actual + "' contains '" + containment + "'";
     }
 
     public boolean matches(final Object item) {
         if (item instanceof Collection<?>) {
-            return matches((Collection<?>) item);
+            return matches((Collection<T>) item);
         }
         return false;
     }

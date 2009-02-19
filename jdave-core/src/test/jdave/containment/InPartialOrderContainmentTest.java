@@ -15,11 +15,10 @@
  */
 package jdave.containment;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ import org.junit.Test;
 public class InPartialOrderContainmentTest extends ContainmentTest {
     @Before
     public void setUp() throws Exception {
-        containment = new InPartialOrderContainment(new Iterable<Integer>() {
+        containment = new InPartialOrderContainment<Integer>(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
             }
@@ -40,12 +39,12 @@ public class InPartialOrderContainmentTest extends ContainmentTest {
     public void testIsInPartialOrderIfCollectionsContainSameElementsInOrder() {
         assertTrue(containment.matches(Arrays.asList(1, 2, 3)));
     }
-        
+
     @Test
     public void testIsNotInPartialOrderIfCollectionsContainSameElementsButNotInOrder() {
         assertFalse(containment.matches(Arrays.asList(1, 3, 2)));
     }
-    
+
     @Test
     public void testIsInPartialOrderWhenActualHasMoreElementsButInOrder() {
         assertTrue(containment.matches(Arrays.asList(4, 1, 2, 3)));
@@ -53,13 +52,13 @@ public class InPartialOrderContainmentTest extends ContainmentTest {
         assertTrue(containment.matches(Arrays.asList(1, 2, 4, 3)));
         assertTrue(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
-    
+
     @Test
     public void testIsNotInOrderWhenActualHasLessElementsButInOrder() {
         assertFalse(containment.matches(Arrays.asList(1, 2)));
         assertFalse(containment.matches(Arrays.asList(1, 3)));
     }
-    
+
     @Test
     public void testIsInPartialOrderWhenActualRepeatsSomeElements() {
         assertTrue(containment.matches(Arrays.asList(1, 1, 2, 3)));

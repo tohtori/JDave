@@ -15,11 +15,10 @@
  */
 package jdave.containment;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ import org.junit.Test;
 public class DuplicatesValuesInExpectedCollectionExactContainmentTest extends ContainmentTest {
     @Before
     public void setUp() throws Exception {
-        containment = new ExactContainment(new Iterable<Integer>() {
+        containment = new ExactContainment<Integer>(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 2).iterator();
             }

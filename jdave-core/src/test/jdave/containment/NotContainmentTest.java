@@ -30,11 +30,12 @@ public class NotContainmentTest extends ContainmentTest {
 
     @Before
     public void setUp() throws Exception {
-        containment = new NotContainment(new AnyContainment(new Iterable<Integer>() {
-            public Iterator<Integer> iterator() {
-                return asList(1, 2, 3).iterator();
-            }
-        }));
+        containment = new NotContainment<Integer>(new AnyContainment<Integer>(
+                new Iterable<Integer>() {
+                    public Iterator<Integer> iterator() {
+                        return asList(1, 2, 3).iterator();
+                    }
+                }));
     }
 
     @Test

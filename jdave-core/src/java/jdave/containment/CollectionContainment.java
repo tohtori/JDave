@@ -25,31 +25,31 @@ import org.hamcrest.Description;
 /**
  * @author Joni Freeman
  */
-public abstract class CollectionContainment extends BaseMatcher<Collection<?>> implements
-        IContainment {
-    protected final Collection<?> elements;
-    private Collection<?> actual;
+public abstract class CollectionContainment<T> extends BaseMatcher<Collection<T>> implements
+        IContainment<T> {
+    protected final Collection<T> elements;
+    private Collection<T> actual;
 
-    public CollectionContainment(final Collection<?> elements) {
+    public CollectionContainment(final Collection<T> elements) {
         this.elements = elements;
     }
 
-    public CollectionContainment(final Iterator<?> elements) {
+    public CollectionContainment(final Iterator<T> elements) {
         this(Collections.list(elements));
     }
 
-    public CollectionContainment(final Iterable<?> elements) {
+    public CollectionContainment(final Iterable<T> elements) {
         this(elements.iterator());
     }
 
     public boolean matches(final Object item) {
         if (item instanceof Collection<?>) {
-            return matches((Collection<?>) item);
+            return matches((Collection<T>) item);
         }
         return false;
     }
 
-    public boolean matches(final Collection<?> actual) {
+    public boolean matches(final Collection<T> actual) {
         if (actual == null) {
             return false;
         }
@@ -57,7 +57,7 @@ public abstract class CollectionContainment extends BaseMatcher<Collection<?>> i
         return nullSafeMatches(actual);
     }
 
-    protected abstract boolean nullSafeMatches(Collection<?> actual);
+    protected abstract boolean nullSafeMatches(Collection<T> actual);
 
     public void describeTo(final Description description) {
         description.appendText(error(actual));
@@ -68,7 +68,7 @@ public abstract class CollectionContainment extends BaseMatcher<Collection<?>> i
         return elements.toString();
     }
 
-    public String error(final Collection<?> actual) {
+    public String error(final Collection<T> actual) {
         return "The specified collection '" + actual + "' does not contain '" + this + "'";
     }
 }

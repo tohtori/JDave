@@ -29,21 +29,21 @@ public class ObjectContainmentTest extends ContainmentTest {
 
     @Before
     public void setUp() throws Exception {
-        containment = new ObjectContainment("hello");
+        containment = new ObjectContainment<Integer>(1);
     }
 
     @Test
     public void canBeUsedAsAMatcher() {
-        assertThat(asList("hello"), containment);
+        assertThat(asList(1), containment);
     }
 
     @Test
     public void describesWell() {
         final StringDescription description = new StringDescription();
-        containment.matches(asList(1));
+        containment.matches(asList(9));
         containment.describeTo(description);
         assertThat(description.toString(),
-                is("The specified collection '[1]' does not contain 'hello'"));
+                is("The specified collection '[9]' does not contain '1'"));
     }
 
 }

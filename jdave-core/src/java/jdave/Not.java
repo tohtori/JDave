@@ -27,97 +27,98 @@ import jdave.equality.NotEqualsEqualityCheck;
 public class Not<A> extends ContainmentSupport {
     public A be;
 
-    public Not(Specification<A> specification) {
+    public Not(final Specification<A> specification) {
         be = specification.be;
     }
 
     @Override
-    protected <T> IContainment newAllContainment(Collection<T> elements) {
-        return new NotContainment(super.newAllContainment(elements));
+    protected <T> IContainment<T> newAllContainment(final Collection<T> elements) {
+        return new NotContainment<T>(super.newAllContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newAllContainment(Iterable<T> elements) {
-        return new NotContainment(super.newAllContainment(elements));
+    protected <T> IContainment<T> newAllContainment(final Iterable<T> elements) {
+        return new NotContainment<T>(super.newAllContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newAllContainment(Iterator<T> elements) {
-        return new NotContainment(super.newAllContainment(elements));
+    protected <T> IContainment<T> newAllContainment(final Iterator<T> elements) {
+        return new NotContainment<T>(super.newAllContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newAnyContainment(Collection<T> elements) {
-        return new NotContainment(super.newAnyContainment(elements));
+    protected <T> IContainment<T> newAnyContainment(final Collection<T> elements) {
+        return new NotContainment<T>(super.newAnyContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newAnyContainment(Iterable<T> elements) {
-        return new NotContainment(super.newAnyContainment(elements));
+    protected <T> IContainment<T> newAnyContainment(final Iterable<T> elements) {
+        return new NotContainment<T>(super.newAnyContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newAnyContainment(Iterator<T> elements) {
-        return new NotContainment(super.newAnyContainment(elements));
+    protected <T> IContainment<T> newAnyContainment(final Iterator<T> elements) {
+        return new NotContainment<T>(super.newAnyContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newExactContainment(Collection<T> elements) {
-        return new NotContainment(super.newExactContainment(elements));
+    protected <T> IContainment<T> newExactContainment(final Collection<T> elements) {
+        return new NotContainment<T>(super.newExactContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newExactContainment(Iterable<T> elements) {
-        return new NotContainment(super.newExactContainment(elements));
+    protected <T> IContainment<T> newExactContainment(final Iterable<T> elements) {
+        return new NotContainment<T>(super.newExactContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newExactContainment(Iterator<T> elements) {
-        return new NotContainment(super.newExactContainment(elements));
+    protected <T> IContainment<T> newExactContainment(final Iterator<T> elements) {
+        return new NotContainment<T>(super.newExactContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInOrderContainment(Collection<T> elements) {
-        return new NotContainment(super.newInOrderContainment(elements));
+    protected <T> IContainment<T> newInOrderContainment(final Collection<T> elements) {
+        return new NotContainment<T>(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInOrderContainment(Iterable<T> elements) {
-        return new NotContainment(super.newInOrderContainment(elements));
+    protected <T> IContainment<T> newInOrderContainment(final Iterable<T> elements) {
+        return new NotContainment<T>(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInOrderContainment(Iterator<T> elements) {
-        return new NotContainment(super.newInOrderContainment(elements));
+    protected <T> IContainment<T> newInOrderContainment(final Iterator<T> elements) {
+        return new NotContainment<T>(super.newInOrderContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInPartialOrderContainment(Collection<T> elements) {
-        return new NotContainment(super.newInPartialOrderContainment(elements));
+    protected <T> IContainment<T> newInPartialOrderContainment(final Collection<T> elements) {
+        return new NotContainment<T>(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInPartialOrderContainment(Iterable<T> elements) {
-        return new NotContainment(super.newInPartialOrderContainment(elements));
+    protected <T> IContainment<T> newInPartialOrderContainment(final Iterable<T> elements) {
+        return new NotContainment<T>(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected <T> IContainment newInPartialOrderContainment(Iterator<T> elements) {
-        return new NotContainment(super.newInPartialOrderContainment(elements));
+    protected <T> IContainment<T> newInPartialOrderContainment(final Iterator<T> elements) {
+        return new NotContainment<T>(super.newInPartialOrderContainment(elements));
     }
 
     @Override
-    protected IContainment newObjectContainment(Object object) {
-        return new NotContainment(super.newObjectContainment(object));
+    protected <T> IContainment<T> newObjectContainment(final T object) {
+        return new NotContainment<T>(super.newObjectContainment(object));
     }
 
-    public <E extends Throwable> ExpectedNoThrow<E> raise(Class<E> expected) {
+    public <E extends Throwable> ExpectedNoThrow<E> raise(final Class<E> expected) {
         return new ExpectedNoThrow<E>(new ExpectedException<E>(expected));
     }
-    
+
     /**
      * No exception is expected from <code>Block</code>.
      * <p>
+     * 
      * @see Specification#specify(Block, ExpectedNoThrow)
      */
     @SuppressWarnings("unchecked")
@@ -125,25 +126,25 @@ public class Not<A> extends ContainmentSupport {
         return (ExpectedNoThrow<E>) raise(Throwable.class);
     }
 
-    public <E extends Throwable> ExpectedNoThrow<E> raise(Class<E> expectedType,
-            String expectedMessage) {
+    public <E extends Throwable> ExpectedNoThrow<E> raise(final Class<E> expectedType,
+            final String expectedMessage) {
         return new ExpectedNoThrow<E>(new ExpectedExceptionWithMessage<E>(expectedType,
                 expectedMessage));
     }
 
-    public <E extends Throwable> ExpectedNoThrow<E> raiseExactly(Class<E> expected) {
+    public <E extends Throwable> ExpectedNoThrow<E> raiseExactly(final Class<E> expected) {
         return new ExpectedNoThrow<E>(new ExactExpectedException<E>(expected));
     }
 
-    public IEqualityCheck equal(Object obj) {
+    public IEqualityCheck equal(final Object obj) {
         return new NotEqualsEqualityCheck(obj);
     }
-    
-    public IEqualityCheck equal(Number expectedNumber, double delta) {
+
+    public IEqualityCheck equal(final Number expectedNumber, final double delta) {
         return new NotDeltaEqualityCheck(expectedNumber, delta);
     }
-    
-    public IContract satisfy(IContract contract) {
+
+    public IContract satisfy(final IContract contract) {
         return new NotContract(contract);
     }
 }

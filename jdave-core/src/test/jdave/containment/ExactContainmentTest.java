@@ -15,11 +15,10 @@
  */
 package jdave.containment;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,33 +28,33 @@ import org.junit.Test;
 public class ExactContainmentTest extends ContainmentTest {
     @Before
     public void setUp() throws Exception {
-        containment = new ExactContainment(new Iterable<Integer>() {
+        containment = new ExactContainment<Integer>(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
             }
         });
     }
-    
+
     @Test
     public void testIsInListWhichIsInDifferentOrder() {
         assertTrue(containment.matches(Arrays.asList(2, 3, 1)));
     }
-        
+
     @Test
     public void testIsNotInListWhichMissesElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 2)));
     }
-    
+
     @Test
     public void testIsNotInListWhichHasExtraElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 4)));
     }
-    
+
     @Test
     public void testIsNotInListWhichHasFewerElements() {
         assertFalse(containment.matches(Arrays.asList(1, 2)));
     }
-    
+
     @Test
     public void testIsNotInListWhichContainsDuplicateElement() {
         assertFalse(containment.matches(Arrays.asList(1, 2, 3, 3)));

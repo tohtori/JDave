@@ -79,11 +79,11 @@ public abstract class Specification<T> extends MockSupport {
         actualState = true;
     }
 
-    public <E> void specify(final Iterator<E> actual, final IContainment containment) {
-        specify(Collections.list(actual), containment);
+    public <E> void specify(final Iterator<E> actual, final IContainment<E> containment) {
+        specify(Collections.<E> list(actual), containment);
     }
 
-    public <E> void specify(final Collection<E> actual, final IContainment containment) {
+    public <E> void specify(final Collection<E> actual, final IContainment<E> containment) {
         try {
             if (!containment.matches(actual)) {
                 throw new ExpectationFailedException(containment.error(actual));
@@ -93,39 +93,39 @@ public abstract class Specification<T> extends MockSupport {
         }
     }
 
-    public void specify(final Object[] actual, final IContainment containment) {
+    public <E> void specify(final Object[] actual, final IContainment<E> containment) {
         specify(Arrays.asList(actual), containment);
     }
 
-    public void specify(final boolean[] actual, final IContainment containment) {
+    public <E> void specify(final boolean[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final byte[] actual, final IContainment containment) {
+    public <E> void specify(final byte[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final char[] actual, final IContainment containment) {
+    public <E> void specify(final char[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final double[] actual, final IContainment containment) {
+    public <E> void specify(final double[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final float[] actual, final IContainment containment) {
+    public <E> void specify(final float[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final int[] actual, final IContainment containment) {
+    public <E> void specify(final int[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final long[] actual, final IContainment containment) {
+    public <E> void specify(final long[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 
-    public void specify(final short[] actual, final IContainment containment) {
+    public <E> void specify(final short[] actual, final IContainment<E> containment) {
         specify(Primitives.asList(actual), containment);
     }
 

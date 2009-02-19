@@ -23,15 +23,15 @@ import org.hamcrest.Description;
 /**
  * @author Joni Freeman
  */
-public class ObjectContainment extends BaseMatcher<Collection<?>> implements IContainment {
+public class ObjectContainment<T> extends BaseMatcher<Collection<T>> implements IContainment<T> {
     private final Object object;
-    private Collection<?> actual;
+    private Collection<T> actual;
 
     public ObjectContainment(final Object object) {
         this.object = object;
     }
 
-    public boolean matches(final Collection<?> actual) {
+    public boolean matches(final Collection<T> actual) {
         if (actual == null) {
             return false;
         }
@@ -39,7 +39,7 @@ public class ObjectContainment extends BaseMatcher<Collection<?>> implements ICo
         return actual.contains(object);
     }
 
-    public String error(final Collection<?> actual) {
+    public String error(final Collection<T> actual) {
         return "The specified collection '" + actual + "' does not contain '" + this + "'";
     }
 
@@ -50,7 +50,7 @@ public class ObjectContainment extends BaseMatcher<Collection<?>> implements ICo
 
     public boolean matches(final Object item) {
         if (item instanceof Collection<?>) {
-            return matches((Collection<?>) item);
+            return matches((Collection<T>) item);
         }
         return false;
     }

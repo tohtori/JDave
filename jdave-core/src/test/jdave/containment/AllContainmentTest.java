@@ -28,7 +28,7 @@ import org.junit.Test;
 public class AllContainmentTest extends ContainmentTest {
     @Before
     public void setUp() throws Exception {
-        containment = new AllContainment(new Iterable<Integer>() {
+        containment = new AllContainment<Integer>(new Iterable<Integer>() {
             public Iterator<Integer> iterator() {
                 return Arrays.asList(1, 2, 3).iterator();
             }
