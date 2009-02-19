@@ -236,7 +236,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * @param containment any containment, see:
      *            http://www.jdave.org/documentation.html#containments
      */
-    public void specify(final MarkupContainer actual, final IContainment containment) {
+    public <T> void specify(final MarkupContainer actual, final IContainment<T> containment) {
         super.specify(modelObjects(actual.iterator()), containment);
     }
 
