@@ -16,16 +16,15 @@
 package jdave.containment;
 
 import java.util.Collection;
-import jdave.IContainment;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
+
+import jdave.BaseMatcherContainment;
 
 /**
  * @author Joni Freeman
  */
-public class ObjectContainment<T> extends BaseMatcher<Collection<T>> implements IContainment<T> {
+public class ObjectContainment<T> extends BaseMatcherContainment<T> {
+
     private final Object object;
-    private Collection<T> actual;
 
     public ObjectContainment(final Object object) {
         this.object = object;
@@ -48,14 +47,4 @@ public class ObjectContainment<T> extends BaseMatcher<Collection<T>> implements 
         return object.toString();
     }
 
-    public boolean matches(final Object item) {
-        if (item instanceof Collection<?>) {
-            return matches((Collection<T>) item);
-        }
-        return false;
-    }
-
-    public void describeTo(final Description description) {
-        description.appendText(error(actual));
-    }
 }

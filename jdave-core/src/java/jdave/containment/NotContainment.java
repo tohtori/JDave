@@ -16,16 +16,15 @@
 package jdave.containment;
 
 import java.util.Collection;
+
+import jdave.BaseMatcherContainment;
 import jdave.IContainment;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 
 /**
  * @author Pekka Enberg
  */
-public class NotContainment<T> extends BaseMatcher<Collection<T>> implements IContainment<T> {
+public class NotContainment<T> extends BaseMatcherContainment<T> {
     private final IContainment<T> containment;
-    private Collection<T> actual;
 
     public NotContainment(final IContainment<T> containment) {
         this.containment = containment;
@@ -40,14 +39,4 @@ public class NotContainment<T> extends BaseMatcher<Collection<T>> implements ICo
         return "The specified collection '" + actual + "' contains '" + containment + "'";
     }
 
-    public boolean matches(final Object item) {
-        if (item instanceof Collection<?>) {
-            return matches((Collection<T>) item);
-        }
-        return false;
-    }
-
-    public void describeTo(final Description description) {
-        description.appendText(error(actual));
-    }
 }
