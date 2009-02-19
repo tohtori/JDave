@@ -38,6 +38,7 @@ public class MapContainmentTest {
         };
     }
 
+    @Test
     public void testProvidesWayToCheckIfMapContainsKeyValuePairs() {
         spec.specify(map, spec.maps(1, 2).to("1", "2"));
     }
