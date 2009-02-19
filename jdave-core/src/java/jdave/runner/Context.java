@@ -17,9 +17,9 @@ package jdave.runner;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import jdave.Specification;
 
 /**
@@ -79,7 +79,10 @@ public abstract class Context {
     private Collection<Class<?>> typesOf(final Class<?> clazz) {
         final List<Class<?>> types = new ArrayList<Class<?>>();
         types.add(clazz);
-        types.addAll(Arrays.asList(clazz.getInterfaces()));
+        final Class<?>[] interfaces = clazz.getInterfaces();
+        for (final Class<?> anInterface : interfaces) {
+            types.add(anInterface);
+        }
         return types;
     }
 
