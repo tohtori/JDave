@@ -55,3 +55,4 @@ Java 6 attach to the rescue.
 In short, VirtualMachine.attach() allows you to add agents programmatically after the JVM has been started.
 
 If you like that, you may want to try the netbeans 6.5 profiler with dynamic attach.
+
