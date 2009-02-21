@@ -121,9 +121,9 @@ public class Not<A> extends ContainmentSupport {
      * 
      * @see Specification#specify(Block, ExpectedNoThrow)
      */
-    @SuppressWarnings("unchecked")
-    public <E extends Throwable> ExpectedNoThrow<E> raiseAnyException() {
-        return (ExpectedNoThrow<E>) raise(Throwable.class);
+
+    public ExpectedNoThrow<Throwable> raiseAnyException() {
+        return raise(Throwable.class);
     }
 
     public <E extends Throwable> ExpectedNoThrow<E> raise(final Class<E> expectedType,

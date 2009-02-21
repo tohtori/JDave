@@ -16,7 +16,6 @@
 package jdave;
 
 import java.util.Collection;
-
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
@@ -41,5 +40,4 @@ public abstract class BaseMatcherContainment<T> extends BaseMatcher<Collection<T
     public final void describeTo(final Description description) {
         description.appendText(error(actual));
     }
-
 }
