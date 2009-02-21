@@ -77,14 +77,7 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      * @param model The model passed to component that is used for context.
      */
     public C startComponent(final IModel<M> model) {
-        final ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
-        Class<?> type;
-        if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
-            type = (Class<?>) superclass.getActualTypeArguments()[0];
-        } else {
-            type = (Class<?>) ((ParameterizedType) superclass.getActualTypeArguments()[0])
-                    .getRawType();
-        }
+        final Class<?> type = extractComponentType();
         if (Page.class.isAssignableFrom(type)) {
             startPage(model);
         } else if (Panel.class.isAssignableFrom(type)) {
@@ -95,6 +88,18 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
             startComponentWithoutMarkup(model);
         }
         return specifiedComponent;
+    }
+
+    private Class<?> extractComponentType() {
+        final ParameterizedType superclass = (ParameterizedType) getClass().getGenericSuperclass();
+        Class<?> type;
+        if (superclass.getActualTypeArguments()[0] instanceof Class<?>) {
+            type = (Class<?>) superclass.getActualTypeArguments()[0];
+        } else {
+            type = (Class<?>) ((ParameterizedType) superclass.getActualTypeArguments()[0])
+                    .getRawType();
+        }
+        return type;
     }
 
     /**
@@ -144,10 +149,19 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
      *            the form returned from <code>newComponent</code> method,
      *            excluding the &lt;form&gt; tag.
      */
-    public <F> Form<F> startForm(final IModel<M> model, final CharSequence formMarkup) {
-        return (Form<F>) startComponent(model, new StringBuilder().append(
+    public C startForm(final IModel<M> model, final CharSequence formMarkup) {
+        ensureComponentIsAForm();
+        return startComponent(model, new StringBuilder().append(
                 "<html><body><form wicket:id='form'>").append(formMarkup).append(
                 "</form></body></html>").toString(), "form");
+    }
+
+    private void ensureComponentIsAForm() {
+        if (!Form.class.isAssignableFrom(extractComponentType())) {
+            throw new IllegalArgumentException(
+                    "Your ComponentSpecification must be typed as <? extends Form<?>> if you want to start a form.  Instead you are using "
+                            + extractComponentType().getName());
+        }
     }
 
     /**
@@ -243,8 +257,9 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     /**
      * Select an item from a <code>RepeatingView</code>.
      */
+    @SuppressWarnings("unchecked")
     public <T> Item<T> itemAt(final RepeatingView view, final int index) {
-        final Iterator<?> items = view.iterator();
+        final Iterator<? extends Component> items = view.iterator();
         for (int i = 0; i < index; i++) {
             items.next();
         }
@@ -265,12 +280,12 @@ public abstract class ComponentSpecification<C extends Component, M> extends Spe
     /**
      * Collect model objects from given components.
      */
-    public List<?> modelObjects(final Iterator<?> components) {
-        @SuppressWarnings("unchecked")
-        final Iterator<? extends Component> unsafe = (Iterator<? extends Component>) components;
+    public List<?> modelObjects(final Iterator<? extends Component> components) {
         final List<Object> objects = new ArrayList<Object>();
-        while (unsafe.hasNext()) {
-            objects.add(unsafe.next().getDefaultModelObject());
+        while (components.hasNext()) {
+            objects
+                    .add(((Iterator<? extends Component>) components).next()
+                            .getDefaultModelObject());
         }
         return objects;
     }
