@@ -11,7 +11,7 @@ public class Link {
     private WebElement webElement;
     private Channel channel = new Channel();
 
-    Link(WebElement webElement) {
+    public Link(WebElement webElement) {
         this.webElement = webElement;
     }
 

@@ -26,7 +26,7 @@ public class CheckBox {
     private WebElement webElement;
     private Channel channel = new Channel();
 
-    CheckBox(WebElement webElement) {
+    public CheckBox(WebElement webElement) {
         this.webElement = webElement;
     }
 

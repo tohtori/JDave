@@ -26,7 +26,7 @@ public class TextBox {
     private WebElement webElement;
     private Channel channel = new Channel();
 
-    TextBox(WebElement webElement) {
+    public TextBox(WebElement webElement) {
         this.webElement = webElement;
     }
 
