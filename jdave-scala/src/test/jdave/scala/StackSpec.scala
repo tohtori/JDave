@@ -28,7 +28,7 @@ class StackSpec extends Specification[Stack[Int]] {
 
     def isNoLongerEmptyAfterPush {
       stack.push(1234)
-     // §(stack, must not() be empty)
+//      §(stack, must not() be empty)
     }
   }
   

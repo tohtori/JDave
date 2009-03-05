@@ -24,7 +24,7 @@ class AdditionSpec extends Specification[Unit] {
   
   class Props {
     def commutativity = prop((x: Int, y: Int) => add(x, y) == add(y, x))
-    def additiveIdentity = prop((x: Int) => add(x, 0) == x)
+    def additiveIdentity = prop((x: Int) => add(x, 0) == x)    
     def distributivity = prop((x: Int, y: Int, z: Int) => x * (add(y, z)) == add(x * y, x * z))
   }
 }
