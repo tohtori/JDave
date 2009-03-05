@@ -35,10 +35,14 @@ trait Specification[T] extends JavaSpecification[T] with MockSupport[T] with Sca
   }
   def §[A <: Throwable](block: => Any, e: ExpectedNoThrow[A]) = specify(block, e)
   
-  def specify[E](i: Iterable[E], c: IContainment) = super.specify(toJavaList(i), c)
-  def §[E](i: Iterable[E], c: IContainment) = specify(i, c)
+  def specify[E](i: Iterable[E], c: IContainment[E]) = super.specify(toJavaList(i), c)
+  def §[E](i: Iterable[E], c: IContainment[E]) = specify(i, c)
   
-  implicit def iterableToJavaList[E](i: Iterable[E]) = toJavaList(i)
+  override def containsExactly[E](e :E*) = {
+    super.containsExactly(toJavaList(e))
+  }
+  
+  implicit def iterableToJavaList[E](i: Iterable[E]): java.util.List[E] = toJavaList(i)
   
   private def toJavaList[E](i: Iterable[E]) = {
     val list = new java.util.ArrayList[E]

@@ -8,25 +8,25 @@ trait ScalaCheckSupport {
   
   def specify(p: Prop): Unit = specify(Test.defaultParams, p)
   
-  def specify(params: Params, p: Prop) = Test.check(params, p).result match {
+  def specify(params: Params, p: Prop) = Test.check(params, p).status match {
     case Proved(args)           =>
     case Passed                 =>
-    case Failed(args)           => throw new jdave.ExpectationFailedException("failed with args " + args)
+    case Failed(args, labels)           => throw new jdave.ExpectationFailedException("failed with args " + args)
     case Exhausted              => throw new jdave.ExpectationFailedException("exhausted")
-    case PropException(args, e) => throw new jdave.ExpectationFailedException("failed: " + e.getMessage)
+    case PropException(args, e, labels) => throw new jdave.ExpectationFailedException("failed: " + e.getMessage)
     case GenException(e)        => throw new jdave.ExpectationFailedException("generation failed: " + e.getMessage)
   }
 
   def prop(p: => Prop) = specify(p)
 
-  def prop[A1,P] (f: A1 => P)(implicit p: P => Prop, a1: Arbitrary[A1], s1: Shrink[A1]) = specify(Prop.property(f))
-
+  def prop[A1,P] (f: A1 => P)(implicit p: P => Prop, a1: Arbitrary[A1], s1: Shrink[A1]) = specify(Prop.forAll(f))
+  
   def prop[A1,A2,P] (
     f: (A1,A2) => P)(implicit
     p: P => Prop,
     a1: Arbitrary[A1], s1: Shrink[A1],
     a2: Arbitrary[A2], s2: Shrink[A2]
-  ): Unit = specify(Prop.property(f))
+  ): Unit = specify(Prop.forAll(f))
 
   def prop[A1,A2,A3,P] (
     f: (A1,A2,A3) => P)(implicit
@@ -64,5 +64,5 @@ trait ScalaCheckSupport {
     a4: Arbitrary[A4], s4: Shrink[A4],
     a5: Arbitrary[A5], s5: Shrink[A5],
     a6: Arbitrary[A6], s6: Shrink[A6]
-  ): Unit = specify(Prop.property(f))
+  ): Unit = specify(Prop.forAll(f))
 }

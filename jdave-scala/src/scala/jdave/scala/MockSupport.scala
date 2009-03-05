@@ -48,7 +48,7 @@ trait MockSupport[T] extends JavaSpecification[T] {
   def runAction(block: => Object) = new RunAction(block)
   def willRunAction(block: => Object) = will(runAction(block))
   def returnIterator(collection: java.util.Collection[_]) = Expectations.returnIterator(collection)
-  def returnIterator[V](items: V*) = Expectations.returnIterator(items.toArray)
+  def returnIterator[V](items: V*) = Expectations.returnIterator(items.toArray:_*)
   def onConsecutiveCalls(actions: Action*) = Expectations.onConsecutiveCalls(actions.toArray)
   def doAll(actions: Action*) = Expectations.doAll(actions.toArray)
     
