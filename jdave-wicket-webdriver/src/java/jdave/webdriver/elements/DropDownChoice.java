@@ -21,6 +21,7 @@ import java.util.Map;
 
 import jdave.webdriver.Channel;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
@@ -36,7 +37,7 @@ public class DropDownChoice {
     }
 
     public void select(String selection) {
-        Map<String, WebElement> optionsMap = optionsMap(webElement.getChildrenOfType("option"));
+        Map<String, WebElement> optionsMap = optionsMap(webElement.findElements(By.tagName("option")));
         WebElement selectedWebElement = optionsMap.get(selection);
         if (selectedWebElement != null) {
             selectedWebElement.setSelected();

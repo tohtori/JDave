@@ -15,11 +15,10 @@
  */
 package jdave.webdriver;
 
-import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxLauncher;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 
@@ -32,7 +31,7 @@ public class Browser {
 
     public Browser() {
     }
-    
+
     public Browser(String profileName) {
         this.profileName = profileName;
     }
@@ -50,16 +49,13 @@ public class Browser {
         webDriver.quit();
     }
 
+    @SuppressWarnings("deprecation")
     private void initFirefoxProfile() {
         FirefoxBinary binary = new FirefoxBinary();
         FirefoxLauncher launcher = new FirefoxLauncher(binary);
         ProfilesIni profiles = new ProfilesIni();
         if (profiles.getProfile(profileName) == null) {
-            try {
-                launcher.createBaseWebDriverProfile(profileName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            launcher.createBaseWebDriverProfile(binary, profileName, FirefoxDriver.DEFAULT_PORT);
         }
     }
 }

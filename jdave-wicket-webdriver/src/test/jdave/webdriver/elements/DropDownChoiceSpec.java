@@ -25,6 +25,7 @@ import jdave.webdriver.Channel;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
@@ -50,7 +51,7 @@ public class DropDownChoiceSpec extends Specification<DropDownChoice> {
             Inject.field("channel").of(dropDownChoice).with(channel);
             final String selection = "lo";
             checking(new Expectations() {{
-                one(webElement).getChildrenOfType("option"); will(returnValue(Arrays.asList(option1, option2)));
+                one(webElement).findElements(By.tagName("option")); will(returnValue(Arrays.asList(option1, option2)));
                 one(option1).getText(); will(returnValue("foo"));
                 one(option2).getText(); will(returnValue(selection));
                 one(option2).setSelected();
@@ -61,7 +62,7 @@ public class DropDownChoiceSpec extends Specification<DropDownChoice> {
 
 		public void raisesExceptionIfInvalidOptionIsSelected() {
 			checking(new Expectations() {{
-                one(webElement).getChildrenOfType("option"); will(returnValue(Arrays.asList(option1, option2)));
+                one(webElement).findElements(By.tagName("option")); will(returnValue(Arrays.asList(option1, option2)));
                 one(option1).getText(); will(returnValue("foo"));
                 one(option2).getText(); will(returnValue("lo"));
 		    }});

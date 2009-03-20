@@ -48,7 +48,7 @@ public class CountSpec extends Specification<Void> {
             checking(new Expectations() {{
                 one(webDriver).findElement(by); will(returnValue(foundElement));
                 List<WebElement> foundChildren = mock(List.class);
-                one(foundElement).getChildrenOfType("tr"); will(returnValue(foundChildren));
+                one(foundElement).findElements(By.tagName("tr")); will(returnValue(foundChildren));
                 one(foundChildren).size(); will(returnValue(2));
             }});
             specify(Count.of(Tag.TR).fromParent(by), does.equal(2));

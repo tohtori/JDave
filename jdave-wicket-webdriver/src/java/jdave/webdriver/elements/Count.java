@@ -19,7 +19,7 @@ public class Count {
 
     public int fromParent(By by) {
         WebElement parent = WebDriverHolder.get().findElement(by);
-        return parent.getChildrenOfType(tag.toString()).size();
+        return parent.findElements(By.tagName(tag.toString())).size();
     }
 
     public static Count of(Tag tag) {
