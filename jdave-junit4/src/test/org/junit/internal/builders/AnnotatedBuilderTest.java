@@ -17,6 +17,7 @@ package org.junit.internal.builders;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -51,7 +52,6 @@ public class AnnotatedBuilderTest {
 
     }
 
-    @Test
     public void aNonStaticInnerClassWithARunWithAnnotationOnTheDeclaringClassHasRunnerBuilt()
             throws Exception {
         final Runner runner = new AnnotatedBuilder(null)
