@@ -72,7 +72,7 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>, 
         public void allowsCompilation() {
             final Form<Void> component = startComponent();
             specify(
-                    selectFirst(TextField.class).from(component).getConvertEmptyInputStringToNull(),
+                    selectFirst(TextField.class).<TextField> from(component).getConvertEmptyInputStringToNull(),
                     is(true));
         }
 

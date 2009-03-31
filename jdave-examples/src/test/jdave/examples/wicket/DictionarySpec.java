@@ -48,8 +48,8 @@ public class DictionarySpec extends ComponentSpecification<DictionaryPanel,Void>
             query("hello");
             RefreshingView<String> words = (RefreshingView<String>) dictionary.get("words");
             specify(words, containsInOrder("hei", "moi"));
-            specify(selectFirst(Label.class, "word").from(dictionary).getDefaultModelObjectAsString(), is("hei"));
-            specify(selectAll(Label.class, "word").from(dictionary).size(), does.equal(2));
+            specify(selectFirst(Label.class, "word").<Label> from(dictionary).getDefaultModelObjectAsString(), is("hei"));
+            specify(selectAll(Label.class, "word").<Label> from(dictionary).size(), does.equal(2));
         }
     }
     
