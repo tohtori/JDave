@@ -37,16 +37,21 @@ public class JDaveGroupRunner extends Runner {
     private final Class<?> suite;
     private final List<Class<? extends Specification<?>>> specs = 
         new ArrayList<Class<? extends Specification<?>>>();
+    private Description description;
 
     public JDaveGroupRunner(Class<?> suite) {
         this.suite = suite;        
+        description = Description.createSuiteDescription(suite);
+        Groups groupsAnnotationOfSuite = suite.getAnnotation(Groups.class);
+        if (groupsAnnotationOfSuite == null) {
+            return;
+        }
+        final Resolution resolution = new Resolution(groupsAnnotationOfSuite);
+        scanSpecsFromDisc(description, resolution);
     }
 
     @Override
     public Description getDescription() {
-        final Description description = Description.createSuiteDescription(suite);
-        final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        scanSpecsFromDisc(description, resolution);
         return description;
     }
 
