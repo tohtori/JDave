@@ -50,11 +50,6 @@ public class JDaveGroupRunner extends Runner {
         scanSpecsFromDisc(description, resolution);
     }
 
-    @Override
-    public Description getDescription() {
-        return description;
-    }
-
     private void scanSpecsFromDisc(Description desc, Resolution resolution) {
         specs.clear();
         for (String dir : findRootDirs()) {
@@ -127,4 +122,9 @@ public class JDaveGroupRunner extends Runner {
     
     protected void onBeforeRun() {}
     protected void onAfterRun() {}
+
+    @Override
+    public Description getDescription() {
+        return description;
+    }
 }
