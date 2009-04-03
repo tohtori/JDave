@@ -19,16 +19,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import jdave.Specification;
 import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
 import jdave.runner.Resolution;
-
 import net.sf.cglib.asm.Type;
 import net.sf.cglib.asm.attrs.Annotation;
-
 import org.junit.runner.Description;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
@@ -47,13 +44,17 @@ public class JDaveGroupRunner extends Runner {
 
     @Override
     public Description getDescription() {
-        specs.clear();
         final Description desc = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        for (String dir : findRootDirs()) {        
+        scanSpecsFromDisc(desc, resolution);
+        return desc;
+    }
+
+    private void scanSpecsFromDisc(Description desc, Resolution resolution) {
+        specs.clear();
+        for (String dir : findRootDirs()) {
             scanDir(dir, desc, resolution);
         }
-        return desc;
     }
 
     private void scanDir(String dir, final Description desc, final Resolution resolution) {
