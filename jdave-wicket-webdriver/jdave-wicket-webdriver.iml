@@ -9,6 +9,11 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/java" />
+          <root url="file://$MODULE_DIR$/src/resources" />
+          <root url="file://$MODULE_DIR$/src/test" />
+        </sourceRoots>
         <building>
           <setting name="EXPLODED_URL" value="file://" />
           <setting name="EXPLODED_ENABLED" value="false" />
@@ -31,12 +36,23 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Wicket" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-common/0.6.870/webdriver-common-0.6.870.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-common/0.6.870/webdriver-common-0.6.870-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -62,22 +78,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-firefox/1.0-SNAPSHOT/webdriver-firefox-1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-firefox/1.0-SNAPSHOT/webdriver-firefox-1.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-common/1.0-SNAPSHOT/webdriver-common-1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-firefox/0.6.870/webdriver-firefox-0.6.870.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-common/1.0-SNAPSHOT/webdriver-common-1.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/openqa/selenium/webdriver/webdriver-firefox/0.6.870/webdriver-firefox-0.6.870-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -106,22 +122,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-junit4/1.1-SNAPSHOT/jdave-junit4-1.1-SNAPSHOT.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-wicket/1.2-SNAPSHOT/jdave-wicket-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-junit4/1.1-SNAPSHOT/jdave-junit4-1.1-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-wicket/1.2-SNAPSHOT/jdave-wicket-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-core/1.1-SNAPSHOT/jdave-core-1.1-SNAPSHOT.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-core/1.2-SNAPSHOT/jdave-core-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-core/1.1-SNAPSHOT/jdave-core-1.1-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-core/1.2-SNAPSHOT/jdave-core-1.2-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -168,10 +184,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit-dep/4.5/junit-dep-4.5.jar!/" />
+          <root url="jar://$M2_REPO$/org/apache/wicket/wicket/1.4-SNAPSHOT/wicket-1.4-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/apache/wicket/wicket/1.4-SNAPSHOT/wicket-1.4-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -276,11 +294,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-wicket/1.1-SNAPSHOT/jdave-wicket-1.1-SNAPSHOT.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-junit4/1.2-SNAPSHOT/jdave-junit4-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/jdave/jdave-wicket/1.1-SNAPSHOT/jdave-wicket-1.1-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/jdave/jdave-junit4/1.2-SNAPSHOT/jdave-junit4-1.2-SNAPSHOT-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/junit/junit-dep/4.5/junit-dep-4.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$M2_REPO$/junit/junit-dep/4.5/junit-dep-4.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -304,27 +333,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$M2_REPO$/junit/junit/4.5/junit-4.5-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/javaee.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Wicket" level="project" />
   </component>
 </module>
 
