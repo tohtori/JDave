@@ -148,7 +148,6 @@ public class JDaveGroupRunnerTest {
                 };
             }
         };
-        runner.getDescription();
         Assert.assertEquals(Arrays.asList("foo", "bar"), dirs);
     }
     
