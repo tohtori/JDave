@@ -44,10 +44,10 @@ public class JDaveGroupRunner extends Runner {
 
     @Override
     public Description getDescription() {
-        final Description desc = Description.createSuiteDescription(suite);
+        final Description description = Description.createSuiteDescription(suite);
         final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        scanSpecsFromDisc(desc, resolution);
-        return desc;
+        scanSpecsFromDisc(description, resolution);
+        return description;
     }
 
     private void scanSpecsFromDisc(Description desc, Resolution resolution) {
