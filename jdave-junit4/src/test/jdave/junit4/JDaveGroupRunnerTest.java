@@ -129,7 +129,8 @@ public class JDaveGroupRunnerTest {
         reader.accept(collector, Attributes.getDefaultAttributes(), true);
         Assert.assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
     }
-    
+
+    @Test
     public void testUsesDirectoriesSpecifiedBySpecDirsIfAnnotationIsPresent() throws Exception {
         final List<String> dirs = new ArrayList<String>();
         runner = new JDaveGroupRunner(SuiteWithSpecifiedDirs.class) {
