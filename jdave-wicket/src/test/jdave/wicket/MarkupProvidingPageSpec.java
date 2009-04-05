@@ -15,9 +15,7 @@
  */
 package jdave.wicket;
 
-import static org.hamcrest.Matchers.is;
 import jdave.junit4.JDaveRunner;
-
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -65,22 +63,6 @@ public class MarkupProvidingPageSpec extends ComponentSpecification<Form<Void>, 
 
         private CharSequence formMarkup() {
             return "<input type='text' wicket:id='textField'/>";
-        }
-    }
-
-    public class TypeInference {
-        public void allowsCompilation() {
-            final Form<Void> component = startComponent();
-            specify(
-                    selectFirst(TextField.class).<TextField> from(component).getConvertEmptyInputStringToNull(),
-                    is(true));
-        }
-
-        public void allowsCompilationForMultiSelection() {
-            final Form<Void> component = startComponent();
-            specify(selectAll(TextField.class).from(component).get(0)
-                    .getConvertEmptyInputStringToNull(), is(true));
-
         }
     }
 
