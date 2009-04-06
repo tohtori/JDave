@@ -25,6 +25,7 @@ import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
 import junit.framework.Assert;
+import static junit.framework.Assert.assertEquals;
 import net.sf.cglib.asm.Attribute;
 import net.sf.cglib.asm.ClassAdapter;
 import net.sf.cglib.asm.ClassReader;
@@ -86,7 +87,7 @@ public class JDaveGroupRunnerTest {
     }
     
     @Test
-    public void runsBehaviorsFromEachMatchingSpec() throws Exception {
+    public void runsBehaviorsFromEachMatchingSpec()  {
         runner = new JDaveGroupRunner(Suite.class) {
             @Override
             protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
@@ -147,7 +148,18 @@ public class JDaveGroupRunnerTest {
                 };
             }
         };
-        Assert.assertEquals(Arrays.asList("foo", "bar"), dirs);
+        assertEquals(Arrays.asList("foo", "bar"), dirs);
+    }
+    
+    @Test
+    public void addsSpecsToDescription() {
+        runner = new JDaveGroupRunner(Suite.class);
+        Description description = runner.getDescription();
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
+        ArrayList<Description> specsInDescription = description.getChildren();
+        assertEquals(2, specsInDescription.size());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", specsInDescription.get(0).getDisplayName());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", specsInDescription.get(1).getDisplayName());
     }
     
     private static class AnnotationCollector extends ClassAdapter {
@@ -166,16 +178,6 @@ public class JDaveGroupRunnerTest {
         }
     }
     
-    @Test
-    public void addsSpecsToDescription() throws Exception {
-        runner = new JDaveGroupRunner(Suite.class);
-        Description description = runner.getDescription();
-        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
-        ArrayList<Description> specsInDescription = description.getChildren();
-        Assert.assertEquals(2, specsInDescription.size());
-        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", specsInDescription.get(0).getDisplayName());
-        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", specsInDescription.get(1).getDisplayName());
-    }
     
     @RunWith(JDaveGroupRunner.class)
     @Groups(include="any")
