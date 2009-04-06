@@ -42,24 +42,23 @@ public class JDaveGroupRunner extends Runner {
     public JDaveGroupRunner(Class<?> suite) {
         this.suite = suite;        
         description = Description.createSuiteDescription(suite);
-        final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
-        scanSpecsFromDisc(description, resolution);
+        collectSpecsAndDescriptionBy(suite);
     }
 
-    private void scanSpecsFromDisc(Description desc, Resolution resolution) {
-        specs.clear();
+    private void collectSpecsAndDescriptionBy(Class<?> suite) {
+        final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
         for (String dir : findRootDirs()) {
-            scanDir(dir, desc, resolution);
+            scanDir(dir, resolution);
         }
     }
-
-    private void scanDir(String dir, final Description desc, final Resolution resolution) {
+    
+    private void scanDir(String dir, final Resolution resolution) {
         newAnnotatedSpecScanner(dir).forEach(new IAnnotatedSpecHandler() {
             public void handle(String classname, String... groups) {
                 if (resolution.includes(Arrays.asList(groups))) {
                     Class<? extends Specification<?>> spec = loadClass(classname);
                     specs.add(spec);
-                    desc.addChild(DescriptionFactory.create(spec));
+                    description.addChild(DescriptionFactory.create(spec));
                 }
             }
         });
