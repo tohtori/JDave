@@ -104,7 +104,6 @@ public class JDaveGroupRunnerTest {
                 };
             }
         };
-        runner.getDescription();
         context.checking(new Expectations() {{ 
             exactly(2).of(notifier).fireTestStarted(with(any(Description.class)));
             exactly(2).of(notifier).fireTestFinished(with(any(Description.class)));
