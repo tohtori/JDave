@@ -86,7 +86,7 @@ public class JDaveGroupRunnerTest {
     }
     
     @Test
-    public void testRunsBehaviorsFromEachMatchingSpec() throws Exception {
+    public void runsBehaviorsFromEachMatchingSpec() throws Exception {
         runner = new JDaveGroupRunner(Suite.class) {
             @Override
             protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
@@ -112,7 +112,7 @@ public class JDaveGroupRunnerTest {
     }
     
     @Test
-    public void testCategorizesSpecToDefaultGroupIfItHasRunWithJDaveRunnerAnnotation() throws Exception {
+    public void categorizesSpecToDefaultGroupIfItHasRunWithJDaveRunnerAnnotation() throws Exception {
         runner = new JDaveGroupRunner(DefaultSpec.class);
         ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$DefaultSpec.class"));
         AnnotationCollector collector = new AnnotationCollector();
@@ -121,7 +121,7 @@ public class JDaveGroupRunnerTest {
     }
     
     @Test
-    public void testDoesNotCategorizeSpecToDefaultGroupIfItDoesNotHaveRunWithAnnotation() throws Exception {
+    public void doesNotCategorizeSpecToDefaultGroupIfItDoesNotHaveRunWithAnnotation() throws Exception {
         runner = new JDaveGroupRunner(DefaultSpec.class);
         ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$SpecWithUnrecognizedAnnotation.class"));
         AnnotationCollector collector = new AnnotationCollector();
@@ -130,7 +130,7 @@ public class JDaveGroupRunnerTest {
     }
 
     @Test
-    public void testUsesDirectoriesSpecifiedBySpecDirsIfAnnotationIsPresent() throws Exception {
+    public void usesDirectoriesSpecifiedBySpecDirsIfAnnotationIsPresent() throws Exception {
         final List<String> dirs = new ArrayList<String>();
         runner = new JDaveGroupRunner(SuiteWithSpecifiedDirs.class) {
             @Override
