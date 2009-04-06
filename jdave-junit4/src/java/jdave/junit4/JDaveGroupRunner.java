@@ -35,13 +35,12 @@ import org.junit.runner.notification.RunNotifier;
  */
 public class JDaveGroupRunner extends Runner {
     private final Class<?> suite;
-    private final List<Class<? extends Specification<?>>> specs = 
-        new ArrayList<Class<? extends Specification<?>>>();
-    private Description description;
+    private final List<Class<? extends Specification<?>>> specs = new ArrayList<Class<? extends Specification<?>>>();
+    private final Description description;
 
     public JDaveGroupRunner(Class<?> suite) {
         this.suite = suite;        
-        description = Description.createSuiteDescription(suite);
+        this.description = Description.createSuiteDescription(suite);
         collectSpecsAndDescriptionBy(suite);
     }
 
