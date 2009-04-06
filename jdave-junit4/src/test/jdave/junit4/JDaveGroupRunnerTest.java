@@ -166,6 +166,17 @@ public class JDaveGroupRunnerTest {
         }
     }
     
+    @Test
+    public void addsSpecsToDescription() throws Exception {
+        runner = new JDaveGroupRunner(Suite.class);
+        Description description = runner.getDescription();
+        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
+        ArrayList<Description> specsInDescription = description.getChildren();
+        Assert.assertEquals(2, specsInDescription.size());
+        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", specsInDescription.get(0).getDisplayName());
+        Assert.assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", specsInDescription.get(1).getDisplayName());
+    }
+    
     @RunWith(JDaveGroupRunner.class)
     @Groups(include="any")
     @SpecDirs({"foo", "bar"})
