@@ -184,6 +184,7 @@ public class JDaveGroupRunnerTest {
     }
 
     @RunWith(JDaveRunner.class)
+    @Groups(include="any")
     public static class DefaultSpec extends Specification<Void> {
         public class Context {
             public void create() {}

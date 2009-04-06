@@ -42,11 +42,7 @@ public class JDaveGroupRunner extends Runner {
     public JDaveGroupRunner(Class<?> suite) {
         this.suite = suite;        
         description = Description.createSuiteDescription(suite);
-        Groups groupsAnnotationOfSuite = suite.getAnnotation(Groups.class);
-        if (groupsAnnotationOfSuite == null) {
-            return;
-        }
-        final Resolution resolution = new Resolution(groupsAnnotationOfSuite);
+        final Resolution resolution = new Resolution(suite.getAnnotation(Groups.class));
         scanSpecsFromDisc(description, resolution);
     }
 
