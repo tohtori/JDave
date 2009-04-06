@@ -45,7 +45,6 @@ import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.RunNotifier;
 
-
 @RunWith(JMock.class)
 public class JDaveGroupRunnerTest {
     private Mockery context = new JUnit4Mockery();
@@ -156,10 +155,10 @@ public class JDaveGroupRunnerTest {
         runner = new JDaveGroupRunner(Suite.class);
         Description description = runner.getDescription();
         assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
-        ArrayList<Description> specsInDescription = description.getChildren();
-        assertEquals(2, specsInDescription.size());
-        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", specsInDescription.get(0).getDisplayName());
-        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", specsInDescription.get(1).getDisplayName());
+        ArrayList<Description> descriptionsForSuite = description.getChildren();
+        assertEquals(2, descriptionsForSuite.size());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", descriptionsForSuite.get(0).getDisplayName());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", descriptionsForSuite.get(1).getDisplayName());
     }
     
     private static class AnnotationCollector extends ClassAdapter {
@@ -177,7 +176,6 @@ public class JDaveGroupRunnerTest {
             }
         }
     }
-    
     
     @RunWith(JDaveGroupRunner.class)
     @Groups(include="any")
