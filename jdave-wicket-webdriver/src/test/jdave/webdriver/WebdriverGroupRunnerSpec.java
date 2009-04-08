@@ -17,6 +17,7 @@ package jdave.webdriver;
 
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+import jdave.runner.Groups;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -34,11 +35,14 @@ public class WebdriverGroupRunnerSpec extends Specification<WebDriverGroupRunner
         private Browser browser = mock(Browser.class);
 
         public WebDriverGroupRunner create() {
-            WebDriverGroupRunner runner = new WebDriverGroupRunner(WebDriverGroupRunner.class);
+            WebDriverGroupRunner runner = new WebDriverGroupRunner(Suite.class);
             Inject.field("webDriverFactory").of(runner).with(webDriverFactory);
             Inject.field("browser").of(runner).with(browser);
             return runner;
         }
+
+        @Groups(include = "any")
+        public class Suite {}
 
         public void opensBrowserBeforeRun() {
             checking(new Expectations() {{
