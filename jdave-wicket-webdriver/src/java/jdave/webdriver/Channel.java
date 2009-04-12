@@ -24,6 +24,11 @@ import org.openqa.selenium.JavascriptExecutor;
 public class Channel {
     public void waitForAjax() {
         while (isChannelBusy()) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

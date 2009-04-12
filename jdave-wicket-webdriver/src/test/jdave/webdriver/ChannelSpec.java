@@ -18,6 +18,8 @@ package jdave.webdriver;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.closeTo;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 
@@ -54,6 +56,21 @@ public class ChannelSpec extends Specification<Channel> {
                 one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
             }});
             context.waitForAjax();
+        }
+
+        public void sleeps50MilisecondsBetweenCheckingIsChannelBusy() {
+            checking(new Expectations() {{
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(true));
+                one(webDriver).executeScript(with(any(String.class)), with(any(Object.class))); will(returnValue(false));
+            }});
+            long start = System.nanoTime();
+            context.waitForAjax();
+            specify(executionTimeInMillis(start), is(closeTo(50, 2)));
+        }
+
+        private Double executionTimeInMillis(long start) {
+            long diffInMillis = System.nanoTime() / 1000000 - start / 1000000;
+            return Double.valueOf(diffInMillis);
         }
 
         public void destroy() {
