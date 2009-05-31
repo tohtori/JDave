@@ -22,11 +22,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Provides lists of class members (methods and inner classes) in the same order
- * as they have been declared in the source code. Requires that the classes have
- * been compiled with debug information (line numbers) included in the bytecode
- * and that the methods have a body (not native nor abstract).
- *
+ * Provides lists of class members (methods and inner classes) in the same
+ * order as they have been declared in the source code. Requires that the
+ * classes have been compiled with debug information (line numbers) included
+ * in the bytecode and that the methods have a body (not native nor abstract).
+ * 
  * @author Esko Luontola
  * @since 4.1.2008
  */
@@ -35,20 +35,24 @@ public final class ClassMemberSorter {
     }
 
     /**
-     * @return the same as {@link Class#getClasses()} but in the same order as declared in the source code.
+     * @return the same as {@link Class#getClasses()} but in the same order as
+     *         declared in the source code.
      */
     public static Class<?>[] getClasses(Class<?> declaringClass) {
-        List<Class<?>> hierarchy = hierarchy(declaringClass);
         List<Class<?>> allDeclaredClasses = new ArrayList<Class<?>>();
-        for (Class<?> clazz : hierarchy) {
-            Class<?>[] classes = clazz.getDeclaredClasses();
+        for (Class<?> clazz : inheritanceHierarchyOf(declaringClass)) {
+            Class<?>[] classes = contextClassesDeclaredIn(clazz);
             Arrays.sort(classes, new ClassLineNumberComparator());
             allDeclaredClasses.addAll(Arrays.asList(classes));
         }
         return allDeclaredClasses.toArray(new Class[allDeclaredClasses.size()]);
     }
 
-    private static List<Class<?>> hierarchy(Class<?> declaringClass) {
+    private static Class<?>[] contextClassesDeclaredIn(Class<?> clazz) {
+        return clazz.getDeclaredClasses();
+    }
+
+    private static List<Class<?>> inheritanceHierarchyOf(Class<?> declaringClass) {
         List<Class<?>> hierarchy = new ArrayList<Class<?>>();
         Class<?> root = declaringClass;
         do {
@@ -60,7 +64,8 @@ public final class ClassMemberSorter {
     }
 
     /**
-     * @return the same as {@link Class#getMethods()} but in the same order as declared in the source code.
+     * @return the same as {@link Class#getMethods()} but in the same order as
+     *         declared in the source code.
      */
     public static Method[] getMethods(Class<?> clazz) {
         Method[] methods = clazz.getMethods();
