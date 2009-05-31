@@ -15,6 +15,10 @@
  */
 package jdave.runner;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +28,8 @@ import java.util.List;
 import jdave.ResultsAdapter;
 import jdave.SpecVisitorAdapter;
 import jdave.Specification;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -68,6 +72,15 @@ public class SpecRunnerTest {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
         assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter.getContextNames());
+    }
+    
+    @Test
+    public void testShouldSkipIgnoredContexts() throws Exception {
+        SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
+        runner.run(SpecWithIgnoredContexts.class, adapter);
+        assertFalse(adapter.getContextNames().contains("ContextWithDefaultVisibility"));
+        assertFalse(adapter.getContextNames().contains("ContextWithJUnit4IgnoreAnnotation"));
+        assertTrue(adapter.getContextNames().contains("TheOnlyProperContext"));
     }
     
     @Test
@@ -148,7 +161,7 @@ public class SpecRunnerTest {
             }
         }
     }
-
+    
     public static class BooleanSpec extends BaseSpec {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
@@ -283,6 +296,27 @@ public class SpecRunnerTest {
         @Override
         public void destroy() throws Exception {
             specDestroyCalled++;
+        }
+    }
+    
+    public static class SpecWithIgnoredContexts extends Specification<Void> {
+        public static List<String> executedContexts = new ArrayList<String>();
+
+        public abstract class ContextThatShouldBeIgnored {
+            public void someBehavior() {
+                executedContexts.add(getClass().getSimpleName());
+            }
+        }
+        
+        class ContextWithDefaultVisibility extends ContextThatShouldBeIgnored {
+        }
+        
+        @Ignore
+        public class ContextWithJUnit4IgnoreAnnotation extends ContextThatShouldBeIgnored {
+        }
+        
+        public class TheOnlyProperContext {
+            public void someBehavior() {}
         }
     }
 }

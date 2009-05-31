@@ -15,7 +15,12 @@
  */
 package jdave.runner;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Ignore;
 
 import jdave.Specification;
 
@@ -25,22 +30,24 @@ import jdave.Specification;
  */
 public class SpecRunner {
     public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
-        for (Class<?> contextType : ClassMemberSorter.getClasses(specType)) {
+        for (Class<?> contextType : getContextsOf(specType)) {
             Context context = new Context(specType, contextType) {
                 @Override
-                protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                protected Behavior newBehavior(Method method,
+                        Class<? extends Specification<?>> specType, Class<?> contextType) {
                     return new VisitingBehavior(method, contextType);
                 }
             };
             run(callback, context);
         }
     }
-    
+
     public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) {
-        for (Class<?> contextType : ClassMemberSorter.getClasses(specType)) {
+        for (Class<?> contextType : getContextsOf(specType)) {
             Context context = new Context(specType, contextType) {
                 @Override
-                protected Behavior newBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+                protected Behavior newBehavior(Method method,
+                        Class<? extends Specification<?>> specType, Class<?> contextType) {
                     return new ExecutingBehavior(method, specType, contextType);
                 }
             };
@@ -54,5 +61,28 @@ public class SpecRunner {
             context.run(callback);
             callback.afterContext(context);
         }
+    }
+
+    private <T> Class<?>[] getContextsOf(Class<T> specType) {
+        List<Class<?>> classes = new ArrayList<Class<?>>();
+        for (Class<?> member : ClassMemberSorter.getClasses(specType)) {
+            if (qualifiesAsContext(member)) {
+                classes.add(member);
+            }
+        }
+        return classes.toArray(new Class[classes.size()]);
+    }
+
+    private boolean qualifiesAsContext(Class<?> clazz) {
+        return annotationIsPresent(clazz, Ignore.class) == false;
+    }
+
+    private boolean annotationIsPresent(Class<?> clazz, Class<? extends Annotation> annotationType) {
+        for (Annotation annotation : clazz.getAnnotations()) {
+            if (annotation.annotationType().equals(annotationType)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
