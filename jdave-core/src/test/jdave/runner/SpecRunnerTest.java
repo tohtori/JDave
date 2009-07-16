@@ -34,6 +34,7 @@ import org.junit.Test;
 
 /**
  * @author Pekka Enberg
+ * @author Lasse Koskela
  */
 public class SpecRunnerTest {
     private List<String> methods = new ArrayList<String>();
@@ -56,7 +57,7 @@ public class SpecRunnerTest {
         assertEquals("shouldEqualToFalse", methods.get(3));
         assertEquals("shouldNotBeEqualToTrue", methods.get(4));
     }
-    
+
     @Test
     public void testShouldInvokeAllSpecificationMethods() throws Exception {
         BooleanSpec.actualCalls.clear();
@@ -64,16 +65,18 @@ public class SpecRunnerTest {
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
         Collections.sort(BooleanSpec.actualCalls);
         assertEquals(Arrays.asList("anyBehavior", "inheritedBehavior"), BaseSpec.actualCalls);
-        assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse", "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
+        assertEquals(Arrays.asList("shouldBeEqualToTrue", "shouldEqualToFalse",
+                "shouldNotBeEqualToTrue"), BooleanSpec.actualCalls);
     }
-    
+
     @Test
     public void testShouldNotifyCallbackWhenContextIsStarted() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter.getContextNames());
+        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter
+                .getContextNames());
     }
-    
+
     @Test
     public void testShouldSkipIgnoredContexts() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
@@ -82,41 +85,64 @@ public class SpecRunnerTest {
         assertFalse(adapter.getContextNames().contains("ContextWithJUnit4IgnoreAnnotation"));
         assertTrue(adapter.getContextNames().contains("TheOnlyProperContext"));
     }
-    
+
     @Test
     public void testShouldNotifyCallbackWhenContextHasFinished() throws Exception {
         SpecVisitorAdapter adapter = new SpecVisitorAdapter(new ResultsAdapter());
         runner.run(BooleanSpec.class, adapter);
-        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter.getFinishedContextNames());
+        assertEquals(Arrays.asList("CommonContext", "FalseBoolean", "TrueBoolean"), adapter
+                .getFinishedContextNames());
     }
-    
+
     @Test
     public void testShouldCallDestroyForEachMethod() throws Exception {
         BooleanSpec.destroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(4, BooleanSpec.destroyCalled);        
+        assertEquals(4, BooleanSpec.destroyCalled);
     }
-    
+
     @Test
     public void testShouldCallSpecCreateForEachMethod() throws Exception {
         BooleanSpec.specCreateCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(5, BooleanSpec.specCreateCalled);        
+        assertEquals(5, BooleanSpec.specCreateCalled);
     }
-    
+
     @Test
     public void testShouldCallSpecDestroyForEachMethod() throws Exception {
         BooleanSpec.specDestroyCalled = 0;
         runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(5, BooleanSpec.specDestroyCalled);        
+        assertEquals(5, BooleanSpec.specDestroyCalled);
     }
-    
 
     @Test
     public void testShouldCallSpecDestroyEvenIfContextDestroyCrashes() {
         SpecWithCrashingContextDestroy.specDestroyCalled = 0;
-        runner.run(SpecWithCrashingContextDestroy.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(1, SpecWithCrashingContextDestroy.specDestroyCalled);        
+        runner.run(SpecWithCrashingContextDestroy.class, new SpecVisitorAdapter(
+                new ResultsAdapter()));
+        assertEquals(1, SpecWithCrashingContextDestroy.specDestroyCalled);
+    }
+
+    @Test
+    public void testShouldCallOnceBeforeExactlyOnce() throws Exception {
+        BooleanSpec.onceBeforeCalled = 0;
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(1, BooleanSpec.onceBeforeCalled);
+    }
+
+    @Test
+    public void testShouldCallOnceAfterExactlyOnce() throws Exception {
+        BooleanSpec.onceAfterCalled = 0;
+        runner.run(BooleanSpec.class, new SpecVisitorAdapter(new ResultsAdapter()));
+        assertEquals(1, BooleanSpec.onceAfterCalled);
+    }
+
+    @Test
+    public void testShouldCallOnceAfterEvenIfContextDestroyCrashes() {
+        SpecWithCrashingContextDestroy.onceAfterCalled = 0;
+        runner.run(SpecWithCrashingContextDestroy.class, new SpecVisitorAdapter(
+                new ResultsAdapter()));
+        assertEquals(1, SpecWithCrashingContextDestroy.onceAfterCalled);
     }
 
     @Test
@@ -131,43 +157,53 @@ public class SpecRunnerTest {
         assertEquals(1, errors.size());
         assertEquals("someBehavior", errors.get(0).getName());
     }
-    
+
     @Test
     public void testAllowsContextHavingCreateMethodWithVoidReturnValue() throws Exception {
         SpecForOtherCreations.whenCreateIsVoid = 0;
         runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(1, SpecForOtherCreations.whenCreateIsVoid);                
+        assertEquals(1, SpecForOtherCreations.whenCreateIsVoid);
     }
-    
+
     @Test
     public void testAllowsContextWithoutCreateMethod() throws Exception {
         SpecForOtherCreations.whenCreateDoesNotExist = 0;
         runner.run(SpecForOtherCreations.class, new SpecVisitorAdapter(new ResultsAdapter()));
-        assertEquals(1, SpecForOtherCreations.whenCreateDoesNotExist);                        
+        assertEquals(1, SpecForOtherCreations.whenCreateDoesNotExist);
     }
-    
+
     public static class BaseSpec extends Specification<Boolean> {
         public static List<String> actualCalls = new ArrayList<String>();
-        
+
         public class CommonContext {
             public void anyBehavior() {
                 actualCalls.add("anyBehavior");
             }
         }
-        
+
         public abstract class BaseContext {
             public void inheritedBehavior() {
                 actualCalls.add("inheritedBehavior");
             }
         }
     }
-    
+
     public static class BooleanSpec extends BaseSpec {
         public static List<String> actualCalls = new ArrayList<String>();
         public static int destroyCalled;
         public static int specCreateCalled;
         public static int specDestroyCalled;
-        
+        public static int onceBeforeCalled;
+        public static int onceAfterCalled;
+
+        public static void onceBefore() {
+            onceBeforeCalled++;
+        }
+
+        public static void onceAfter() {
+            onceAfterCalled++;
+        }
+
         public class FalseBoolean extends BaseContext {
             public Boolean create() {
                 return false;
@@ -185,6 +221,7 @@ public class SpecRunnerTest {
                 actualCalls.add("protectedMethod");
             }
 
+            @SuppressWarnings("unused")
             private void privateMethod() {
                 actualCalls.add("privateMethod");
             }
@@ -192,11 +229,11 @@ public class SpecRunnerTest {
             void packageProtectedMethod() {
                 actualCalls.add("packageProtectedMethod");
             }
-            
+
             public void methodWhichTakesParameters(Object obj) {
-                actualCalls.add("methodWhichTakesParameters");                
+                actualCalls.add("methodWhichTakesParameters");
             }
-            
+
             public void destroy() {
                 destroyCalled++;
             }
@@ -206,7 +243,7 @@ public class SpecRunnerTest {
             public Boolean create() {
                 return true;
             }
-            
+
             public void shouldBeEqualToTrue() {
                 actualCalls.add("shouldBeEqualToTrue");
             }
@@ -215,32 +252,33 @@ public class SpecRunnerTest {
                 destroyCalled++;
             }
         }
-        
-        public class ContextWithoutBehaviors {            
+
+        public class ContextWithoutBehaviors {
         }
-        
-        public abstract class SomeAbstractClass {            
+
+        public abstract class SomeAbstractClass {
         }
-        
-        public static class SomeHelperClass {   
-            public void thisIsNotBehavior() {                
+
+        public static class SomeHelperClass {
+            public void thisIsNotBehavior() {
             }
         }
-        
-        private class SomePrivateClass {            
+
+        @SuppressWarnings("unused")
+        private class SomePrivateClass {
         }
-        
-        class SomePackageProtectedClass {            
+
+        class SomePackageProtectedClass {
         }
-        
-        protected class SomeProtectedClass {            
+
+        protected class SomeProtectedClass {
         }
-        
+
         @Override
         public void create() {
             specCreateCalled++;
         }
-        
+
         @Override
         public void destroy() {
             specDestroyCalled++;
@@ -252,37 +290,42 @@ public class SpecRunnerTest {
         public static int whenCreateDoesNotExist = 0;
 
         public class ContextWithVoidCreateMethod {
-            public void create() {                
+            public void create() {
             }
 
-            public void whenCreateIsVoid() {    
+            public void whenCreateIsVoid() {
                 whenCreateIsVoid++;
             }
         }
-        
+
         public class ContextWithoutCreateMethod {
             public void whenCreateDoesNotExist() {
                 whenCreateDoesNotExist++;
             }
         }
     }
-    
+
     public class FailingSpec extends Specification<Void> {
         public FailingSpec() {
             throw new RuntimeException();
         }
-        
+
         public class Context {
             public void create() {
             }
-            
+
             public void someBehavior() {
             }
         }
     }
 
     public static class SpecWithCrashingContextDestroy extends Specification<Void> {
+        public static int onceAfterCalled;
         private static int specDestroyCalled;
+
+        public static void onceAfter() {
+            onceAfterCalled++;
+        }
 
         public class Context {
             public void destroy() {
@@ -298,7 +341,7 @@ public class SpecRunnerTest {
             specDestroyCalled++;
         }
     }
-    
+
     public static class SpecWithIgnoredContexts extends Specification<Void> {
         public static List<String> executedContexts = new ArrayList<String>();
 
@@ -307,16 +350,17 @@ public class SpecRunnerTest {
                 executedContexts.add(getClass().getSimpleName());
             }
         }
-        
+
         class ContextWithDefaultVisibility extends ContextThatShouldBeIgnored {
         }
-        
+
         @Ignore
         public class ContextWithJUnit4IgnoreAnnotation extends ContextThatShouldBeIgnored {
         }
-        
+
         public class TheOnlyProperContext {
-            public void someBehavior() {}
+            public void someBehavior() {
+            }
         }
     }
 }

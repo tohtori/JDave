@@ -17,16 +17,19 @@ package jdave.runner;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
-
 import jdave.Specification;
+import jdave.support.Reflection;
+
+import org.junit.Ignore;
 
 /**
  * @author Pekka Enberg
  * @author Joni Freeman
+ * @author Lasse Koskela
  */
 public class SpecRunner {
     public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
@@ -43,6 +46,31 @@ public class SpecRunner {
     }
 
     public <T extends Specification<?>> void run(Class<T> specType, ISpecVisitor callback) {
+        runOnceBefores(specType);
+        runContexts(specType, callback);
+        runOnceAfters(specType);
+    }
+
+    private <T extends Specification<?>> void runOnceBefores(Class<T> specType) {
+        runPublicStaticVoidMethodNamed("onceBefore", specType);
+    }
+
+    private <T extends Specification<?>> void runOnceAfters(Class<T> specType) {
+        runPublicStaticVoidMethodNamed("onceAfter", specType);
+    }
+
+    private <T> void runPublicStaticVoidMethodNamed(String name, Class<T> specType) {
+        try {
+            Method method = Reflection.getMethod(specType, name, Modifier.PUBLIC, Modifier.STATIC);
+            try {
+                method.invoke(null);
+            } catch (Exception e) {
+            }
+        } catch (NoSuchMethodException isOk) {
+        }
+    }
+
+    private <T extends Specification<?>> void runContexts(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : getContextsOf(specType)) {
             Context context = new Context(specType, contextType) {
                 @Override
