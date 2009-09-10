@@ -23,10 +23,12 @@ import jdave.webdriver.Channel;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 
 /**
  * @author Marko Sibakov
+ * @author Petteri Parkkila
  */
 public class DropDownChoice {
     private WebElement webElement;
@@ -61,5 +63,15 @@ public class DropDownChoice {
 
     public String getText() {
         return webElement.getText();
+    }
+
+    public String getSelected() {
+        Map<String, WebElement> optionsMap = optionsMap(webElement.findElements(By.tagName("option")));
+        for (WebElement webElements : optionsMap.values()) {
+            if (webElements.getAttribute("selected") != null) {
+                return webElements.getText();
+            }
+        }
+        throw new NotFoundException("No selection found from DropDownChoice");
     }
 }
