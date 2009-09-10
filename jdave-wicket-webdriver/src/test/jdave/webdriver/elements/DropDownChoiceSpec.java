@@ -16,16 +16,20 @@
 package jdave.webdriver.elements;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
+import jdave.Block;
+import jdave.Specification;
+import jdave.junit4.JDaveRunner;
 import jdave.webdriver.Channel;
-import net.sf.cglib.core.Block;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 
-/** 
+/**
  * @author Marko Sibakov
  */
 @RunWith(JDaveRunner.class)
