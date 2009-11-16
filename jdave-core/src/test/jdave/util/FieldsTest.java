@@ -44,7 +44,19 @@ public class FieldsTest {
         assertEquals(500, Fields.get(testObject, "foo"));    
     }
     
+    @Test
+    public void testGetsValueFromStaticField() {
+        assertEquals("lol", Fields.getStatic(TestClass.class, "LOL"));
+    }
+    
+    @Test(expected = RuntimeException.class)
+    public void testGetStaticWrapsExceptionsToRuntimeException() {
+        Fields.getStatic(TestClass.class, "nonExistingField");
+    }
+
     private class TestClass {
         public int foo = 500;
+        @SuppressWarnings("unused")
+        private static final String LOL = "lol";
     }
 }

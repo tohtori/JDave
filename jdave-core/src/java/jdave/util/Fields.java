@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 
 /**
  * @author Pekka Enberg
+ * @author Juha Karemo
  */
 public class Fields {
     public static void set(Object object, String fieldName, Object value) {
@@ -35,6 +36,17 @@ public class Fields {
             Field field = object.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             return field.get(object);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T getStatic(Class<?> clazz, String fieldName) {
+        try {
+            Field field = clazz.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (T) field.get(clazz);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

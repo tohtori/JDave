@@ -21,17 +21,44 @@ import org.openqa.selenium.WebDriver;
  * @author Juha Karemo
  */
 public class WebDriverHolder {
-    private static ThreadLocal<WebDriver> currentWebDriver = new ThreadLocal<WebDriver>();
+    private static ThreadLocal<WebDriver> user1WebDriver = new ThreadLocal<WebDriver>();
+    private static ThreadLocal<WebDriver> user2WebDriver = new ThreadLocal<WebDriver>();
+    private static ThreadLocal<Boolean> user1IsActive = new ThreadLocal<Boolean>() {
+        @Override
+        protected Boolean initialValue() {
+            return true;
+        }
+    };
 
     public static WebDriver get() {
-        return currentWebDriver.get();
+        if (user1IsActive.get()) {
+            return user1WebDriver.get();
+        }
+        return user2WebDriver.get();
     }
 
     public static void set(WebDriver webDriver) {
-        currentWebDriver.set(webDriver);
+        user1WebDriver.set(webDriver);
+    }
+    
+    public static void setForUser2(WebDriver webDriver) {
+        user2WebDriver.set(webDriver);
+    }
+    
+    public static void switchToUser1() {
+        user1IsActive.set(true);
+    }
+    
+    public static void switchToUser2() {
+        if(user2WebDriver.get() == null) {
+            throw new IllegalStateException("You need to set WebDriver for user2 before executing this method.");
+        }
+        user1IsActive.set(false);
     }
 
     public static void clear() {
-        currentWebDriver.remove();
+        user1WebDriver.remove();
+        user2WebDriver.remove();
+        user1IsActive.remove();
     }
 }

@@ -26,9 +26,9 @@ import org.junit.runner.notification.RunNotifier;
  * @author Juha Karemo
  */
 public class WebDriverSpecRunner extends Runner {
-    private Runner jDaveRunner;
-    private WebDriverFactory webDriverFactory = new WebDriverFactory();
-    private Browser browser = new Browser();
+    protected Runner jDaveRunner;
+    protected WebDriverFactory webDriverFactory = new WebDriverFactory();
+    protected Browser browser = new Browser();
 
     public WebDriverSpecRunner(Class<? extends Specification<?>> spec) {
         jDaveRunner = new JDaveRunner(spec);
